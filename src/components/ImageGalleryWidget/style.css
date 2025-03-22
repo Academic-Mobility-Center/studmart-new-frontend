@@ -1,0 +1,47 @@
+.student-discount-section {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  position: relative;
+}
+.partner-discount-section {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  /* padding-left: 40px; */
+  /* padding-right: -40px; */
+  margin-top: -272px;
+  position: relative;
+  z-index: 2;
+}
+.image-container-outer {
+  box-sizing: border-box;
+  display: block;
+  width: 390px;
+  max-width: initial;
+  height: 312px;
+  border: none;
+  border-radius: 30px;
+  object-fit: cover;
+  
+}
+.student-discount-offer {
+  flex: 0 0 auto;
+  /* padding-right: 48px; */
+  padding-left: 50px;
+  margin-top: -179px;
+  position: relative;
+  z-index: 1;
+  transform: scaleX(-1);
+}
+.image-container-style {
+  box-sizing: border-box;
+  display: block;
+  width: 610px;
+  max-width: initial;
+  height: 189px;
+  border: none;
+  object-fit: cover;
+  transform: scaleX(-1);
+}

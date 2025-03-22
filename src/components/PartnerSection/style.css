@@ -1,0 +1,53 @@
+.partner-benefits-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  padding-bottom: 30px;
+  padding-left: 29px;
+  background: linear-gradient(292.56deg, rgba(254, 226, 0, 1) 0%, rgba(255, 235, 75, 1) 100%);
+  border-radius: 30px;
+}
+.partner-section1 {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.partner-section {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 253px;
+  padding-top: 30px;
+}
+.partner-heading {
+  padding: 0;
+  margin: 0;
+  font: 800 24px "Nunito Sans", sans-serif;
+  color: #032c28;
+}
+.marketing-panel {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 282px;
+  margin-left: 24px;
+}
+.partner-details-button {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 auto;
+  max-width: 528px;
+  height: 48px;
+  margin-top: 30px;
+  font: 700 14px Mulish, sans-serif;
+  color: #032c28;
+  text-transform: uppercase;
+  letter-spacing: 0.42px;
+  cursor: pointer;
+  background: #f8f8f8;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}

@@ -1,0 +1,47 @@
+.main-content-container {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 120px;
+  margin-left: 40px;
+}
+.main-heading-style {
+  padding: 0;
+  padding-right: 22px;
+  /* padding-left: 22px; */
+  margin: 0;
+  font: 800 36px/36px "Nunito Sans", sans-serif;
+  color: #032c28;
+  letter-spacing: 1.08px;
+}
+.feature-highlight-section1 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 40px;
+}
+.feature-highlight-section {
+  box-sizing: border-box;
+  flex: 0 0 558px;
+}
+.promo-banner {
+  margin-top: -95px;
+  margin-left: -23px;
+}
+.image-container4 {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 auto;
+  width: 129px;
+  max-width: initial;
+  height: 108px;
+
+}
+.partner-offers-section {
+  box-sizing: border-box;
+  flex: 0 0 588px;
+  padding-bottom: 13px;
+  margin-left: 24px;
+}

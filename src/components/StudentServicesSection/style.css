@@ -1,0 +1,48 @@
+.student-benefit-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 30px 30px 30px 29px;
+  background: linear-gradient(113.42deg, rgba(255, 211, 255, 1) 0%, rgba(255, 185, 255, 1) 100%);
+  border-radius: 30px;
+}
+.student-title-heading {
+  flex: 0 0 auto;
+  padding: 0;
+  margin: 0;
+  font: 800 24px "Nunito Sans", sans-serif;
+  color: #032c28;
+}
+.student-offers-container {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  align-items: center;
+}
+.student-benefits-section {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  align-items: stretch;
+  height: 136px;
+}
+.promo-button-style {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 auto;
+  min-width: 528px;
+  height: 48px;
+  margin-top: 10px;
+  font: 700 14px Mulish, sans-serif;
+  color: #032c28;
+  text-transform: uppercase;
+  letter-spacing: 0.42px;
+  cursor: pointer;
+  background: #f8f8f8;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}

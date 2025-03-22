@@ -1,0 +1,50 @@
+.student-discount-offer-container {
+  flex: 0 0 auto;
+  width: 100%;
+}
+.student-discount-offer-container1 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  max-width: 894px;
+  padding: 40px 39px;
+  background: #fee200;
+  border-radius: 30px;
+  margin-top: 20px;
+  /* margin-left: 40px; */
+}
+.exclusive-discount-message {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  max-width: 733px;
+  padding: 0;
+  margin: 0;
+  font: 800 48px/48px "Nunito Sans";
+  color: #032c28;
+  text-align: left;
+  letter-spacing: 7px;
+  line-height: 100%;
+  font-variant-numeric: proportional-nums;
+  font-variant-ligatures: lining-nums;
+  
+}
+.exclusive-discount-button {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 auto;
+  width: 400px;
+  min-width: 400px;
+  height: 48px;
+  margin-top: 40px;
+  font: 700 14px Mulish, sans-serif;
+  color: #032c28;
+  text-transform: uppercase;
+  letter-spacing: 0.42px;
+  cursor: pointer;
+  background: #f8f8f8;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
