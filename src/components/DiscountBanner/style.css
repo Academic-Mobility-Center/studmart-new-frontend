@@ -1,4 +1,4 @@
-.discount-offer-container {
+.discount-offer-container-55 {
   box-sizing: border-box;
   display: flex;
   flex: 0 0 auto;
@@ -10,8 +10,9 @@
   padding: 20px 35px;
   background: #f8f8f8;
   border-radius: 20px;
+  height: 118px;
 }
-.discount-image {
+.discount-image-55 {
   box-sizing: border-box;
   display: block;
   flex: 0 0 auto;

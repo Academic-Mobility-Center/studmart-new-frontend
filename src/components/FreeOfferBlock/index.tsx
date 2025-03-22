@@ -4,7 +4,7 @@ import "./style.css";
 function FreeOfferBlock() {
   return (
     <div className="discount-offer-container">
-      <MoneySvg className="discount-image" />
+      <MoneySvg className="discount-image-12" />
       <p className="discount-offer-heading">Бесплатно</p>
     </div>
   );
