@@ -1,7 +1,6 @@
 import ContentLayoutWidget from "@/components/main-page/ContentLayoutWidget/ContentLayoutWidget"
 import "./style.css"
-import Header from "@/components/header/Header"
-import PrivacyGuardian from "@/components/PrivacyGuardian"
+import Header from "@/components/header"
 import Footer from "@/components/footer"
 export default function MainPage(){
     return(
@@ -10,7 +9,6 @@ export default function MainPage(){
                 <Header/>
                 <ContentLayoutWidget/>
                 <Footer/>
-                {/* <PrivacyGuardian/> */}
             </div>
         </div>
     )

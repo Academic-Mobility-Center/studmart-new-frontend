@@ -9,8 +9,6 @@
 .partner-discount-section {
   flex: 0 0 auto;
   align-self: flex-end;
-  /* padding-left: 40px; */
-  /* padding-right: -40px; */
   margin-top: -272px;
   position: relative;
   z-index: 2;
@@ -28,7 +26,6 @@
 }
 .student-discount-offer {
   flex: 0 0 auto;
-  /* padding-right: 48px; */
   padding-left: 65px;
   margin-top: -179px;
   position: relative;

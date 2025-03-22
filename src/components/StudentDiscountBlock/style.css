@@ -13,8 +13,7 @@
   padding: 40px 39px;
   background: #fee200;
   border-radius: 30px;
-  margin-top: 20px;
-  /* margin-left: 40px; */
+  margin-top: 30px;
 }
 .exclusive-discount-message {
   box-sizing: border-box;
@@ -29,7 +28,6 @@
   line-height: 100%;
   font-variant-numeric: proportional-nums;
   font-variant-ligatures: lining-nums;
-  
 }
 .exclusive-discount-button {
   box-sizing: border-box;
