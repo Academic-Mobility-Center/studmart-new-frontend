@@ -18,7 +18,7 @@
   align-self: center;
   justify-content: space-between;
   min-width: 1200px;
-  margin-left: -79px;
+  /* margin-left: -79px; */
 }
 .flex-column-centered {
   display: flex;
@@ -39,6 +39,7 @@
   padding: 11px 15px 123px;
   border: none;
   border-radius: 20px 20px 0px 0px;
+  position: relative;
 }
 .bg-1{
   background: url("/assets/image_43dfe9ff.png") 50% / cover no-repeat;
@@ -54,4 +55,13 @@
   flex: 0 0 auto;
   width: 32px;
   height: 32px;
+}
+.bg-svg-1{
+  background: url("/icons/big-categories/GoldenAppleBig.svg") 50% / cover no-repeat;
+}
+.bg-svg-2{
+  background: url("/icons/big-categories/ChocolateBig.svg") 50% / cover no-repeat;
+}
+.bg-svg-3{
+  background: url("/icons/big-categories/CosmeticsBig.svg") 50% / cover no-repeat;
 }

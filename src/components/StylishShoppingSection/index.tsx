@@ -1,13 +1,10 @@
 import BrightStar from "../../../public/icons/ContentLayoutWidget/BrightStar";
 import Star from "../../../public/icons/ContentLayoutWidget/Star";
+import BigCategory from "../big-category";
 import FavoriteCategoriesSection from "../FavoriteCategoriesSection";
-// import GoldenAppleShop from "../MainSectionsShops/GoldenAppleShop";
-// import ChocolateDiscount from "../MainSectionsShops/ChocolateDiscount";
-// import CosmeticsDiscount from "../MainSectionsShops/CosmeticsDiscount";
-// import StylishWidgetSection from "../StylishWidgetSection";
+import StylishWidgetSection from "../StylishWidgetSection";
 import "./style.css";
-// import BrightStar from "../../icons/MainSectionShops/BrightStar"
-// import Star from "../../icons/MainSectionShops/Star";
+
 
 function StylishShoppingSection() {
   return (
@@ -15,43 +12,37 @@ function StylishShoppingSection() {
       <FavoriteCategoriesSection />
       <div className="promo-card-container2">
         <div className="flex-column-centered">
-          
-          <div className="flex-column-container">
+          <div className="flex-column-container bg-svg-1">
             <BrightStar className="svg-container" />
           </div>
+          <BigCategory 
+            heading="Золотое Яблоко"
+            description="Магазин косметики"
+            discount="10"
+          />
         </div>
         <div className="flex-column-centered">
-          <div className="flex-column-container">
+          <div className="flex-column-container bg-svg-2">
               <Star className="svg-container" />
           </div>
+          <BigCategory 
+            heading="Шоколадница" 
+            description="Сеть кофеен" 
+            discount="15"
+          />
         </div>
         <div className="flex-column-centered">
-          <div className="flex-column-container">
-                <Star className="svg-container" />
-          </div>
-        </div>
-      </div>
-      {/* <div className="promo-card-container2">
-        <div className="flex-column-centered">
-          <div className="flex-column-container bg-1">
-            <BrightStar className="svg-container" />
-          </div>
-          <GoldenAppleShop />
-        </div>
-        <div className="flex-column-centered">
-          <div className="flex-column-container bg-2">
+          <div className="flex-column-container bg-svg-3">
             <Star className="svg-container" />
           </div>
-          <ChocolateDiscount />
-        </div>
-        <div className="flex-column-centered">
-          <div className="flex-column-container bg-3">
-            <Star className="svg-container" />
-          </div>
-          <CosmeticsDiscount />
+          <BigCategory
+            heading="Рив Гош"
+            description="Магазин косметики"
+            discount="5"
+          />
         </div>
       </div>
-      <StylishWidgetSection /> */}
+      <StylishWidgetSection/>
     </div>
   );
 }

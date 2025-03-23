@@ -1,0 +1,19 @@
+.loyalty-program-info-container {
+  padding-right: 22px;
+  padding-left: 40px;
+  margin-top: 107px;
+}
+.loyalty-program-heading-style {
+  padding: 0;
+  margin: 0;
+  font: 800 36px/36px "Nunito Sans", sans-serif;
+  color: #032c28;
+  letter-spacing: 1.08px;
+}
+.loyalty-program-info-container1 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 40px;
+}

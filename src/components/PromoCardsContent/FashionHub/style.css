@@ -1,0 +1,65 @@
+.delivery-service-card {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 282px;
+  height: 203px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+.flex-column-container3 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 100%;
+  height: 125px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background: url("/assets/image_c5e3ca0c.png") 50% / cover no-repeat;
+  border: none;
+  border-radius: 20px 20px 0px 0px;
+}
+.svg-container4 {
+  display: flex;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+}
+.bg-creative-hub{
+  background: url("/assets/image_ab41bc81.png") 50% / cover no-repeat;
+}
+.bg-fashion-hub{
+  background: url("/assets/image_c5e3ca0c.png") 50% / cover no-repeat;
+}
+.bg-apple-market{
+  background: url("/assets/image_43dfe9ff.png") 50% / cover no-repeat;
+}
+.bg-stylish-service{
+  background: url("/assets/image_e9cbdc65.png") 50% / cover no-repeat;
+}
+.bg-sweets-treats{
+  background: url("/assets/image_8dfa5d67.png") 50% / cover no-repeat;
+}
+.flex-column-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 100%;
+  height: 125px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: none;
+  border-radius: 20px 20px 0px 0px;
+}
+.svg-container {
+  display: flex;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+}

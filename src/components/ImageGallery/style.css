@@ -1,0 +1,27 @@
+.image-container-flex-row {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 24px;
+}
+.image-container {
+  box-sizing: border-box;
+  display: block;
+  width: 282px;
+  max-width: initial;
+  height: 368px;
+}
+.image-container-with-blend-mode {
+  box-sizing: border-box;
+  display: block;
+  width: 386px;
+  max-width: initial;
+  height: 386px;
+  margin-left: -267px;
+  border: none;
+  mix-blend-mode: multiply;
+  object-fit: cover;
+  margin-top: 55px;
+}

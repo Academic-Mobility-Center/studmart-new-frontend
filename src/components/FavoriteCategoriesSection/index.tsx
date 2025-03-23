@@ -14,7 +14,6 @@ const ScrollContainer = styled(Box)({
   display: "flex",
   overflowX: "auto",
   gap: "10px",
-  padding: "10px",
   scrollbarWidth: "none",
   "&::-webkit-scrollbar": {
     display: "none",
@@ -49,6 +48,8 @@ const menuItems = [
   { label: "Спорт", Icon: ExerciseSvg },
   { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
   { label: "Обучение", Icon: SchoolSvg },
+  { label: "Спорт", Icon: ExerciseSvg },
+  { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
   { label: "Спорт", Icon: ExerciseSvg },
   { label: "Красота и здоровье", Icon: HealthAndBeautySvg}
 ];

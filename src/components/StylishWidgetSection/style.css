@@ -1,0 +1,24 @@
+.vertical-center-column {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.promo-button {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 auto;
+  width: 350px;
+  min-width: 350px;
+  height: 48px;
+  margin-top: 40px;
+  font: 700 14px Mulish, sans-serif;
+  color: #032c28;
+  text-transform: uppercase;
+  letter-spacing: 0.42px;
+  cursor: pointer;
+  background: #8fe248;
+  border: none;
+  border-radius: 15px;
+}

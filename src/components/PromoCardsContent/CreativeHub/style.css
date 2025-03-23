@@ -1,0 +1,30 @@
+.academic-mobility-center-card {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 282px;
+  height: 243px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+.flex-column-container3 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 100%;
+  height: 125px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  background: url("/assets/image_c5e3ca0c.png") 50% / cover no-repeat;
+  border: none;
+  border-radius: 20px 20px 0px 0px;
+}
+.svg-container4 {
+  display: flex;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+}

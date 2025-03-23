@@ -1,0 +1,22 @@
+.promo-card {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 405px;
+  padding: 20px;
+  margin-left: 24px;
+  background: #f8f8f8;
+  border-radius: 20px;
+}
+.loyalty-program-description {
+  flex: 1 1 auto;
+  padding: 0;
+  margin: 0;
+  font: 700 16px Mulish, sans-serif;
+  color: #032c28;
+  text-align: left;
+}

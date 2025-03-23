@@ -1,0 +1,50 @@
+.promo-card1 {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 auto;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 15px 15px 16px 19px;  
+    background: #f8f8f8;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0px 0px 30px 30px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  }
+  .delivery-service-section {
+    flex: 0 0 auto;
+    padding-top: 5px;
+  }
+  .golden-apple-heading {
+    padding: 0;
+    margin: 0;
+    font: 700 16px Mulish, sans-serif;
+    color: #032c28;
+  }
+  .golden-apple-cosmetics-description {
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    font: 400 14px Mulish, sans-serif;
+    color: #032c28;
+  }
+  .discount-button-container {
+    flex: 0 0 auto;
+    padding-bottom: 6px;
+  }
+  .discount-button1 {
+    box-sizing: border-box;
+    display: block;
+    flex: 0 0 auto;
+    width: 95px;
+    min-width: 95px;
+    height: 47px;
+    font: 800 20px "Nunito Sans", sans-serif;
+    color: #032c28;
+    cursor: pointer;
+    background: #8fe248;
+    border: none;
+    border-radius: 20px;
+  }
+  
