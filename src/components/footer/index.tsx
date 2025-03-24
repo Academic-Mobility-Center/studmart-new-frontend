@@ -14,10 +14,13 @@ function Footer() {
           <div className="contact-info-section3">
             <p className="contact-title-text-style">Контакты</p>
             <div className="contact-info-container">
-              <a href="mailto:info@studmart.ru" className="email-link-style">
+              <a className="flex-row-with-text"
+                // href="mailto:info@studmart.ru" 
+                // className="email-link-style"
+              >
                 info@studmart.ru
               </a>
-              <a href="mailto:support@studmart.ru" className="email-link-style1">
+              <a className="flex-row-with-text">
                 support@studmart.ru
               </a>
               <p className="flex-row-with-text">+7 (495) 147-10-69</p>
