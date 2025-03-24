@@ -9,6 +9,12 @@ import LunchDiningSvg from "../../../public/icons/favourite-categories/LunchDini
 import SchoolSvg from "../../../public/icons/favourite-categories/SchoolSvg";
 import ExerciseSvg from "../../../public/icons/favourite-categories/ExerciseSvg";
 import HealthAndBeautySvg from "../../../public/icons/favourite-categories/HealthAndBeautySvg";
+import { useRef, WheelEvent as ReactWheelEvent, useEffect } from "react";
+
+interface MenuItem {
+  label: string;
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
 
 const ScrollContainer = styled(Box)({
   display: "flex",
@@ -39,7 +45,7 @@ const StyledButton = styled(Button)({
   padding: "0 12px"
 });
 
-const menuItems = [
+const menuItems: MenuItem[] = [
   { label: "Избранное", Icon: FavoriteSvg },
   { label: "Техника и Электроника", Icon: DevicesSvg },
   { label: "Товары", Icon: ShoppingBar },
@@ -51,14 +57,51 @@ const menuItems = [
   { label: "Спорт", Icon: ExerciseSvg },
   { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
   { label: "Спорт", Icon: ExerciseSvg },
+  { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
+  { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
+  { label: "Спорт", Icon: ExerciseSvg },
   { label: "Красота и здоровье", Icon: HealthAndBeautySvg}
 ];
 
 export default function FavoriteCategoriesSection() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleWheelScroll = (event: ReactWheelEvent) => {
+    if (scrollRef.current) {
+      event.preventDefault();
+      scrollRef.current.scrollLeft += event.deltaY;
+    }
+  };
+  useEffect(() => {
+    const disableScroll = (event: Event) => event.preventDefault();
+
+    const handleMouseEnter = () => {
+      document.addEventListener("wheel", disableScroll, { passive: false });
+    };
+
+    const handleMouseLeave = () => {
+      document.removeEventListener("wheel", disableScroll);
+    };
+
+    const scrollContainer = scrollRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener("mouseenter", handleMouseEnter);
+      scrollContainer.addEventListener("mouseleave", handleMouseLeave);
+    }
+
+    return () => {
+      document.removeEventListener("wheel", disableScroll);
+      if (scrollContainer) {
+        scrollContainer.removeEventListener("mouseenter", handleMouseEnter);
+        scrollContainer.removeEventListener("mouseleave", handleMouseLeave);
+      }
+    };
+  }, []);
+
   return (
     <div className="beauty-health-container">
       <div className="beauty-health-banner" />
-        <ScrollContainer>
+        <ScrollContainer ref={scrollRef} onWheel={handleWheelScroll}>
         {menuItems.map(({ label, Icon }, index) => (
           <StyledButton key={index}>
             <Icon className="icon" />

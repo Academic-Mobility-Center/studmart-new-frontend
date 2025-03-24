@@ -30,7 +30,7 @@ function StylishWidgetSection() {
         rows={rows} 
         renderPromoCardsRow={renderPromoCardsRow}
       />
-      <Button className="promo-button" onClick={addRow}>Посмотреть еще</Button>
+      <Button className="promo-button" onClick={addRow} disabled={rows === 7}>Посмотреть еще</Button>
     </div>
   );
 }

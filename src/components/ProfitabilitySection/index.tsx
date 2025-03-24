@@ -6,7 +6,7 @@ function ProfitabilitySection() {
     <div className="cost-section-container">
       <ProfitabilitySvg className="discount-image" />
       {/* <img src="/assets/image_96db7297.png" alt="" className="discount-image" /> */}
-      <p className="discount-offer-heading">Окупаемая стоимость</p>
+      <p className="discount-offer-heading-115">Окупаемая стоимость</p>
     </div>
   );
 }

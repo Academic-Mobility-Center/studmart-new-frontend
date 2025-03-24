@@ -5,7 +5,7 @@ function FreeOfferBlock() {
   return (
     <div className="discount-offer-container">
       <MoneySvg className="discount-image-12" />
-      <p className="discount-offer-heading">Бесплатно</p>
+      <p className="discount-offer-heading-113">Бесплатно</p>
     </div>
   );
 }

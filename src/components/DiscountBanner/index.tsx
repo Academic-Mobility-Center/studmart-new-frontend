@@ -4,7 +4,7 @@ function DiscountBanner() {
   return (
     <div className="discount-offer-container-55">
       <ProcentSvg className="discount-image-55" />
-      <p className="discount-offer-heading">Получаешь скидку 5–30%</p>
+      <p className="discount-offer-heading-111">Получаешь скидку 5–30%</p>
     </div>
   );
 }

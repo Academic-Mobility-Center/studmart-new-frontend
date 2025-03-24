@@ -11,6 +11,7 @@ function ServiceAudience() {
         <div className="feature-highlight-section">
           <StudentServicesSection />
           <div className="promo-banner">
+            {/* <img src="/icons/ServiceAudience/yellow.svg" alt="" className="image-container4" /> */}
             <YellowSvg className="image-container4" />
           </div>
         </div>

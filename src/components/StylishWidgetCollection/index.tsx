@@ -9,11 +9,10 @@ import StylishAppleMarket from "../PromoCardsContent/StylishAppleMarket";
 
 const category = ["academic", "treats", "cosmetics", "delivery", "golden-apple"]; 
 function StylishWidgetCollection({ rows, renderPromoCardsRow }: { rows: number, renderPromoCardsRow: () => React.JSX.Element }) {
-  // Генерируем массив рядов карточек
   const promoCardRows = [];
   for (let i = 0; i < rows; i++) {
     promoCardRows.push(
-      <div key={i}>{renderPromoCardsRow()}</div> // Adding a unique key for each row
+      <div key={i}>{renderPromoCardsRow()}</div>
     );
   }
 

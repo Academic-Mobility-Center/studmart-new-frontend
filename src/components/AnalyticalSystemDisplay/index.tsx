@@ -6,8 +6,7 @@ function AnalyticalSystemDisplay() {
     <div className="analytics-system-container1">
       <div className="analytics-system-container">
         <AnalyticalSvg className="discount-image" />
-        {/* <img src="/assets/image_50943b81.png" alt="" className="discount-image" /> */}
-        <p className="discount-offer-heading">Аналитическая система</p>
+        <p className="discount-offer-heading-117">Аналитическая система</p>
       </div>
     </div>
   );
