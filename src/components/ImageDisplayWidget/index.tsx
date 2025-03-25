@@ -1,5 +1,5 @@
 import HandSvg from "../../../public/icons/PartnerServicesSection/HandSvg";
-import AnalyticalSystemDisplay from "../AnalyticalSystemDisplay";
+import AnalyticalSystemDisplay from "../analytical-system-display";
 import "./style.css";
 
 function ImageDisplayWidget() {

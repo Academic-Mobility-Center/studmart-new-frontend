@@ -1,0 +1,126 @@
+.loyalty-program-info-container {
+    padding-right: 22px;
+    margin-top: 107px;
+  }
+  .loyalty-program-heading-style {
+    padding: 0;
+    margin: 0;
+    font: 800 36px/36px "Nunito Sans", sans-serif;
+    color: #032c28;
+    letter-spacing: 1.08px;
+    padding-left: 40px;
+  }
+  .loyalty-program-info-container1 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 40px;
+    padding-left: 40px;
+  }
+  .image-container-flex-row {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    margin-left: 24px;
+  }
+  .image-container {
+    width: 282px;
+    height: 368px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .image-container-with-blend-mode {
+    box-sizing: border-box;
+    display: block;
+    width: 386px;
+    max-width: initial;
+    height: 386px;
+    border: none;
+    mix-blend-mode: multiply;
+    object-fit: cover;
+    margin-top: 55px;
+    position: relative;
+    z-index: 2;
+  }
+  .loyalty-program-container {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    padding-top: 30px;
+    padding-right: 29px;
+    padding-left: 29px;
+    background: #f0e9e2;
+    border-radius: 30px;
+  }
+  .loyalty-program-description-text-style {
+    box-sizing: border-box;
+    max-width: 572px;
+    padding: 0;
+    margin: 0;
+    font: 700 16px Mulish, sans-serif;
+    color: #032c28;
+    text-align: left;
+  }
+  .loyalty-program-details-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    height: 160px;
+    margin-top: 24px;
+  }
+  .primary-button-style {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 834px;
+    height: 48px;
+    margin-top: 20px;
+    font: 700 14px Mulish, sans-serif;
+    color: #032c28;
+    text-transform: uppercase;
+    letter-spacing: 0.42px;
+    cursor: pointer;
+    background: #8fe248;
+    border: none;
+    border-radius: 15px;
+    margin-bottom: 30px;
+  }
+  .loyalty-program-details-container1 {
+    box-sizing: border-box;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 405px;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 20px;
+  }
+  .loyalty-program-description {
+    flex: 1 1 auto;
+    padding: 0;
+    margin: 0;
+    font: 700 16px Mulish, sans-serif;
+    color: #032c28;
+    text-align: left;
+  }
+  .promo-card {
+    box-sizing: border-box;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: center;
+    width: 405px;
+    padding: 20px;
+    margin-left: 24px;
+    background: #f8f8f8;
+    border-radius: 20px;
+  }

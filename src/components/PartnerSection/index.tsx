@@ -1,8 +1,10 @@
 import { Button } from "@mui/base";
-import BusinessOverviewSection from "../BusinessOverviewSection";
 import ImageDisplayWidget from "../ImageDisplayWidget";
 import SalesChannelCard from "../SalesChannelCard";
 import "./style.css";
+import ProfitabilitySvg from "../../../public/icons/PartnerServicesSection/ProfitabilitySvg";
+import AudienceSvg from "../../../public/icons/PartnerServicesSection/AudienceSvg";
+import ServiceCard from "../service-card";
 
 function PartnerSection() {
   return (
@@ -10,7 +12,10 @@ function PartnerSection() {
       <div className="partner-section1">
         <div className="partner-section">
           <p className="partner-heading">Партнерам</p>
-          <BusinessOverviewSection />
+            <div className="vertical-flex-container">
+              <ServiceCard title="Окупаемая стоимость" Icon={ProfitabilitySvg}/>
+              <ServiceCard title="Точно определяемая аудитория" Icon={AudienceSvg}/>    
+            </div>
         </div>
         <div className="marketing-panel">
           <ImageDisplayWidget />

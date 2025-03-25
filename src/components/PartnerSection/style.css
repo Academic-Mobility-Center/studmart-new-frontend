@@ -34,6 +34,7 @@
   flex: 0 0 auto;
   width: 282px;
   margin-left: 24px;
+
 }
 .partner-details-button {
   box-sizing: border-box;
@@ -50,4 +51,14 @@
   background: #f8f8f8;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 15px;
+}
+.vertical-flex-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  gap: 20px;
 }
