@@ -29,7 +29,7 @@ export default function About(){
                 </p>
               </div>
             </div>
-            <Button className="primary-button-style">Зарегистрироваться</Button>
+            <Button className="primary-button-style" >Зарегистрироваться</Button>
           </div>
           <div className="image-container-flex-row">
           <img src="/icons/About/layout.svg" alt="" className="image-container"/>

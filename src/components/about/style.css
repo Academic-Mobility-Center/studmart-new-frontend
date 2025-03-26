@@ -67,7 +67,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: center;
     justify-content: flex-start;
     height: 160px;
     margin-top: 24px;
@@ -101,6 +101,7 @@
     padding: 20px;
     background: #f8f8f8;
     border-radius: 20px;
+    height: 160px;
   }
   .loyalty-program-description {
     flex: 1 1 auto;
@@ -123,4 +124,5 @@
     margin-left: 24px;
     background: #f8f8f8;
     border-radius: 20px;
+    height: 160px;
   }
