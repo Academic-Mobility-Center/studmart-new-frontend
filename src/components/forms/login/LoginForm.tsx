@@ -2,8 +2,12 @@
 import { useState } from "react";
 import NextImage from "next/image";
 import ForgotPasswordEmail from "../forgot-password-email/ForgotPasswordEmail";
+import InputField from "@/components/fields/input/InputField";
+import PasswordField from "@/components/fields/password/PasswordField";
+import ForgotPasswordConfirm from "../forgot-password-confirm/ForgotPasswordConfirm";
 export default function LoginForm() {
     const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
+    const [isPasswordConfirmVisible, setIsPasswordConfirmVisible] = useState(false);
     const handleForgotPasswordClick = () => {
       setIsPasswordResetVisible(true);
     };
@@ -37,48 +41,14 @@ export default function LoginForm() {
             Еще нет аккаунта? <span className="underline">Зарегистрироваться</span>
           </p>
         </div>
-        {isPasswordResetVisible && <ForgotPasswordEmail onClose={() => setIsPasswordResetVisible(false)} />}
-      </div>
-    );
-  }
-  
-  function InputField({ label, placeholder }: { label: string, placeholder: string }) {
-    return (
-      <div className="flex flex-col gap-2 w-[350px]">
-        <label className="text-sm text-[#032c28]">{label}</label>
-        <input 
-          className="border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] placeholder:text-[#888888]" 
-          type="text" 
-          placeholder={placeholder}
-          
-        />
-      </div>
-    );
-  }
+        {isPasswordResetVisible && <ForgotPasswordEmail onClose={() => setIsPasswordResetVisible(false)} 
+          onClick={() => {
+            setIsPasswordResetVisible(false);
+            setIsPasswordConfirmVisible(true)
+          }}/>}
+        {isPasswordConfirmVisible && <ForgotPasswordConfirm 
+          onClose={() => setIsPasswordConfirmVisible(false)} onClick={() => console.log('123')}/>}
 
-  function PasswordField({label, placeholder}: {label: string, placeholder: string}){
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    return (
-      <div className="flex flex-col gap-2 w-[350px] relative">
-        <label className="text-sm text-[#032c28]">{label}</label>
-        <input
-          className="border border-gray-300 p-2 rounded-2xl pr-10 focus:outline-none text-[#032c28] placeholder:text-[#888888]"
-          type={isPasswordVisible ? "text" : "password"}
-          autoComplete="off"
-          placeholder={placeholder}
-        />
-        <button
-          type="button"
-          className="absolute right-3 top-[35px] focus:outline-none"
-          onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-        >
-          <NextImage
-            src={isPasswordVisible ? "/icons/auth/open-eye.svg" : "/icons/Header/account.svg"}
-            alt="Toggle Password Visibility"
-            width={24}
-            height={24}
-          />
-        </button>
       </div>
     );
   }
