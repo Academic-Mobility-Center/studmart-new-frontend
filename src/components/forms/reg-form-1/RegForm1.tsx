@@ -1,7 +1,47 @@
 import InputField from "@/components/fields/input/InputField";
 import PasswordField from "@/components/fields/password/PasswordField";
+import RegistrationFormData from "@/types/RegistrationFormData";
+import React, { ChangeEvent, useState } from "react";
 
-export default function RegForm1(){
+interface RegForm1Props{
+    onClose: () => void;
+    onClick: () => void;
+    formData: RegistrationFormData;
+    handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const RegForm1: React.FC<RegForm1Props> = ({
+    onClose,
+    onClick,
+    formData,
+    handleChange
+}) => {
+
+    const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string; email?: string }>({
+        password: '',
+        confirmPassword: '',
+        email: ""
+    });
+    
+    const validate = () => {
+        const newErrors: { email?: string; password?: string } = {};
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "Некорректный email";
+        }
+        if (formData.password.length < 6) {
+            newErrors.password = "Пароль должен содержать минимум 6 символов";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+        };    
+    
+        const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        console.log(formData)
+        if (validate()) {
+            console.log("Форма отправлена", formData);
+        }
+        };        
     return (
         <>
             <div className="flex justify-between">
@@ -23,3 +63,5 @@ export default function RegForm1(){
         </>
     )
 }
+
+export default RegForm1;
