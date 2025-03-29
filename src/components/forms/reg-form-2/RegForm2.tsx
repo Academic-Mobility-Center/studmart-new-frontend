@@ -1,29 +1,102 @@
 import { DateField } from "@/components/fields/date/DateField";
 import InputField from "@/components/fields/input/InputField";
 import { SelectField } from "@/components/fields/select/SelectField";
+import RegFormProps from "@/types/RegFormProps";
+import { useState } from "react";
+import Link from 'next/link'
 
 
-export default function RegForm2(){
+const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick}) => {
+
+    const [errors, setErrors] = useState<{ name?: string; fullname?: string }>({
+        name: "",
+        fullname: ""
+    });
+
+    const validate = () => {
+        const newErrors: {name?: string, fullname?: string} ={};
+        const nameRegex = /^[A-Za-zА-Яа-яЁё]+$/;
+        if (!nameRegex.test(formData.name)){
+            newErrors.name = "Имя должно содержать только буквы без пробелов";
+        }
+        if (!nameRegex.test(formData.fullname)){
+            newErrors.fullname = "Имя должно содержать только буквы без пробелов";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+    const handleSubmit = (event: React.FormEvent) =>{
+        if(validate()){
+            onClick(event);
+        }
+    }
     return (
-        <>
+        <div 
+            className="border bg-[#f8f8f8] 
+            flex flex-col gap-5 w-[410px] 
+            self-center p-[30px] rounded-[30px] 
+            border-solid border-[rgba(0,0,0,0.20)] mt-[25px]"
+        >
             <div className="flex justify-between">
                 <h2 className="text-2xl font-extrabold text-[#032c28]">Регистрация</h2>
                 <h2 className="text-2xl font-extrabold text-[#032c28]">2/3</h2>
             </div>
+            <div className="flex flex-col gap-1">
+                <InputField 
+                    label="Имя" 
+                    placeholder="Дмитрий" 
+                    onChange={handleChange} 
+                    name="name" 
+                    value={formData.name}
+                />
+                {errors.name && <p className="text-red-600 text-sm font-medium mt-1">{errors.name}</p>}
+            </div>
+            <div className="flex flex-col gap-1">
+                <InputField 
+                    label="Фамилия" 
+                    placeholder="Орлов" 
+                    onChange={handleChange} 
+                    name="fullname" 
+                    value={formData.fullname}
+                />
+                {errors.fullname && <p className="text-red-600 text-sm font-medium mt-1">{errors.fullname}</p>}
+            </div>
 
-            <InputField label="Имя" placeholder="Дмитрий"/>
-            <InputField label="Фамилия" placeholder="Орлов"/>
-            <DateField label="Дата рождения"/>
-            <SelectField label="Пол" options={["Мужской", "Женский"]}/>
+
+            <DateField 
+                label="Дата рождения" 
+                onChange={handleChange} 
+                name="date" 
+                value={formData?.date instanceof Date ? formData?.date?.toISOString().split("T")[0] : ""}
+                />
+            <SelectField 
+                label="Пол" 
+                options={["Мужской", "Женский"]} 
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+            />
             <div className="flex flex-col gap-4">
                 <div className="flex justify-center gap-[15px]">
-                    <button className="bg-[#EFEFEF] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[116px] w-[116px] h-[48]">Назад</button>
-                    <button className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px]">Далее</button>
+                    <button 
+                        onClick={onBack}
+                        className="bg-[#EFEFEF] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[116px] w-[116px] h-[48]"
+                    >
+                        Назад
+                    </button>
+                    <button 
+                        className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px]" 
+                        onClick={handleSubmit}
+                    >
+                        Далее
+                    </button>
                 </div>
                 <p className="text-sm font-bold text-[#032c28] text-center">
-                    Уже есть аккаунт? <span className="text-[#6dbc29] underline">Войти</span>
+                    Уже есть аккаунт? 
+                    <Link href="/auth" className="text-[#6dbc29] underline pl-2">Войти</Link>
                 </p>
-            </div>    
-        </>
+            </div>  
+        </div>  
     )
 }
+export default RegForm2;

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import NextImage from "next/image";
-
 export default function PasswordField({
   label, 
   placeholder,
@@ -36,7 +35,7 @@ export default function PasswordField({
             onClick={() => setIsPasswordVisible(!isPasswordVisible)}
           >
             <NextImage
-              src={isPasswordVisible ? "/icons/auth/open-eye.svg" : "/icons/Header/account.svg"}
+              src={isPasswordVisible ? "/icons/auth/open-eye.svg" : "/icons/auth/closed-eye.svg"}
               alt="Toggle Password Visibility"
               width={24}
               height={24}

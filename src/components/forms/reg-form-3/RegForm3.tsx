@@ -1,19 +1,61 @@
 import { FileField } from "@/components/fields/file/FileField";
 import InputField from "@/components/fields/input/InputField";
 import { SelectField } from "@/components/fields/select/SelectField";
+import RegFormProps from "@/types/RegFormProps";
+import { useState } from "react";
+import Link from 'next/link'
 
-
-export default function RegForm3(){
+const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick}) => {
+    const [errors, setErrors] = useState<{profession?: string }>({
+        profession: ""
+    });
+    const validate = () => {
+        const newErrors: {profession?: string} ={};
+        const nameRegex = /^[A-Za-zА-Яа-яЁё]+$/;
+        if (!nameRegex.test(formData.profession)){
+            newErrors.profession = "Имя должно содержать только буквы без пробелов";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+    const handleSubmit = (event: React.FormEvent) =>{
+        if(validate()){
+            onClick(event);
+        }
+    }
     return (
         <>
             <div className="flex justify-between">
                 <h2 className="text-2xl font-extrabold text-[#032c28]">Регистрация</h2>
                 <h2 className="text-2xl font-extrabold text-[#032c28]">3/3</h2>
             </div>
-            <SelectField label="Университет" options={["НГУ", "НГТУ", "МГУ"]}/>
-            <InputField label="Специальность" placeholder="Специальность"/>
-            <SelectField label="Курс" options={["Первый", "Второй", "Третий"]}/>
-            <FileField label="Документ, подтверждающий статус студента" />
+            <SelectField 
+                label="Университет" 
+                options={["НГУ", "НГТУ", "МГУ"]} 
+                name="university" 
+                value={formData.university} 
+                onChange={handleChange}
+            />
+            <InputField 
+                label="Специальность" 
+                placeholder="Специальность" 
+                name="profession" 
+                value={formData.profession} 
+                onChange={handleChange}
+            />
+            <SelectField 
+                label="Курс" 
+                options={["Первый", "Второй", "Третий"]}
+                name="course"
+                value={formData.course}
+                onChange={handleChange}
+            />
+            {/* <FileField 
+                label="Документ, подтверждающий статус студента" 
+                name="file" 
+                value={formData.file} 
+                onChange={handleChange}
+            /> */}
             
             <div className="flex flex-col gap-4">
                 <div className="flex justify-center gap-[15px]">
@@ -27,3 +69,4 @@ export default function RegForm3(){
         </>
     )
 }
+export default RegForm3;

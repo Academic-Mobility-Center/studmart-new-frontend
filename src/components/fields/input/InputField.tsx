@@ -3,7 +3,7 @@ export default function InputField({
   placeholder,
   name,
   value,
-  onChange 
+  onChange, 
 }: { 
   label: string, 
   placeholder: string ,
