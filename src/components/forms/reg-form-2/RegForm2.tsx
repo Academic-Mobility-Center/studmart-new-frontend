@@ -8,14 +8,45 @@ import Link from 'next/link'
 
 const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick}) => {
 
-    const [errors, setErrors] = useState<{ name?: string; fullname?: string }>({
+    const [errors, setErrors] = useState<{ 
+        name?: string; 
+        fullname?: string;
+        date?: string;
+        gender?: string;
+    }>({
         name: "",
-        fullname: ""
+        fullname: "",
+        date: "",
+        gender: ""
     });
 
     const validate = () => {
-        const newErrors: {name?: string, fullname?: string} ={};
+        const newErrors: {
+            name?: string, 
+            fullname?: string,
+            date?: string,
+            gender?: string
+        } ={};
+
+        const selectedDate = formData?.date ? new Date(formData?.date) : null;
         const nameRegex = /^[A-Za-zА-Яа-яЁё]+$/;
+
+        if(!formData.name){
+            newErrors.name = "Введите имя"
+        }
+        
+        if(!formData.fullname){
+            newErrors.fullname = "Введите фамилию"
+        }
+    
+        if(!!selectedDate === false){
+            newErrors.date = "Введите дату рождения"
+        }
+
+        if(!formData.gender){
+            newErrors.gender = "Выберете пол"
+        }
+
         if (!nameRegex.test(formData.name)){
             newErrors.name = "Имя должно содержать только буквы без пробелов";
         }
@@ -61,19 +92,21 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                 />
                 {errors.fullname && <p className="text-red-600 text-sm font-medium mt-1">{errors.fullname}</p>}
             </div>
-
-
-            <DateField 
-                label="Дата рождения" 
-                onChange={handleChange} 
-                name="date" 
-                value={formData?.date instanceof Date ? formData?.date?.toISOString().split("T")[0] : ""}
+            <div className="flex flex-col gap-1">
+                <DateField 
+                    label="Дата рождения" 
+                    onChange={handleChange} 
+                    name="date" 
+                    value={formData?.date instanceof Date ? formData?.date?.toISOString().split("T")[0] : ""}
                 />
+                {errors.date && <p className="text-red-600 text-sm font-medium mt-1">{errors.date}</p>}
+            </div>
+
             <SelectField 
                 label="Пол" 
                 options={["Мужской", "Женский"]} 
                 name="gender"
-                value={formData.gender}
+                value={formData.gender || ""}
                 onChange={handleChange}
             />
             <div className="flex flex-col gap-4">

@@ -83,7 +83,7 @@ export default function RegistraionForm(){
         }
     };  
 
-    const handleBackForm2 = () =>{
+    const handleBackForm2 = () => {
         setIsSecondPage(false);
         setIsFirstPage(true);
     }
@@ -103,36 +103,7 @@ export default function RegistraionForm(){
         <>
         {isFirstPage && <RegForm1 handleChange={handleChangeForm} onClick={handleSubmitForm1} formData={formData}/>} 
         {isSecondPage && <RegForm2 handleChange={handleChangeForm} formData={formData} onClick={handleSubmitForm2} onBack={handleBackForm2}/>}   
-        {isThirdPage && <RegForm3 handleChange={handleChangeForm} formData={formData} onClick={handleSubmitForm2} onBack={handleBackForm2}/>}
-        {/* {isSecondPage && <RegForm2 handleChange={}} */}
+        {isThirdPage && <RegForm3 handleChange={handleChangeForm} formData={formData} onClick={handleSubmitForm3} onBack={handleBackForm3}/>}
         </>
     )
 }
-            {/* {isFirstPage && <RegForm1 formData={formData} handleChange={handleChangeForm1} onClose={() => {}} onClick={() => {}}/>} */}
-
-    // const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    //     const { name, value, type, checked, files } = event.target;
-      
-    //     setFormData((prevData) => {
-    //       let newValue: any;
-      
-    //       switch (name) {
-    //         case "gender":
-    //           newValue = value as "man" | "woman";
-    //           break;
-    //         case "date":
-    //           newValue = value ? new Date(value) : null;
-    //           break;
-    //         case "file":
-    //           newValue = files ? files[0] : null;
-    //           break;
-    //         default:
-    //           newValue = type === "checkbox" ? checked : value;
-    //       }
-      
-    //       return {
-    //         ...prevData,
-    //         [name]: newValue,
-    //       };
-    //     });
-    //   };    

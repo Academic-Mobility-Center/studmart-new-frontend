@@ -18,6 +18,8 @@ export function DateField({
           name={name}
           onChange={onChange}
           value={value}
+          min="1960-01-01"
+          max="2009-12-31"
         />
       </div>
     );

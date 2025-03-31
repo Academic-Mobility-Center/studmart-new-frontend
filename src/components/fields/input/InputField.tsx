@@ -4,12 +4,14 @@ export default function InputField({
   name,
   value,
   onChange, 
+  autoComplete
 }: { 
   label: string, 
   placeholder: string ,
   name?: string,
   value?: string,
   onChange?:  (event: React.ChangeEvent<HTMLInputElement>) => void;
+  autoComplete?: string;
 }) {
     return (
       <div className="flex flex-col gap-2 w-[350px]">
@@ -21,7 +23,7 @@ export default function InputField({
           name={name}
           value={value}
           onChange={onChange}
-          autoComplete="off"
+          autoComplete={autoComplete}
         />
       </div>
     );

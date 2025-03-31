@@ -5,6 +5,7 @@ import InputField from "@/components/fields/input/InputField";
 import PasswordField from "@/components/fields/password/PasswordField";
 import ForgotPasswordConfirm from "../forgot-password-confirm/ForgotPasswordConfirm";
 import LoginFormData from "@/types/LoginFormData";
+import Link from "next/link";
 
 export default function LoginForm() {
     const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
@@ -80,7 +81,7 @@ export default function LoginForm() {
       <div className="flex flex-col gap-4">
         <button type="submit" className="bg-[#6dbc29] text-white p-2 rounded-2xl hover:bg-[#5b9e26]">Войти</button>
         <p className="text-sm font-bold text-[#032c28] text-center">
-          Еще нет аккаунта? <span className="underline text-[#6dbc29]">Зарегистрироваться</span>
+          Еще нет аккаунта? <Link href="/registration" className="underline text-[#6dbc29]">Зарегистрироваться</Link>
         </p>
       </div>
       {isPasswordResetVisible && 

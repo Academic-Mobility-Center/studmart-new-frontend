@@ -5,7 +5,7 @@ export default interface RegistrationFormData{
     promocode: string;
     name: string;
     fullname: string;
-    gender: "man" | "woman";
+    gender: string;
     date: Date | null;
     university: string;
     profession: string;
