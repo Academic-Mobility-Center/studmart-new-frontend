@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function NewHeader() {
   return (
@@ -8,9 +9,9 @@ export default function NewHeader() {
       </div>
 
       <nav className="w-[37.75%] px-4 flex items-center gap-10">
-        <NavItem text="Предложения" />
-        <NavItem text="О сервисе" />
-        <NavItem text="Партнерам" />
+        <NavItem text="Предложения" url={"/partners"}/>
+        <NavItem text="О сервисе" url={"/about"}/>
+        <NavItem text="Партнерам" url={"/partners"}/>
       </nav>
 
         <div className="w-[42%] flex items-center gap-[23.5px] px-4">
@@ -28,10 +29,10 @@ export default function NewHeader() {
   );
 }
 
-function NavItem({ text }: { text: string }) {
+function NavItem({ text, url }: { text: string, url: string }) {
   return (
     <div className="w-[99px] h-[18px] flex items-center">
-      <p className="text-sm font-bold text-[#032c28] m-0 p-0">{text}</p>
+      <Link href={url} className="text-sm font-bold text-[#032c28] m-0 p-0">{text}</Link>
     </div>
   );
 }
