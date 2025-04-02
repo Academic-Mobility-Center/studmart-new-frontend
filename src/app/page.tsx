@@ -1,7 +1,7 @@
-import MainPage from "./main-page/MainPage"
+import Home from "./home/page"
 
 export default function Page() {
   return (
-    <MainPage/>
+    <Home/>
   )
 }
