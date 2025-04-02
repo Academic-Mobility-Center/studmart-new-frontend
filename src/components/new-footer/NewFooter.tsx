@@ -19,7 +19,7 @@ const NewFooter = () => {
             </div>
         
             <div className="flex flex-row justify-between items-end mt-10">
-                <p className="font-mulish text-sm text-[#032c28] pt-4">
+                <p className="font-mulish text-sm text-[#032c28] pt-4 pl-4">
                     Политика конфиденциальности
                 </p>
                 <p className="font-mulish text-sm text-right text-[#032c28]">

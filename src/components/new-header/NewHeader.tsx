@@ -25,18 +25,18 @@ export default function NewHeader() {
         <NavItem text="Партнерам" url={"/partners"}/>
       </nav>
 
-        <div className="w-[42%] flex items-center gap-[23.5px] px-4">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={openModal}>
-                <Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
-                <p className="text-sm text-[#032c28]">{selectedCity || "Выберите город"}</p>
-            </div>
-            <SearchBar />
-            <div className="flex items-center gap-2">
-                <Image src="/icons/Header/account.svg" alt="" width={24} height={24} />
-                <Image src="/icons/Header/wallet.svg" alt="" width={24} height={24} />
-            </div>
-        </div>
-        <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} setSelectedCity={setSelectedCity} />
+      <div className="w-[42%] flex items-center gap-[23.5px]">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={openModal}>
+              <Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
+              <p className="text-sm text-[#032c28]">{selectedCity || "Выберите город"}</p>
+          </div>
+          <SearchBar />
+          <div className="flex items-center gap-2 pl-4">
+              <Image src="/icons/Header/account.svg" alt="" width={24} height={24} />
+              <Image src="/icons/Header/wallet.svg" alt="" width={24} height={24} />
+          </div>
+      </div>
+      <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} setSelectedCity={setSelectedCity} />
     </header>
   );
 }
@@ -60,24 +60,14 @@ function SearchBar() {
 
 function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: boolean; closeModal: () => void; setSelectedCity: (city: string) => void }) {
   const [cities, setCities] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // useEffect(() => {
-  //   fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Accept": "application/json",
-  //       "Authorization": "Token 99fc5827ba464a22c64b06aa3bda8fd9721ef5d8"
-  //     },
-  //     body: JSON.stringify({ query: "москва" })
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setCities(data.suggestions.map((s: any) => s.value));
-  //     });
-  // }, []);
+  const filteredCities = cities.filter(city =>
+    city.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  
   useEffect(() => {
-    fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
+    fetch("http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,30 +75,39 @@ function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: b
         "Authorization": "Token 99fc5827ba464a22c64b06aa3bda8fd9721ef5d8"
       },
       body: JSON.stringify({
-        query: "",
-        count: 50, // Увеличьте при необходимости
-        locations_boost: [{ country: "Россия" }],
-        from_bound: { value: "city" },
-        to_bound: { value: "city" }
+        query: "г Новосибирск",
+        count: 50,
       })
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setCities(data.suggestions.map((s: any) => s.value));
       });
   }, []);
   
-
   return (
     <Dialog open={isOpen} onClose={closeModal} className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs">
-      <div className="bg-white p-6 rounded-lg w-[900px] h-[900px] flex flex-col items-center">
+      <div className="bg-white p-6 rounded-lg w-[700px] h-[700px] flex flex-col items-center">
         <h2 className="text-lg font-bold text-black">Выберите город</h2>
-        <ul className="w-full overflow-auto">
-          {cities.map((city, index) => (
-            <li key={index} className="cursor-pointer p-2 hover:bg-gray-200 text-black" onClick={() => { setSelectedCity(city); closeModal(); }}>
-              {city}
-            </li>
-          ))}
+        <input
+          type="text"
+          placeholder="Введите название города"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border p-2 w-full rounded mt-2 text-black"
+        />
+        <ul className="w-full overflow-auto mt-4">
+          {filteredCities.length > 0 ? (
+            filteredCities.map((city, index) => (
+              <li key={index} className="cursor-pointer p-2 hover:bg-gray-200 text-black"
+                  onClick={() => { setSelectedCity(city); closeModal(); }}>
+                {city}
+              </li>
+            ))
+          ) : (
+            <p className="text-gray-500 text-center mt-2">Такого города нет</p>
+          )}
         </ul>
       </div>
     </Dialog>
