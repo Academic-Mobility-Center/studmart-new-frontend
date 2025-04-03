@@ -69,36 +69,3 @@ const PartnersPage = () => {
 }
 
 export default PartnersPage;
-
-                    {/* <div className="w-[100.00%] box-border">
-                        <InCooperation/>
-                        <WhatGivesStudmart/> 
-                        <div 
-                            className="relative grow-0 shrink-0 basis-auto pb-[41px] pl-[199px] pt-[120px]"
-                        >
-                            <img 
-                                src="/icons/partners/access-procent.svg"
-                                className="absolute z-20 pt-[190px] transform -translate-x-[114px]"
-                            />
-                            <div 
-                                className="relative z-10 bg-[#f0e9e2] box-border flex justify-center 
-                                items-stretch flex-col max-w-[802px] pl-[62px] pr-[60px] py-10 rounded-[30px]"
-                            >
-                                <p 
-                                    className="[font-family:'Nunito_Sans',sans-serif] text-5xl font-extrabold 
-                                    tracking-[1.44px] text-center leading-[48px] text-[#032c28] 
-                                    self-center grow-0 shrink-0 basis-auto m-0 p-0"
-                                >
-                                    Бесплатный тестовый доступ до 31 декабря 2025 года.
-                                </p>
-                                <Button 
-                                    className="border bg-[#f8f8f8] [font-family:Mulish,sans-serif] text-sm 
-                                    font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[588px] h-12 
-                                    cursor-pointer block box-border grow-0 shrink-0 basis-auto 
-                                    ml-[45px] mr-[47px] mt-10 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]"
-                                >
-                                    Оставить заявку
-                                </Button>
-                            </div>
-                        </div>
-                    </div> */}

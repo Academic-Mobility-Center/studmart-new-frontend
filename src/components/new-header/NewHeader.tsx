@@ -19,16 +19,18 @@ export default function NewHeader() {
         </Link>
       </div>
 
-      <nav className="w-[37.75%] px-4 flex items-center gap-10">
-        <NavItem text="Предложения" url={"/partners"}/>
+      <nav className="w-[37.75%] flex items-center gap-10">
+        <NavItem text="Предложения" url={"/offer-page"}/>
         <NavItem text="О сервисе" url={"/about"}/>
         <NavItem text="Партнерам" url={"/partners"}/>
       </nav>
 
-      <div className="w-[42%] flex items-center gap-[23.5px]">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={openModal}>
+      <div className="w-[38%] flex items-center gap-[24px] ">
+          <div className="flex items-center gap-2 cursor-pointer " onClick={openModal}>
               <Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
-              <p className="text-sm text-[#032c28]">{selectedCity || "Выберите город"}</p>
+              <p className="text-sm text-[#032c28] max-w-[110px]">
+                {selectedCity || "Выберите город"}
+              </p>
           </div>
           <SearchBar />
           <div className="flex items-center gap-2 pl-4">
