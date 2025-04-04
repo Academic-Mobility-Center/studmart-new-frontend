@@ -1,4 +1,5 @@
 import { Button } from "@mui/base"
+import { Typography } from "@mui/material";
 
 interface Props{
     title: string;
@@ -24,48 +25,45 @@ const DiscountBox = ({
                 shrink-0 basis-auto overflow-hidden 
                 rounded-[30px] border-solid border-[rgba(0,0,0,0.20)]"
             >
-                <div 
-                    className="w-[100.00%] box-border"
-                >
+                <div className="w-full box-border">
                     <div 
-                        className="bg-[#f0e9e2] box-border w-[100.00%] 
-                        max-w-[588px] pb-[30px] pl-[30px] rounded-[30px] "
+                        className="relative bg-[#f0e9e2] box-border w-full 
+                        max-w-[588px] pb-[30px] pl-[30px] rounded-[30px] overflow-hidden"
                     >
+                        <img 
+                            src="/icons/offer/lines.svg" 
+                            className="absolute top-0 right-0 h-[98px] w-[191px] object-cover z-0 pointer-events-none"
+                            alt="Background Decoration"
+                        />
+
                         <div 
-                            className="flex justify-start 
-                            items-stretch flex-row w-[100.00%] 
-                            h-[109px] box-border"
+                            className="flex justify-start items-stretch 
+                            flex-row w-full h-[109px] box-border relative z-10"
                         >
                             <div 
-                                className="flex justify-end 
-                                items-stretch flex-col grow-0 
-                                shrink basis-auto relative z-20"
+                                className="flex justify-end items-stretch 
+                                flex-col grow-0 shrink basis-auto"
                             >
                                 <p className="[font-family:'Nunito_Sans',sans-serif] 
                                     text-[24px] font-extrabold text-[#032c28] 
-                                    grow-0 shrink-0 basis-auto m-0 p-0"
+                                    m-0 p-0 tracking-wider proportional-nums 
+                                    whitespace-nowrap overflow-hidden text-ellipsis w-full"
                                 >
                                     {title}
                                 </p>
                                 <p 
                                     className="[font-family:Mulish,sans-serif] 
                                     text-sm font-normal text-left text-[#032c28] 
-                                    grow-0 shrink-0 basis-auto mt-2.5 m-0 p-0"
+                                    mt-2.5 m-0 p-0"
                                 >
                                     {description}
                                 </p>
                             </div>
-                            <img 
-                                src="/icons/offer/lines.svg" 
-                                className="h-[98px] max-w-[initial] 
-                                object-cover w-[191px] box-border 
-                                block ml-[-52px] border-[none] relative z-1" 
-                            />
                         </div>
+
                         <div 
-                            className="flex justify-start 
-                            items-stretch flex-row h-12
-                            box-border mt-10"
+                            className="flex justify-start items-stretch 
+                            flex-row h-12 box-border mt-10 relative z-10"
                         >
                             <Button 
                                 className="border bg-[#f8f8f8] 
@@ -77,7 +75,7 @@ const DiscountBox = ({
                                 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]"
                                 onClick={onClick}
                             >
-                            Получить скидку
+                                Получить скидку
                             </Button>
                             <div 
                                 className="border bg-[#f8f8f8] 
@@ -98,7 +96,7 @@ const DiscountBox = ({
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
     )
 }
 

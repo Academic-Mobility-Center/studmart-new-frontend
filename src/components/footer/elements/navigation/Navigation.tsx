@@ -11,6 +11,8 @@ const Navigation = () => {
             <LinkedMenuItem link="/home" name="Главная страница"/>
             <LinkedMenuItem link="/about" name="О сервисе"/>
             <LinkedMenuItem link="/home" name="Партнерам"/>
+            // Вход, если не залогинен
+            // Выход, если залогинен
             <LinkedMenuItem link="/auth" name="Вход"/>
         </div>
     </div>

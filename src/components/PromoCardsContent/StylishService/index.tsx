@@ -7,8 +7,11 @@ function StylishService() {
   return (
     <div className="delivery-service-card">
       <StylishWrapper category="delivery"/>
-      <PromoCardsDescriprion heading="Самокат" 
-      discount="10" description="Сервис доставки"/>
+      <PromoCardsDescriprion 
+        heading="Самокат" 
+        discount="10" 
+        description="Сервис доставки"
+      />
     </div>
   );
 }

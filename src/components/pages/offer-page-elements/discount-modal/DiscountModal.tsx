@@ -21,7 +21,7 @@ export const DiscountModal: React.FC<Props> = ({isOpen, closeModal}) => {
             <div className="backdrop-blur-[5px] bg-[rgba(0,0,0,0.10)] fixed inset-0" onClick={closeModal}></div>
             <div className="relative bg-[#f0e9e2] border border-[rgba(0,0,0,0.20)] rounded-[30px] pt-[30px] px-[29px] w-[588px] shadow-lg">
                 <div className="w-full">
-                    <p className="text-2xl font-extrabold text-[#032c28]">-15% на покупку от 700 руб.</p>
+                    <p className="text-[24px] font-extrabold text-[#032c28] m-0 p-0 tracking-widest">-15% на покупку от 700 руб.</p>
                     <p className="text-sm text-[#032c28] mt-2.5 max-w-[370px]">
                         Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!
                     </p>

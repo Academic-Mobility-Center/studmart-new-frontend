@@ -49,7 +49,7 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
             onClick(event);
         }
     }
-
+    
     return (
         <div className="border bg-[#f8f8f8] 
         flex flex-col gap-5 w-[410px] 

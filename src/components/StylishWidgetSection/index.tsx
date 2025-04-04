@@ -1,19 +1,54 @@
 "use client";
 import { Button } from "@mui/base";
-import StylishWidgetCollection from "../StylishWidgetCollection";
 import "./style.css";
-import StylishService from "../PromoCardsContent/StylishService";
-import FashionHub from "../PromoCardsContent/FashionHub";
-import SweetTreatsPage from "../PromoCardsContent/SweetTreatsPage";
-import StylishAppleMarket from "../PromoCardsContent/StylishAppleMarket";
 import React, { useState } from 'react';
+import { PromoCard } from "../promo-card/PromoCard";
+
+function StylishWidgetCollection({ rows, renderPromoCardsRow }: { rows: number, renderPromoCardsRow: () => React.JSX.Element }) {
+  const promoCardRows = [];
+  for (let i = 0; i < rows; i++) {
+    promoCardRows.push(
+      <div key={i}>{renderPromoCardsRow()}</div>
+    );
+  }
+  return (
+    <>
+      <div className="hierarchical-text-container">
+        <div className="hierarchical-content-container">
+          {promoCardRows}
+        </div>
+      </div>
+    </>
+
+  );
+}
 
 const renderPromoCardsRow = () => (
   <div className="promo-card-container">
-    <StylishService />
-    <SweetTreatsPage />
-    <StylishAppleMarket />
-    <FashionHub />
+    <PromoCard
+      heading="Самокат"
+      discount="10"
+      description="Сервис доставки"
+      imageUrl="/icons/home/delivery.svg"
+    />
+    <PromoCard
+      heading="Шоколадница"
+      discount="15"
+      description="Сеть кофеен"
+      imageUrl="/icons/home/chocolate.svg"
+    />
+    <PromoCard
+      heading="Золотое яблоко"
+      discount="10"
+      description="Магазин косметики"
+      imageUrl="/icons/home/golden-apple.svg"
+    />
+    <PromoCard
+      heading="Рив Гош"
+      discount="5"
+      description="Магазин косметики"
+      imageUrl="/icons/home/cosmetic.svg"
+    />
   </div>
 );
 

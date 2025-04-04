@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Dialog } from "@headlessui/react";
@@ -69,16 +70,15 @@ function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: b
   );
   
   useEffect(() => {
-    fetch("http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
+    fetch("http://to-your-api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": "Token 99fc5827ba464a22c64b06aa3bda8fd9721ef5d8"
+        "Authorization": "Token Some-Token-bla-bla-bla"
       },
       body: JSON.stringify({
-        query: "г Новосибирск",
-        count: 50,
+        // какие нибудь параметры
       })
     })
       .then((response) => response.json())
@@ -94,7 +94,7 @@ function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: b
         <h2 className="text-lg font-bold text-black">Выберите город</h2>
         <input
           type="text"
-          placeholder="Введите название города"
+          placeholder="Введите название региона"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="border p-2 w-full rounded mt-2 text-black"
@@ -108,7 +108,7 @@ function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: b
               </li>
             ))
           ) : (
-            <p className="text-gray-500 text-center mt-2">Такого города нет</p>
+            <p className="text-gray-500 text-center mt-2">Такого региона нет</p>
           )}
         </ul>
       </div>

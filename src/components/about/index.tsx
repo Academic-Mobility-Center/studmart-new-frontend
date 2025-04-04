@@ -2,6 +2,7 @@ import { Button } from "@mui/base"
 import "./style.css"
 const aboutStudmart = "Про Студмарт"
 const studmartDescription = "«Студмарт» — это система лояльности. Студентам она предоставляет скидки, а бизнесу — возможность расширить аудиторию."
+
 export default function About(){
     return(
       <div className="loyalty-program-info-container">

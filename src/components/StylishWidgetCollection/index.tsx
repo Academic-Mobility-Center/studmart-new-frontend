@@ -1,11 +1,4 @@
-
-
-import StylishService from "../PromoCardsContent/StylishService";
-import FashionHub from "../PromoCardsContent/FashionHub";
-import SweetTreatsPage from "../PromoCardsContent/SweetTreatsPage";
-import CreativeHub from "../PromoCardsContent/CreativeHub";
 import "./style.css";
-import StylishAppleMarket from "../PromoCardsContent/StylishAppleMarket";
 
 const category = ["academic", "treats", "cosmetics", "delivery", "golden-apple"]; 
 function StylishWidgetCollection({ rows, renderPromoCardsRow }: { rows: number, renderPromoCardsRow: () => React.JSX.Element }) {
@@ -17,11 +10,14 @@ function StylishWidgetCollection({ rows, renderPromoCardsRow }: { rows: number, 
   }
 
   return (
-    <div className="hierarchical-text-container">
-      <div className="hierarchical-content-container">
-        {promoCardRows}
+    <>
+      <div className="hierarchical-text-container">
+        <div className="hierarchical-content-container">
+          {promoCardRows}
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }
 

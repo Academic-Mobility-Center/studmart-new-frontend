@@ -101,9 +101,9 @@ export default function RegistraionForm(){
 
     return(
         <>
-        {isFirstPage && <RegForm1 handleChange={handleChangeForm} onClick={handleSubmitForm1} formData={formData}/>} 
-        {isSecondPage && <RegForm2 handleChange={handleChangeForm} formData={formData} onClick={handleSubmitForm2} onBack={handleBackForm2}/>}   
-        {isThirdPage && <RegForm3 handleChange={handleChangeForm} formData={formData} onClick={handleSubmitForm3} onBack={handleBackForm3}/>}
+            {isFirstPage && <RegForm1 handleChange={handleChangeForm} onClick={handleSubmitForm1} formData={formData}/>} 
+            {isSecondPage && <RegForm2 handleChange={handleChangeForm} formData={formData} onClick={handleSubmitForm2} onBack={handleBackForm2}/>}   
+            {isThirdPage && <RegForm3 handleChange={handleChangeForm} formData={formData} onClick={handleSubmitForm3} onBack={handleBackForm3}/>}
         </>
     )
 }

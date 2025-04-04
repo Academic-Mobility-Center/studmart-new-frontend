@@ -11,9 +11,15 @@ import ExerciseSvg from "../../../public/icons/favourite-categories/ExerciseSvg"
 import HealthAndBeautySvg from "../../../public/icons/favourite-categories/HealthAndBeautySvg";
 import { useRef, WheelEvent as ReactWheelEvent, useEffect } from "react";
 
+interface FavoriteCategoriesSectionProps {
+  selectedCategoryId: number | null;
+  onSelectCategory: (id: number | null) => void;
+}
+
 interface MenuItem {
   label: string;
   Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  id?: number;
 }
 
 const ScrollContainer = styled(Box)({
@@ -46,26 +52,17 @@ const StyledButton = styled(Button)({
 });
 
 const menuItems: MenuItem[] = [
-  { label: "Избранное", Icon: FavoriteSvg },
-  { label: "Техника и Электроника", Icon: DevicesSvg },
-  { label: "Товары", Icon: ShoppingBar },
-  { label: "Рестораны и доставка", Icon: LunchDiningSvg },
-  { label: "Обучение", Icon: SchoolSvg },
-  { label: "Спорт", Icon: ExerciseSvg },
-  { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
-  { label: "Обучение", Icon: SchoolSvg },
-  { label: "Спорт", Icon: ExerciseSvg },
-  { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
-  { label: "Спорт", Icon: ExerciseSvg },
-  { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
-  { label: "Красота и здоровье", Icon: HealthAndBeautySvg},
-  { label: "Спорт", Icon: ExerciseSvg },
-  { label: "Красота и здоровье", Icon: HealthAndBeautySvg}
+  { label: "Избранное", Icon: FavoriteSvg, id: 0 },
+  { label: "Техника и Электроника", Icon: DevicesSvg, id: 1 },
+  { label: "Товары", Icon: ShoppingBar, id: 2 },
+  { label: "Рестораны и доставка", Icon: LunchDiningSvg, id: 3 },
+  { label: "Обучение", Icon: SchoolSvg, id: 4 },
+  { label: "Спорт", Icon: ExerciseSvg, id: 5 },
 ];
 
 export default function FavoriteCategoriesSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  
   const handleWheelScroll = (event: ReactWheelEvent) => {
     if (scrollRef.current) {
       event.preventDefault();
