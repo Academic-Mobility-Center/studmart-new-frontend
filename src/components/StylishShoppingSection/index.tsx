@@ -12,11 +12,10 @@ function StylishShoppingSection() {
 
   return (
     <div className="beauty-health-container2">
-      <FavoriteCategoriesSection />
-      {/* <FavoriteCategoriesSection 
+      <FavoriteCategoriesSection 
         selectedCategoryId={selectedCategoryId}
         onSelectCategory={setSelectedCategoryId}
-      /> */}
+      />
       <div className="promo-card-container2">
         <div className="flex-column-centered">
           <div className="flex-column-container bg-svg-1">
@@ -49,7 +48,9 @@ function StylishShoppingSection() {
           />
         </div>
       </div>
-      <StylishWidgetSection/>
+      <StylishWidgetSection 
+        selectedCategoryId={selectedCategoryId}
+      />
     </div>
   );
 }

@@ -1,10 +1,13 @@
 import React from 'react';
 import PromoCardsDescriprion from '../promo-card-description';
+import { useRouter } from 'next/navigation';
 type PromoCardProps = {
+  id: number;
   imageUrl: string;
   heading: string;
   description: string;
   discount: string;
+  categoryId: number;
 };
 
 export const PromoCard: React.FC<PromoCardProps> = ({
@@ -12,9 +15,22 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   heading,
   description,
   discount,
+  categoryId,
+  id,
 }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.prefetch(`/partner-offer/${id}`);
+    router.push(`/partner-offer/${id}`);
+  };
   return (
-    <div className="flex-none w-[282px] h-[203px] rounded-[20px] border border-black/20 overflow-hidden box-border">
+    <div
+      className="flex-none w-[282px] h-[203px] 
+      rounded-[20px] border border-black/20 
+      overflow-hidden box-border transition-transform duration-200 hover:scale-[1.02] cursor-pointer"
+      onClick={handleClick}
+    >
       <StylishWrapper imageUrl={imageUrl} />
       <PromoCardsDescriprion 
         heading={heading} 

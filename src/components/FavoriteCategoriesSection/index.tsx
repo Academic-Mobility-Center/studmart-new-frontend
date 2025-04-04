@@ -58,9 +58,15 @@ const menuItems: MenuItem[] = [
   { label: "Рестораны и доставка", Icon: LunchDiningSvg, id: 3 },
   { label: "Обучение", Icon: SchoolSvg, id: 4 },
   { label: "Спорт", Icon: ExerciseSvg, id: 5 },
+  { label: "Рестораны и доставка", Icon: LunchDiningSvg, id: 6 },
+  { label: "Обучение", Icon: SchoolSvg, id: 7 },
+  { label: "Спорт", Icon: ExerciseSvg, id: 8 },
 ];
 
-export default function FavoriteCategoriesSection() {
+export default function FavoriteCategoriesSection({
+  selectedCategoryId,
+  onSelectCategory
+}: FavoriteCategoriesSectionProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   
   const handleWheelScroll = (event: ReactWheelEvent) => {
@@ -97,10 +103,16 @@ export default function FavoriteCategoriesSection() {
 
   return (
     <div className="beauty-health-container">
-      <div className="beauty-health-banner" />
-        <ScrollContainer ref={scrollRef} onWheel={handleWheelScroll}>
-        {menuItems.map(({ label, Icon }, index) => (
-          <StyledButton key={index}>
+      <ScrollContainer ref={scrollRef} onWheel={handleWheelScroll}>
+        {menuItems.map(({ label, Icon, id }) => (
+          <StyledButton 
+            key={id}
+            onClick={() => onSelectCategory(id === selectedCategoryId ? null : id || null)}
+            style={{ 
+              background: id === selectedCategoryId ? '#e0f7fa' : '#f8f8f8',
+              borderColor: id === selectedCategoryId ? '#4dd0e1' : 'rgba(0, 0, 0, 0.2)'
+            }}
+          >
             <Icon className="icon" />
             {label}
           </StyledButton>

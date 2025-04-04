@@ -2,6 +2,8 @@ import { Input } from "@mui/base"
 import LinkedMenuItem from "../linked-menu-tem/MenuItem";
 
 const Navigation = () => {
+        // Вход, если не залогинен
+    // Выход, если залогинен
     return (
         <div className="box-border flex justify-start items-start flex-col gap-5 w-[140px] grow-0 shrink-0 basis-auto ml-[166px]">
         <p className="[font-family:Mulish,sans-serif] text-base font-bold text-left text-[#032c28] self-stretch grow-0 shrink-0 basis-auto m-0 p-0">
@@ -11,8 +13,7 @@ const Navigation = () => {
             <LinkedMenuItem link="/home" name="Главная страница"/>
             <LinkedMenuItem link="/about" name="О сервисе"/>
             <LinkedMenuItem link="/home" name="Партнерам"/>
-            // Вход, если не залогинен
-            // Выход, если залогинен
+
             <LinkedMenuItem link="/auth" name="Вход"/>
         </div>
     </div>
