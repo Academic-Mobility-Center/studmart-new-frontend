@@ -2,11 +2,15 @@ import { Button } from "@mui/base";
 import LinesSvg from "../../../public/icons/ContentLayoutWidget/LinesSvg";
 import SmileSvg from "../../../public/icons/ContentLayoutWidget/SmileSvg";
 import "./style.css";
+import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 interface Props {
   isAuthenticated: boolean;
 }
 
 function ImageGalleryWidget({isAuthenticated}: Props) {
+  const { isAuthenticated: authStatus } = useAuth();
+
   return (
     <div className="student-discount-section">
       <div className="student-discount-offer-container">
@@ -16,7 +20,21 @@ function ImageGalleryWidget({isAuthenticated}: Props) {
             <br />
             ведь ты студент!
           </p>
-          <Button className="exclusive-discount-button">Получить доступ</Button>
+          {/* <div className="button-container" style={{ height: authStatus ? '0' : 'auto' }}>
+            {!authStatus && (
+              <Link href="/registration" passHref>
+                <Button 
+                  className="exclusive-discount-button"
+                  style={{ visibility: authStatus ? 'hidden' : 'visible' }}
+                >
+                  Получить доступ
+                </Button>
+              </Link>
+            )}
+          </div> */}
+          <Link href={!isAuthenticated ? "#" : "registration"}>
+            <Button className="exclusive-discount-button">Получить доступ</Button>
+          </Link>
         </div>
       </div>
       <div className="partner-discount-section">

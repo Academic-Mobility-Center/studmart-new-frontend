@@ -5,6 +5,7 @@
   align-items: stretch;
   justify-content: flex-start;
   position: relative;
+  min-height: 300px;
 }
 .partner-discount-section {
   flex: 0 0 auto;
@@ -58,6 +59,7 @@
   background: #fee200;
   border-radius: 30px;
   margin-top: 30px;
+  min-height: 312px;
 }
 .exclusive-discount-message {
   box-sizing: border-box;
@@ -89,5 +91,21 @@
   background: #f8f8f8;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 15px;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.button-container {
+  transition: height 0.3s ease;
+  overflow: hidden;
+  margin-top: auto; /* Прижимаем кнопку к низу */
+  flex-shrink: 0; /* Запрещаем сжатие */
 }
 
+
+.exclusive-discount-button.hidden {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}

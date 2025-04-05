@@ -25,6 +25,7 @@ function StylishShoppingSection() {
             heading="Золотое Яблоко"
             description="Магазин косметики"
             discount="10"
+            id={1}
           />
         </div>
         <div className="flex-column-centered">
@@ -35,6 +36,7 @@ function StylishShoppingSection() {
             heading="Шоколадница" 
             description="Сеть кофеен" 
             discount="15"
+            id={2}
           />
         </div>
         <div className="flex-column-centered">
@@ -45,6 +47,7 @@ function StylishShoppingSection() {
             heading="Рив Гош"
             description="Магазин косметики"
             discount="5"
+            id={3}
           />
         </div>
       </div>

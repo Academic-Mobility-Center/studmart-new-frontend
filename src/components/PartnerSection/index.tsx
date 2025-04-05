@@ -5,6 +5,7 @@ import "./style.css";
 import ProfitabilitySvg from "../../../public/icons/PartnerServicesSection/ProfitabilitySvg";
 import AudienceSvg from "../../../public/icons/PartnerServicesSection/AudienceSvg";
 import ServiceCard from "../service-card";
+import Link from "next/link";
 
 function PartnerSection() {
   return (
@@ -22,8 +23,11 @@ function PartnerSection() {
           <SalesChannelCard />
         </div>
       </div>
-      <Button className="partner-details-button">Подробнее</Button>
+      <Link href="partners">
+        <Button className="partner-details-button">Подробнее</Button>
+      </Link>
     </div>
+
   );
 }
 

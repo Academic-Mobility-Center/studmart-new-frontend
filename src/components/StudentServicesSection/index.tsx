@@ -5,6 +5,7 @@ import ReferalSvg from "../../../public/icons/StudentServicesSection/ReferalSvg"
 import ProcentSvg from "../../../public/icons/StudentServicesSection/ProcentSvg";
 import MoneySvg from "../../../public/icons/StudentServicesSection/MoneySvg";
 import ForeignStudentSvg from "../../../public/icons/PartnerServicesSection/ForeignStudentSvg";
+import Link from "next/link";
 function StudentServicesSection() {
   return (
     <div >
@@ -18,7 +19,9 @@ function StudentServicesSection() {
           <ServiceCard title={"Бесплатно"} Icon={MoneySvg}/>
           <ServiceCard title={"Доступ для иностранных студентов"} Icon={ForeignStudentSvg}/>
         </div>
-        <Button className="promo-button-style">Подробнее</Button>
+        <Link href="about">
+          <Button className="promo-button-style">Подробнее</Button>
+        </Link>
       </div>
     </div>
   );

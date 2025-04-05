@@ -47,4 +47,19 @@
     border: none;
     border-radius: 20px;
   }
-  
+  /* Стили для ссылки-обертки */
+.big-category-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Hover-эффект для всей карточки */
+.hover-card {
+  transition: transform 200ms ease;
+}
+
+.hover-card:hover {
+  transform: scale(1.02);
+}

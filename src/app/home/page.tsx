@@ -23,7 +23,7 @@ export default function Home() {
                         <ImageGalleryWidget isAuthenticated={isAuthenticated}/>
                         <StylishShoppingSection />
                     </div>                    
-                    {isAuthenticated && (
+                    {!isAuthenticated && (
                       <>
                         <ServiceAudience isAuthenticated={isAuthenticated}/>
                         <About isAuthenticated={isAuthenticated}/>
