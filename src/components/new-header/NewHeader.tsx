@@ -3,8 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Dialog } from "@headlessui/react";
 import { useState, useEffect } from "react";
+interface NewHeaderProps {
+  isAuthenticated: boolean;
+}
 
-export default function NewHeader() {
+export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
@@ -15,52 +18,83 @@ export default function NewHeader() {
   return (
     <header className="w-7xl bg-[#8fe248] flex items-center justify-start h-20 px-10 rounded-b-[30px]">
       <div className="w-[24.25%]">
-        <Link href="/personal-account">
+        <Link href={isAuthenticated ? "/home" : "#"} className={!isAuthenticated ? "pointer-events-none" : ""}>
           <Image src="/icons/Header/logo.svg" alt="" width={141} height={30} />
         </Link>
       </div>
 
       <nav className="w-[37.75%] flex items-center gap-10">
-        <NavItem text="Предложения" url={"/offer-page"}/>
-        <NavItem text="О сервисе" url={"/about"}/>
-        <NavItem text="Партнерам" url={"/partners"}/>
+        <NavItem text="Предложения" url={"/home"} isAuthenticated={isAuthenticated} />
+        <NavItem text="О сервисе" url={"/about"} isAuthenticated={isAuthenticated} />
+        <NavItem text="Партнерам" url={"/partners"} isAuthenticated={isAuthenticated} />
       </nav>
 
-      <div className="w-[38%] flex items-center gap-[24px] ">
-          <div className="flex items-center gap-2 cursor-pointer " onClick={openModal}>
-              <Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
-              <p className="text-sm text-[#032c28] max-w-[110px]">
-                {selectedCity || "Выберите город"}
-              </p>
-          </div>
-          <SearchBar />
-          <div className="flex items-center gap-2 pl-4">
-              <Image src="/icons/Header/account.svg" alt="" width={24} height={24} />
-              <Image src="/icons/Header/wallet.svg" alt="" width={24} height={24} />
-          </div>
+      <div className="w-[38%] flex items-center gap-[24px]">
+        <div 
+          className={`flex items-center gap-2 ${isAuthenticated ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`} 
+          onClick={isAuthenticated ? openModal : undefined}
+        >
+          <Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
+          <p className="text-sm text-[#032c28] max-w-[110px]">
+            {selectedCity || "Выберите город"}
+          </p>
+        </div>
+        <SearchBar isAuthenticated={isAuthenticated} />
+        <div className="flex items-center gap-2 pl-4">
+          <Image 
+            src="/icons/Header/account.svg" 
+            alt="" 
+            width={24} 
+            height={24} 
+            className={!isAuthenticated ? "opacity-50" : ""}
+          />
+          <Image 
+            src="/icons/Header/wallet.svg" 
+            alt="" 
+            width={24} 
+            height={24} 
+            className={!isAuthenticated ? "opacity-50" : ""}
+          />
+        </div>
       </div>
-      <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} setSelectedCity={setSelectedCity} />
+      {isAuthenticated && (
+        <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} setSelectedCity={setSelectedCity} />
+      )}
     </header>
   );
 }
 
-function NavItem({ text, url }: { text: string, url: string }) {
+interface NavItemProps {
+  text: string;
+  url: string;
+  isAuthenticated: boolean;
+}
+
+function NavItem({ text, url, isAuthenticated }: NavItemProps) {
   return (
     <div className="w-[99px] h-[18px] flex items-center">
-      <Link href={url} className="text-sm font-bold text-[#032c28] m-0 p-0">{text}</Link>
+      <Link 
+        href={isAuthenticated ? url : "#"} 
+        className={`text-sm font-bold text-[#032c28] m-0 p-0 ${!isAuthenticated ? "pointer-events-none opacity-50" : ""}`}
+      >
+        {text}
+      </Link>
     </div>
   );
 }
 
-function SearchBar() {
+interface SearchBarProps {
+  isAuthenticated: boolean;
+}
+
+function SearchBar({ isAuthenticated }: SearchBarProps) {
   return (
-    <div className="w-[201px] flex flex-col gap-1">
+    <div className={`w-[201px] flex flex-col gap-1 ${!isAuthenticated ? "opacity-50" : ""}`}>
       <p className="text-sm text-[#032c28]">Поиск</p>
       <div className="border-t border-[#032c28]"></div>
     </div>
   );
 }
-
 function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: boolean; closeModal: () => void; setSelectedCity: (city: string) => void }) {
   const [cities, setCities] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");

@@ -4,9 +4,15 @@ import AboutTheSystem from "../about-page-elements/about-the-system/AboutTheSyst
 import NeedStudmart from "../about-page-elements/need-studmart/NeedStudmart";
 import Faq from "../about-page-elements/faq/Faq";
 import NewFooter from "@/components/new-footer/NewFooter";
+import { useAuth } from "@/context/AuthContext";
 
 
 const AboutPage = () => {
+    const { isAuthenticated, isLoading } = useAuth();
+
+    if (isLoading) {
+      return <div>Загрузка...</div>;
+    }    
     return(
         <>
             <div 
@@ -15,7 +21,7 @@ const AboutPage = () => {
                 items-center flex-col min-w-[1600px] 
                 border-solid border-[rgba(0,0,0,0.20)]"
             >
-                <NewHeader />
+                <NewHeader isAuthenticated={isAuthenticated}/>
                 <div 
                     className="flex flex-col 
                     items-center 
@@ -34,7 +40,7 @@ const AboutPage = () => {
                     </div>  
                 </div>
                 <div className="max-w-7xl w-full">
-                    <NewFooter/>
+                    <NewFooter isAuthenticated={isAuthenticated}/>
                 </div>
             </div>
             

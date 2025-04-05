@@ -5,8 +5,14 @@ import Faq from "@/components/partners-page-items/faq/Faq";
 import WhatGivesStudmart from "@/components/partners-page-items/what-gives-studmart/WhatGivesStudmart";
 import InCooperation from "@/components/partners-page-items/in-cooperation/InCooperation";
 import { Button } from "@mui/base";
+import { useAuth } from "@/context/AuthContext";
 
 const PartnersPage = () => {
+    const { isAuthenticated, isLoading } = useAuth();
+
+    if (isLoading) {
+      return <div>Загрузка...</div>;
+    }    
     return (
         <>
         <div 
@@ -15,7 +21,7 @@ const PartnersPage = () => {
             items-center flex-col min-w-[1600px] 
             border-solid border-[rgba(0,0,0,0.20)]"
         >
-            <NewHeader />
+            <NewHeader isAuthenticated={isAuthenticated}/>
             <div 
                 className="flex flex-col 
                 items-center 
@@ -61,7 +67,7 @@ const PartnersPage = () => {
                 </div>  
             </div>
             <div className="max-w-7xl w-full">
-                <NewFooter/>
+                <NewFooter isAuthenticated={isAuthenticated}/>
             </div>
         </div>
         </>

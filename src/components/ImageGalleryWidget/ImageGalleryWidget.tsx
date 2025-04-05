@@ -2,8 +2,11 @@ import { Button } from "@mui/base";
 import LinesSvg from "../../../public/icons/ContentLayoutWidget/LinesSvg";
 import SmileSvg from "../../../public/icons/ContentLayoutWidget/SmileSvg";
 import "./style.css";
+interface Props {
+  isAuthenticated: boolean;
+}
 
-function ImageGalleryWidget() {
+function ImageGalleryWidget({isAuthenticated}: Props) {
   return (
     <div className="student-discount-section">
       <div className="student-discount-offer-container">

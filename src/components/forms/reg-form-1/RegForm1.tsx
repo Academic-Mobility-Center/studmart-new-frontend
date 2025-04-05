@@ -106,7 +106,7 @@ const RegForm1: React.FC<RegFormProps> = ({
                 >Далее</button>
                 <p className="text-sm font-bold text-[#032c28] text-center">
                     Уже есть аккаунт? 
-                    <Link href="/auth" className="text-[#6dbc29] underline pl-2">Войти</Link>
+                    <Link href="/login" className="text-[#6dbc29] underline pl-2">Войти</Link>
                 </p>
             </div>              
         </form>    

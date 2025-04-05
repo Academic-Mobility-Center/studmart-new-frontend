@@ -5,7 +5,7 @@ import "./style.css";
 function DynamicDisplayWidget() {
   return (
     <div className="exclusive-discounts-section">
-      <ImageGalleryWidget />
+      <ImageGalleryWidget isAuthenticated/>
       <StylishShoppingSection />
     </div>
   );

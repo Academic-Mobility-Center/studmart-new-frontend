@@ -1,8 +1,13 @@
 import { Input } from "@mui/base"
 import LinkedMenuItem from "../linked-menu-tem/MenuItem";
 
-const Navigation = () => {
-        // Вход, если не залогинен
+interface NavigationProps {
+    isAuthenticated: boolean;
+    logout: () => void;
+  }
+
+  const Navigation = ({ isAuthenticated, logout }: NavigationProps) => {
+    // Вход, если не залогинен
     // Выход, если залогинен
     return (
         <div className="box-border flex justify-start items-start flex-col gap-5 w-[140px] grow-0 shrink-0 basis-auto ml-[166px]">
@@ -14,7 +19,16 @@ const Navigation = () => {
             <LinkedMenuItem link="/about" name="О сервисе"/>
             <LinkedMenuItem link="/home" name="Партнерам"/>
 
-            <LinkedMenuItem link="/auth" name="Вход"/>
+            {isAuthenticated ? (
+          <button 
+            onClick={logout}
+            className="[font-family:Mulish,sans-serif] text-sm font-bold text-left text-[#032c28] self-stretch grow-0 shrink-0 basis-auto m-0 p-0 cursor-pointer hover:underline"
+          >
+            Выход
+          </button>
+        ) : (
+          <LinkedMenuItem link="/login" name="Вход"/>
+        )}
         </div>
     </div>
     )

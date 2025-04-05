@@ -6,10 +6,15 @@ import PasswordField from "@/components/fields/password/PasswordField";
 import ForgotPasswordConfirm from "../forgot-password-confirm/ForgotPasswordConfirm";
 import LoginFormData from "@/types/LoginFormData";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { setAuthToken } from "@/lib/auth";
+import { useAuth } from '@/context/AuthContext';
 
 export default function LoginForm() {
+    const router = useRouter();
+    const { login } = useAuth();
+
     const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
-    // const [isPasswordConfirmVisible, setIsPasswordConfirmVisible] = useState(false);
     const [formData, setFormData] = useState<LoginFormData>({
       email: "",
       password: "",
@@ -44,16 +49,42 @@ export default function LoginForm() {
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
     };    
-
-    const handleSubmit = (event: React.FormEvent) => {
-      // fetch где нибудь тут
+    
+    const handleSubmit = async (event: React.FormEvent) => {
       event.preventDefault();
-      console.log(formData)
-      if (validate()) {
-        console.log("Форма отправлена", formData);
+      
+      if (!validate()) return;
+      
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok && data.token) {
+          login(data.token, formData.rememberMe);
+          router.push('/home');
+        } else {
+          setErrors({
+            email: ' ',
+            password: data.error || 'Ошибка авторизации'
+          });
+        }
+      } catch (error) {
+        setErrors({
+          email: ' ',
+          password: 'Ошибка соединения'
+        });
       }
     };
-    
+
+
     return (
       <form 
         onSubmit={handleSubmit} 

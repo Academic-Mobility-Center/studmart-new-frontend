@@ -1,7 +1,13 @@
 import Navigation from "../footer/elements/navigation/Navigation";
 import Contacts from "../footer/elements/contacts/Contacts";
+import { useAuth } from "@/context/AuthContext";
 
-const NewFooter = () => {
+interface NewFooterProps {
+    isAuthenticated: boolean;
+}
+
+const NewFooter = ({ isAuthenticated }: NewFooterProps) => {
+    const { logout } = useAuth();
     return (
         <footer className="bg-[#f0e9e2] flex flex-col w-full mt-32 px-10 py-10 rounded-t-[30px]">
             <div className="flex flex-row justify-start">
@@ -14,7 +20,7 @@ const NewFooter = () => {
                 </div>
                 <div className="flex flex-row justify-center items-start w-3/4 pl-40">
                     <Contacts/>
-                    <Navigation/>
+                    <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
                 </div>
             </div>
         

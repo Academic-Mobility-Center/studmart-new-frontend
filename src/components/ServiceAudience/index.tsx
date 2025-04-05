@@ -1,8 +1,12 @@
 import StudentServicesSection from "../StudentServicesSection";
 import PartnerSection from "../PartnerSection";
 import "./style.css";
+interface Props {
+  isAuthenticated: boolean;
+}
+function ServiceAudience({isAuthenticated}: Props) {
+  if (!isAuthenticated) return null;
 
-function ServiceAudience() {
   return (
     <div className="main-content-container">
       <p className="main-heading-style">Кому пригодится сервис?</p>

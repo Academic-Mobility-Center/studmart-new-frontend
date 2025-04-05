@@ -14,3 +14,19 @@
     width: 100%;
     max-width: 1280px; 
 }
+.student-discount-portal {
+    box-sizing: border-box;
+    width: 1200px;  
+    margin-top: 15px;
+}
+.exclusive-discounts-section {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 1280px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  

@@ -114,7 +114,7 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                 </div>
                 <p className="text-sm font-bold text-[#032c28] text-center">
                     Уже есть аккаунт? 
-                    <Link href="/auth" className="text-[#6dbc29] underline pl-2">Войти</Link>
+                    <Link href="/login" className="text-[#6dbc29] underline pl-2">Войти</Link>
                 </p>
             </div>    
         </div>

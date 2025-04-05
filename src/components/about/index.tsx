@@ -2,8 +2,11 @@ import { Button } from "@mui/base"
 import "./style.css"
 const aboutStudmart = "Про Студмарт"
 const studmartDescription = "«Студмарт» — это система лояльности. Студентам она предоставляет скидки, а бизнесу — возможность расширить аудиторию."
-
-export default function About(){
+interface Props {
+  isAuthenticated: boolean;
+}
+export default function About({isAuthenticated}: Props){
+  if (!isAuthenticated) return null;
     return(
       <div className="loyalty-program-info-container">
         <p className="loyalty-program-heading-style">

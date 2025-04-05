@@ -5,9 +5,7 @@ export default function ContentLayoutWidget() {
     return(
         <div className="student-discount-portal">
             <DynamicDisplayWidget/>
-            // скрываем ServiceAudience если залогинен
             <ServiceAudience/>
-            // скрываем About если залогинен
             <About/>
         </div>
     )

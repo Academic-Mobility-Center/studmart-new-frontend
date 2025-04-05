@@ -3,11 +3,16 @@
 import NewFooter from "@/components/new-footer/NewFooter";
 import NewHeader from "@/components/new-header/NewHeader";
 import OfferPageContent from "@/components/pages/offer-page-content/OfferPageContent";
+import { useAuth } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
 
 const PartnerOffer = () => {
     const id = useParams();
+    const { isAuthenticated, isLoading } = useAuth();
 
+    if (isLoading) {
+      return <div>Загрузка...</div>;
+    }
     return (
         <div 
             className="border bg-[#f8f8f8] 
@@ -15,7 +20,7 @@ const PartnerOffer = () => {
             items-center flex-col min-w-[1600px] 
             border-solid border-[rgba(0,0,0,0.20)]"
         >
-            <NewHeader />
+            <NewHeader isAuthenticated={isAuthenticated}/>
             <div 
                 className="flex flex-col 
                 items-center 
@@ -24,7 +29,7 @@ const PartnerOffer = () => {
                 <OfferPageContent/>
             </div>
             <div className="max-w-7xl w-full">
-                <NewFooter />
+                <NewFooter isAuthenticated={isAuthenticated}/>
             </div>
         </div>
     );
