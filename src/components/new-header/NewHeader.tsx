@@ -18,7 +18,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
   return (
     <header className="w-7xl bg-[#8fe248] flex items-center justify-start h-20 px-10 rounded-b-[30px]">
       <div className="w-[24.25%]">
-        <Link href={isAuthenticated ? "/home" : "#"} className={!isAuthenticated ? "pointer-events-none" : ""}>
+        <Link href="/home">
           <Image src="/icons/Header/logo.svg" alt="" width={141} height={30} />
         </Link>
       </div>

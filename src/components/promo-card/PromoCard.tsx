@@ -7,7 +7,9 @@ type PromoCardProps = {
   heading: string;
   description: string;
   discount: string;
-  categoryId: number;
+  categoryId?: number;
+  width?: number;
+  height?: number;
 };
 
 export const PromoCard: React.FC<PromoCardProps> = ({
@@ -15,8 +17,9 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   heading,
   description,
   discount,
-  categoryId,
   id,
+  width= 282,
+  height = 203
 }) => {
   const router = useRouter();
 
@@ -26,9 +29,10 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   };
   return (
     <div
-      className="flex-none w-[282px] h-[203px] 
-      rounded-[20px] border border-black/20 
-      overflow-hidden box-border transition-transform duration-200 hover:scale-[1.02] cursor-pointer"
+    className="flex-none rounded-[20px] border border-black/20 
+    overflow-hidden box-border transition-transform duration-200 hover:scale-[1.02] cursor-pointer
+    flex flex-col"
+    style={{ width: `${width}px`, height: `${height}px` }}
       onClick={handleClick}
     >
       <StylishWrapper imageUrl={imageUrl} />
@@ -43,13 +47,22 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 
 type StylishWrapperProps = {
   imageUrl: string;
+  height?: number;
 };
 
-const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl }) => {
+const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl, height = 203 }) => {
+  const imageHeight = `${Math.round(height * 0.6)}px`;
   return (
     <div
-      className="w-full h-[125px] rounded-t-[20px] px-[10px] pt-[10px] flex justify-end items-start"
-      style={{ backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      className="w-full rounded-t-[20px] px-[10px] pt-[10px] flex justify-end items-start"
+      style={{ 
+        backgroundImage: `url(${imageUrl})`,
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '125px',
+        flex: '2 1 auto',
+      }}
     >
       <img src="/icons/home/star.svg" alt="icon" className="w-8 h-8" />
     </div>

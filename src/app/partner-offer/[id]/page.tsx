@@ -3,16 +3,75 @@
 import NewFooter from "@/components/new-footer/NewFooter";
 import NewHeader from "@/components/new-header/NewHeader";
 import OfferPageContent from "@/components/pages/offer-page-content/OfferPageContent";
+import PartnerOfferContent from "@/components/pages/partner-offer-content/PartnerOfferContent";
 import { useAuth } from "@/context/AuthContext";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+interface PartnerOffer {
+    id: string;
+    heading: string;
+    subHeading: string;
+    description: string;
+    url: string;
+    imageUrl: string;
+  }
 
 const PartnerOffer = () => {
-    const id = useParams();
+    const router = useRouter();
+
+    const params = useParams();
+    const id = params?.id as string;
     const { isAuthenticated, isLoading } = useAuth();
 
+    // здесь fetch
+    const partnerOffers: PartnerOffer[] = [
+        {
+          id: "1",
+          heading: "Шоколадница",
+          subHeading: "Сеть кофеен",
+          description: "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
+          url: "https://shoko.ru/",
+          imageUrl: "/icons/partners/chocolate.png"
+        },
+        {
+          id: "2",
+          heading: "Золотое Яблоко",
+          subHeading: "Сеть парфюмерно-косметических магазинов",
+          description: "Откройте для себя мир красоты со скидками на любимые бренды косметики и парфюмерии!",
+          url: "https://goldapple.ru/",
+          imageUrl: "/icons/partners/golden-apple.png"
+
+        },
+        {
+          id: "3",
+          heading: "Рив Гош",
+          subHeading: "Парфюмерия и косметика",
+          description: "Эксклюзивные предложения на премиальную косметику и парфюмерию в магазинах Рив Гош!",
+          url: "https://rivegauche.ru/",
+          imageUrl: "/icons/partners/cosmetic.png"
+
+        }
+    ];    
+
+    const currentOffer = partnerOffers.find(offer => offer.id === id);
+    useEffect(() => {
+        if (id && !currentOffer) {
+            router.push('/home');
+        }
+    }, [id, currentOffer, router]);
+
+    if (isLoading) {
+        return <div>Загрузка...</div>;
+    }
+
+    if (!currentOffer) {
+        return null;
+    }
     if (isLoading) {
       return <div>Загрузка...</div>;
     }
+
     return (
         <div 
             className="border bg-[#f8f8f8] 
@@ -26,7 +85,14 @@ const PartnerOffer = () => {
                 items-center 
                 min-w-[1280px]"
             >
-                <OfferPageContent/>
+                <PartnerOfferContent
+                    heading={currentOffer.heading}
+                    subHeading={currentOffer.subHeading}
+                    description={currentOffer.description}
+                    url={currentOffer.url}
+                    imageUrl={currentOffer.imageUrl}
+                    partnerId={id}
+                />
             </div>
             <div className="max-w-7xl w-full">
                 <NewFooter isAuthenticated={isAuthenticated}/>

@@ -32,6 +32,8 @@ const ScrollContainer = styled(Box)({
   },
   maxWidth: "1200px",
   whiteSpace: "nowrap",
+  scrollBehavior: "smooth",
+  "-webkit-overflow-scrolling": "touch"
 });
 
 const StyledButton = styled(Button)({
@@ -48,7 +50,8 @@ const StyledButton = styled(Button)({
   borderRadius: "15px",
   whiteSpace: "nowrap",
   flexShrink: 0, 
-  padding: "0 12px"
+  padding: "0 12px",
+  touchAction: "manipulation",
 });
 
 const menuItems: MenuItem[] = [
@@ -68,7 +71,8 @@ export default function FavoriteCategoriesSection({
   onSelectCategory
 }: FavoriteCategoriesSectionProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  
+  const isTouchDevice = useRef(false);
+
   const handleWheelScroll = (event: ReactWheelEvent) => {
     if (scrollRef.current) {
       event.preventDefault();
@@ -76,30 +80,49 @@ export default function FavoriteCategoriesSection({
     }
   };
   useEffect(() => {
-    const disableScroll = (event: Event) => event.preventDefault();
-
-    const handleMouseEnter = () => {
-      document.addEventListener("wheel", disableScroll, { passive: false });
-    };
-
-    const handleMouseLeave = () => {
-      document.removeEventListener("wheel", disableScroll);
-    };
+    // Определяем, является ли устройство тач-устройством
+    isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     const scrollContainer = scrollRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener("mouseenter", handleMouseEnter);
-      scrollContainer.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    return () => {
-      document.removeEventListener("wheel", disableScroll);
-      if (scrollContainer) {
-        scrollContainer.removeEventListener("mouseenter", handleMouseEnter);
-        scrollContainer.removeEventListener("mouseleave", handleMouseLeave);
-      }
+    
+    // Для тачпадов и сенсорных устройств
+    const handleTouchStart = () => {
+      isTouchDevice.current = true;
     };
+
+    if (scrollContainer) {
+      scrollContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+      
+      return () => {
+        scrollContainer.removeEventListener('touchstart', handleTouchStart);
+      };
+    }
   }, []);
+  // useEffect(() => {
+  //   const disableScroll = (event: Event) => event.preventDefault();
+
+  //   const handleMouseEnter = () => {
+  //     document.addEventListener("wheel", disableScroll, { passive: false });
+  //   };
+
+  //   const handleMouseLeave = () => {
+  //     document.removeEventListener("wheel", disableScroll);
+  //   };
+
+  //   const scrollContainer = scrollRef.current;
+  //   if (scrollContainer) {
+  //     scrollContainer.addEventListener("mouseenter", handleMouseEnter);
+  //     scrollContainer.addEventListener("mouseleave", handleMouseLeave);
+  //   }
+
+  //   return () => {
+  //     document.removeEventListener("wheel", disableScroll);
+  //     if (scrollContainer) {
+  //       scrollContainer.removeEventListener("mouseenter", handleMouseEnter);
+  //       scrollContainer.removeEventListener("mouseleave", handleMouseLeave);
+  //     }
+  //   };
+  // }, []);
 
   return (
     <div className="beauty-health-container">
