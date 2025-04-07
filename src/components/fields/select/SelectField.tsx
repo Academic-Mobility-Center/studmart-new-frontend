@@ -19,8 +19,9 @@ export function SelectField({
           value={value || ""} 
           name={name} 
           className="pl-6 border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] h-[48px] "
+          
         >
-          <option value="">Выберите значение</option>
+          {/* <option value="">Выберите значение</option> */}
           {options.map((option, index) => (
             <option key={index} value={option}>
               {option}

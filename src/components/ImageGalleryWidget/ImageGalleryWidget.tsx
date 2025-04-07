@@ -20,7 +20,7 @@ function ImageGalleryWidget({isAuthenticated}: Props) {
             <br />
             ведь ты студент!
           </p>
-          {/* <div className="button-container" style={{ height: authStatus ? '0' : 'auto' }}>
+          <div className="button-container" style={{ height: authStatus ? '0' : 'auto' }}>
             {!authStatus && (
               <Link href="/registration" passHref>
                 <Button 
@@ -31,10 +31,10 @@ function ImageGalleryWidget({isAuthenticated}: Props) {
                 </Button>
               </Link>
             )}
-          </div> */}
-          <Link href={!isAuthenticated ? "#" : "registration"}>
+          </div>
+          {/* <Link href={!isAuthenticated ? "#" : "registration"}>
             <Button className="exclusive-discount-button">Получить доступ</Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="partner-discount-section">

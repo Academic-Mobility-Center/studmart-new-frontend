@@ -108,6 +108,7 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                 name="gender"
                 value={formData.gender || ""}
                 onChange={handleChange}
+                
             />
             <div className="flex flex-col gap-4">
                 <div className="flex justify-center gap-[15px]">

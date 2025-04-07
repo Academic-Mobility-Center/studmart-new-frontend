@@ -7,7 +7,7 @@ interface Props {
   isAuthenticated: boolean;
 }
 export default function About({isAuthenticated}: Props){
-  if (!isAuthenticated) return null;
+    if (isAuthenticated) return null;
     return(
       <div className="loyalty-program-info-container">
         <p className="loyalty-program-heading-style">

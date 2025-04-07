@@ -16,20 +16,20 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <header className="w-7xl bg-[#8fe248] flex items-center justify-start h-20 px-10 rounded-b-[30px]">
-      <div className="w-[24.25%]">
+    <header className="w-7xl bg-[#8fe248] flex items-center justify-start h-20 pl-[40px] rounded-b-[30px]">
+      <div className="w-[320px]">
         <Link href="/home">
           <Image src="/icons/Header/logo.svg" alt="" width={141} height={30} />
         </Link>
       </div>
 
-      <nav className="w-[37.75%] flex items-center gap-10">
+      <nav className="w-[430px] flex items-center gap-10">
         <NavItem text="Предложения" url={"/home"} isAuthenticated={isAuthenticated} />
         <NavItem text="О сервисе" url={"/about"} isAuthenticated={isAuthenticated} />
         <NavItem text="Партнерам" url={"/partners"} isAuthenticated={isAuthenticated} />
       </nav>
 
-      <div className="w-[38%] flex items-center gap-[24px]">
+      <div className="w-[481px] flex items-center gap-[24px]">
         <div 
           className={`flex items-center gap-2 ${isAuthenticated ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`} 
           onClick={isAuthenticated ? openModal : undefined}
@@ -41,13 +41,15 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
         </div>
         <SearchBar isAuthenticated={isAuthenticated} />
         <div className="flex items-center gap-2 pl-4">
-          <Image 
-            src="/icons/Header/account.svg" 
-            alt="" 
-            width={24} 
-            height={24} 
-            className={!isAuthenticated ? "opacity-50" : ""}
-          />
+          <Link href={isAuthenticated ? "partner-personal-account" : "#"}>
+            <Image 
+              src="/icons/Header/account.svg" 
+              alt="" 
+              width={24} 
+              height={24} 
+              className={!isAuthenticated ? "opacity-50" : ""}
+            />          
+          </Link>
           <Image 
             src="/icons/Header/wallet.svg" 
             alt="" 
@@ -72,7 +74,7 @@ interface NavItemProps {
 
 function NavItem({ text, url, isAuthenticated }: NavItemProps) {
   return (
-    <div className="w-[99px] h-[18px] flex items-center">
+    <div className="w-auto h-[18px] flex items-center">
       <Link 
         href={isAuthenticated ? url : "#"} 
         className={`text-sm font-bold text-[#032c28] m-0 p-0 ${!isAuthenticated ? "pointer-events-none opacity-50" : ""}`}

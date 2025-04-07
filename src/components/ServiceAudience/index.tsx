@@ -5,7 +5,7 @@ interface Props {
   isAuthenticated: boolean;
 }
 function ServiceAudience({isAuthenticated}: Props) {
-  if (!isAuthenticated) return null;
+  if (isAuthenticated) return null;
 
   return (
     <div className="main-content-container">

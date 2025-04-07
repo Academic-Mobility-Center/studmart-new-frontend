@@ -99,6 +99,7 @@
   overflow: hidden;
   margin-top: auto; /* Прижимаем кнопку к низу */
   flex-shrink: 0; /* Запрещаем сжатие */
+  z-index: 3;
 }
 
 

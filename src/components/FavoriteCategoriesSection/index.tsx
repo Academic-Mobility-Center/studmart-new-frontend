@@ -33,7 +33,7 @@ const ScrollContainer = styled(Box)({
   maxWidth: "1200px",
   whiteSpace: "nowrap",
   scrollBehavior: "smooth",
-  "-webkit-overflow-scrolling": "touch"
+  WebkitOverflowScrolling: "touch"
 });
 
 const StyledButton = styled(Button)({
