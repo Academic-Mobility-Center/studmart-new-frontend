@@ -117,10 +117,10 @@ const PartnerProfileForm: React.FC = () => {
             newErrors.country = "Некорректное название страны";
         }
     
-        if (formData.regions && !formData.regions.every(region => /^[а-яА-Я\s\'’-]+$/.test(region))) {
-            newErrors.regions = ["Некорректные регионы"];
+        if (formData.specificRegions && formData?.regions?.length < 1) {
+            newErrors.regions = ["Выберете регионы"];
         }
-    
+        // !formData.regions.every(region => /^[а-яА-Я\s\'’-]+$/.test(region))
         if (!/^\d{10}$/.test(formData.inn.toString())) {
             newErrors.inn = "Некорректный ИНН";
         }

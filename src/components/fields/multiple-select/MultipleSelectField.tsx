@@ -76,7 +76,7 @@ export function MultipleSelectField({
     setRegionMode(mode);
     if (mode === 'all') {
       setShowTags(false)
-      // setSelectedMultiple(options);
+      setSelectedMultiple(options);
       if (onChange) {
         const events = [
           {
@@ -107,6 +107,7 @@ export function MultipleSelectField({
     if (mode === 'specific')
        {
       setShowTags(true)
+      setSelectedMultiple([])      
       if (onChange) {
         const events = [
           {
@@ -183,7 +184,7 @@ export function MultipleSelectField({
           setQuery={setQuery}
           displayValue={(value: string[]) => value.join(', ')}
         />
-          {showTags && selectedMultiple.length > 0 && ( 
+          {regionMode === 'specific' && selectedMultiple.length > 0 && ( 
             <SelectedTags
               selected={selectedMultiple}
               onRemove={(val) =>
