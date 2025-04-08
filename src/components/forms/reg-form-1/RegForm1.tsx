@@ -71,6 +71,8 @@ const RegForm1: React.FC<RegFormProps> = ({
                     name="email" 
                     value={formData.email}
                     autoComplete="off"
+                    width={350}
+                    labelFontSize={14}
                 />
                 {errors.email && <p className="text-red-600 text-sm font-medium mt-1">{errors.email}</p>}
             </div>
@@ -81,6 +83,8 @@ const RegForm1: React.FC<RegFormProps> = ({
                     onChange={handleChange} 
                     name="password" 
                     value={formData.password}
+                    width={350}
+                    labelFontSize={14}                    
                 />
                 {errors.password && <p className="text-red-600 text-sm font-medium mt-1">{errors.password}</p>}
             </div>
@@ -91,6 +95,8 @@ const RegForm1: React.FC<RegFormProps> = ({
                     onChange={handleChange} 
                     name="confirmPassword" 
                     value={formData.confirmPassword}
+                    width={350}
+                    labelFontSize={14}                    
                 />
                 {errors.confirmPassword && <p className="text-red-600 text-sm font-medium mt-1">{errors.confirmPassword}</p>}
             </div>
@@ -98,6 +104,8 @@ const RegForm1: React.FC<RegFormProps> = ({
             <InputField 
                 label="Есть промокод?" 
                 placeholder="Hhufs8a7auh40egij"
+                width={350}
+                labelFontSize={14}                
             />
     
             <div className="flex flex-col gap-4">

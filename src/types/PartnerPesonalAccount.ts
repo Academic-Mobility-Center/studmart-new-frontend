@@ -1,4 +1,4 @@
-export default interface PartnerPersonalAccount{
+export interface PartnerPersonalAccountFormData{
     personalEmail: string;
     password: string;
     companyName: string;
@@ -9,9 +9,9 @@ export default interface PartnerPersonalAccount{
     country: string;
     serviceRegions: string;
     regions: string[];
-    inn: number;
+    inn: string;
     taxForm: string;
-    currentAccount: number;
-    corAccount: number;
-    bic: number;
+    currentAccount: string;
+    corAccount: string;
+    bic: string;
 }

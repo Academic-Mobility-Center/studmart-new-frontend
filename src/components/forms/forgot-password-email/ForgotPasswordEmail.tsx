@@ -56,6 +56,8 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
                         name="passwordResetEmail"
                         value={formData.passwordResetEmail}
                         onChange={handleChange}
+                        width={350}
+                        labelFontSize={14}                        
                     />
                     {errors.passwordResetEmail && (
                         <p className="text-red-600 text-sm font-medium mt-1">{errors.passwordResetEmail}</p>

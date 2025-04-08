@@ -79,6 +79,8 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     onChange={handleChange} 
                     name="name" 
                     value={formData.name}
+                    width={350}
+                    labelFontSize={14}                    
                 />
                 {errors.name && <p className="text-red-600 text-sm font-medium mt-1">{errors.name}</p>}
             </div>
@@ -89,6 +91,8 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     onChange={handleChange} 
                     name="fullname" 
                     value={formData.fullname}
+                    width={350}
+                    labelFontSize={14}                    
                 />
                 {errors.fullname && <p className="text-red-600 text-sm font-medium mt-1">{errors.fullname}</p>}
             </div>
@@ -108,7 +112,9 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                 name="gender"
                 value={formData.gender || ""}
                 onChange={handleChange}
-                
+                width={350}
+                labelFontSize={14}                
+                placeholder="Мужской"
             />
             <div className="flex flex-col gap-4">
                 <div className="flex justify-center gap-[15px]">

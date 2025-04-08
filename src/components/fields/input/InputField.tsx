@@ -5,7 +5,8 @@ export default function InputField({
   value,
   onChange, 
   autoComplete,
-  width = 350
+  width = 350,
+  labelFontSize = 14
 }: { 
   label: string, 
   placeholder: string ,
@@ -13,13 +14,14 @@ export default function InputField({
   value?: string,
   onChange?:  (event: React.ChangeEvent<HTMLInputElement>) => void;
   autoComplete?: string;
-  width: number
+  width: number,
+  labelFontSize: number;
 }) {
     return (
-      <div className="flex flex-col gap-2" style={{width: width}}>
-        <label className="text-sm text-[#032c28]">{label}</label>
+      <div className="flex flex-col gap-2" style={{width: `${width}px`}}>
+        <label className="text-[#032c28]" style={{fontSize: `${labelFontSize}px`}}>{label}</label>
         <input 
-          className="pl-6 border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] placeholder:text-[#888888] h-[48px]" 
+          className="pl-[20px] border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] placeholder:text-[#888888] h-[48px]" 
           type="text" 
           placeholder={placeholder}
           name={name}

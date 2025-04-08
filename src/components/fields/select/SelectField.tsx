@@ -1,33 +1,122 @@
-export function SelectField({ 
-  label, 
-  options, 
+import { Combobox } from '@headlessui/react'
+import { useState, useEffect } from 'react'
+
+export function SelectField({
+  label,
+  options,
   value,
   name,
-  onChange
-}: { 
-  label: string, 
-  options: string[] ,
-  value?: string,
-  name: string,
-  onChange?:  (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange,
+  width,
+  labelFontSize,
+  placeholder,
+}: {
+  label: string
+  options: string[]
+  value?: string;
+  name: string
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  width: number
+  labelFontSize: number
+  placeholder: string;
 }) {
-    return (
-      <div className="flex flex-col gap-2 w-[350px]">
-        <label className="text-sm text-[#032c28]">{label}</label>
-        <select 
-          onChange={onChange}
-          value={value || ""} 
-          name={name} 
-          className="pl-6 border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] h-[48px] "
-          
-        >
-          {/* <option value="">Выберите значение</option> */}
-          {options.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
+  const [selectedOption, setSelectedOption] = useState(value || '')
+
+  const [query, setQuery] = useState('')
+
+  useEffect(() => {
+    setSelectedOption(value || '')
+  }, [value])
+
+  const filteredOptions =
+    query === ''
+      ? options
+      : options.filter((option) =>
+          option.toLowerCase().includes(query.toLowerCase())
+        )
+
+  const handleChange = (value: string) => {
+    setSelectedOption(value)
+    if (onChange) {
+      const event = {
+        target: {
+          name,
+          value
+        }
+      } as React.ChangeEvent<HTMLSelectElement>
+      onChange(event)
+    }
   }
+
+  return (
+    <div className="flex flex-col gap-2" style={{ width: `${width}px` }}>
+      <label
+        className="text-[#032c28]"
+        style={{ fontSize: `${labelFontSize}px` }}
+      >
+        {label}
+      </label>
+      <Combobox 
+        value={selectedOption}
+        onChange={handleChange} 
+        name={name}
+      >
+        <div className="relative">
+          <Combobox.Input
+            className={`w-full pl-[20px] pr-10 border 
+              border-gray-300 p-2 rounded-2xl 
+              focus:outline-none h-[48px] ${
+              selectedOption ? 'text-[#032c28]' : 'text-gray-500 placeholder:text-[#888888]' 
+            } 
+            `}
+            displayValue={(option: string) => option}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={placeholder}
+          />
+          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
+            <svg
+              className="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </Combobox.Button>
+          <Combobox.Options 
+            className="absolute z-10 mt-1 max-h-60 w-full 
+            overflow-auto rounded-2xl 
+            bg-white py-1 shadow-lg ring-1 ring-black 
+            ring-opacity-5 focus:outline-none"
+          >
+            {filteredOptions.length === 0 && query !== '' ? (
+              <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                Ничего не найдено
+              </div>
+            ) : (
+              filteredOptions.map((option, index) => (
+                <Combobox.Option
+                  key={index}
+                  value={option}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2 pl-4 pr-4 ${
+                      active ? 'bg-[#032c28] text-white' : 'text-[#032c28]'
+                    }`
+                  }
+                >
+                  {option}
+                </Combobox.Option>
+              ))
+            )}
+          </Combobox.Options>
+        </div>
+      </Combobox>
+    </div>
+  )
+}

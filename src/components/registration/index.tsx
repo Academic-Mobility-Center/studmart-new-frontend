@@ -14,7 +14,7 @@ export default function RegistraionForm(){
         promocode: "",
         name: "",
         fullname: "",
-        gender: "man",
+        gender: "",
         date: null,
         university: "",
         profession: "",

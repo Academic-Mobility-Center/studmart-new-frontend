@@ -105,6 +105,8 @@ export default function LoginForm() {
             name="email" 
             value={formData.email} 
             onChange={handleChange} 
+            width={350}
+            labelFontSize={14}
           />
           {errors.email && 
             <p 
@@ -115,7 +117,15 @@ export default function LoginForm() {
           }
         </div>
         <div className="flex flex-col gap-1">
-          <PasswordField label="Пароль" placeholder="********" name="password" value={formData.password} onChange={handleChange} />
+          <PasswordField 
+            label="Пароль" 
+            placeholder="********" 
+            name="password" 
+            value={formData.password} 
+            onChange={handleChange} 
+            width={350}
+            labelFontSize={14}            
+          />
           {errors.password && <p className="text-red-600 text-sm font-medium mt-1">{errors.password}</p>}
         </div>
         <p 

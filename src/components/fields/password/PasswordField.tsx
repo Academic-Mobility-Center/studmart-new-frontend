@@ -7,21 +7,27 @@ export default function PasswordField({
   placeholder,
   name,
   value,
-  onChange 
+  onChange,
+  width,
+  labelFontSize 
 }: {
   label: string, 
   placeholder: string,
   name?: string,
   value?: string,
+  width: number,
+  labelFontSize: number;
   onChange?:  (event: React.ChangeEvent<HTMLInputElement>) => void;
 }){
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     return (
-      <div className="flex flex-col gap-2 w-[350px] relative">
-        <label className="text-sm text-[#032c28]">{label}</label>
+      <div className="flex flex-col gap-2 relative" style={{width: `${width}px`}}>
+        <label className="text-[#032c28]" style={{fontSize: `${labelFontSize}px`}}>{label}</label>
         <div className="relative">
           <input
-            className="flex items-center leading-none border border-gray-300 p-2 pl-6 rounded-2xl pr-10 focus:outline-none text-[#032c28] placeholder:text-[#888888] h-[48px] w-full text-base"
+            className="flex items-center leading-none border 
+            border-gray-300 p-2 pl-6 rounded-2xl pr-10 focus:outline-none 
+            text-[#032c28] placeholder:text-[#888888] h-[48px] w-full text-base"
             type={isPasswordVisible ? "text" : "password"}
             autoComplete="off"
             placeholder={placeholder}

@@ -28,9 +28,6 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
         if (!formData.profession){
             newErrors.profession = "Введите свою профессию";
         }
-        if (!formData.file){
-            newErrors.file = "Прикрепите файл";
-        }
         if (!formData.course){
             newErrors.course = "Выберете ваш курс обучения";
         }
@@ -41,6 +38,14 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
             newErrors.profession = "Имя должно содержать только буквы без пробелов";
         }
 
+        const email = formData?.email;
+        const emailDomainMatch = email.match(/@([^@.]+)\./);
+        const isStudentDomain = emailDomainMatch?.[1]?.toLowerCase().includes("stud") 
+        || emailDomainMatch?.[1]?.toLowerCase().includes("edu");
+
+        if (!formData.file && !isStudentDomain) {
+            newErrors.file = "Прикрепите файл";
+        }        
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     }
@@ -66,6 +71,9 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     name="university" 
                     value={formData.university || ""} 
                     onChange={handleChange}
+                    width={350}
+                    labelFontSize={14}     
+                    placeholder="Университет"               
                 />
                 {errors.university && <p className="text-red-600 text-sm font-medium mt-1">{errors.university}</p>}                
             </div>
@@ -76,6 +84,8 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     name="profession" 
                     value={formData.profession} 
                     onChange={handleChange}
+                    width={350}
+                    labelFontSize={14}                    
                 />
                 {errors.profession && <p className="text-red-600 text-sm font-medium mt-1">{errors.profession}</p>}
             </div>
@@ -86,6 +96,9 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     name="course"
                     value={formData.course || ""}
                     onChange={handleChange}
+                    width={350}
+                    labelFontSize={14}     
+                    placeholder="Курс"               
                 />
                 {errors.course && <p className="text-red-600 text-sm font-medium mt-1">{errors.course}</p>}
             </div>
