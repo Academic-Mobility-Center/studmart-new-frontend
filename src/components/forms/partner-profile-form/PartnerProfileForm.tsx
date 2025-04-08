@@ -1,10 +1,10 @@
 import InputField from "@/components/fields/input/InputField"
-import { MultipleSelectField } from "@/components/fields/multiple-select/MultipleSelectField"
 import PasswordField from "@/components/fields/password/PasswordField"
-import { SelectField } from "@/components/fields/select/SelectField"
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount"
 import { Button } from "@mui/base"
 import { ChangeEvent, useState } from "react"
+import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
+import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 
 
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
@@ -31,7 +31,9 @@ const PartnerProfileForm: React.FC = () => {
         taxForm: "",
         currentAccount: "",
         corAccount: "",
-        bic: ""
+        bic: "",
+        allRegions: true,
+        specificRegions: false
     });
 
     const [errors, setErrors] = useState<{ 
@@ -45,11 +47,11 @@ const PartnerProfileForm: React.FC = () => {
         country?: string,
         serviceRegions?: string,
         regions?: string[],
-        inn?: number,
+        inn?: string,
         taxForm?: string,
-        currentAccount?: number,
-        corAccount?: number,
-        bic?: number,       
+        currentAccount?: string,
+        corAccount?: string,
+        bic?: string,       
     }>({
         personalEmail: '',
         password: '',
@@ -61,47 +63,111 @@ const PartnerProfileForm: React.FC = () => {
         country: "",
         serviceRegions: "",
         regions: [],
-        inn: 0,
+        inn: "",
         taxForm: "",
-        currentAccount: 0,
-        corAccount: 0,
-        bic: 0
+        currentAccount: "",
+        corAccount: "",
+        bic: ""
     });
+
     const validate = () => {
         const newErrors: { 
             personalEmail?: string; 
             password?: string; 
-            companyName?: string 
+            companyName?: string;
             site?: string;
-            phoneNumber?: string,
-            companyEmail?: string,
-            industry?: string,
-            country?: string,
-            serviceRegions?: string,
-            regions?: string[],
-            inn?: number,
-            taxForm?: string,
-            currentAccount?: number,
-            corAccount?: number,
-            bic?: number,       
+            phoneNumber?: string;
+            companyEmail?: string;
+            industry?: string;
+            country?: string;
+            serviceRegions?: string;
+            regions?: string[];
+            inn?: string;
+            taxForm?: string;
+            currentAccount?: string;
+            corAccount?: string;
+            bic?: string;       
         } = {};
+    
+        if (!/^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(formData.personalEmail)) {
+            newErrors.personalEmail = "Некорректный email";
+        }
+    
+        if (formData.password.length < 6) {
+            newErrors.password = "Пароль должен содержать минимум 6 символов";
+        }
+    
+        if (!/^[a-zA-Zа-яА-Я0-9\s\'-]+$/.test(formData.companyName)) {
+            newErrors.companyName = "Некорректное название компании";
+        }
+    
+        if (!/^(https?:\/\/)?(www\.)?(([\w-]+\.)+[\w-]+|localhost)(\.\w{2,})?(:[0-9]{1,5})?(\/[^\s<>]*)?(\?[^\s<>]*)?$/.test(formData.site)) {
+            newErrors.site = "Некорректный URL";
+        }
+    
+        if (!/^(\+7|8)?[\s-]?\(?9\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/.test(formData.phoneNumber)) {
+            newErrors.phoneNumber = "Некорректный номер телефона";
+        }
+    
+        if (!/^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(formData.companyEmail)) {
+            newErrors.companyEmail = "Некорректный email компании";
+        }
+    
+        if (!/^[а-яА-Я\s\'’\-]+$/.test(formData.country)) {
+            newErrors.country = "Некорректное название страны";
+        }
+    
+        if (formData.regions && !formData.regions.every(region => /^[а-яА-Я\s\'’-]+$/.test(region))) {
+            newErrors.regions = ["Некорректные регионы"];
+        }
+    
+        if (!/^\d{10}$/.test(formData.inn.toString())) {
+            newErrors.inn = "Некорректный ИНН";
+        }
+    
+        if (!formData.taxForm) {
+            newErrors.taxForm = "Укажите форму налогообложения";
+        }
+    
+        if (!/^\d{20}$/.test(formData.currentAccount.toString())) {
+            newErrors.currentAccount = "Некорректный расчетный счет";
+        }
+    
+        if (!/^\d{20}$/.test(formData.corAccount.toString())) {
+            newErrors.corAccount = "Некорректный корреспондентский счет";
+        }
+    
+        if (!/^\d{9}$/.test(formData.bic.toString())) {
+            newErrors.bic = "Некорректный БИК";
+        }
+    
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };   
+    };  
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = event.target as HTMLInputElement;
+        const { name, value, type, checked } = event.target as HTMLInputElement;
         
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    }
+        if (type === 'checkbox' || type === 'radio') {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: checked, // для чекбокса или радиокнопки
+            }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value, // для обычного поля
+            }));
+        }
+    };
+
     const handleSubmitForm = (event: React.FormEvent) => {
         event.preventDefault();
+        console.log(formData)        
         if (validate()) {
             console.log(formData)
         }
-    };         
+    };    
+
     return(<>
     <form onSubmit={handleSubmitForm} className={profileCardClasses}>
         <div className="grow-0 shrink-0 basis-auto">
@@ -120,6 +186,7 @@ const PartnerProfileForm: React.FC = () => {
                                 value={formData.personalEmail}
                                 onChange={handleChange}
                             />
+                            {errors.personalEmail && <p className="text-red-600 text-sm font-medium">{errors.personalEmail}</p>}                            
                         </div>
                         <div className={inputContainerClasses}>
                             <PasswordField 
@@ -131,166 +198,15 @@ const PartnerProfileForm: React.FC = () => {
                                 value={formData.password}
                                 onChange={handleChange}                                
                             />
+                            {errors.password && <p className="text-red-600 text-sm font-medium">{errors.password}</p>}                            
                         </div>
                     </div>
                     <p className={changePasswordLinkClasses}>
                         Сменить пароль
                     </p>
                 </div>
-                <div className="pt-[20px] ">
-                    <h2 className={sectionTitleClasses}>Информация о компании</h2>
-                    <div className={fieldsRowClasses}>
-                        <div className={inputContainerClasses}>
-                            <InputField
-                                name="companyName" 
-                                label="Название компании" 
-                                placeholder="Company" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.companyName}
-                                onChange={handleChange}                                
-                            />
-                        </div>
-                        <div className={inputContainerClasses}>
-                            <InputField
-                                name="site" 
-                                label="Сайт" 
-                                placeholder="Сайт" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.site}
-                                onChange={handleChange}                                  
-                            />
-                        </div>
-                    </div>
-                    <div className={fieldsRowClasses}>
-                        <div className={inputContainerClasses}>
-                            <InputField
-                                name="phoneNumber" 
-                                label="Номер телефона" 
-                                placeholder="Номер телефона" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.phoneNumber}
-                                onChange={handleChange}                                
-                            />
-                        </div>
-                        <div className={inputContainerClasses}>
-                            <InputField 
-                                label="Email"
-                                name="companyEmail" 
-                                placeholder="company@gmail.com" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.companyEmail}
-                                onChange={handleChange}                                  
-                            />
-                        </div>
-                    </div>
-                    <div className={fieldsRowClasses}>
-                        <div className={inputContainerClasses}>
-                            <SelectField 
-                                label="Отрасль" 
-                                options={['123','124']}
-                                name="industry"
-                                placeholder="Отрасль" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.industry}
-                                onChange={handleChange}                                  
-                            />
-                        </div>
-                        <div className={inputContainerClasses}>
-                            <SelectField 
-                                label="Страна" 
-                                options={['РФ', 'США', 'ОАЭ']}
-                                name="country"
-                                placeholder="Страна" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.country}
-                                onChange={handleChange}                                  
-                            />
-                        </div>
-                    </div> 
-                    <div className="pt-[20px] w-[200px]">
-                        <MultipleSelectField 
-                            label="Регионы предоставления услуг" 
-                            options={['НСК','СПБ', "МСК", "ЕКБ"]}
-                            name="regions"
-                            placeholder="" 
-                            width={548}
-                            labelFontSize={16}
-                            isNeedRadio
-                            value={formData.regions}
-                            onChange={handleChange}                              
-                        />   
-                    </div>
-                </div>
-                <div className="pt-[20px]">
-                    <h2 className={sectionTitleClasses}>Платежная информация</h2>
-                    <div className={fieldsRowClasses}>
-                        <div className={inputContainerClasses}>
-                            <InputField 
-                                name="inn"
-                                label="ИНН" 
-                                placeholder="ИНН" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.inn}
-                                onChange={handleChange}                                 
-                            />
-                        </div>
-                        <div className={inputContainerClasses}>
-                            <SelectField 
-                                name="taxForm"
-                                options={["ОСН","УСН","ЕСХН","ПСН","НПД","АУСН"]}
-                                label="Форма налогооблажения" 
-                                placeholder="Форма налогооблажения" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.taxForm}
-                                onChange={handleChange}                                   
-                            />
-                        </div>
-                    </div>
-                    <div className={fieldsRowClasses}>
-                        <div className={inputContainerClasses}>
-                            <InputField
-                                name="currentAccount" 
-                                label="Расчетный счет" 
-                                placeholder="Расчетный счет" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.currentAccount}
-                                onChange={handleChange}                                   
-                            />
-                        </div>
-                        <div className={inputContainerClasses}>
-                            <InputField 
-                                label="Корреспондентский счет"
-                                name="corAccount" 
-                                placeholder="Корреспондентский счет" 
-                                width={262}
-                                labelFontSize={16}
-                                value={formData.corAccount}
-                                onChange={handleChange}                                   
-                            />
-                        </div>
-                    </div>
-                    <div className="pt-[20px]">
-                        <InputField 
-                            label="БИК" 
-                            name="bic"
-                            placeholder="БИК" 
-                            width={262}
-                            labelFontSize={16}
-                            value={formData.bic}
-                            onChange={handleChange}                              
-                        /> 
-                    </div>
-                
-                </div>                            
+                <CompanyInfo formData={formData} handleChange={handleChange} errors={errors}/>
+                <PaymentInfo formData={formData} handleChange={handleChange} errors={errors}/>
             </div>
         </div>
         <Button type="submit" className={saveButtonClasses}>

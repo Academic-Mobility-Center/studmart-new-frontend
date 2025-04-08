@@ -23,6 +23,7 @@ export function MultipleSelectField({
   isNeedRadio?: boolean
 }) {
   const [query, setQuery] = useState('')
+  const [showTags, setShowTags] = useState<boolean>(false)
   const [regionMode, setRegionMode] = useState<'all' | 'specific'>('all')
 
   const isDisabled = isNeedRadio ? regionMode === 'all' : false
@@ -36,6 +37,20 @@ export function MultipleSelectField({
       setSelectedMultiple(value)
     }
   }, [value])
+  // const [selectedMultiple, setSelectedMultiple] = useState<string[]>([])
+
+  // useEffect(() => {
+  //   if (Array.isArray(value)) {
+  //     setSelectedMultiple(value)
+  //     if (value.length === options.length) {
+  //       setRegionMode('all')
+  //       setShowTags(false)
+  //     } else {
+  //       setRegionMode('specific')
+  //       setShowTags(true)
+  //     }
+  //   }
+  // }, [value, options])
 
   const filteredOptions =
     query === ''
@@ -56,6 +71,70 @@ export function MultipleSelectField({
       onChange(event)
     }
   }
+  const handleRegionModeChange = (mode: 'all' | 'specific') => {
+    if (mode === regionMode) return
+    setRegionMode(mode);
+    if (mode === 'all') {
+      setShowTags(false)
+      // setSelectedMultiple(options);
+      if (onChange) {
+        const events = [
+          {
+            target: {
+              name: name,
+              value: options
+            }
+          },
+          {
+            target: {
+              name: 'allRegions',
+              type: 'radio',
+              checked: true
+            }
+          },
+          {
+            target: {
+              name: 'specificRegions',
+              type: 'radio',
+              checked: false
+            }
+          }
+        ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
+        
+        events.forEach(event => onChange(event));
+      }
+    }
+    if (mode === 'specific')
+       {
+      setShowTags(true)
+      if (onChange) {
+        const events = [
+          {
+            target: {
+              name: name,
+              value: [] 
+            }
+          },
+          {
+            target: {
+              name: 'allRegions',
+              type: 'radio',
+              checked: false
+            }
+          },
+          {
+            target: {
+              name: 'specificRegions',
+              type: 'radio',
+              checked: true
+            }
+          }
+        ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
+        
+        events.forEach(event => onChange(event));
+      }
+    }
+  }
 
   return (
     <div className="flex flex-col gap-2 relative" style={{ width: `${width}px` }}>
@@ -71,21 +150,19 @@ export function MultipleSelectField({
           <label className="flex items-center gap-1 text-sm text-[#032c28]">
             <input
               type="radio"
-              name={`${name}-region-mode`}
-              value="all"
+              name={"allRegions"}
               checked={regionMode === 'all'}
-              onChange={() => setRegionMode('all')}
-            />
+              onChange={() => handleRegionModeChange('all')} 
+                         />
             Все регионы
           </label>
           <label className="flex items-center gap-1 text-sm text-[#032c28]">
             <input
               type="radio"
-              name={`${name}-region-mode`}
-              value="specific"
+              name={"specificRegions"}
               checked={regionMode === 'specific'}
-              onChange={() => setRegionMode('specific')}
-            />
+              onChange={() => handleRegionModeChange('specific')}
+                          />
             Конкретные регионы
           </label>
         </div>
@@ -106,18 +183,19 @@ export function MultipleSelectField({
           setQuery={setQuery}
           displayValue={(value: string[]) => value.join(', ')}
         />
+          {showTags && selectedMultiple.length > 0 && ( 
             <SelectedTags
-            selected={selectedMultiple}
-            onRemove={(val) =>
+              selected={selectedMultiple}
+              onRemove={(val) =>
                 handleMultipleChange(selectedMultiple.filter((v) => v !== val))
-            }
+              }
             />
+          )}
         <ComboboxOptionsList
           options={filteredOptions}
           selected={selectedMultiple}
         />
         </div>
-
       </Combobox>
     </div>
   )
@@ -146,7 +224,7 @@ function ComboboxInputBase({
           ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed' : 'bg-white'}
           text-[#032C28]
         `}
-        displayValue={displayValue}
+        displayValue={() => ''}
         onChange={(event) => setQuery(event.target.value)}
         placeholder={placeholder}
         disabled={isDisabled}

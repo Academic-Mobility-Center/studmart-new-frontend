@@ -14,4 +14,6 @@ export interface PartnerPersonalAccountFormData{
     currentAccount: string;
     corAccount: string;
     bic: string;
+    allRegions: boolean;
+    specificRegions: boolean;
 }
