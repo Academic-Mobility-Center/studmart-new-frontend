@@ -6,7 +6,8 @@ export default function InputField({
   onChange, 
   autoComplete,
   width = 350,
-  labelFontSize = 14
+  labelFontSize = 14,
+  onBlur
 }: { 
   label: string, 
   placeholder: string ,
@@ -16,6 +17,7 @@ export default function InputField({
   autoComplete?: string;
   width: number,
   labelFontSize: number;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }) {
     return (
       <div className="flex flex-col gap-2" style={{width: `${width}px`}}>
@@ -28,6 +30,7 @@ export default function InputField({
           value={value}
           onChange={onChange}
           autoComplete={autoComplete}
+          onBlur={onBlur}
         />
       </div>
     );

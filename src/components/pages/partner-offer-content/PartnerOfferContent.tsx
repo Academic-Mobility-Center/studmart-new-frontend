@@ -16,8 +16,8 @@ interface PromoCode {
     id: string;
     title: string;
     description: string;
-    code: string; // Код промокода
-    partnerName: string; // Название партнера
+    code: string;
+    partnerName: string; 
 }
 const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl, partnerId}: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,79 +28,30 @@ const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl, p
     const closeModal = () => setIsModalOpen(false);
     const [selectedPromo, setSelectedPromo] = useState<PromoCode | undefined>(undefined);
 
-    const partnerPromoCodes: Record<string, PromoCode[]> = {
-        "1": [
-            {
-                id: "1",
-                title: "-15% на покупку от 700 руб.",
-                description: "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
-                code: "COFFEE15",
-                partnerName: "Кофейня №1"
-            },
-            {
-                id: "2",
-                title: "-15% на покупку от 700 руб.",
-                description: "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
-                code: "SWEET15",
-                partnerName: "Кофейня №1"
-            },
-            {
-                id: "3",
-                title: "-15% на покупку от 700 руб.",
-                description: "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
-                code: "WELCOME15",
-                partnerName: "Кофейня №1"
-            }
-        ],
-        "2": [
-            {
-                id: "1",
-                title: "-20% на все меню",
-                description: "Специальное предложение для постоянных клиентов!",
-                code: "LOYAL20",
-                partnerName: "Ресторан Премиум"
-            },
-            {
-                id: "2",
-                title: "Бесплатная доставка",
-                description: "Заказы от 1000 руб. доставляются бесплатно!",
-                code: "FREEDEL",
-                partnerName: "Ресторан Премиум"
-            },
-            {
-                id: "3",
-                title: "Подарок к заказу",
-                description: "При заказе от 1500 руб. получите бесплатный десерт!",
-                code: "GIFT23",
-                partnerName: "Ресторан Премиум"
-            }
-        ],
-        "3": [
-            {
-                id: "1",
-                title: "-10% на первый заказ",
-                description: "Скидка для новых клиентов!",
-                code: "NEW10",
-                partnerName: "Фастфуд Оригинал"
-            },
-            {
-                id: "2",
-                title: "-25% на бизнес-ланч",
-                description: "Специальное предложение с 12:00 до 16:00!",
-                code: "LUNCH25",
-                partnerName: "Фастфуд Оригинал"
-            },
-            {
-                id: "3",
-                title: "2 по цене 1",
-                description: "При покупке двух кофе - второе бесплатно!",
-                code: "2FOR1",
-                partnerName: "Фастфуд Оригинал"
-            }
-        ]
-    };
-    const promoCodes = partnerPromoCodes[partnerId] || partnerPromoCodes["1"];
-
+    const promoCodesArray = [
+        {
+            id: "1",
+            title: "-15% на покупку от 700 руб.",
+            description: "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
+            code: "COFFEE15",
+            partnerName: "Кофейня №1"
+        },
+        {
+            id: "2",
+            title: "-15% на покупку от 500 руб.",
+            description: "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
+            code: "SWEET15",
+            partnerName: "Кофейня №1"
+        },
+        {
+            id: "3",
+            title: "-15% на покупку от 200 руб.",
+            description: "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
+            code: "WELCOME15",
+            partnerName: "Кофейня №1"
+        }
+    ]
+    
     return (
         <div className="flex flex-col items-center min-w-[1280px]">
             <div className="w-[100.00%] box-border mt-[25px] px-[40px]">
@@ -140,17 +91,6 @@ const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl, p
                                 </div>
                             </div>
                             <div className="w-[100.00%] box-border mt-5">
-                                <p className="[font-family:Mulish,sans-serif] text-base font-bold text-[#032c28] m-0 p-0">
-                                    Условия использования:
-                                </p>
-                                <div className="mt-2.5 px-[11px]">
-                                    <div className="box-border flex justify-start items-start flex-col gap-2.5 w-[473px]">
-                                        <TermsOfUse title="Скидка действительна с [дата начала] по [дата окончания] включительно" />
-                                        <TermsOfUse title="Скидка не суммируется с другими акциями и спецпредложениями" />  
-                                        <TermsOfUse title="Минимальная сумма заказа для применения скидки: [сумма]" />
-                                        <TermsOfUse title="Скидка не распространяется на товары из категорий: [перечень категорий или товаров]" />
-                                    </div>
-                                </div>
                                 <a
                                     href={url}
                                     target="_blank"
@@ -169,7 +109,7 @@ const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl, p
                             </div>
                         </div>
                         <div className="box-border flex justify-start items-start flex-col gap-[30px] w-[588px] grow-0 shrink-0 basis-auto">
-                            {promoCodes.map((promo) => (
+                            {promoCodesArray.map((promo) => (
                                 <DiscountBox 
                                     key={promo.id}
                                     title={promo.title}
@@ -182,14 +122,14 @@ const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl, p
                 </div>  
             </div>
             <DiscountModal 
-    isOpen={isModalOpen} 
-    closeModal={closeModal}
-    promoCode={selectedPromo}
-    userInfo={{
-        name: "Максим Орлов",
-        university: "Белгородский университет кооперации, экономики и права"
-    }}
-/>
+                isOpen={isModalOpen} 
+                closeModal={closeModal}
+                promoCode={selectedPromo}
+                userInfo={{
+                    name: "Максим Орлов",
+                    university: "Белгородский университет кооперации, экономики и права"
+                }}
+            />
         </div>
     )
 }

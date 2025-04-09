@@ -32,9 +32,6 @@ function ImageGalleryWidget({isAuthenticated}: Props) {
               </Link>
             )}
           </div>
-          {/* <Link href={!isAuthenticated ? "#" : "registration"}>
-            <Button className="exclusive-discount-button">Получить доступ</Button>
-          </Link> */}
         </div>
       </div>
       <div className="partner-discount-section">

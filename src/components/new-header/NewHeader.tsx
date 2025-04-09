@@ -41,7 +41,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
         </div>
         <SearchBar isAuthenticated={isAuthenticated} />
         <div className="flex items-center gap-2 pl-4">
-          <Link href={isAuthenticated ? "partner-personal-account" : "#"}>
+          <Link href={isAuthenticated ? "/partner-personal-account" : "#"}>
             <Image 
               src="/icons/Header/account.svg" 
               alt="" 

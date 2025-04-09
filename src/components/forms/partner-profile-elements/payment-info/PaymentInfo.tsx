@@ -1,5 +1,4 @@
 import InputField from "@/components/fields/input/InputField"
-import { SelectField } from "@/components/fields/select/SelectField"
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount";
 import { ChangeEvent } from "react";
 const sectionTitleClasses = "[font-family:Mulish,sans-serif] text-base font-bold text-[#032c28] m-0 p-0";
@@ -11,16 +10,18 @@ interface Props{
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     errors: {
         inn?: string;
-        taxForm?: string;
         currentAccount?: string;
         corAccount?: string;
         bic?: string;
     }
+    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void
+
 }
 const PaymentInfo: React.FC<Props> = ({
     formData,
     handleChange,
-    errors
+    errors,
+    handleBlur
 }) => {
 
     return(
@@ -36,22 +37,23 @@ const PaymentInfo: React.FC<Props> = ({
                             width={262}
                             labelFontSize={16}
                             value={formData.inn}
-                            onChange={handleChange}                                 
+                            onChange={handleChange}
+                            onBlur={handleBlur}                                 
                         />
                         {errors.inn && <p className="text-red-600 text-sm font-medium">{errors.inn}</p>}
                     </div>
                     <div className={inputContainerClasses}>
-                        <SelectField 
-                            name="taxForm"
-                            options={["ОСН","УСН","ЕСХН","ПСН","НПД","АУСН"]}
-                            label="Форма налогооблажения" 
-                            placeholder="Форма налогооблажения" 
+                        <InputField 
+                            label="БИК" 
+                            name="bic"
+                            placeholder="БИК" 
                             width={262}
                             labelFontSize={16}
-                            value={formData.taxForm}
-                            onChange={handleChange}                                   
-                        />
-                        {errors.taxForm && <p className="text-red-600 text-sm font-medium">{errors.taxForm}</p>}                            
+                            value={formData.bic}
+                            onChange={handleChange} 
+                            onBlur={handleBlur}                             
+                        /> 
+                        {errors.bic && <p className="text-red-600 text-sm font-medium">{errors.bic}</p>}                         
                     </div>
                 </div>
                 <div className={fieldsRowClasses}>
@@ -63,7 +65,8 @@ const PaymentInfo: React.FC<Props> = ({
                             width={262}
                             labelFontSize={16}
                             value={formData.currentAccount}
-                            onChange={handleChange}                                   
+                            onChange={handleChange}    
+                            onBlur={handleBlur}                               
                         />
                         {errors.currentAccount && <p className="text-red-600 text-sm font-medium">{errors.currentAccount}</p>}                            
                     </div>
@@ -75,22 +78,11 @@ const PaymentInfo: React.FC<Props> = ({
                             width={262}
                             labelFontSize={16}
                             value={formData.corAccount}
-                            onChange={handleChange}                                   
+                            onChange={handleChange}
+                            onBlur={handleBlur}                                   
                         />
                         {errors.corAccount && <p className="text-red-600 text-sm font-medium">{errors.corAccount}</p>}                            
                     </div>
-                </div>
-                <div className="pt-[20px]">
-                    <InputField 
-                        label="БИК" 
-                        name="bic"
-                        placeholder="БИК" 
-                        width={262}
-                        labelFontSize={16}
-                        value={formData.bic}
-                        onChange={handleChange}                              
-                    /> 
-                    {errors.bic && <p className="text-red-600 text-sm font-medium">{errors.bic}</p>}                        
                 </div>
             </div>        
         </>

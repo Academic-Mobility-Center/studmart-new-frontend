@@ -1,3 +1,5 @@
+import { Option } from "./Option";
+
 export interface PartnerPersonalAccountFormData{
     personalEmail: string;
     password: string;
@@ -7,10 +9,8 @@ export interface PartnerPersonalAccountFormData{
     companyEmail: string;
     industry: string;
     country: string;
-    serviceRegions: string;
-    regions: string[];
+    regions: Option[];
     inn: string;
-    taxForm: string;
     currentAccount: string;
     corAccount: string;
     bic: string;

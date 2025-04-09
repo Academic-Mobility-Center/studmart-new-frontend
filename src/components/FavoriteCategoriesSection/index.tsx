@@ -80,49 +80,18 @@ export default function FavoriteCategoriesSection({
     }
   };
   useEffect(() => {
-    // Определяем, является ли устройство тач-устройством
     isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
     const scrollContainer = scrollRef.current;
-    
-    // Для тачпадов и сенсорных устройств
     const handleTouchStart = () => {
       isTouchDevice.current = true;
     };
-
     if (scrollContainer) {
       scrollContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
-      
       return () => {
         scrollContainer.removeEventListener('touchstart', handleTouchStart);
       };
     }
   }, []);
-  // useEffect(() => {
-  //   const disableScroll = (event: Event) => event.preventDefault();
-
-  //   const handleMouseEnter = () => {
-  //     document.addEventListener("wheel", disableScroll, { passive: false });
-  //   };
-
-  //   const handleMouseLeave = () => {
-  //     document.removeEventListener("wheel", disableScroll);
-  //   };
-
-  //   const scrollContainer = scrollRef.current;
-  //   if (scrollContainer) {
-  //     scrollContainer.addEventListener("mouseenter", handleMouseEnter);
-  //     scrollContainer.addEventListener("mouseleave", handleMouseLeave);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener("wheel", disableScroll);
-  //     if (scrollContainer) {
-  //       scrollContainer.removeEventListener("mouseenter", handleMouseEnter);
-  //       scrollContainer.removeEventListener("mouseleave", handleMouseLeave);
-  //     }
-  //   };
-  // }, []);
 
   return (
     <div className="beauty-health-container">

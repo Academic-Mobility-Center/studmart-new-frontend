@@ -9,7 +9,8 @@ export default function PasswordField({
   value,
   onChange,
   width,
-  labelFontSize 
+  labelFontSize,
+  onBlur
 }: {
   label: string, 
   placeholder: string,
@@ -18,6 +19,8 @@ export default function PasswordField({
   width: number,
   labelFontSize: number;
   onChange?:  (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+
 }){
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     return (
@@ -34,6 +37,7 @@ export default function PasswordField({
             onChange={onChange}
             value={value}
             name={name}
+            onBlur={onBlur}
           />
           <button
             type="button"

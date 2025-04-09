@@ -1,6 +1,9 @@
 import { Combobox } from '@headlessui/react'
 import { useState, useEffect } from 'react'
-
+type Option = {
+  label: string;
+  value: string;
+};
 export function SelectField({
   label,
   options,
@@ -10,43 +13,48 @@ export function SelectField({
   width,
   labelFontSize,
   placeholder,
+  onBlur
 }: {
   label: string
-  options: string[]
+  options: Option[]
   value?: string;
   name: string
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
   width: number
   labelFontSize: number
   placeholder: string;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }) {
-  const [selectedOption, setSelectedOption] = useState(value || '')
+  const [selectedOption, setSelectedOption] = useState<Option | null>(
+    options.find((opt) => opt.value === value) || null
+  );
 
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    setSelectedOption(value || '')
-  }, [value])
+    const match = options.find((opt) => opt.value === value);
+    setSelectedOption(match || null);
+  }, [value, options]);
 
   const filteredOptions =
     query === ''
       ? options
       : options.filter((option) =>
-          option.toLowerCase().includes(query.toLowerCase())
-        )
+          option.label.toLowerCase().includes(query.toLowerCase())
+        );
 
-  const handleChange = (value: string) => {
-    setSelectedOption(value)
-    if (onChange) {
-      const event = {
-        target: {
-          name,
-          value
-        }
-      } as React.ChangeEvent<HTMLSelectElement>
-      onChange(event)
-    }
-  }
+    const handleChange = (selected: Option) => {
+      setSelectedOption(selected);
+      if (onChange) {
+        const event = {
+          target: {
+            name,
+            value: selected.value,
+          },
+        } as React.ChangeEvent<HTMLSelectElement>;
+        onChange(event);
+      }
+    };
 
   return (
     <div className="flex flex-col gap-2" style={{ width: `${width}px` }}>
@@ -59,7 +67,6 @@ export function SelectField({
       <Combobox 
         value={selectedOption}
         onChange={handleChange} 
-        name={name}
       >
         <div className="relative">
           <Combobox.Input
@@ -69,9 +76,11 @@ export function SelectField({
               selectedOption ? 'text-[#032c28]' : 'text-gray-500 placeholder:text-[#888888]' 
             } 
             `}
-            displayValue={(option: string) => option}
+            displayValue={(option: Option) => option?.label || ''}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
+            name={name}
+            onBlur={onBlur}
           />
           <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
             <svg
@@ -100,9 +109,9 @@ export function SelectField({
                 Ничего не найдено
               </div>
             ) : (
-              filteredOptions.map((option, index) => (
+              filteredOptions.map((option) => (
                 <Combobox.Option
-                  key={index}
+                  key={option.value}
                   value={option}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-4 pr-4 ${
@@ -110,7 +119,7 @@ export function SelectField({
                     }`
                   }
                 >
-                  {option}
+                  {option.label}
                 </Combobox.Option>
               ))
             )}

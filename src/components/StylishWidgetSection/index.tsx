@@ -14,6 +14,7 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   const [promoCardsData, setPromoCardsData] = useState([])
   // Сюда фетч запрос на карточки
   // useEffect(() => {},[])
+  
   const [promoCards] = useState([
     {
       id: 1,

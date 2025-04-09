@@ -1,6 +1,6 @@
+import { Option } from '@/types/Option'
 import { Combobox } from '@headlessui/react'
 import { useState, useEffect } from 'react'
-
 export function MultipleSelectField({
   label,
   options,
@@ -11,55 +11,55 @@ export function MultipleSelectField({
   labelFontSize,
   placeholder,
   isNeedRadio,
+  onBlur,
+  allRegions
 }: {
   label: string
-  options: string[]
-  value?: string[]
+  options: Option[]
+  value?: Option[]
   name: string
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
   width: number
   labelFontSize: number
   placeholder: string
   isNeedRadio?: boolean
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  allRegions: boolean
+
 }) {
   const [query, setQuery] = useState('')
-  const [showTags, setShowTags] = useState<boolean>(false)
-  const [regionMode, setRegionMode] = useState<'all' | 'specific'>('all')
-
+  const [showTags, setShowTags] = useState(!allRegions)
+  const [regionMode, setRegionMode] = useState<'all' | 'specific'>(allRegions ? 'all' : 'specific');
   const isDisabled = isNeedRadio ? regionMode === 'all' : false
 
-  const [selectedMultiple, setSelectedMultiple] = useState<string[]>(
-    Array.isArray(value) ? value : []
-  )
+  const [selectedMultiple, setSelectedMultiple] = useState<Option[]>([])
+  
+  useEffect(() => {
+    if (allRegions) {
+      setSelectedMultiple(options);
+    } else {
+      setSelectedMultiple(Array.isArray(value) ? value : []);
+    }
+  }, [allRegions, options, value]);
 
   useEffect(() => {
     if (Array.isArray(value)) {
-      setSelectedMultiple(value)
+      const selected = options.filter((opt) =>
+        value.some((v) => v.value === opt.value)
+      )
+      setSelectedMultiple(selected)
     }
-  }, [value])
-  // const [selectedMultiple, setSelectedMultiple] = useState<string[]>([])
-
-  // useEffect(() => {
-  //   if (Array.isArray(value)) {
-  //     setSelectedMultiple(value)
-  //     if (value.length === options.length) {
-  //       setRegionMode('all')
-  //       setShowTags(false)
-  //     } else {
-  //       setRegionMode('specific')
-  //       setShowTags(true)
-  //     }
-  //   }
-  // }, [value, options])
+  }, [value, options])
+  
 
   const filteredOptions =
     query === ''
       ? options
       : options.filter((option) =>
-          option.toLowerCase().includes(query.toLowerCase())
-        )
+          option.label.toLowerCase().includes(query.toLowerCase())
+        );
 
-  const handleMultipleChange = (val: string[]) => {
+  const handleMultipleChange = (val: Option[]) => {
     setSelectedMultiple(val)
     if (onChange) {
       const event = {
@@ -74,8 +74,8 @@ export function MultipleSelectField({
   const handleRegionModeChange = (mode: 'all' | 'specific') => {
     if (mode === regionMode) return
     setRegionMode(mode);
+
     if (mode === 'all') {
-      setShowTags(false)
       setSelectedMultiple(options);
       if (onChange) {
         const events = [
@@ -106,7 +106,6 @@ export function MultipleSelectField({
     }
     if (mode === 'specific')
        {
-      setShowTags(true)
       setSelectedMultiple([])      
       if (onChange) {
         const events = [
@@ -183,6 +182,7 @@ export function MultipleSelectField({
           placeholder={placeholder}
           setQuery={setQuery}
           displayValue={(value: string[]) => value.join(', ')}
+          onBlur={onBlur}
         />
           {regionMode === 'specific' && selectedMultiple.length > 0 && ( 
             <SelectedTags
@@ -208,12 +208,14 @@ function ComboboxInputBase({
   placeholder,
   setQuery,
   displayValue,
+  onBlur
 }: {
   value: any
   isDisabled: boolean
   placeholder: string
   setQuery: (val: string) => void
-  displayValue: (val: any) => string
+  displayValue: (val: any) => string,
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
 }) {
   return (
     <div className="relative">
@@ -229,6 +231,7 @@ function ComboboxInputBase({
         onChange={(event) => setQuery(event.target.value)}
         placeholder={placeholder}
         disabled={isDisabled}
+        onBlur={onBlur}
       />
       <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
         <svg
@@ -253,8 +256,8 @@ function ComboboxOptionsList({
   options,
   selected,
 }: {
-  options: string[]
-  selected: string[]
+  options: Option[]
+  selected: Option[]
 }) {
   return (
     <Combobox.Options
@@ -269,9 +272,9 @@ function ComboboxOptionsList({
           Ничего не найдено
         </div>
       ) : (
-        options.map((option, index) => (
+        options.map((option) => (
           <Combobox.Option
-            key={index}
+            key={option.value}
             value={option}
             className={({ active, selected }) =>
               `relative cursor-default select-none py-2 pl-4 pr-4 ${
@@ -279,7 +282,7 @@ function ComboboxOptionsList({
               } ${selected ? 'font-semibold' : ''}`
             }
           >
-            {option}
+            {option.label}
           </Combobox.Option>
         ))
       )}
@@ -291,8 +294,8 @@ function SelectedTags({
   selected,
   onRemove,
 }: {
-  selected: string[]
-  onRemove: (val: string) => void
+  selected: Option[]
+  onRemove: (val: Option) => void
 }) {
   if (selected.length === 0) return null
 
@@ -300,10 +303,10 @@ function SelectedTags({
     <div className="flex flex-wrap gap-2 mt-2">
       {selected.map((item) => (
         <div
-          key={item}
+          key={item.value}
           className="flex items-center gap-1 bg-[#032C28] text-white text-sm px-3 py-1 rounded-full"
         >
-          {item}
+          {item.label}
           <button
             type="button"
             onClick={() => onRemove(item)}

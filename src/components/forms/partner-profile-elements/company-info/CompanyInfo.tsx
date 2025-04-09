@@ -3,7 +3,10 @@ import { MultipleSelectField } from "@/components/fields/multiple-select/Multipl
 import { SelectField } from "@/components/fields/select/SelectField";
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount";
 import { ChangeEvent } from "react";
-
+interface SelectOption {
+    id: number;
+    name: string;
+}
 interface Props{
     formData: PartnerPersonalAccountFormData
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -16,6 +19,10 @@ interface Props{
         country?: string;
         regions?: string[];
     }
+    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    industryOptions: SelectOption[];
+    countryOptions: SelectOption[];
+    regionOptions: SelectOption[];
 }
 const sectionTitleClasses = "[font-family:Mulish,sans-serif] text-base font-bold text-[#032c28] m-0 p-0";
 const fieldsRowClasses = "flex justify-center items-start flex-row mt-5 gap-[24px]";
@@ -24,7 +31,11 @@ const inputContainerClasses = "box-border flex justify-start items-start flex-co
 const CompanyInfo: React.FC<Props> = ({
     formData,
     handleChange,
-    errors
+    errors,
+    handleBlur,
+    industryOptions,
+    countryOptions,
+    regionOptions
 }) => {
     return(<>
                 <div className="pt-[20px] ">
@@ -38,7 +49,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 width={262}
                                 labelFontSize={16}
                                 value={formData.companyName}
-                                onChange={handleChange}                                
+                                onChange={handleChange}   
+                                onBlur={handleBlur}                             
                             />
                             {errors.companyName && <p className="text-red-600 text-sm font-medium">{errors.companyName}</p>}                              
                         </div>
@@ -50,7 +62,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 width={262}
                                 labelFontSize={16}
                                 value={formData.site}
-                                onChange={handleChange}                                  
+                                onChange={handleChange}
+                                onBlur={handleBlur}                                  
                             />
                             {errors.site && <p className="text-red-600 text-sm font-medium">{errors.site}</p>}                            
                         </div>
@@ -64,7 +77,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 width={262}
                                 labelFontSize={16}
                                 value={formData.phoneNumber}
-                                onChange={handleChange}                                
+                                onChange={handleChange}
+                                onBlur={handleBlur}                                
                             />
                             {errors.phoneNumber && <p className="text-red-600 text-sm font-medium">{errors.phoneNumber}</p>}                            
                         </div>
@@ -76,7 +90,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 width={262}
                                 labelFontSize={16}
                                 value={formData.companyEmail}
-                                onChange={handleChange}                                  
+                                onChange={handleChange}
+                                onBlur={handleBlur}                                  
                             />
                             {errors.companyEmail && <p className="text-red-600 text-sm font-medium">{errors.companyEmail}</p>}                                                        
                         </div>
@@ -85,26 +100,28 @@ const CompanyInfo: React.FC<Props> = ({
                         <div className={inputContainerClasses}>
                             <SelectField 
                                 label="Отрасль" 
-                                options={['123','124']}
+                                options={industryOptions.map(option => ({ value: option.id.toString(), label: option.name }))}
                                 name="industry"
                                 placeholder="Отрасль" 
                                 width={262}
                                 labelFontSize={16}
                                 value={formData.industry}
-                                onChange={handleChange}                                  
+                                onChange={handleChange}
+                                onBlur={handleBlur}                                  
                             />
                             {errors.industry && <p className="text-red-600 text-sm font-medium">{errors.industry}</p>}                            
                         </div>
                         <div className={inputContainerClasses}>
                             <SelectField 
                                 label="Страна" 
-                                options={['РФ', 'США', 'ОАЭ']}
+                                options={countryOptions.map(option => ({ value: option.id.toString(), label: option.name }))}
                                 name="country"
                                 placeholder="Страна" 
                                 width={262}
                                 labelFontSize={16}
                                 value={formData.country}
-                                onChange={handleChange}                                  
+                                onChange={handleChange} 
+                                onBlur={handleBlur}                                 
                             />
                             {errors.country && <p className="text-red-600 text-sm font-medium">{errors.country}</p>}                            
                         </div>
@@ -112,14 +129,16 @@ const CompanyInfo: React.FC<Props> = ({
                     <div className="pt-[20px] w-[200px]">
                         <MultipleSelectField 
                             label="Регионы предоставления услуг" 
-                            options={['НСК','СПБ', "МСК", "ЕКБ"]}
+                            options={regionOptions.map(option => ({ value: option.id.toString(), label: option.name }))}
                             name="regions"
                             placeholder="" 
                             width={548}
                             labelFontSize={16}
                             isNeedRadio
                             value={formData.regions}
-                            onChange={handleChange}                              
+                            onChange={handleChange}
+                            onBlur={handleBlur}        
+                            allRegions={formData.allRegions}                      
                         />   
                         {errors.regions && <p className="text-red-600 text-sm font-medium">{errors.regions}</p>}                        
                     </div>

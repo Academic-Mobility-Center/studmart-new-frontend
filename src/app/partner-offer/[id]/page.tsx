@@ -34,24 +34,6 @@ const PartnerOffer = () => {
           url: "https://shoko.ru/",
           imageUrl: "/icons/partners/chocolate.png"
         },
-        {
-          id: "2",
-          heading: "Золотое Яблоко",
-          subHeading: "Сеть парфюмерно-косметических магазинов",
-          description: "Откройте для себя мир красоты со скидками на любимые бренды косметики и парфюмерии!",
-          url: "https://goldapple.ru/",
-          imageUrl: "/icons/partners/golden-apple.png"
-
-        },
-        {
-          id: "3",
-          heading: "Рив Гош",
-          subHeading: "Парфюмерия и косметика",
-          description: "Эксклюзивные предложения на премиальную косметику и парфюмерию в магазинах Рив Гош!",
-          url: "https://rivegauche.ru/",
-          imageUrl: "/icons/partners/cosmetic.png"
-
-        }
     ];    
 
     const currentOffer = partnerOffers.find(offer => offer.id === id);
@@ -102,3 +84,22 @@ const PartnerOffer = () => {
 };
 
 export default PartnerOffer;
+
+        // {
+        //   id: "2",
+        //   heading: "Золотое Яблоко",
+        //   subHeading: "Сеть парфюмерно-косметических магазинов",
+        //   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt ex id consequat sagittis. Proin dolor est, rhoncus eu dolor nec, posuere dictum quam. Donec et cursus eros, et mattis lectus. Nunc non lectus molestie, porttitor leo vel, malesuada diam. Praesent pretium tellus dolor, et hendrerit nunc feugiat vel. Ut rutrum ullamcorper orci, non facilisis metus tristique vitae. Praesent scelerisque lectus interdum lectus ornare bibendum. In ac lacus molestie, molestie sapien in, aliquet justo. Nam consectetur eleifend risus in ornare. Pellentesque accumsan auctor eros, eu convallis dolor efficitur ut. Sed eu vulputate eros. In ac dapibus quam. Maecenas mi tortor, aliquet ut magna nec, bibendum aliquet velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam blandit turpis nulla, nec egestas augue mattis a. Nunc blandit feugiat lacus aliquet tempus",
+        //   url: "https://goldapple.ru/",
+        //   imageUrl: "/icons/partners/golden-apple.png"
+
+        // },
+        // {
+        //   id: "3",
+        //   heading: "Рив Гош",
+        //   subHeading: "Парфюмерия и косметика",
+        //   description: "Эксклюзивные предложения на премиальную косметику и парфюмерию в магазинах Рив Гош!",
+        //   url: "https://rivegauche.ru/",
+        //   imageUrl: "/icons/partners/cosmetic.png"
+
+        // }
