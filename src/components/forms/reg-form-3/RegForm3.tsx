@@ -4,36 +4,48 @@ import { SelectField } from "@/components/fields/select/SelectField";
 import RegFormProps from "@/types/RegFormProps";
 import { useState } from "react";
 import Link from 'next/link'
+import { transformToOptions } from "@/utils/dataTransform";
+
+const univercityOptions = [
+    { id: 1, name: "НГТУ" },
+    { id: 3, name: "НГУ" },
+    { id: 5, name: "ТГУ" },
+];
+const courceOptions = [
+    { id: 1, name: "Первый" },
+    { id: 2, name: "Второй" },
+    { id: 123, name: "Третий" },
+];
 
 const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick}) => {
     const [errors, setErrors] = useState<{
         profession?: string, 
         file?: string, 
-        course?: string,
-        university?: string, 
+        course?: string[],
+        university?: string[], 
     }>({
         profession: "",
         file: "",
-        course: "",
-        university: ""
+        course: undefined,
+        university: undefined
     });
     const validate = () => {
         const newErrors: {
             profession?: string, 
             file?: string, 
-            course?: string,
-            university?: string
+            course?: undefined,
+            university?: undefined
         } ={};
         const nameRegex = /^[A-Za-zА-Яа-яЁё]+$/;
         if (!formData.profession){
             newErrors.profession = "Введите свою профессию";
         }
-        if (!formData.course){
-            newErrors.course = "Выберете ваш курс обучения";
-        }
-        if (!formData.university){
-            newErrors.university = "Выберете свой университет";
-        }
+        // if (!formData.course){
+        //     newErrors.course = "Выберете ваш курс обучения";
+        // }
+        // if (!formData.university){
+        //     newErrors.university = "Выберете свой университет";
+        // }
         if (!nameRegex.test(formData.profession)){
             newErrors.profession = "Имя должно содержать только буквы без пробелов";
         }
@@ -67,9 +79,9 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
             <div className="flex flex-col gap-1">
                 <SelectField 
                     label="Университет" 
-                    options={["НГУ", "НГТУ", "МГУ"]} 
+                    options={transformToOptions(univercityOptions)} 
                     name="university" 
-                    value={formData.university || ""} 
+                    value={formData.university ?? undefined} 
                     onChange={handleChange}
                     width={350}
                     labelFontSize={14}     
@@ -92,9 +104,9 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
             <div className="flex flex-col gap-1">
                 <SelectField 
                     label="Курс" 
-                    options={["Первый", "Второй", "Третий"]}
+                    options={transformToOptions(courceOptions)}
                     name="course"
-                    value={formData.course || ""}
+                    value={formData.course ?? undefined}
                     onChange={handleChange}
                     width={350}
                     labelFontSize={14}     

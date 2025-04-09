@@ -2,6 +2,7 @@ import InputField from "@/components/fields/input/InputField";
 import { MultipleSelectField } from "@/components/fields/multiple-select/MultipleSelectField";
 import { SelectField } from "@/components/fields/select/SelectField";
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount";
+import { transformToOptions } from "@/utils/dataTransform";
 import { ChangeEvent } from "react";
 interface SelectOption {
     id: number;
@@ -15,8 +16,8 @@ interface Props{
         site?: string;
         phoneNumber?: string;
         companyEmail?: string;
-        industry?: string;
-        country?: string;
+        industry?: string[];
+        country?: string[];
         regions?: string[];
     }
     handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -100,7 +101,7 @@ const CompanyInfo: React.FC<Props> = ({
                         <div className={inputContainerClasses}>
                             <SelectField 
                                 label="Отрасль" 
-                                options={industryOptions.map(option => ({ value: option.id.toString(), label: option.name }))}
+                                options={transformToOptions(industryOptions)}
                                 name="industry"
                                 placeholder="Отрасль" 
                                 width={262}
@@ -114,7 +115,7 @@ const CompanyInfo: React.FC<Props> = ({
                         <div className={inputContainerClasses}>
                             <SelectField 
                                 label="Страна" 
-                                options={countryOptions.map(option => ({ value: option.id.toString(), label: option.name }))}
+                                options={transformToOptions(countryOptions)}
                                 name="country"
                                 placeholder="Страна" 
                                 width={262}
@@ -129,7 +130,7 @@ const CompanyInfo: React.FC<Props> = ({
                     <div className="pt-[20px] w-[200px]">
                         <MultipleSelectField 
                             label="Регионы предоставления услуг" 
-                            options={regionOptions.map(option => ({ value: option.id.toString(), label: option.name }))}
+                            options={transformToOptions(regionOptions)}
                             name="regions"
                             placeholder="" 
                             width={548}

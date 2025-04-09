@@ -4,7 +4,12 @@ import { SelectField } from "@/components/fields/select/SelectField";
 import RegFormProps from "@/types/RegFormProps";
 import { useState } from "react";
 import Link from 'next/link'
+import { transformToOptions } from "@/utils/dataTransform";
 
+const genderOptions = [
+    { id: 1, name: "Мужской" },
+    { id: 2, name: "Женский" },
+];
 
 const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick}) => {
 
@@ -12,12 +17,12 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
         name?: string; 
         fullname?: string;
         date?: string;
-        gender?: string;
+        gender?: string[];
     }>({
         name: "",
         fullname: "",
         date: "",
-        gender: ""
+        gender: undefined
     });
 
     const validate = () => {
@@ -25,7 +30,7 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
             name?: string, 
             fullname?: string,
             date?: string,
-            gender?: string
+            gender?: undefined;
         } ={};
 
         const selectedDate = formData?.date ? new Date(formData?.date) : null;
@@ -43,9 +48,9 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
             newErrors.date = "Введите дату рождения"
         }
 
-        if(!formData.gender){
-            newErrors.gender = "Выберете пол"
-        }
+        // if(!formData.gender){
+        //     newErrors.gender = "Выберете пол"
+        // }
 
         if (!nameRegex.test(formData.name)){
             newErrors.name = "Имя должно содержать только буквы без пробелов";
@@ -108,9 +113,9 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
 
             <SelectField 
                 label="Пол" 
-                options={["Мужской", "Женский"]} 
+                options={transformToOptions(genderOptions)} 
                 name="gender"
-                value={formData.gender || ""}
+                value={formData.gender ?? undefined} 
                 onChange={handleChange}
                 width={350}
                 labelFontSize={14}                

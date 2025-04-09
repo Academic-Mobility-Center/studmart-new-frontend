@@ -1,3 +1,5 @@
+import { Option } from "./Option";
+
 export default interface RegistrationFormData{
     email: string;
     password: string;
@@ -5,10 +7,10 @@ export default interface RegistrationFormData{
     promocode: string;
     name: string;
     fullname: string;
-    gender: string;
+    gender: Option | undefined;
     date: Date | null;
-    university: string;
+    university: Option | undefined;
     profession: string;
-    course: string;
+    course: Option | undefined;
     file: File | null;
 }

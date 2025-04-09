@@ -7,8 +7,8 @@ export interface PartnerPersonalAccountFormData{
     site: string;
     phoneNumber: string;
     companyEmail: string;
-    industry: string;
-    country: string;
+    industry: Option;
+    country: Option;
     regions: Option[];
     inn: string;
     currentAccount: string;

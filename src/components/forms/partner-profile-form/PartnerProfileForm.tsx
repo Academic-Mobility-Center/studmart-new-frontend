@@ -5,10 +5,12 @@ import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
 import { Option } from "@/types/Option"
+import { transformToOption, transformToOptions } from "@/utils/dataTransform"
 
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
 const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
+
 const industryOptions = [
     { id: 1, name: "ИТ-услуги" },
     { id: 2, name: "Финансы" },
@@ -26,6 +28,13 @@ const regionOptions = [
     { id: 3, name: "МСК" },
     { id: 4, name: "ЕКБ" },
 ];
+
+const regionsValues = [
+    { name: "НСК", id: 1 },
+    { name: "СПБ", id: 2 },
+]
+const industry = { id: 1, name: "ИТ-услуги" }
+const country ={ id: 1, name: "Россия" }
 
 const validateField = (
     name: string,
@@ -80,7 +89,13 @@ const validateField = (
     }
 };
 
+
 const PartnerProfileForm: React.FC = () => {
+
+
+    const regions = transformToOptions(regionsValues)
+    const industryValue = transformToOption(industry)
+    const countryValue = transformToOption(country)
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
         personalEmail: "test.partner@example.com",
         password: "securePass123",
@@ -88,12 +103,9 @@ const PartnerProfileForm: React.FC = () => {
         site: "https://test-company.ru",
         phoneNumber: "+7 (912) 345-67-89",
         companyEmail: "info@test-company.ru",
-        industry: "ИТ-услуги",
-        country: "Россия",
-        regions: [
-            { label: "НСК", value: "1" },
-            { label: "СПБ", value: "2" },
-          ],
+        industry: industryValue,
+        country: countryValue,
+        regions: regions,
         inn: "7701234567",
         currentAccount: "40702810900000012345",
         corAccount: "30101810400000000225",
@@ -109,8 +121,8 @@ const PartnerProfileForm: React.FC = () => {
         site?: string;
         phoneNumber?: string,
         companyEmail?: string,
-        industry?: string,
-        country?: string,
+        industry?: string[],
+        country?: string[],
         regions?: string[],
         inn?: string,
         currentAccount?: string,
@@ -123,8 +135,8 @@ const PartnerProfileForm: React.FC = () => {
         site: "",
         phoneNumber: "",
         companyEmail: "",
-        industry: "",
-        country: "",
+        industry: [],
+        country: [],
         regions: [],
         inn: "",
         currentAccount: "",
@@ -158,6 +170,7 @@ const PartnerProfileForm: React.FC = () => {
     };    
 
     const handleSubmitForm = (event: React.FormEvent) => {
+        console.log("Отправка формы:", formData); 
         event.preventDefault();
 
         let hasErrors = false;
@@ -178,39 +191,38 @@ const PartnerProfileForm: React.FC = () => {
         console.log("Отправка формы:", formData);     
     };    
 
-
     return(<>
-    <form onSubmit={handleSubmitForm} className={profileCardClasses}>
-        <div className="grow-0 shrink-0 basis-auto">
-            <h3 className={profileTitleClasses}>Профиль партнера</h3>
-            <div className="mt-5">
-                <LoginInfo 
-                    formData={formData} 
-                    handleChange={handleChange} 
-                    errors={errors} 
-                    handleBlur={handleBlur}
-                />
-                <CompanyInfo 
-                    formData={formData} 
-                    handleChange={handleChange} 
-                    errors={errors} 
-                    handleBlur={handleBlur}
-                    industryOptions={industryOptions}
-                    countryOptions={countryOptions}
-                    regionOptions={regionOptions}
-                />
-                <PaymentInfo 
-                    formData={formData} 
-                    handleChange={handleChange} 
-                    errors={errors} 
-                    handleBlur={handleBlur}
-                />
-            </div>
-        </div>   
-        <Button type="submit" className={saveButtonClasses}>
-            Сохранить
-        </Button>
-    </form>    
+        <form onSubmit={handleSubmitForm} className={profileCardClasses}>
+            <div className="grow-0 shrink-0 basis-auto">
+                <h3 className={profileTitleClasses}>Профиль партнера</h3>
+                <div className="mt-5">
+                    <LoginInfo 
+                        formData={formData} 
+                        handleChange={handleChange} 
+                        errors={errors} 
+                        handleBlur={handleBlur}
+                    />
+                    <CompanyInfo 
+                        formData={formData} 
+                        handleChange={handleChange} 
+                        errors={errors} 
+                        handleBlur={handleBlur}
+                        industryOptions={industryOptions}
+                        countryOptions={countryOptions}
+                        regionOptions={regionOptions}
+                    />
+                    <PaymentInfo 
+                        formData={formData} 
+                        handleChange={handleChange} 
+                        errors={errors} 
+                        handleBlur={handleBlur}
+                    />
+                </div>
+            </div>   
+            <Button type="submit" className={saveButtonClasses}>
+                Сохранить
+            </Button>
+        </form>    
     </>)
 }
 
