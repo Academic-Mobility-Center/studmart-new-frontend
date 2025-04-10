@@ -13,8 +13,8 @@ const logoutButtonClass =
   "border bg-[#f8f8f8] font-mulish text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] w-full h-12 cursor-pointer rounded-[15px] border-solid border-[rgba(0,0,0,0.20)] hover:bg-[#efefef] transition-colors";
 
 const menuItems = [
-  { icon: "id-card", label: "Студмарт ID", href: "/partner-personal-account/profile" },
-  { icon: "profile", label: "Личная информация", href: "/partner-personal-account/offers" },
+  { icon: "id-card", label: "Студмарт ID", href: "/student-personal-account/id" },
+  { icon: "profile", label: "Личная информация", href: "/student-personal-account/profile" },
   { icon: "link", label: " Реферальная программа", href: "/partner-personal-account/statistics" },
   { icon: "admin-pannel-settings", label: "Политика персональных данных", href: "/partner-personal-account/documents" },
   {icon: "notifications-settings", label: "Настройка уведомлений", href: "/partner-personal-account/documents"},
