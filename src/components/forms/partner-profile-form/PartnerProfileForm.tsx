@@ -1,6 +1,6 @@
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount"
 import { Button } from "@mui/base"
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
@@ -89,7 +89,6 @@ const validateField = (
     }
 };
 
-
 const PartnerProfileForm: React.FC = () => {
 
 
@@ -157,17 +156,55 @@ const PartnerProfileForm: React.FC = () => {
         }));
     };    
 
-    const handleChange = (event: any) => {
-        const { name, value, type, checked } = event.target;
-      
-        const newValue =
-          type === 'checkbox' || type === 'radio' ? checked : value;
-      
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value, type, files } = event.target as HTMLInputElement;
+    
+        let newValue: string | File | Date | any = value;
+    
+        if (type === "date") {
+            newValue = new Date(value);
+        } else if (type === "file" && files) {
+            newValue = files[0];
+        }
+    
+        if (name === "industry") {
+            const selectedIndustry = industryOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+    
+        if (name === "country") {
+            const selectedCountry = countryOptions.find(option => option.id.toString() === value);
+            newValue = selectedCountry
+                ? { value: selectedCountry.id.toString(), label: selectedCountry.name }
+                : null;
+        }
+    
+        if (name === "regions") {
+            newValue = Array.isArray(value)
+                ? value.map((regionId: string) => {
+                    const region = regionOptions.find(option => option.id.toString() === regionId);
+                    return region ? { value: region.id.toString(), label: region.name } : null;
+                  }).filter(Boolean)
+                : value;
+        }
+    
         setFormData((prevData) => ({
-          ...prevData,
-          [name]: name === 'regions' ? (value as Option[]) : newValue
+            ...prevData,
+            [name]: newValue,
         }));
-    };    
+    
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: validateField(name, newValue, {
+                ...formData,
+                [name]: newValue,
+            }),
+        }));
+    };
+    
 
     const handleSubmitForm = (event: React.FormEvent) => {
         console.log("Отправка формы:", formData); 

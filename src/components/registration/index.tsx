@@ -42,30 +42,6 @@ export default function RegistraionForm(){
         email: ""
     });
 
-    // const handleChangeForm = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     const { name, value, type, files } = event.target as HTMLInputElement;
-    
-    //     let newValue: string | Date | File | number | null = value; // Обновление типа
-    
-    //     if (type === "date") {
-    //         newValue = new Date(value);
-    //     } else if (type === "file" && files) {
-    //         newValue = files[0];
-    //     }
-    
-    //     if (name === "gender") {
-    //         // Находим объект по значению
-    //         const selectedOption = genderOptions.find(option => option.id.toString() === value);
-    //         newValue = selectedOption ? selectedOption.id : null; // сохраняем id выбранного значения
-    //     }
-    
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         [name]: newValue,
-    //     }));
-    // };
-    
-
     const handleChangeForm = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type, files } = event.target as HTMLInputElement;
         

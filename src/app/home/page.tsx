@@ -9,11 +9,12 @@ import ImageGalleryWidget from "@/components/ImageGalleryWidget/ImageGalleryWidg
 import StylishShoppingSection from "@/components/StylishShoppingSection";
 
 export default function Home() {
-    const { isAuthenticated, isLoading } = useAuth();
+    const { isAuthenticated, isLoading, role } = useAuth();
 
     if (isLoading) {
       return <div>Загрузка...</div>;
     }
+    console.log(role)
     return (
         <div className="main-content">
             <div className="content">

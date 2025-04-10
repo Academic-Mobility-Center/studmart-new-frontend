@@ -3,19 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { Dialog } from "@headlessui/react";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
 interface NewHeaderProps {
   isAuthenticated: boolean;
 }
 
 export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
+  const { role } = useAuth();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  return (
+  const isAuth = (isAuthenticated && role && role === "partner") 
+  ? "/partner-personal-account" 
+  : isAuthenticated 
+  ? "/student-personal-account" 
+  : "#";
+    return (
     <header className="w-7xl bg-[#8fe248] flex items-center justify-start h-20 pl-[40px] rounded-b-[30px]">
       <div className="w-[320px]">
         <Link href="/home">
@@ -41,7 +47,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
         </div>
         <SearchBar isAuthenticated={isAuthenticated} />
         <div className="flex items-center gap-2 pl-4">
-          <Link href={isAuthenticated ? "/partner-personal-account" : "#"}>
+          <Link href={isAuth}>
             <Image 
               src="/icons/Header/account.svg" 
               alt="" 
