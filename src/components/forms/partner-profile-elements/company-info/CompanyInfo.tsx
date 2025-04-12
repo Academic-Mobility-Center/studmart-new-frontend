@@ -2,12 +2,10 @@ import InputField from "@/components/fields/input/InputField";
 import { MultipleSelectField } from "@/components/fields/multiple-select/MultipleSelectField";
 import { SelectField } from "@/components/fields/select/SelectField";
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount";
+import { SelectOption } from "@/types/SelectOption";
 import { transformToOptions } from "@/utils/dataTransform";
 import { ChangeEvent } from "react";
-interface SelectOption {
-    id: number;
-    name: string;
-}
+
 interface Props{
     formData: PartnerPersonalAccountFormData
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;

@@ -1,7 +1,7 @@
 "use client";
 import CompanyInfo from '@/components/forms/partner-profile-elements/company-info/CompanyInfo';
-import LoginInfo from '@/components/forms/partner-profile-elements/login-info/LoginInfo';
 import PaymentInfo from '@/components/forms/partner-profile-elements/payment-info/PaymentInfo';
+import LoginInfo from '@/components/forms/student-profile-elements/login-info/LoginInfo';
 import { PartnerPersonalAccountFormData } from '@/types/PartnerPesonalAccount';
 import { StudentFormData } from '@/types/StudentProfileData';
 import { transformToOption, transformToOptions } from '@/utils/dataTransform';
@@ -46,6 +46,9 @@ const validateField = (
         case "email":
             return /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(value as string)
                 ? undefined : "Некорректный email";
+        case "password":
+            return (value as string).length >= 6 ? undefined : "Пароль должен содержать минимум 6 символов";            
+                
         default:
             return undefined;
     }
@@ -174,27 +177,12 @@ const ProfilePage: React.FC = () => {
             <div className="grow-0 shrink-0 basis-auto">
                 <h3 className={profileTitleClasses}>Личная информация</h3>
                 <div className="mt-5">
-                    {/* <LoginInfo 
-                        formData={formData} 
-                        handleChange={handleChange} 
-                        errors={errors} 
+                    <LoginInfo
+                        formData={formData}
+                        handleChange={handleChange}
                         handleBlur={handleBlur}
+                        errors={errors}
                     />
-                    <CompanyInfo
-                        formData={formData} 
-                        handleChange={handleChange} 
-                        errors={errors} 
-                        handleBlur={handleBlur}
-                        industryOptions={industryOptions}
-                        countryOptions={countryOptions}
-                        regionOptions={regionOptions}
-                    />
-                    <PaymentInfo 
-                        formData={formData} 
-                        handleChange={handleChange} 
-                        errors={errors} 
-                        handleBlur={handleBlur}
-                    /> */}
                 </div>
             </div>   
             <Button type="submit" className={saveButtonClasses}>
