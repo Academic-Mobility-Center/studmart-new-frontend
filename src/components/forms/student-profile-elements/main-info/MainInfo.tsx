@@ -29,8 +29,6 @@ interface Props{
     familyStatusOptions: SelectOption[];
     isWorkOptions: SelectOption[];
     languageProfiencyOptions: SelectOption[];
-
-
 }
 const sectionTitleClasses = "[font-family:Mulish,sans-serif] text-base font-bold text-[#032c28] m-0 p-0";
 const fieldsRowClasses = "flex justify-center items-start flex-row mt-5 gap-[24px]";
@@ -84,26 +82,27 @@ const MainInfo: React.FC<Props> = ({
                     <DateField
                         name="date"
                         label="Дата рождения" 
-                        // width={262}
-                        // labelFontSize={16}
-                        value={formData.date}
-                        onChange={handleChange}
-                        // onBlur={handleBlur}
-                    />
-                    {errors.date && <p className="text-red-600 text-sm font-medium">{errors.date}</p>}                            
-                </div>
-                <div className={inputContainerClasses}>
-                    <InputField 
-                        name="lastName"
-                        label="Фамилия" 
-                        placeholder="Фамилия" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.lastName}
+                        value={formData?.date instanceof Date ? formData?.date?.toISOString().split("T")[0] : ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
-                    {errors.lastName && <p className="text-red-600 text-sm font-medium">{errors.lastName}</p>}                          
+                    {errors.date && <p className="text-red-600 text-sm font-medium">{errors.date}</p>}                            
+                </div>  
+                <div className={inputContainerClasses}>
+                    <SelectField
+                        options={transformToOptions(genderOptions)}
+                        name="gender"
+                        label="Пол" 
+                        placeholder="Пол" 
+                        width={262}
+                        labelFontSize={16}
+                        value={formData.gender}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    />
+                    {errors.gender && <p className="text-red-600 text-sm font-medium">{errors.gender}</p>}                          
                 </div>
             </div>
             <div className={fieldsRowClasses}>
@@ -165,7 +164,20 @@ const MainInfo: React.FC<Props> = ({
                     />
                     {errors.isWork && <p className="text-red-600 text-sm font-medium">{errors.isWork}</p>}                           
                 </div>
-            </div>                                    
+            </div> 
+            <div>
+                <SelectField
+                    name="languageProfiency"
+                    value={formData.languageProfiency}
+                    options={transformToOptions(languageProfiencyOptions)}
+                    width={262}
+                    labelFontSize={16}
+                    label="Владение иностранными языками"
+                    placeholder="Владение иностранными языками"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                />
+            </div>                                   
         </div>
     )
 }
