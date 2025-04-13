@@ -79,19 +79,38 @@ export default function FavoriteCategoriesSection({
       scrollRef.current.scrollLeft += event.deltaY;
     }
   };
+  
   useEffect(() => {
     isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  
     const scrollContainer = scrollRef.current;
-    const handleTouchStart = () => {
-      isTouchDevice.current = true;
+    if (!scrollContainer || isTouchDevice.current) return;
+  
+    const handleWheel = (event: WheelEvent) => {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+  
+      const atStart = scrollLeft === 0;
+      const atEnd = scrollLeft + clientWidth >= scrollWidth;
+  
+      const scrollingLeft = event.deltaY < 0;
+      const scrollingRight = event.deltaY > 0;
+  
+      const prevent =
+        (scrollingLeft && !atStart) || (scrollingRight && !atEnd);
+  
+      if (prevent) {
+        event.preventDefault();
+        scrollContainer.scrollLeft += event.deltaY * 1.5;
+      }
     };
-    if (scrollContainer) {
-      scrollContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
-      return () => {
-        scrollContainer.removeEventListener('touchstart', handleTouchStart);
-      };
-    }
+  
+    scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
+  
+    return () => {
+      scrollContainer.removeEventListener("wheel", handleWheel);
+    };
   }, []);
+  
 
   return (
     <div className="beauty-health-container">

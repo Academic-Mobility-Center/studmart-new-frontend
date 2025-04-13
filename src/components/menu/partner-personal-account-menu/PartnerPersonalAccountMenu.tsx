@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { useAuth } from "@/context/AuthContext";
 const buttonBaseClasses =
   "w-full flex items-center gap-2.5 px-[19px] py-3 hover:bg-[#efefef] transition-colors h-16";
 const iconClass = "w-6 h-6";
@@ -22,6 +22,7 @@ const menuItems = [
 
 const StudentPersonalAccountMenu = () => {
   const pathname = usePathname();  
+  const {logout} = useAuth()
   return (
     <nav className="flex flex-col w-[322px] gap-5 self-start pl-[40px]">
       <ul className={menuWrapperClass}>
@@ -41,7 +42,7 @@ const StudentPersonalAccountMenu = () => {
           );
         })}
       </ul>
-      <button className={logoutButtonClass}>Выйти из аккаунта</button>
+      <button className={logoutButtonClass} onClick={logout}>Выйти из аккаунта</button>
     </nav>    
   );
 };

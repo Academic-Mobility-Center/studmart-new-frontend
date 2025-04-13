@@ -157,13 +157,6 @@ export default function LoginForm() {
             }} 
           />
         }
-        {/* {isPasswordConfirmVisible && 
-          <ForgotPasswordConfirm 
-            onClick={() => setIsPasswordConfirmVisible(false)} 
-            handleChange={handleChange}
-            formData={formData}
-          />
-        } */}
     </form>      
     );
 }

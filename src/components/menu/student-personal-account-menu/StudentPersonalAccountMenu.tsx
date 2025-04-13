@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const buttonBaseClasses =
   "w-full flex items-center gap-2.5 px-[19px] py-3 hover:bg-[#efefef] transition-colors h-16";
@@ -15,15 +16,16 @@ const logoutButtonClass =
 const menuItems = [
   { icon: "id-card", label: "Студмарт ID", href: "/student-personal-account/id" },
   { icon: "profile", label: "Личная информация", href: "/student-personal-account/profile" },
-  { icon: "link", label: " Реферальная программа", href: "/partner-personal-account/statistics" },
-  { icon: "admin-pannel-settings", label: "Политика персональных данных", href: "/partner-personal-account/documents" },
-  {icon: "notifications-settings", label: "Настройка уведомлений", href: "/partner-personal-account/documents"},
-  {icon: "bank", label: "Банковские реквизиты", href: "/partner-personal-account/documents"},
-  { icon: "faq", label: "FAQ", href: "/partner-personal-account/faq" },
+  { icon: "link", label: " Реферальная программа", href: "/student-personal-account/referal-program" },
+  { icon: "admin-pannel-settings", label: "Политика персональных данных", href: "/student-personal-account/policy" },
+  {icon: "notification-settings", label: "Настройка уведомлений", href: "/student-personal-account/notifications"},
+  {icon: "bank", label: "Банковские реквизиты", href: "/student-personal-account/credentials"},
+  { icon: "faq", label: "FAQ", href: "/student-personal-account/faq" },
 ];
 
 const StudentMenu = () => {
-  const pathname = usePathname();  
+  const pathname = usePathname();
+  const {logout} = useAuth();
   return (
     <nav className="flex flex-col w-[322px] gap-5 self-start pl-[40px]">
       <ul className={menuWrapperClass}>
@@ -43,7 +45,7 @@ const StudentMenu = () => {
           );
         })}
       </ul>
-      <button className={logoutButtonClass}>Выйти из аккаунта</button>
+      <button className={logoutButtonClass} onClick={logout}>Выйти из аккаунта</button>
     </nav>    
   );
 };

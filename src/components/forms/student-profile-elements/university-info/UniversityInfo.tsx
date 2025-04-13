@@ -26,14 +26,14 @@ const UniversityInfo: React.FC<Props> = ({
     formData, handleBlur, handleChange, universityOptions, courseOptions, errors
 }) => {
     return(<>
-        <div className="">
+        <div className="mt-5">
             <h2 className={sectionTitleClasses}>Личная информация</h2>
             <div className={fieldsRowClasses}>
                 <div className={inputContainerClasses}>
                     <SelectField 
-                        name="firstName"
-                        label="Имя" 
-                        placeholder="Имя" 
+                        name="university"
+                        label="Университет" 
+                        placeholder="Университет" 
                         width={262}
                         labelFontSize={16}
                         value={formData.university}
@@ -45,7 +45,7 @@ const UniversityInfo: React.FC<Props> = ({
                 </div>
                 <div className={inputContainerClasses}>
                     <InputField 
-                        name="industry"
+                        name="profession"
                         label="Специальность" 
                         placeholder="Специальность" 
                         width={262}

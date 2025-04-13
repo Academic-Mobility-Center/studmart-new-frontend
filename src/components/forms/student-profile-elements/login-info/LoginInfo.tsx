@@ -24,7 +24,7 @@ const LoginInfo: React.FC<Props> = ({handleChange, formData, errors, handleBlur}
             <div className={fieldsRowClasses}>
                 <div className={inputContainerClasses}>
                     <InputField 
-                        name="personalEmail"
+                        name="email"
                         label="Почта" 
                         placeholder="ivanov@gmail.com" 
                         width={262}

@@ -48,13 +48,10 @@ const universityOptions = [
 ]
 
 const courseOptions = [
-    {id: 1, name: "1"},
-    {id: 2, name: "2"},
-    {id: 3, name: "3"}
+    {id: 1, name: "1 курс"},
+    {id: 2, name: "2 курс"},
+    {id: 3, name: "3 курс"}
 ]
-
-const industry = { id: 1, name: "ИТ-услуги" }
-const country ={ id: 1, name: "Россия" }
 
 const validateField = (
     name: string,
@@ -136,8 +133,6 @@ const ProfilePage: React.FC = () => {
             }),
         }));
     };    
-
-
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type, files } = event.target as HTMLInputElement;
     
@@ -147,6 +142,62 @@ const ProfilePage: React.FC = () => {
             newValue = new Date(value);
         } else if (type === "file" && files) {
             newValue = files[0];
+        }
+    
+        if (name === "gender") {
+            const selectedIndustry = genderOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+
+        if (name === "region") {
+            const selectedIndustry = regionOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+        
+        if (name === "city") {
+            const selectedIndustry = cityOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+
+        if (name === "familyStatus") {
+            const selectedIndustry = familyStatusOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+
+        if (name === "isWork") {
+            const selectedIndustry = isWorkOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+
+        if (name === "languageProfiency") {
+            const selectedIndustry = languageProfiencyOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+
+        if (name === "university") {
+            const selectedIndustry = universityOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
+        }
+
+        if (name === "course") {
+            const selectedIndustry = courseOptions.find(option => option.id.toString() === value);
+            newValue = selectedIndustry
+                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+                : null;
         }
     
         setFormData((prevData) => ({
@@ -162,7 +213,6 @@ const ProfilePage: React.FC = () => {
             }),
         }));
     };
-    
 
     const handleSubmitForm = (event: React.FormEvent) => {
         console.log("Отправка формы:", formData); 
