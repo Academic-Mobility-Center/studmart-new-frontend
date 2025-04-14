@@ -32,25 +32,34 @@ export function MultipleSelectField({
   const [regionMode, setRegionMode] = useState<'all' | 'specific'>(allRegions ? 'all' : 'specific');
   const isDisabled = isNeedRadio ? regionMode === 'all' : false
 
-  const [selectedMultiple, setSelectedMultiple] = useState<Option[]>([])
+  const [selectedMultiple, setSelectedMultiple] = useState<Option[]>(value || [])
   
-  useEffect(() => {
-    if (allRegions) {
-      setSelectedMultiple(options);
-    } else {
-      setSelectedMultiple(Array.isArray(value) ? value : []);
-    }
-  }, [allRegions, options, value]);
+  // useEffect(() => {
+  //   if (allRegions) {
+  //     setSelectedMultiple(options);
+  //   } else {
+  //     setSelectedMultiple(Array.isArray(value) ? value : []);
+  //   }
+  // }, [allRegions, options, value]);
 
+  // useEffect(() => {
+  //   if (Array.isArray(value)) {
+  //     const selected = options.filter((opt) =>
+  //       value.some((v) => v.value === opt.value)
+  //     )
+  //     setSelectedMultiple(selected)
+  //   }
+  // }, [value, options])
   useEffect(() => {
-    if (Array.isArray(value)) {
-      const selected = options.filter((opt) =>
-        value.some((v) => v.value === opt.value)
-      )
-      setSelectedMultiple(selected)
+    if (value) {
+      setSelectedMultiple(value)
     }
-  }, [value, options])
-  
+  }, [value])
+
+  // Sync region mode with allRegions prop
+  useEffect(() => {
+    setRegionMode(allRegions ? 'all' : 'specific')
+  }, [allRegions])
 
   const filteredOptions =
     query === ''
@@ -71,71 +80,116 @@ export function MultipleSelectField({
       onChange(event)
     }
   }
+  // const handleRegionModeChange = (mode: 'all' | 'specific') => {
+  //   if (mode === regionMode) return
+  //   setRegionMode(mode);
+
+  //   if (mode === 'all') {
+  //     setSelectedMultiple(options);
+  //     if (onChange) {
+  //       const events = [
+  //         {
+  //           target: {
+  //             name: name,
+  //             value: options
+  //           }
+  //         },
+  //         {
+  //           target: {
+  //             name: 'allRegions',
+  //             type: 'radio',
+  //             checked: true
+  //           }
+  //         },
+  //         {
+  //           target: {
+  //             name: 'specificRegions',
+  //             type: 'radio',
+  //             checked: false
+  //           }
+  //         }
+  //       ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
+        
+  //       events.forEach(event => onChange(event));
+  //     }
+  //   }
+  //   if (mode === 'specific')
+  //      {
+  //     setSelectedMultiple([])      
+  //     if (onChange) {
+  //       const events = [
+  //         {
+  //           target: {
+  //             name: name,
+  //             value: [] 
+  //           }
+  //         },
+  //         {
+  //           target: {
+  //             name: 'allRegions',
+  //             type: 'radio',
+  //             checked: false
+  //           }
+  //         },
+  //         {
+  //           target: {
+  //             name: 'specificRegions',
+  //             type: 'radio',
+  //             checked: true
+  //           }
+  //         }
+  //       ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
+        
+  //       events.forEach(event => onChange(event));
+  //     }
+  //   }
+  // }
   const handleRegionModeChange = (mode: 'all' | 'specific') => {
     if (mode === regionMode) return
-    setRegionMode(mode);
+    
+    setRegionMode(mode)
 
+    // Create synthetic events to update form state
+    const events = [
+      {
+        target: {
+          name: 'allRegions',
+          type: 'radio',
+          checked: mode === 'all'
+        }
+      },
+      {
+        target: {
+          name: 'specificRegions',
+          type: 'radio',
+          checked: mode === 'specific'
+        }
+      }
+    ] as unknown as React.ChangeEvent<HTMLSelectElement>[]
+
+    // If switching to "all regions", select all options
     if (mode === 'all') {
-      setSelectedMultiple(options);
-      if (onChange) {
-        const events = [
-          {
-            target: {
-              name: name,
-              value: options
-            }
-          },
-          {
-            target: {
-              name: 'allRegions',
-              type: 'radio',
-              checked: true
-            }
-          },
-          {
-            target: {
-              name: 'specificRegions',
-              type: 'radio',
-              checked: false
-            }
-          }
-        ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
-        
-        events.forEach(event => onChange(event));
-      }
+      setSelectedMultiple(options)
+      events.push({
+        target: {
+          name,
+          value: options
+        }
+      } as unknown as React.ChangeEvent<HTMLSelectElement>)
+    } else {
+      // If switching to "specific regions", clear selection
+      setSelectedMultiple([])
+      events.push({
+        target: {
+          name,
+          value: []
+        }
+      } as unknown as React.ChangeEvent<HTMLSelectElement>)
     }
-    if (mode === 'specific')
-       {
-      setSelectedMultiple([])      
-      if (onChange) {
-        const events = [
-          {
-            target: {
-              name: name,
-              value: [] 
-            }
-          },
-          {
-            target: {
-              name: 'allRegions',
-              type: 'radio',
-              checked: false
-            }
-          },
-          {
-            target: {
-              name: 'specificRegions',
-              type: 'radio',
-              checked: true
-            }
-          }
-        ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
-        
-        events.forEach(event => onChange(event));
-      }
-    }
-  }
 
+    // Trigger all changes
+    events.forEach((event) => onChange?.(event))
+  }
   return (
     <div className="flex flex-col gap-2 relative" style={{ width: `${width}px` }}>
       <label

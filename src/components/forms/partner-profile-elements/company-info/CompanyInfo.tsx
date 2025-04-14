@@ -134,7 +134,7 @@ const CompanyInfo: React.FC<Props> = ({
                             width={548}
                             labelFontSize={16}
                             isNeedRadio
-                            value={formData.regions}
+                            value={formData.regions || []}
                             onChange={handleChange}
                             onBlur={handleBlur}        
                             allRegions={formData.allRegions}                      

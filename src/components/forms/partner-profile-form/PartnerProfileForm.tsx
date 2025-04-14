@@ -64,7 +64,12 @@ const validateField = (
                 ? undefined : "Некорректный email компании";
 
         case "country":
-            return /^[а-яА-Я\s\'’\-]+$/.test(value as string) ? undefined : "Некорректное название страны";
+            if (!value) return "Выберите страну";
+            return undefined;
+
+        case "industry":
+            if (!value) return ["Выберите отрасль"];
+            return undefined;
 
         case "inn":
             return /^\d{10}$/.test(value as string) ? undefined : "Некорректный ИНН";
@@ -101,15 +106,15 @@ const PartnerProfileForm: React.FC = () => {
         site: "https://test-company.ru",
         phoneNumber: "+7 (912) 345-67-89",
         companyEmail: "info@test-company.ru",
-        industry: industryValue,
-        country: countryValue,
-        regions: regions,
+        industry: undefined,
+        country: undefined,
+        regions: undefined,
         inn: "7701234567",
         currentAccount: "40702810900000012345",
         corAccount: "30101810400000000225",
         bic: "044525225",
-        allRegions: false,
-        specificRegions: true
+        allRegions: true,
+        specificRegions: false
     });
 
     const [errors, setErrors] = useState<{ 
@@ -154,56 +159,59 @@ const PartnerProfileForm: React.FC = () => {
             }),
         }));
     };    
-
-
+    
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type, files } = event.target as HTMLInputElement;
-    
-        let newValue: string | File | Date | any = value;
-    
-        if (type === "date") {
-            newValue = new Date(value);
-        } else if (type === "file" && files) {
-            newValue = files[0];
+        const { name, value, type, checked } = event.target as HTMLInputElement;
+      
+        let newValue: any = type === 'checkbox' ? checked : value;
+      
+        if (name === 'allRegions' && checked) {
+          setFormData(prev => ({
+            ...prev,
+            allRegions: true,
+            specificRegions: false,
+            regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name }))
+          }));
+          return;
         }
-    
+      
+        if (name === 'specificRegions' && checked) {
+          setFormData(prev => ({
+            ...prev,
+            allRegions: false,
+            specificRegions: true,
+            regions: []
+          }));
+          return;
+        }
+
         if (name === "industry") {
             const selectedIndustry = industryOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
     
         if (name === "country") {
             const selectedCountry = countryOptions.find(option => option.id.toString() === value);
             newValue = selectedCountry
                 ? { value: selectedCountry.id.toString(), label: selectedCountry.name }
-                : null;
+                : undefined;
         }
-    
-        if (name === "regions") {
-            newValue = Array.isArray(value)
-                ? value.map((regionId: string) => {
-                    const region = regionOptions.find(option => option.id.toString() === regionId);
-                    return region ? { value: region.id.toString(), label: region.name } : null;
-                  }).filter(Boolean)
-                : value;
-        }
-    
-        setFormData((prevData) => ({
-            ...prevData,
+
+        setFormData(prev => ({
+          ...prev,
+          [name]: newValue
+        }));
+      
+        setErrors(prev => ({
+          ...prev,
+          [name]: validateField(name, newValue, {
+            ...formData,
             [name]: newValue,
+          }),
         }));
-    
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: validateField(name, newValue, {
-                ...formData,
-                [name]: newValue,
-            }),
-        }));
-    };
-    
+      };
 
     const handleSubmitForm = (event: React.FormEvent) => {
         console.log("Отправка формы:", formData); 

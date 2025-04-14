@@ -62,9 +62,45 @@ const validateField = (
         case "email":
             return /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(value as string)
                 ? undefined : "Некорректный email";
+
         case "password":
-            return (value as string).length >= 6 ? undefined : "Пароль должен содержать минимум 6 символов";            
-                
+            return (value as string).length >= 6 ? undefined : "Пароль должен содержать минимум 6 символов";
+
+        case "firstName":
+        case "lastName":
+            return /^[a-zA-Zа-яА-ЯёЁ\s\-']+$/.test(value as string)
+                ? undefined : "Некорректное имя или фамилия";
+
+        case "date":
+            return value ? undefined : "Укажите дату рождения";
+
+        case "gender":
+            return value ? undefined : ["Выберите пол"];
+
+        case "region":
+            return value ? undefined : ["Выберите регион"];
+
+        case "city":
+            return value ? undefined : ["Выберите город"];
+
+        case "familyStatus":
+            return value ? undefined : ["Выберите семейное положение"];
+
+        case "isWork":
+            return value ? undefined : ["Выберите статус занятости"];
+
+        case "languageProfiency":
+            return value ? undefined : ["Выберите уровень владения языком"];
+
+        case "university":
+            return value ? undefined : ["Выберите университет"];
+
+        case "profession":
+            return (value as string).length >= 2 ? undefined : "Укажите профессию";
+
+        case "course":
+            return value ? undefined : ["Выберите курс"];
+
         default:
             return undefined;
     }
@@ -133,6 +169,7 @@ const ProfilePage: React.FC = () => {
             }),
         }));
     };    
+
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type, files } = event.target as HTMLInputElement;
     
@@ -148,56 +185,56 @@ const ProfilePage: React.FC = () => {
             const selectedIndustry = genderOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
 
         if (name === "region") {
             const selectedIndustry = regionOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
         
         if (name === "city") {
             const selectedIndustry = cityOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
 
         if (name === "familyStatus") {
             const selectedIndustry = familyStatusOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
 
         if (name === "isWork") {
             const selectedIndustry = isWorkOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
 
         if (name === "languageProfiency") {
             const selectedIndustry = languageProfiencyOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
 
         if (name === "university") {
             const selectedIndustry = universityOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
 
         if (name === "course") {
             const selectedIndustry = courseOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : null;
+                : undefined;
         }
     
         setFormData((prevData) => ({
@@ -217,9 +254,24 @@ const ProfilePage: React.FC = () => {
     const handleSubmitForm = (event: React.FormEvent) => {
         console.log("Отправка формы:", formData); 
         event.preventDefault();
+
+        let hasErrors = false;
+        const newErrors: Partial<typeof errors> = {};
+        
+        Object.entries(formData).forEach(([key, value]) => {
+            const error = validateField(key, value, formData);
+            if (error) {
+                (newErrors as any)[key] = error;
+                hasErrors = true;
+            }
+        });
+        
+        setErrors({ ...errors, ...newErrors });
+    
+        if (hasErrors) return;
     
         console.log("Отправка формы:", formData);     
-    };    
+    };  
 
     return (
         <>

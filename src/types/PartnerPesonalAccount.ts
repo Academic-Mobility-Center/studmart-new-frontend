@@ -7,9 +7,9 @@ export interface PartnerPersonalAccountFormData{
     site: string;
     phoneNumber: string;
     companyEmail: string;
-    industry: Option;
-    country: Option;
-    regions: Option[];
+    industry: Option | undefined;
+    country: Option | undefined;
+    regions: Option[] | undefined;
     inn: string;
     currentAccount: string;
     corAccount: string;

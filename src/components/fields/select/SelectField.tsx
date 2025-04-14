@@ -76,7 +76,22 @@ export function SelectField({
             } 
             `}
             displayValue={(option: Option) => option?.label || ''}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              const inputValue = event.target.value;
+              setQuery(inputValue);
+              if (inputValue === '') {
+                setSelectedOption(null);
+                if (onChange) {
+                  const emptyEvent = {
+                    target: {
+                      name,
+                      value: '',
+                    },
+                  } as React.ChangeEvent<HTMLSelectElement>;
+                  onChange(emptyEvent);
+                }
+              }
+            }}
             placeholder={placeholder}
             name={name}
             onBlur={onBlur}
