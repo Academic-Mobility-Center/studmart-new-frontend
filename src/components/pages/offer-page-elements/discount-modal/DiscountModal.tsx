@@ -51,7 +51,7 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode, 
                                         {promoCode.code}
                                     </p>
                                 </div>
-                                <button className="w-8 h-8" onClick={copyToClipboard}>
+                                <button className="w-8 h-8 cursor-pointer" onClick={copyToClipboard}>
                                     <img src="/icons/offer/copy.svg" alt="Копировать промокод" />
                                 </button>
                             </div>

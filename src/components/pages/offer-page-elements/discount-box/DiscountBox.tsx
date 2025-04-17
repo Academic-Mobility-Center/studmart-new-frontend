@@ -66,19 +66,19 @@ const DiscountBox = ({
                             flex-row h-12 box-border mt-10 relative z-10"
                         >
                             <Button 
-                                className="border bg-[#f8f8f8] 
+                                className="border bg-[#f8f8f8] hover:brightness-90 transition  
                                 [font-family:Mulish,sans-serif] 
                                 text-sm font-bold tracking-[0.42px] 
                                 uppercase text-[#032c28] min-w-[438px] 
                                 h-12 w-[438px] cursor-pointer block 
                                 box-border grow-0 shrink-0 basis-auto 
-                                rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]"
+                                rounded-[15px] border-solid border-[rgba(0,0,0,0.20)] "
                                 onClick={onClick}
                             >
                                 Получить скидку
                             </Button>
                             <div 
-                                className="border bg-[#f8f8f8] 
+                                className="border bg-[#f8f8f8] hover:brightness-90 transition 
                                 box-border flex justify-center 
                                 items-center flex-row gap-2.5 
                                 grow-0 shrink-0 basis-auto ml-6 px-6 
