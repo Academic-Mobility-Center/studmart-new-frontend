@@ -23,8 +23,8 @@ const defaultGeographyData = [
 ];
 
 const defaultDevicesData = [
-    { name: "Мобильные", value: 75 },
-    { name: "Компьютеры", value: 25 },
+    { name: "Просмотры с мобильных", value: 75 },
+    { name: "Просмотры с компьютеров", value: 25 },
 ];
   
 const COLORS = ["#8fe248", "#FFD55A"];
@@ -80,29 +80,28 @@ const StatisticsPage = () => {
             </p>
 
             <div className="mt-5">
-            <div className="flex justify-start items-center flex-row">
-                <button
-                onClick={() => setSelectedTab("users")}
-                className={`h-12 w-[262px] rounded-[15px] text-sm font-bold uppercase tracking-[0.42px] cursor-pointer ${
-                    selectedTab === "users"
-                    ? "bg-[#8fe248] text-[#032c28]"
-                    : "bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]"
-                }`}
-                >
-                Пользователи
-                </button>
-                <button
-                onClick={() => setSelectedTab("events")}
-                className={`ml-6 h-12 w-[262px] rounded-[15px] text-sm font-bold uppercase tracking-[0.42px] cursor-pointer ${
-                    selectedTab === "events"
-                    ? "bg-[#8fe248] text-[#032c28]"
-                    : "bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]"
-                }`}
-                >
-                События
-                </button>
-            </div>
-
+                <div className="flex justify-start items-center flex-row">
+                    <button
+                    onClick={() => setSelectedTab("users")}
+                    className={`h-12 w-[262px] rounded-[15px] text-sm font-bold uppercase tracking-[0.42px] cursor-pointer ${
+                        selectedTab === "users"
+                        ? "bg-[#8fe248] text-[#032c28]"
+                        : "bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]"
+                    }`}
+                    >
+                    Пользователи
+                    </button>
+                    <button
+                    onClick={() => setSelectedTab("events")}
+                    className={`ml-6 h-12 w-[262px] rounded-[15px] text-sm font-bold uppercase tracking-[0.42px] cursor-pointer ${
+                        selectedTab === "events"
+                        ? "bg-[#8fe248] text-[#032c28]"
+                        : "bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]"
+                    }`}
+                    >
+                    События
+                    </button>
+                </div>
                 <div className="flex justify-between items-end mt-10">
                     <div className="flex flex-col">
                     <DateRangeField
@@ -123,9 +122,26 @@ const StatisticsPage = () => {
                 </div>
                 {selectedTab === "users" && (
                     <>
-                        <DemographyChart data={demographyData} />
-                        <GeographyChart data={geographyData} />
-                        <DevicesChart data={devicesData} />
+                        <div 
+                            className="border border-[rgba(0,0,0,0.2)] 
+                            rounded-[15px]  w-full mt-10"
+                        >
+                            <DemographyChart data={demographyData} />
+                        </div>              
+                        <div 
+                            className="border border-[rgba(0,0,0,0.2)] 
+                            rounded-[15px] pl-[20px] 
+                            pr-[20px] w-full mt-10"
+                        >
+                            <GeographyChart data={geographyData} /> 
+                        </div>   
+                        <div 
+                            className="border border-[rgba(0,0,0,0.2)] 
+                            rounded-[5px] pl-[20px] 
+                            pr-[20px] w-full mt-10"
+                        >
+                            <DevicesChart data={devicesData} />
+                        </div>                  
                     </>
                 )}
             </div>
