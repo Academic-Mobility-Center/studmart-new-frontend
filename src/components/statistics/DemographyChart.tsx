@@ -42,11 +42,11 @@ export const DemographyChart = ({ data }: Props) => {
   const malePercent = total ? ((totalMale/total) * 100 ).toFixed(0) : "0";
   const femalePercent = total ? ((totalFemale/total) * 100 ).toFixed(0) : "0"
   return (
-    <div className="mt-[20px]">
+    <div className="mt-[20px] mb-5">
       <div className="flex justify-between items-start mb-[20px]">
-        <p className="font-bold [font-family:'Nunito_Sans',sans-serif] text-xl text-[#032c28] pl-4">Демография</p>
+        <p className="font-bold [font-family:'Nunito_Sans',sans-serif] text-xl text-[#032c28] pl-5">Демография</p>
         <div className="flex flex-col gap-1 text-sm text-[#032c28]">
-          <div className="flex items-center gap-1 text-sm text-[#032c28] pr-4">
+          <div className="flex items-center gap-1 text-sm text-[#032c28] mr-5">
             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#3A7AFE" }} />
             Муж. - {malePercent}%
           </div>
@@ -56,10 +56,10 @@ export const DemographyChart = ({ data }: Props) => {
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={240}>
         <BarChart 
           data={data} 
-          margin={{ top: 0, right: 10, left: 0, bottom: 0 }}
+          margin={{ top: 0, right: 20, left: 0, bottom: 0 }}
         >
         <CartesianGrid
             vertical={false}

@@ -12,8 +12,8 @@ export const DevicesChart = ({ data }: Props) => {
 
   return (
     <div className="mt-4">
-      <p className="font-bold text-[#032c28] mb-2">Устройства</p>
-      <div className="flex items-start gap-8">
+      <p className="font-bold text-[#032c28] mb-2 pl-5">Устройства</p>
+      <div className="flex items-start gap-8 mb-4 pl-3">
         <PieChart width={158} height={158}>
           <Pie
             data={data}
@@ -31,10 +31,10 @@ export const DevicesChart = ({ data }: Props) => {
           </Pie>
         </PieChart>
 
-        <div className="flex flex-col justify-center gap-2">
+        <div className="flex flex-col justify-center gap-2 pl-5">
           <div className="flex font-medium text-[#888888]">
             <span style={{ width: 206 }}>Устройства</span>
-            <span style={{ width: 79 }}>Количество</span>
+            <span style={{ width: 79, marginLeft: '10px' }}>Количество</span>
           </div>
           {data.map((item, index) => (
             <div key={index} className="flex text-sm items-center text-[#032c28]">
@@ -45,7 +45,7 @@ export const DevicesChart = ({ data }: Props) => {
                 ></span>
                 {item.name}
               </div>
-              <span style={{ width: 79 }}>
+              <span style={{ width: 79, textAlign: "right", marginLeft: '15px' }}>
                 {((item.value / total) * 100).toFixed(0)}%
               </span>
             </div>
