@@ -1,6 +1,9 @@
 import React from "react";
 import ArrowForward from "../../../public/icons/partner-account/arrow-forward";
 import ArrowDown from "../../../public/icons/partner-account/arrow-down";
+import Link from "next/link";
+import Region from "@/types/Region";
+import University from "@/types/University";
 
 interface StatCardProps {
   width?: number | string;
@@ -10,6 +13,8 @@ interface StatCardProps {
   value: string | number;
   onDetailsClick?: () => void;
   isUp: boolean;
+  eventKey: string;
+
 }
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -19,7 +24,8 @@ export const StatCard: React.FC<StatCardProps> = ({
   percentage,
   value,
   onDetailsClick,
-  isUp
+  isUp,
+  eventKey,
 }) => {
   return (
         <div style={{ display: "inline-block", width }}>
@@ -49,13 +55,16 @@ export const StatCard: React.FC<StatCardProps> = ({
             <p className="text-4xl font-extrabold tracking-[1.08px] leading-9 text-[#032c28] text-center">
                 {value}
             </p>
-            <button
-                className="bg-[#8fe248] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] 
-                cursor-pointer min-w-[222px] h-12 mt-5 rounded-[15px] border-none"
-                onClick={onDetailsClick}
-            >
-                Подробнее
-            </button>
+            <Link href={`/partner-personal-account/event-details/${eventKey}`}>
+                <button
+                    className="bg-[#8fe248] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] 
+                    cursor-pointer min-w-[222px] h-12 mt-5 rounded-[15px] border-none"
+                    onClick={onDetailsClick}
+                >
+                    Подробнее
+                </button>
+            </Link>
+
             </div>
         </div>
         </div>

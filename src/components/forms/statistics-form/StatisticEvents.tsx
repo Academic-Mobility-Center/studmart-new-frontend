@@ -1,19 +1,16 @@
 import { DateRangeField } from "@/components/fields/date/DateRangeField"
 import { SelectField } from "@/components/fields/select/SelectField"
 import { StatCard } from "@/components/statistics/StatCard"
+import { Option } from "@/types/Option"
+import Region from "@/types/Region"
 import StatisticFormData from "@/types/StatisticFormData"
+import University from "@/types/University"
 import { transformToOptions } from "@/utils/dataTransform"
 import { Dispatch, SetStateAction } from "react"
 
 interface Props{
-    regionOptions: {
-        id: number;
-        name: string;
-    }[]
-    universityOptions: {
-        id: number;
-        name: string;
-    }[]
+    regionOptions: Region[];
+    universityOptions: University[];
     formData: StatisticFormData
     setFormData: Dispatch<SetStateAction<StatisticFormData>>
 }
@@ -26,15 +23,28 @@ const StatisticEvents: React.FC<Props> = ({
 }) => {
     const handleSelectChange = (name: keyof StatisticFormData) => 
         (event: React.ChangeEvent<HTMLSelectElement>) => {
-          const selectedOption = transformToOptions(
-            name === "region" ? regionOptions : universityOptions
-          ).find((opt) => opt.value === event.target.value) || null;
+            let selectedOption: Option | null = null;
+            
+            if (name === "region") {
+                const region = regionOptions.find(r => r.id.toString() === event.target.value);
+                selectedOption = region ? { value: region.id.toString(), label: region.name } : null;
+            } else if (name === "university") {
+                const university = universityOptions.find(u => u.id.toString() === event.target.value);
+                selectedOption = university ? { value: university.id.toString(), label: university.name } : null;
+            }
     
-          setFormData((prev) => ({
-            ...prev,
-            [name]: selectedOption,
-          }));
-        };    
+            setFormData(prev => ({
+                ...prev,
+                [name]: selectedOption,
+            }));
+    };
+    
+    const filteredUniversityOptions = formData.region ? 
+        universityOptions.filter(u => 
+            u.city.region.id.toString() === formData.region?.value
+        ) : 
+        universityOptions;
+
     return(
     <>
         <div className="flex flex-row justify-center items-start gap-[20px] mt-10">
@@ -52,7 +62,7 @@ const StatisticEvents: React.FC<Props> = ({
                 label="Университет"
                 placeholder="Университет"
                 value={formData?.university}
-                options={transformToOptions(universityOptions)}
+                options={transformToOptions(filteredUniversityOptions)}
                 onChange={handleSelectChange("university")}
                 name="university"
                 width={262}
@@ -83,12 +93,14 @@ const StatisticEvents: React.FC<Props> = ({
                 percentage={formData?.eventStats?.visitors?.percentage.toString() ?? "0"}
                 value={formData?.eventStats?.visitors?.value.toString() ?? "0"}
                 isUp={formData?.eventStats?.visitors?.isUp ?? true}
+                eventKey="visitors"
             />
             <StatCard
                 title="Повторных посещений"
                 percentage={formData?.eventStats?.repeatVisits?.percentage.toString() ?? "0"}
                 value={formData?.eventStats?.repeatVisits?.value.toString() ?? "0"}
                 isUp={formData?.eventStats?.repeatVisits?.isUp ?? true}
+                eventKey="visitors"
             />
         </div>
         <div className="flex flex-row justify-center items-start gap-[20px] mt-5">
@@ -97,12 +109,14 @@ const StatisticEvents: React.FC<Props> = ({
                 percentage={formData?.eventStats?.uniqueVisitors?.percentage.toString() ?? "0"}
                 value={formData?.eventStats?.uniqueVisitors?.value.toString() ?? "0"}
                 isUp={formData?.eventStats?.uniqueVisitors?.isUp ?? true}
+                eventKey="visitors"
             />
             <StatCard
                 title="Получено промокодов"
                 percentage={formData?.eventStats?.promocodes?.percentage.toString() ?? "0"}
                 value={formData?.eventStats?.promocodes?.value.toString() ?? "0"}
                 isUp={formData?.eventStats?.promocodes?.isUp ?? true}
+                eventKey="promocodes"
             />
         </div>
         <div className="flex flex-row justify-center items-start gap-[20px] mt-5">
@@ -111,12 +125,14 @@ const StatisticEvents: React.FC<Props> = ({
                 percentage={formData?.eventStats?.repeatPromocodes?.percentage.toString() ?? "0"}
                 value={formData?.eventStats?.repeatPromocodes?.value.toString() ?? "0"}
                 isUp={formData?.eventStats?.repeatPromocodes?.isUp ?? true}
+                eventKey="promocodes"
             />
             <StatCard
                 title="Перешли на сайт"
                 percentage={formData?.eventStats?.siteVisits?.percentage.toString() ?? "0"}
                 value={formData?.eventStats?.siteVisits?.value.toString() ?? "0"}
                 isUp={formData?.eventStats?.siteVisits?.isUp ?? true}
+                eventKey="visitors"
             />
         </div>
     </>)

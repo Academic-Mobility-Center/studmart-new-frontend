@@ -214,12 +214,9 @@ const PartnerProfileForm: React.FC = () => {
       };
 
     const handleSubmitForm = (event: React.FormEvent) => {
-        console.log("Отправка формы:", formData); 
         event.preventDefault();
-
         let hasErrors = false;
         const newErrors: typeof errors = {};
-    
         Object.entries(formData).forEach(([key, value]) => {
             const error = validateField(key, value, formData);
             if (error) {
