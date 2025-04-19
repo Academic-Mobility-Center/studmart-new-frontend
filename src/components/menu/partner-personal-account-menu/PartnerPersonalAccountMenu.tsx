@@ -15,7 +15,7 @@ const logoutButtonClass =
 const menuItems = [
   { icon: "profile", label: "Профиль партнера", href: "/partner-personal-account/profile" },
   { icon: "shopping", label: "Предложения", href: "/partner-personal-account/offers" },
-  { icon: "charts", label: "Статистика", href: "/partner-personal-account/statistics" },
+  { icon: "charts", label: "Статистика", href: "/partner-personal-account/statistics/users" },
   { icon: "docs", label: "Документы", href: "/partner-personal-account/documents" },
   { icon: "faq", label: "FAQ", href: "/partner-personal-account/faq" },
 ];
@@ -26,21 +26,24 @@ const StudentPersonalAccountMenu = () => {
   return (
     <nav className="flex flex-col w-[322px] gap-5 self-start pl-[40px]">
       <ul className={menuWrapperClass}>
-        {menuItems.map(({ icon, label, href }, index) => {
-          const isActive = pathname === href;
+      {menuItems.map(({ icon, label, href }, index) => {
+        const isActive =
+          pathname === href ||
+          (href === "/partner-personal-account/statistics/users" &&
+          pathname.startsWith("/partner-personal-account/statistics"));
 
-          return (
-            <li key={icon}>
-              <Link href={href}>
-                <div className={`${buttonBaseClasses} ${isActive ? "bg-[#efefef]" : ""}`}>
-                  <img src={`/icons/partner-account/${icon}.svg`} className={iconClass} alt="" />
-                  <span className={textClass}>{label}</span>
-                </div>
-              </Link>
-              {index < menuItems.length - 1 && <div className={sectionBorderClass} />}
-            </li>
-          );
-        })}
+        return (
+          <li key={icon}>
+            <Link href={href}>
+              <div className={`${buttonBaseClasses} ${isActive ? "bg-[#efefef]" : ""}`}>
+                <img src={`/icons/partner-account/${icon}.svg`} className={iconClass} alt="" />
+                <span className={textClass}>{label}</span>
+              </div>
+            </Link>
+            {index < menuItems.length - 1 && <div className={sectionBorderClass} />}
+          </li>
+        );
+      })}
       </ul>
       <button className={logoutButtonClass} onClick={logout}>Выйти из аккаунта</button>
     </nav>    

@@ -50,63 +50,65 @@ export default function EventDetailsPageContent() {
     const filteredData = groupChartDataBy(applyFilters(config.chartData, formData), grouping);
     if (!config) return <div>Нет данных для {eventKey}</div>;
     return (
-      <div className="p-5 bg-[#F8F8F8] rounded-2xl border border-gray-300 width-[588px]">
-        <button
+        <div className="p-5 bg-[#F8F8F8] rounded-2xl border border-gray-300 w-[588px]">
+          <button
             className={`h-12 w-[174px] rounded-[15px] text-sm font-bold 
             uppercase tracking-[0.42px] cursor-pointer bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]`}
             onClick={() => history.back()}
-        >
+          >
             Назад
-        </button>
-  
-        <h1 className="text-xl font-extrabold mb-5 text-[#032C28] mt-5">{config.title}</h1>
-  
-        <div className="grid grid-cols-2 gap-13 mb-4">
+          </button>
+      
+          <h1 className="text-xl font-extrabold mb-5 text-[#032C28] mt-5">{config.title}</h1>
+      
+          <div className="grid grid-cols-2 gap-7 mb-4">
             <SelectField
-                label="Регион"
-                placeholder="Регион"
-                options={transformToOptions(regionOptions)}
-                value={formData?.region}
-                onChange={handleSelectChange("region")}
-                name="region"
-                width={262}
-                labelFontSize={14}
+              label="Регион"
+              placeholder="Регион"
+              options={transformToOptions(regionOptions)}
+              value={formData?.region}
+              onChange={handleSelectChange("region")}
+              name="region"
+              width={262}
+              labelFontSize={14}
             />
             <SelectField
-                label="Университет"
-                placeholder="Университет"
-                value={formData?.university}
-                options={transformToOptions(filteredUniversityOptions)}
-                onChange={handleSelectChange("university")}
-                name="university"
-                width={262}
-                labelFontSize={14}
+              label="Университет"
+              placeholder="Университет"
+              value={formData?.university}
+              options={transformToOptions(filteredUniversityOptions)}
+              onChange={handleSelectChange("university")}
+              name="university"
+              width={262}
+              labelFontSize={14}
             />
-        </div>
-  
-        <DateRangeField
+          </div>
+      
+          <DateRangeField
             label="Выбор периода"
             width={262}
             labelFontSize={14}
             value={formData?.dateRange}
             onChange={(dates) => setFormData(prev => ({ ...prev, dateRange: dates }))}
-        />
-
-        <div className="flex flex-row gap-10 my-4 width-[548px]">
+          />
+      
+          <div className="flex flex-row gap-10 my-4 ">
             {groupingButtons.map(({ label, value }) => (
-                <button
+              <button
                 key={value}
                 className={`h-12 w-[167px] rounded-[15px] text-sm font-bold uppercase tracking-[0.42px] cursor-pointer
-                    ${grouping === value 
+                  ${grouping === value 
                     ? "bg-[#8FE248] text-[#032c28] border-none" 
                     : "bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]"}`}
                 onClick={() => setGrouping(value as "day" | "week" | "month")}
-                >
+              >
                 {label}
-                </button>
+              </button>
             ))}
+          </div>
+      
+          <div>{config.renderChart(filteredData)}</div>
         </div>
-        <div>{config.renderChart(filteredData)}</div>
-      </div>
-    );
+      );
+      
 }

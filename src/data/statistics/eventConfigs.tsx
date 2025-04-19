@@ -84,72 +84,12 @@ export const eventConfigs: Record<string, EventConfig> = {
       { date: "11.10.24", new: 289, repeat: 480 },
       { date: "12.10.24", new: 150, repeat: 200 },
     ],
-    // renderChart: (data) => {
-    //   // Вычислим максимальное значение для нормализации ширины полос
-    //   const maxValue = Math.max(...data.map(item => Math.max(item.new, item.repeat)));
-    
-    //   return (
-    //     <div className="border border-zinc-200 rounded-xl p-4 space-y-2">
-    //       {/* Заголовок */}
-    //       <div className="flex items-center gap-4 mb-2 text-sm">
-    //         <div className="flex items-center gap-1 text-[#032C28]">
-    //           <div className="w-3 h-3 rounded bg-[#76E57F] " />
-    //           Новые
-    //         </div>
-    //         <div className="flex items-center gap-1 text-[#032C28]">
-    //           <div className="w-3 h-3 rounded bg-[#FFD54F] " />
-    //           Повторные
-    //         </div>
-    //       </div>
-    
-    //       {/* График */}
-    //       {data.map((item) => {
-    //         const isRepeatBigger = item.repeat >= item.new;
-    //         const leftValue = isRepeatBigger ? item.new : item.repeat;
-    //         const rightValue = isRepeatBigger ? item.repeat : item.new;
-    
-    //         const leftColor = isRepeatBigger ? '#76E57F' : '#FFD54F';
-    //         const rightColor = isRepeatBigger ? '#FFD54F' : '#76E57F';
-    
-    //         const leftWidth = `${(leftValue / maxValue) * 100}%`;
-    //         const rightWidth = `${(rightValue / maxValue) * 100}%`;
-    
-    //         return (
-    //           <div key={item.date}>
-    //             <div className="text-xs text-gray-500 mb-1">{item.date}</div>
-    //             <div className="flex w-full h-6 rounded-full overflow-hidden bg-gray-100 relative">
-    //               <div
-    //                 className="h-full"
-    //                 style={{
-    //                   backgroundColor: leftColor,
-    //                   width: leftWidth,
-    //                 }}
-    //               />
-    //               <div
-    //                 className="h-full absolute top-0"
-    //                 style={{
-    //                   backgroundColor: rightColor,
-    //                   left: leftWidth,
-    //                   width: `calc(${rightWidth} - ${leftWidth})`,
-    //                 }}
-    //               />
-    //             </div>
-    //             <div className="flex justify-between text-xs mt-1">
-    //               <span style={{ color: leftColor }}>{leftValue}</span>
-    //               <span style={{ color: rightColor }}>{rightValue}</span>
-    //             </div>
-    //           </div>
-    //         );
-    //       })}
-    //     </div>
-    //   );
-    // }
     renderChart: (data) => {
       const maxValue = Math.max(...data.map(item => Math.max(item.new, item.repeat)));
     
       return (
-        <div className="border border-zinc-200 rounded-xl p-4 space-y-2">
-          <div className="flex items-center gap-4 mb-2 text-sm text-[#032C28]">
+        <div className="border border-zinc-200 rounded-xl p-5 space-y-2">
+          <div className="flex items-center gap-4 mb-5 text-sm text-[#032C28]">
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 rounded bg-[#76E57F]" />
               Новые
