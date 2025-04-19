@@ -10,6 +10,7 @@ import { useState } from "react";
 import { groupChartDataBy } from "@/utils/groupChartDataBy";
 import { eventConfigs } from "@/data/statistics/eventConfigs";
 import { applyFilters } from "@/utils/applyFilters";
+import Link from "next/link";
 
 
 export default function EventDetailsPageContent() {
@@ -21,7 +22,6 @@ export default function EventDetailsPageContent() {
         { label: "По неделям", value: "week" },
         { label: "По месяцам", value: "month" },
     ];
-
 
     const config = eventConfigs[eventKey as keyof typeof eventConfigs];
 
@@ -51,14 +51,16 @@ export default function EventDetailsPageContent() {
     if (!config) return <div>Нет данных для {eventKey}</div>;
     return (
         <div className="p-5 bg-[#F8F8F8] rounded-2xl border border-gray-300 w-[588px]">
-          <button
-            className={`h-12 w-[174px] rounded-[15px] text-sm font-bold 
-            uppercase tracking-[0.42px] cursor-pointer bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]`}
-            onClick={() => history.back()}
-          >
-            Назад
-          </button>
-      
+            <Link href="/partner-personal-account/statistics/events">          
+                <button
+                    className={`h-12 w-[174px] rounded-[15px] text-sm 
+                    font-bold uppercase tracking-[0.42px] cursor-pointer 
+                    bg-[#f8f8f8] text-[#032c28] border border-[rgba(0,0,0,0.20)]`}
+                >
+                    Назад
+                </button>
+            </Link>
+
           <h1 className="text-xl font-extrabold mb-5 text-[#032C28] mt-5">{config.title}</h1>
       
           <div className="grid grid-cols-2 gap-7 mb-4">

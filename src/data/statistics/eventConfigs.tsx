@@ -28,7 +28,7 @@ export const eventConfigs: Record<string, EventConfig> = {
         { date: "12.10.24", new: 721, repeat: 802, unique: 530, views: 490 },
       ],
       renderChart: (data) => (
-        <div className="border border-zinc-200 rounded-xl p-4">
+        <div className="border border-zinc-300 rounded-xl p-4">
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -78,7 +78,7 @@ export const eventConfigs: Record<string, EventConfig> = {
     title: "Промокоды",
     chartData: [
       { date: "07.10.24", new: 120, repeat: 320 },
-      { date: "08.10.24", new: 245, repeat: 280 },
+      { date: "08.10.24", new: 245, repeat: 320 },
       { date: "09.10.24", new: 310, repeat: 390 },
       { date: "10.10.24", new: 190, repeat: 450 },
       { date: "11.10.24", new: 289, repeat: 480 },
@@ -111,12 +111,12 @@ export const eventConfigs: Record<string, EventConfig> = {
             const rightWidth = `${(rightValue / maxValue) * 100}%`;
 
             return (
-              <div key={item.date} className="flex items-center gap-4">
+              <div key={item.date} className="flex items-center gap-4 border-b-[0.66px] pb-2 border-gray-300 last:border-b-0 last:pb-0 ">
                 <div className="text-xs text-gray-500 w-16 shrink-0 text-[#032C28]">{item.date}</div>
 
                 <div className="flex w-full h-6 rounded-l-none rounded-r-full overflow-hidden bg-gray-100 relative text-xs font-medium">
                   <div
-                    className="h-full flex items-center pl-2 text-[#032C28]"
+                    className="h-full flex items-center pl-2 text-[#032C28] rounded-r-full"
                     style={{
                       backgroundColor: leftColor,
                       width: leftWidth,
@@ -127,7 +127,7 @@ export const eventConfigs: Record<string, EventConfig> = {
                   </div>
 
                   <div
-                    className="h-full flex items-center pl-2 text-[#032C28] rounded-r-full"
+                    className="h-full flex items-center pl-4 -ml-2 text-[#032C28] rounded-r-full"
                     style={{
                       backgroundColor: rightColor,
                       left: leftWidth,
