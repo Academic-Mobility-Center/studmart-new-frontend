@@ -13,7 +13,8 @@ export function SelectField({
   width,
   labelFontSize,
   placeholder,
-  onBlur
+  onBlur,
+  disabled
 }: {
   label: string
   options: Option[]
@@ -24,6 +25,7 @@ export function SelectField({
   labelFontSize: number
   placeholder: string;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  disabled?: boolean | undefined
 }) {
   const [selectedOption, setSelectedOption] = useState<Option | null>(
     value || null  // Используем значение из пропсов напрямую
@@ -95,6 +97,7 @@ export function SelectField({
             placeholder={placeholder}
             name={name}
             onBlur={onBlur}
+            disabled={disabled}
           />
           <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
             <svg

@@ -3,108 +3,17 @@ import LoginInfo from '@/components/forms/student-profile-elements/login-info/Lo
 import MainInfo from '@/components/forms/student-profile-elements/main-info/MainInfo';
 import UniversityInfo from '@/components/forms/student-profile-elements/university-info/UniversityInfo';
 import { StudentFormData } from '@/types/StudentProfileData';
-import { transformToOption, transformToOptions } from '@/utils/dataTransform';
 import { Button } from '@mui/base';
 import React, { ChangeEvent, useState } from 'react';
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
 const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
-
-const regionOptions = [
-    { id: 1, name: "НСК" },
-    { id: 2, name: "СПБ" },
-    { id: 3, name: "МСК" },
-    { id: 4, name: "ЕКБ" },
-];
-
-const cityOptions = [
-    { name: "НСК", id: 1 },
-    { name: "СПБ", id: 2 },
-]
-
-const genderOptions= [
-    {id: 1, name: "Мужской"},
-    {id: 2, name: "Женский"}
-]
-
-const familyStatusOptions = [
-    {id: 1, name: "Состоит в браке"},
-    {id: 2, name: "Не состоит в браке" }
-]
-
-const isWorkOptions = [
-    {id: 1, name: "Не работает"},
-    {id: 2, name: "Работает"}
-]
-
-const languageProfiencyOptions = [
-    {id: 1, name: "A уровень"},
-    {id: 2, name: "B уровень"}
-]
-
-const universityOptions = [
-    {id: 1, name: "НГТУ"},
-    {id: 2, name: "НГУ"}
-]
-
-const courseOptions = [
-    {id: 1, name: "1 курс"},
-    {id: 2, name: "2 курс"},
-    {id: 3, name: "3 курс"}
-]
-
-const validateField = (
-    name: string,
-    value: string | boolean | string[],
-    fullFormData: StudentFormData
-): string | string[] | undefined => {
-    switch (name) {
-        case "email":
-            return /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(value as string)
-                ? undefined : "Некорректный email";
-
-        case "password":
-            return (value as string).length >= 6 ? undefined : "Пароль должен содержать минимум 6 символов";
-
-        case "firstName":
-        case "lastName":
-            return /^[a-zA-Zа-яА-ЯёЁ\s\-']+$/.test(value as string)
-                ? undefined : "Некорректное имя или фамилия";
-
-        case "date":
-            return value ? undefined : "Укажите дату рождения";
-
-        case "gender":
-            return value ? undefined : ["Выберите пол"];
-
-        case "region":
-            return value ? undefined : ["Выберите регион"];
-
-        case "city":
-            return value ? undefined : ["Выберите город"];
-
-        case "familyStatus":
-            return value ? undefined : ["Выберите семейное положение"];
-
-        case "isWork":
-            return value ? undefined : ["Выберите статус занятости"];
-
-        case "languageProfiency":
-            return value ? undefined : ["Выберите уровень владения языком"];
-
-        case "university":
-            return value ? undefined : ["Выберите университет"];
-
-        case "profession":
-            return (value as string).length >= 2 ? undefined : "Укажите профессию";
-
-        case "course":
-            return value ? undefined : ["Выберите курс"];
-
-        default:
-            return undefined;
-    }
-};
+import { 
+    regionOptions as newRegionOptions, 
+    cityOptions as newCityOptions,
+    universityOptions as newUniversityOptions
+} from '@/app/partner-personal-account/statistics/context';
+import { courseOptions, familyStatusOptions, genderOptions, isWorkOptions, languageProfiencyOptions, validateField } from '../context';
 
 const ProfilePage: React.FC = () => {
 
@@ -189,14 +98,25 @@ const ProfilePage: React.FC = () => {
         }
 
         if (name === "region") {
-            const selectedIndustry = regionOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+            const selectedRegion = newRegionOptions.find(option => option.id.toString() === value);
+            newValue = selectedRegion
+                ? { value: selectedRegion.id.toString(), label: selectedRegion.name }
                 : undefined;
+            if (formData.region?.value !== newValue?.value){
+                setFormData((prevData) => ({
+                    ...prevData,
+                    region: newValue,
+                    city: undefined,
+                    university: undefined
+                }));
+                return;
+            }
+
         }
         
+        
         if (name === "city") {
-            const selectedIndustry = cityOptions.find(option => option.id.toString() === value);
+            const selectedIndustry = newCityOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
                 : undefined;
@@ -224,7 +144,7 @@ const ProfilePage: React.FC = () => {
         }
 
         if (name === "university") {
-            const selectedIndustry = universityOptions.find(option => option.id.toString() === value);
+            const selectedIndustry = newUniversityOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
                 ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
                 : undefined;
@@ -290,20 +210,20 @@ const ProfilePage: React.FC = () => {
                         handleChange={handleChange}
                         handleBlur={handleBlur}
                         errors={errors}
-                        regionOptions={regionOptions}
                         genderOptions={genderOptions}
-                        cityOptions={cityOptions}
                         familyStatusOptions={familyStatusOptions}
                         isWorkOptions={isWorkOptions}
                         languageProfiencyOptions={languageProfiencyOptions}
+                        newCityOptions={newCityOptions}
+                        newRegionOptions={newRegionOptions}
                     />
                     <UniversityInfo
                         formData={formData}
                         handleBlur={handleBlur}
                         handleChange={handleChange}
                         errors={errors}
-                        universityOptions={universityOptions}
                         courseOptions={courseOptions}
+                        newUniversityOptions={newUniversityOptions}
                     />
                 </div>
             </div>   

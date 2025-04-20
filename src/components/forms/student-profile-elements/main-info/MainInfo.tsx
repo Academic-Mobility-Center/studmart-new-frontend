@@ -1,8 +1,8 @@
 import { DateField } from "@/components/fields/date/DateField";
 import InputField from "@/components/fields/input/InputField"
-import PasswordField from "@/components/fields/password/PasswordField"
 import { SelectField } from "@/components/fields/select/SelectField";
-import { Option } from "@/types/Option";
+import City from "@/types/Cities";
+import Region from "@/types/Region";
 import { SelectOption } from "@/types/SelectOption";
 import { StudentFormData } from "@/types/StudentProfileData";
 import { transformToOptions } from "@/utils/dataTransform";
@@ -24,11 +24,11 @@ interface Props{
     }
     handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
     genderOptions: SelectOption[];
-    regionOptions: SelectOption[];
-    cityOptions: SelectOption[];
     familyStatusOptions: SelectOption[];
     isWorkOptions: SelectOption[];
     languageProfiencyOptions: SelectOption[];
+    newCityOptions: City[];
+    newRegionOptions: Region[];
 }
 const sectionTitleClasses = "[font-family:Mulish,sans-serif] text-base font-bold text-[#032c28] m-0 p-0";
 const fieldsRowClasses = "flex justify-center items-start flex-row mt-5 gap-[24px]";
@@ -40,12 +40,15 @@ const MainInfo: React.FC<Props> = ({
     errors, 
     handleBlur,
     genderOptions,
-    regionOptions,
-    cityOptions,
     familyStatusOptions,
     isWorkOptions,
-    languageProfiencyOptions
+    languageProfiencyOptions,
+    newCityOptions,
+    newRegionOptions
 }) => {
+    const filteredCityOptions = formData.region
+    ? newCityOptions.filter(city => city.region.id === Number(formData.region?.value))
+    : [];
     return(
         <div className="">
             <h2 className={sectionTitleClasses}>Личная информация</h2>
@@ -109,7 +112,7 @@ const MainInfo: React.FC<Props> = ({
                 <div className={inputContainerClasses}>
                     <SelectField 
                         name="region"
-                        options={transformToOptions(regionOptions)}
+                        options={transformToOptions(newRegionOptions)}
                         label="Регион проживания" 
                         placeholder="Регион проживания" 
                         width={262}
@@ -123,7 +126,7 @@ const MainInfo: React.FC<Props> = ({
                 <div className={inputContainerClasses}>
                     <SelectField 
                         name="city"
-                        options={transformToOptions(cityOptions)}
+                        options={transformToOptions(filteredCityOptions)}
                         label="Город проживания" 
                         placeholder="Город проживания" 
                         width={262}
