@@ -2,18 +2,20 @@
 
 FROM node:18-alpine AS base
 
+ARG ENV=local
+
+FROM base AS deps
 # Установка зависимостей, которые могут понадобиться (например, для некоторых пакетов node)
 RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
 # --- Установка зависимостей ---
-FROM base AS deps
-COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
 RUN \
-  if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm install; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -22,6 +24,9 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+COPY .env.${ENV} .env.production
+
 RUN npm run build
 
 # --- Финальный образ ---
