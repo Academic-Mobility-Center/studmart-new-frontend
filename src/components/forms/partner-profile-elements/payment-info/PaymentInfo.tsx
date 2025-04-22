@@ -7,14 +7,14 @@ const inputContainerClasses = "box-border flex justify-start items-start flex-co
 
 interface Props{
     formData: PartnerPersonalAccountFormData
-    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         inn?: string;
         currentAccount?: string;
         corAccount?: string;
         bic?: string;
     }
-    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void
+    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
 
 }
 const PaymentInfo: React.FC<Props> = ({
@@ -38,7 +38,8 @@ const PaymentInfo: React.FC<Props> = ({
                             labelFontSize={16}
                             value={formData.inn}
                             onChange={handleChange}
-                            onBlur={handleBlur}                                 
+                            onBlur={handleBlur}  
+                            maxRows={1}                               
                         />
                         {errors.inn && <p className="text-red-600 text-sm font-medium">{errors.inn}</p>}
                     </div>
@@ -51,7 +52,8 @@ const PaymentInfo: React.FC<Props> = ({
                             labelFontSize={16}
                             value={formData.bic}
                             onChange={handleChange} 
-                            onBlur={handleBlur}                             
+                            onBlur={handleBlur}
+                            maxRows={1}                              
                         /> 
                         {errors.bic && <p className="text-red-600 text-sm font-medium">{errors.bic}</p>}                         
                     </div>
@@ -66,7 +68,8 @@ const PaymentInfo: React.FC<Props> = ({
                             labelFontSize={16}
                             value={formData.currentAccount}
                             onChange={handleChange}    
-                            onBlur={handleBlur}                               
+                            onBlur={handleBlur}
+                            maxRows={1}                                
                         />
                         {errors.currentAccount && <p className="text-red-600 text-sm font-medium">{errors.currentAccount}</p>}                            
                     </div>
@@ -79,7 +82,8 @@ const PaymentInfo: React.FC<Props> = ({
                             labelFontSize={16}
                             value={formData.corAccount}
                             onChange={handleChange}
-                            onBlur={handleBlur}                                   
+                            onBlur={handleBlur}
+                            maxRows={1}                                    
                         />
                         {errors.corAccount && <p className="text-red-600 text-sm font-medium">{errors.corAccount}</p>}                            
                     </div>

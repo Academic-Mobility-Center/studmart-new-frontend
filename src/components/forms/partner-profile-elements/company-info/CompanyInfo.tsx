@@ -8,7 +8,7 @@ import { ChangeEvent } from "react";
 
 interface Props{
     formData: PartnerPersonalAccountFormData
-    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         companyName?: string;
         site?: string;
@@ -18,7 +18,7 @@ interface Props{
         country?: string[];
         regions?: string[];
     }
-    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     industryOptions: SelectOption[];
     countryOptions: SelectOption[];
     regionOptions: SelectOption[];
@@ -49,7 +49,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 labelFontSize={16}
                                 value={formData.companyName}
                                 onChange={handleChange}   
-                                onBlur={handleBlur}                             
+                                onBlur={handleBlur}    
+                                maxRows={1}                         
                             />
                             {errors.companyName && <p className="text-red-600 text-sm font-medium">{errors.companyName}</p>}                              
                         </div>
@@ -62,7 +63,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 labelFontSize={16}
                                 value={formData.site}
                                 onChange={handleChange}
-                                onBlur={handleBlur}                                  
+                                onBlur={handleBlur}
+                                maxRows={1}                                   
                             />
                             {errors.site && <p className="text-red-600 text-sm font-medium">{errors.site}</p>}                            
                         </div>
@@ -77,7 +79,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 labelFontSize={16}
                                 value={formData.phoneNumber}
                                 onChange={handleChange}
-                                onBlur={handleBlur}                                
+                                onBlur={handleBlur}
+                                maxRows={1}                                 
                             />
                             {errors.phoneNumber && <p className="text-red-600 text-sm font-medium">{errors.phoneNumber}</p>}                            
                         </div>
@@ -90,7 +93,8 @@ const CompanyInfo: React.FC<Props> = ({
                                 labelFontSize={16}
                                 value={formData.companyEmail}
                                 onChange={handleChange}
-                                onBlur={handleBlur}                                  
+                                onBlur={handleBlur}
+                                maxRows={1}                                   
                             />
                             {errors.companyEmail && <p className="text-red-600 text-sm font-medium">{errors.companyEmail}</p>}                                                        
                         </div>

@@ -1,9 +1,31 @@
-import { Combobox } from '@headlessui/react'
-import { useState, useEffect } from 'react'
+
+import React, { useEffect, useState } from "react";
+import {
+  Autocomplete,
+  TextField,
+  Typography,
+  Box,
+  AutocompleteRenderInputParams,
+} from "@mui/material";
+
 type Option = {
   label: string;
   value: string;
 };
+
+interface SelectFieldProps {
+  label: string;
+  options: Option[];
+  value?: Option | undefined;
+  name: string;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  width: number;
+  labelFontSize: number;
+  placeholder: string;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+}
+
 export function SelectField({
   label,
   options,
@@ -14,136 +36,105 @@ export function SelectField({
   labelFontSize,
   placeholder,
   onBlur,
-  disabled
-}: {
-  label: string
-  options: Option[]
-  value?: Option | undefined;
-  name: string
-  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
-  width: number
-  labelFontSize: number
-  placeholder: string;
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  disabled?: boolean | undefined
-}) {
+  disabled,
+}: SelectFieldProps) {
   const [selectedOption, setSelectedOption] = useState<Option | null>(
-    value || null  // Используем значение из пропсов напрямую
+    value || null
   );
-
-  const [query, setQuery] = useState('')
 
   useEffect(() => {
     setSelectedOption(value || null);
   }, [value]);
 
-  const filteredOptions =
-    query === ''
-      ? options
-      : options.filter((option) =>
-          option.label.toLowerCase().includes(query.toLowerCase())
-        );
-
-        const handleChange = (selected: Option) => {
-          setSelectedOption(selected);
-          if (onChange) {
-            const event = {
-              target: {
-                name,
-                value: selected.value,
-              },
-            } as React.ChangeEvent<HTMLSelectElement>;
-            onChange(event);
-          }
-        };
+  const handleChange = (
+    _: React.SyntheticEvent,
+    newValue: Option | null
+  ) => {
+    setSelectedOption(newValue);
+    if (onChange) {
+      const event = {
+        target: {
+          name,
+          value: newValue?.value || "",
+        },
+      } as React.ChangeEvent<HTMLSelectElement>;
+      onChange(event);
+    }
+  };
 
   return (
-    <div className="flex flex-col gap-2" style={{ width: `${width}px` }}>
-      <label
-        className="text-[#032c28]"
-        style={{ fontSize: `${labelFontSize}px` }}
-      >
+    <Box display="flex" flexDirection="column" gap={1} width={width}>
+      <Typography sx={{ fontSize: labelFontSize, color: "#032c28" }}>
         {label}
-      </label>
-      <Combobox 
+      </Typography>
+      <Autocomplete
+        options={options}
         value={selectedOption}
-        onChange={handleChange} 
-      >
-        <div className="relative">
-          <Combobox.Input
-            className={`w-full pl-[20px] pr-10 border 
-              border-gray-300 p-2 rounded-2xl 
-              focus:outline-none h-[48px] ${
-              selectedOption ? 'text-[#032c28]' : 'text-gray-500 placeholder:text-[#888888]' 
-            } 
-            `}
-            displayValue={(option: Option) => option?.label || ''}
-            onChange={(event) => {
-              const inputValue = event.target.value;
-              setQuery(inputValue);
-              if (inputValue === '') {
-                setSelectedOption(null);
-                if (onChange) {
-                  const emptyEvent = {
-                    target: {
-                      name,
-                      value: '',
-                    },
-                  } as React.ChangeEvent<HTMLSelectElement>;
-                  onChange(emptyEvent);
-                }
-              }
-            }}
+        onChange={handleChange}
+        getOptionLabel={(option) => option.label}
+        isOptionEqualToValue={(option, value) => option.value === value.value}
+        disabled={disabled}
+        noOptionsText="Ничего не найдено"
+        renderInput={(params: AutocompleteRenderInputParams) => (
+          <TextField
+            {...params}
             placeholder={placeholder}
             name={name}
             onBlur={onBlur}
-            disabled={disabled}
+            InputProps={{
+              ...params.InputProps,
+              sx: {
+                paddingRight: "10px",
+                borderRadius: "16px",
+                backgroundColor: "#fff",
+                color: "#032c28",
+                "& input::placeholder": {
+                  color: "#888888",
+                  opacity: 1,
+                },
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                paddingLeft: "20px",
+                height: "48px",
+                "& fieldset": {
+                  borderColor: "#ccc",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#888",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#032c28",
+                },
+              },
+            }}
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
-            <svg
-              className="w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </Combobox.Button>
-          <Combobox.Options 
-            className="absolute z-10 mt-1 max-h-60 w-full 
-            overflow-auto rounded-2xl 
-            bg-white py-1 shadow-lg ring-1 ring-black 
-            ring-opacity-5 focus:outline-none"
+        )}
+        renderOption={(props, option, { selected }) => (
+          <Box
+            component="li"
+            {...props}
+            sx={{
+              px: 2,
+              py: 1,
+              cursor: "pointer",
+              color: "#032c28",
+              "&:hover": {
+                backgroundColor: "#032c28",
+                color: "#8FE248",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#032c28",
+                color: "#8FE248",
+              },
+            }}
           >
-            {filteredOptions.length === 0 && query !== '' ? (
-              <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                Ничего не найдено
-              </div>
-            ) : (
-              filteredOptions.map((option) => (
-                <Combobox.Option
-                  key={option.value}
-                  value={option}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-4 pr-4 ${
-                      active ? 'bg-[#032c28] text-white' : 'text-[#032c28]'
-                    }`
-                  }
-                >
-                  {option.label}
-                </Combobox.Option>
-              ))
-            )}
-          </Combobox.Options>
-        </div>
-      </Combobox>
-    </div>
-  )
+            {option.label}
+          </Box>
+        )}
+      />
+    </Box>
+  );
 }
 

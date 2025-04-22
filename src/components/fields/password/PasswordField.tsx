@@ -30,7 +30,7 @@ export default function PasswordField({
           <input
             className="flex items-center leading-none border 
             border-gray-300 p-2 pl-6 rounded-2xl pr-10 focus:outline-none 
-            text-[#032c28] placeholder:text-[#888888] h-[48px] w-full text-base"
+            text-[#032c28] placeholder:text-[#888888] h-[48px] w-full text-base bg-white"
             type={isPasswordVisible ? "text" : "password"}
             autoComplete="off"
             placeholder={placeholder}

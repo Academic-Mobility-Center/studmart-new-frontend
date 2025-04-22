@@ -4,7 +4,6 @@ import { ChangeEvent, useState } from "react"
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
-import { transformToOption, transformToOptions } from "@/utils/dataTransform"
 
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
@@ -27,13 +26,6 @@ const regionOptions = [
     { id: 3, name: "МСК" },
     { id: 4, name: "ЕКБ" },
 ];
-
-const regionsValues = [
-    { name: "НСК", id: 1 },
-    { name: "СПБ", id: 2 },
-]
-const industry = { id: 1, name: "ИТ-услуги" }
-const country ={ id: 1, name: "Россия" }
 
 const validateField = (
     name: string,
@@ -95,10 +87,6 @@ const validateField = (
 
 const PartnerProfileForm: React.FC = () => {
 
-
-    const regions = transformToOptions(regionsValues)
-    const industryValue = transformToOption(industry)
-    const countryValue = transformToOption(country)
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
         personalEmail: "test.partner@example.com",
         password: "securePass123",
@@ -147,8 +135,11 @@ const PartnerProfileForm: React.FC = () => {
         bic: ""
     });
 
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleBlur = (
+        event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
         const { name, value, type, checked } = event.target as HTMLInputElement;
+    
         const newValue = type === 'checkbox' || type === 'radio' ? checked : value;
     
         setErrors((prevErrors) => ({
@@ -158,33 +149,35 @@ const PartnerProfileForm: React.FC = () => {
                 [name]: newValue,
             }),
         }));
-    };    
+    };   
     
-    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
         const { name, value, type, checked } = event.target as HTMLInputElement;
-      
+    
         let newValue: any = type === 'checkbox' ? checked : value;
-      
+    
         if (name === 'allRegions' && checked) {
-          setFormData(prev => ({
-            ...prev,
-            allRegions: true,
-            specificRegions: false,
-            regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name }))
-          }));
-          return;
+            setFormData(prev => ({
+                ...prev,
+                allRegions: true,
+                specificRegions: false,
+                regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name }))
+            }));
+            return;
         }
-      
+    
         if (name === 'specificRegions' && checked) {
-          setFormData(prev => ({
-            ...prev,
-            allRegions: false,
-            specificRegions: true,
-            regions: []
-          }));
-          return;
+            setFormData(prev => ({
+                ...prev,
+                allRegions: false,
+                specificRegions: true,
+                regions: []
+            }));
+            return;
         }
-
+    
         if (name === "industry") {
             const selectedIndustry = industryOptions.find(option => option.id.toString() === value);
             newValue = selectedIndustry
@@ -198,20 +191,20 @@ const PartnerProfileForm: React.FC = () => {
                 ? { value: selectedCountry.id.toString(), label: selectedCountry.name }
                 : undefined;
         }
-
+    
         setFormData(prev => ({
-          ...prev,
-          [name]: newValue
+            ...prev,
+            [name]: newValue
         }));
-      
+    
         setErrors(prev => ({
-          ...prev,
-          [name]: validateField(name, newValue, {
-            ...formData,
-            [name]: newValue,
-          }),
+            ...prev,
+            [name]: validateField(name, newValue, {
+                ...formData,
+                [name]: newValue,
+            }),
         }));
-      };
+    };
 
     const handleSubmitForm = (event: React.FormEvent) => {
         event.preventDefault();

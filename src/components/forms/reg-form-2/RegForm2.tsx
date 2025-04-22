@@ -85,7 +85,8 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     name="name" 
                     value={formData.name}
                     width={350}
-                    labelFontSize={14}                    
+                    labelFontSize={14}  
+                    maxRows={1}                  
                 />
                 {errors.name && <p className="text-red-600 text-sm font-medium mt-1">{errors.name}</p>}
             </div>
@@ -97,7 +98,8 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     name="fullname" 
                     value={formData.fullname}
                     width={350}
-                    labelFontSize={14}                    
+                    labelFontSize={14}
+                    maxRows={1}                    
                 />
                 {errors.fullname && <p className="text-red-600 text-sm font-medium mt-1">{errors.fullname}</p>}
             </div>
@@ -107,6 +109,8 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     onChange={handleChange} 
                     name="date" 
                     value={formData?.date instanceof Date ? formData?.date?.toISOString().split("T")[0] : ""}
+                    labelFontSize={14}
+                    width={350}
                 />
                 {errors.date && <p className="text-red-600 text-sm font-medium mt-1">{errors.date}</p>}
             </div>

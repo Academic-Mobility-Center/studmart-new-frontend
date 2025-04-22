@@ -1,71 +1,33 @@
 "use client";
 import { useState } from "react";
-import { Switch } from "@mui/material";
-import { styled } from "@mui/material/styles";
-
-const personalDataItems = [
-    "Университет",
-    "Специальность",
-    "Курс",
-    "Наличие места работы",
-    "Регион проживания",
-    "Город проживания",
-    "Дата рождения",
-    "Пол",
-    "Семейное положение",
-    "Владение иностранными языками"
-];
+import { personalDataItems } from "../context";
+import { StyledSwitch } from "@/components/fields/switch/StyledSwitch";
+import { ArrowDown } from "./icons/ArrowDown";
+import { categoriesAndServices } from "../context";
+import { ArrowUp } from "./icons/ArrowUp";
+const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] mt-5 h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto rounded-[15px] border-[none]";
 
 const PolicyPage = () => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [selectedMenuItem, setSelectedMenuItem] = useState<"categories" | "data" | null>("categories");
     const [activeStates, setActiveStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(personalDataItems.map(item => [item, false]))
     );
-
+    const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
+        Object.fromEntries(categoriesAndServices.map(item => [item.heading, false]))
+    );
+    const toggleExpand = (heading: string) => {
+        setExpandedStates(prev => ({
+            ...prev,
+            [heading]: !prev[heading]
+        }));
+    };
     const toggleItem = (item: string) => {
         setActiveStates(prev => ({
             ...prev,
             [item]: !prev[item]
         }));
     };
-    const CustomSwitch = styled(Switch)(({ theme }) => ({
-        width: 42,
-        height: 26,
-        padding: 0,
-        display: "flex",
-        alignItems: "center",
-      
-        "& .MuiSwitch-switchBase": {
-          padding: 2,
-          transitionDuration: "300ms",
-          "&.Mui-checked": {
-            transform: "translateX(16px)",
-            color: "#032C28",
-            "& + .MuiSwitch-track": {
-              backgroundColor: "#8FE248",
-              borderColor: "#8FE248",
-              opacity: 1,
-              border: "1px solid #032C28",
-            },
-          },
-        },
-        "& .MuiSwitch-thumb": {
-            boxSizing: "border-box",
-            width: 9.75,
-            height: 9.75,
-            backgroundColor: "#032C28",
-            marginTop: "auto",
-            marginBottom: "auto",
-            marginLeft: 1.5, // Подогнано под центр
-          },
-        "& .MuiSwitch-track": {
-          borderRadius: 13,
-          border: "1px solid #032C28",
-          backgroundColor: "transparent",
-          opacity: 1,
-          boxSizing: "border-box",
-        },
-      }));
+
     return (
         <div className="flex flex-col gap-[40px]">
             <div
@@ -83,24 +45,30 @@ const PolicyPage = () => {
 
                 <div className="flex flex-row gap-5 mb-5">
                     <button
-                        className="bg-[#F8F8F8] font-[Mulish] text-sm font-bold tracking-[0.42px] 
+                        className=" font-[Mulish] text-sm font-bold tracking-[0.42px] 
                         uppercase text-[#032c28] min-w-[262px] h-12 cursor-pointer block box-border 
                         grow-0 shrink-0 basis-auto rounded-[15px] border border-[rgba(0,0,0,0.20)]"
-                        onClick={() => setIsExpanded(prev => !prev)}
+                        style={{backgroundColor: selectedMenuItem === "categories" ? "#efefef" : "#F8F8F8"}}
+                        onClick={() => {
+                            setSelectedMenuItem("categories")
+                        }}
                     >
                         Категории и услуги
                     </button>
                     <button
-                        className="bg-[#F8F8F8] font-[Mulish] text-sm font-bold tracking-[0.42px] 
+                        className=" font-[Mulish] text-sm font-bold tracking-[0.42px] 
                         uppercase text-[#032c28] min-w-[262px] h-12 cursor-pointer block box-border 
                         grow-0 shrink-0 basis-auto rounded-[15px] border border-[rgba(0,0,0,0.20)]"
-                        onClick={() => setIsExpanded(prev => !prev)}
+                        style={{backgroundColor: selectedMenuItem === "data" ? "#efefef" : "#F8F8F8"}}
+                        onClick={() => {
+                            setSelectedMenuItem("data")
+                        }}
                     >
                         Персональные данные
                     </button>
                 </div>
 
-                {isExpanded && (
+                {selectedMenuItem === "data" && (
                     <div className="grid grid-cols-2 gap-3">
                         {personalDataItems.map(item => (
                             <div
@@ -111,7 +79,7 @@ const PolicyPage = () => {
                                 bg-white text-[#032C28] border-[rgba(0,0,0,0.2)] font-[Mulish] min-h-[48px]"
                             >
                                 {item}
-                                <CustomSwitch
+                                <StyledSwitch
                                     checked={activeStates[item]}
                                     onChange={() => toggleItem(item)}
                                     onClick={(e) => e.stopPropagation()}
@@ -119,6 +87,50 @@ const PolicyPage = () => {
                             </div>
                         ))}
                     </div>
+                )}
+                {selectedMenuItem === "categories" && (
+                    <div className="flex flex-col gap-5">
+                        {categoriesAndServices.map(({ heading, p, p_array }) => {
+                            const isExpanded = expandedStates[heading];
+                            return (
+                                <div
+                                    key={heading}
+                                    className="w-[548px] rounded-[15px] 
+                                        border border-[rgba(0,0,0,0.20)] 
+                                        bg-[#EFEFEF] text-[#032C28] p-5 font-[Mulish]"
+                                >
+                                    <div className="flex flex-row justify-between font-extrabold">
+                                        <p>{heading}</p>
+                                        <div className="flex flex-row justify-between gap-5 items-center">
+                                            <StyledSwitch
+                                                onClick={(e) => e.stopPropagation()}
+                                                onChange={() => {}}
+                                            />
+                                            <div onClick={() => toggleExpand(heading)} className="cursor-pointer">
+                                                {isExpanded ? <ArrowUp /> : <ArrowDown />}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {isExpanded && (
+                                        <>
+                                            <p className="mt-5 text-[14px]">{p}</p>
+                                            <div className="flex flex-col gap-[10px] mt-5 text-[14px]">
+                                                {Object.values(p_array).map((item, idx) => (
+                                                    <p key={idx}>{item}</p>
+                                                ))}
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                {selectedMenuItem !== null && (                
+                    <button type="submit" className={saveButtonClasses}>
+                    Сохранить
+                    </button>
                 )}
             </div>
         </div>

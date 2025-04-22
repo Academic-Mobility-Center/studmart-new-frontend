@@ -73,6 +73,7 @@ const RegForm1: React.FC<RegFormProps> = ({
                     autoComplete="off"
                     width={350}
                     labelFontSize={14}
+                    maxRows={1}
                 />
                 {errors.email && <p className="text-red-600 text-sm font-medium mt-1">{errors.email}</p>}
             </div>
@@ -105,7 +106,8 @@ const RegForm1: React.FC<RegFormProps> = ({
                 label="Есть промокод?" 
                 placeholder="Hhufs8a7auh40egij"
                 width={350}
-                labelFontSize={14}                
+                labelFontSize={14}
+                maxRows={1}                
             />
     
             <div className="flex flex-col gap-4">

@@ -24,8 +24,8 @@ export default function LoginForm() {
       passwordResetConfirm: ""
     });    
     
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const { name, value, type, checked } = event.target;
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      const { name, value, type, checked } = event.target as HTMLInputElement;
       setFormData((prevData) => ({
           ...prevData,
           [name]: type === "checkbox" ? checked : value,
@@ -107,6 +107,7 @@ export default function LoginForm() {
             onChange={handleChange} 
             width={350}
             labelFontSize={14}
+            maxRows={1}
           />
           {errors.email && 
             <p 

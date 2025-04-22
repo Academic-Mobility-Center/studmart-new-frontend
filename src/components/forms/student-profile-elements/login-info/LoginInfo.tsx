@@ -1,16 +1,15 @@
 import InputField from "@/components/fields/input/InputField"
 import PasswordField from "@/components/fields/password/PasswordField"
 import { StudentFormData } from "@/types/StudentProfileData";
-import { ChangeEvent } from "react";
 
 interface Props{
     formData: StudentFormData
-    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         email?: string;
         password?: string;
     }
-    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void
+    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
 }
 const sectionTitleClasses = "[font-family:Mulish,sans-serif] text-base font-bold text-[#032c28] m-0 p-0";
 const fieldsRowClasses = "flex justify-center items-start flex-row mt-5 gap-[24px]";
@@ -32,6 +31,7 @@ const LoginInfo: React.FC<Props> = ({handleChange, formData, errors, handleBlur}
                         value={formData.email}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        maxRows={1}
                     />
                     {errors.email && <p className="text-red-600 text-sm font-medium">{errors.email}</p>}                            
                 </div>

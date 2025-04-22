@@ -66,8 +66,11 @@ const ProfilePage: React.FC = () => {
         course: []
     });
     
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleBlur = (
+        event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
         const { name, value, type, checked } = event.target as HTMLInputElement;
+    
         const newValue = type === 'checkbox' || type === 'radio' ? checked : value;
     
         setErrors((prevErrors) => ({
@@ -77,32 +80,44 @@ const ProfilePage: React.FC = () => {
                 [name]: newValue,
             }),
         }));
-    };    
+    };
+    
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type, files } = event.target as HTMLInputElement;
+    const handleChange = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value, type, files, checked } = event.target as HTMLInputElement;
     
         let newValue: string | File | Date | any = value;
     
-        if (type === "date") {
+        if (type === "checkbox" || type === "radio") {
+            newValue = checked;
+        } else if (type === "date") {
             newValue = new Date(value);
         } else if (type === "file" && files) {
             newValue = files[0];
         }
     
-        if (name === "gender") {
-            const selectedIndustry = genderOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
+        // Обработка select-like значений
+        const selectMapping = {
+            gender: genderOptions,
+            region: newRegionOptions,
+            city: newCityOptions,
+            familyStatus: familyStatusOptions,
+            isWork: isWorkOptions,
+            languageProfiency: languageProfiencyOptions,
+            university: newUniversityOptions,
+            course: courseOptions,
+        };
+    
+        if (name in selectMapping) {
+            const options = selectMapping[name as keyof typeof selectMapping];
+            const selected = options.find(option => option.id.toString() === value);
+            newValue = selected
+                ? { value: selected.id.toString(), label: selected.name }
                 : undefined;
-        }
-
-        if (name === "region") {
-            const selectedRegion = newRegionOptions.find(option => option.id.toString() === value);
-            newValue = selectedRegion
-                ? { value: selectedRegion.id.toString(), label: selectedRegion.name }
-                : undefined;
-            if (formData.region?.value !== newValue?.value){
+    
+            if (name === "region" && formData.region?.value !== newValue?.value) {
                 setFormData((prevData) => ({
                     ...prevData,
                     region: newValue,
@@ -111,50 +126,6 @@ const ProfilePage: React.FC = () => {
                 }));
                 return;
             }
-
-        }
-        
-        
-        if (name === "city") {
-            const selectedIndustry = newCityOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : undefined;
-        }
-
-        if (name === "familyStatus") {
-            const selectedIndustry = familyStatusOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : undefined;
-        }
-
-        if (name === "isWork") {
-            const selectedIndustry = isWorkOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : undefined;
-        }
-
-        if (name === "languageProfiency") {
-            const selectedIndustry = languageProfiencyOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : undefined;
-        }
-
-        if (name === "university") {
-            const selectedIndustry = newUniversityOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : undefined;
-        }
-
-        if (name === "course") {
-            const selectedIndustry = courseOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : undefined;
         }
     
         setFormData((prevData) => ({

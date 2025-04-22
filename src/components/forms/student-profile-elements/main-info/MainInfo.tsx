@@ -10,7 +10,7 @@ import { ChangeEvent } from "react";
 
 interface Props{
     formData: StudentFormData
-    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         firstName: string,
         lastName: string,
@@ -22,7 +22,7 @@ interface Props{
         isWork: string[],
         languageProfiency: string[],
     }
-    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     genderOptions: SelectOption[];
     familyStatusOptions: SelectOption[];
     isWorkOptions: SelectOption[];
@@ -63,6 +63,7 @@ const MainInfo: React.FC<Props> = ({
                         value={formData.firstName}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        maxRows={1}
                     />
                     {errors.firstName && <p className="text-red-600 text-sm font-medium">{errors.firstName}</p>}                            
                 </div>
@@ -74,6 +75,7 @@ const MainInfo: React.FC<Props> = ({
                         width={262}
                         labelFontSize={16}
                         value={formData.lastName}
+                        maxRows={1}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />

@@ -23,7 +23,7 @@ export function DateField({
           className=" text-[#032c28]"
         >{label}</label>
         <input
-          className="pl-6 border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] h-[48px] pr-4"
+          className="pl-6 border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] h-[48px] pr-4 bg-white"
           type="date"
           name={name}
           onChange={onChange}

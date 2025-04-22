@@ -38,7 +38,7 @@ export function FileField({
         />
         <label
           htmlFor={name}
-          className="pl-6 border border-gray-300 p-2 rounded-2xl text-[#032c28] h-[48px] cursor-pointer flex justify-between items-center"
+          className="pl-6 border border-gray-300 p-2 rounded-2xl text-[#032c28] h-[48px] cursor-pointer flex justify-between items-center bg-white"
         >
           {fileName || "Прикрепите файл"}
         </label>

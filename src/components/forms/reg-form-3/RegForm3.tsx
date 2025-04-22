@@ -97,7 +97,8 @@ const RegForm3: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                     value={formData.profession} 
                     onChange={handleChange}
                     width={350}
-                    labelFontSize={14}                    
+                    labelFontSize={14}   
+                    maxRows={1}                 
                 />
                 {errors.profession && <p className="text-red-600 text-sm font-medium mt-1">{errors.profession}</p>}
             </div>

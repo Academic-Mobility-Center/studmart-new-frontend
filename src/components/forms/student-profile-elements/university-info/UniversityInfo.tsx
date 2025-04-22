@@ -8,13 +8,13 @@ import { ChangeEvent } from "react";
 
 interface Props{
     formData: StudentFormData
-    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         university: string[];
         profession: string,
         course: string[]
     }
-    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleBlur: (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     courseOptions: SelectOption[];
     newUniversityOptions: University[];
 }
@@ -57,6 +57,7 @@ const UniversityInfo: React.FC<Props> = ({
                         width={262}
                         labelFontSize={16}
                         value={formData.profession}
+                        maxRows={1}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
@@ -66,13 +67,13 @@ const UniversityInfo: React.FC<Props> = ({
             <div>
                 <SelectField 
                     name="course"
-                label="Курс" 
-                placeholder="Курс" 
-                width={262}
-                labelFontSize={16}
-                value={formData.course}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                    label="Курс" 
+                    placeholder="Курс" 
+                    width={262}
+                    labelFontSize={16}
+                    value={formData.course}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     options={transformToOptions(courseOptions)}
                 />
                 {errors.course && <p className="text-red-600 text-sm font-medium">{errors.course}</p>}   

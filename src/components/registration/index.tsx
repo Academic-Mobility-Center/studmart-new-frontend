@@ -42,7 +42,7 @@ export default function RegistraionForm(){
         email: ""
     });
 
-    const handleChangeForm = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type, files } = event.target as HTMLInputElement;
         
         let newValue: string | File | Date | any = value;
