@@ -6,6 +6,7 @@ import WhatGivesStudmart from "@/components/partners-page-items/what-gives-studm
 import InCooperation from "@/components/partners-page-items/in-cooperation/InCooperation";
 import { Button } from "@mui/base";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
 const PartnersPage = () => {
     const { isAuthenticated, isLoading } = useAuth();
@@ -37,7 +38,8 @@ const PartnersPage = () => {
                         <div 
                             className="relative grow-0 shrink-0 basis-auto pb-[41px] pl-[199px] pt-[120px]"
                         >
-                            <img 
+                            <Image
+                                alt="" 
                                 src="/icons/partners/access-procent.svg"
                                 className="absolute z-20 pt-[190px] transform -translate-x-[114px]"
                             />

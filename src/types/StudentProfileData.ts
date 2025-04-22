@@ -16,7 +16,7 @@ export interface StudentFormData{
   password: string;
   firstName: string,
   lastName: string,
-  date: Date | null;
+  date: Date | undefined;
   gender: Option | undefined;
   region: Option | undefined;
   city: Option | undefined;

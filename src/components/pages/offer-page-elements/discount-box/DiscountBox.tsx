@@ -1,5 +1,5 @@
 import { Button } from "@mui/base"
-import { Typography } from "@mui/material";
+import Image from "next/image";
 
 interface Props{
     title: string;
@@ -30,7 +30,7 @@ const DiscountBox = ({
                         className="relative bg-[#f0e9e2] box-border w-full 
                         max-w-[588px] pb-[30px] pl-[30px] rounded-[30px] overflow-hidden"
                     >
-                        <img 
+                        <Image 
                             src="/icons/offer/lines.svg" 
                             className="absolute top-0 right-0 h-[98px] w-[191px] object-cover z-0 pointer-events-none"
                             alt="Background Decoration"
@@ -85,11 +85,12 @@ const DiscountBox = ({
                                 py-3 rounded-[15px] border-solid 
                                 border-[rgba(0,0,0,0.20)]"
                             >
-                                <img 
+                                <Image 
                                     src="/icons/offer/eye.svg" 
                                     className="w-6 h-6 flex grow-0 
                                     shrink-0 basis-auto box-border cursor-pointer" 
                                     onClick={onClick}
+                                    alt=""
                                 />
                             </div>
                         </div>

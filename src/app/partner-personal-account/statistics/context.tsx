@@ -5,7 +5,14 @@ import Region from "@/types/Region";
 import University from "@/types/University";
 import City from "@/types/Cities";
 import Country from "@/types/Country";
+type SimulatedFetchKey = "demography" | "geography" | "devices" | "eventStats";
 
+type SimulatedFetchReturnType<K extends SimulatedFetchKey> =
+  K extends "demography" ? typeof defaultDemographyData :
+  K extends "geography" ? typeof defaultGeographyData :
+  K extends "devices" ? typeof defaultDevicesData :
+  K extends "eventStats" ? typeof defaultEventStats :
+  never;
 const country: Country = {
     id: 1,
     name: "Россия"
@@ -139,12 +146,12 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
     if (!start || !end) return;
 
     const fetchStats = async () => {
-      let regionMultiplier = formData.region ? 0.7 : 1;
-      let universityMultiplier = formData.university ? 0.5 : 1;
+      const regionMultiplier = formData.region ? 0.7 : 1;
+      const universityMultiplier = formData.university ? 0.5 : 1;
       const totalMultiplier = regionMultiplier * universityMultiplier;
 
-      const simulatedFetch = (key: string) =>
-        new Promise<any>((resolve) => {
+      const simulatedFetch = <K extends SimulatedFetchKey>(key: K): Promise<SimulatedFetchReturnType<K>> =>
+        new Promise((resolve) => {
           setTimeout(() => {
             switch (key) {
               case "demography":
@@ -152,19 +159,19 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
                   ...item,
                   male: Math.floor(item.male * totalMultiplier),
                   female: Math.floor(item.female * totalMultiplier),
-                })));
+                })) as SimulatedFetchReturnType<K>);
                 break;
               case "geography":
                 resolve(defaultGeographyData.map(item => ({
                   ...item,
                   value: +(item.value * totalMultiplier).toFixed(2),
-                })));
+                })) as SimulatedFetchReturnType<K>);
                 break;
               case "devices":
                 resolve(defaultDevicesData.map(item => ({
                   ...item,
                   value: Math.floor(item.value * totalMultiplier),
-                })));
+                })) as SimulatedFetchReturnType<K>);
                 break;
               case "eventStats":
                 const randomStat = (base: number): EventStatItem => {
@@ -180,13 +187,58 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
                   promocodes: randomStat(521),
                   repeatPromocodes: randomStat(346),
                   siteVisits: randomStat(168),
-                });
+                } as SimulatedFetchReturnType<K>);
                 break;
-              default:
-                resolve([]);
+                default:
+                  throw new Error(`Unsupported key: ${key}`);
             }
           }, 800);
         });
+      
+      // const simulatedFetch = (key: string) =>
+      //   new Promise<any>((resolve) => {
+      //     setTimeout(() => {
+      //       switch (key) {
+      //         case "demography":
+      //           resolve(defaultDemographyData.map(item => ({
+      //             ...item,
+      //             male: Math.floor(item.male * totalMultiplier),
+      //             female: Math.floor(item.female * totalMultiplier),
+      //           })));
+      //           break;
+      //         case "geography":
+      //           resolve(defaultGeographyData.map(item => ({
+      //             ...item,
+      //             value: +(item.value * totalMultiplier).toFixed(2),
+      //           })));
+      //           break;
+      //         case "devices":
+      //           resolve(defaultDevicesData.map(item => ({
+      //             ...item,
+      //             value: Math.floor(item.value * totalMultiplier),
+      //           })));
+      //           break;
+      //         case "eventStats":
+      //           const randomStat = (base: number): EventStatItem => {
+      //             const value = Math.floor(base * totalMultiplier);
+      //             const percentage = Math.floor(Math.random() * 50);
+      //             const isUp = Math.random() > 0.5;
+      //             return { value, percentage, isUp };
+      //           };
+      //           resolve({
+      //             visitors: randomStat(2000),
+      //             repeatVisits: randomStat(1567),
+      //             uniqueVisitors: randomStat(1800),
+      //             promocodes: randomStat(521),
+      //             repeatPromocodes: randomStat(346),
+      //             siteVisits: randomStat(168),
+      //           });
+      //           break;
+      //         default:
+      //           resolve([]);
+      //       }
+      //     }, 800);
+      //   });
 
       const [demographyData, geographyData, devicesData, eventStats] = await Promise.all([
         simulatedFetch("demography"),

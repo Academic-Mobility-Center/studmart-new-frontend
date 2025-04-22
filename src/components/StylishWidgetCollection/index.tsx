@@ -1,6 +1,5 @@
 import "./style.css";
 
-const category = ["academic", "treats", "cosmetics", "delivery", "golden-apple"]; 
 function StylishWidgetCollection({ rows, renderPromoCardsRow }: { rows: number, renderPromoCardsRow: () => React.JSX.Element }) {
   const promoCardRows = [];
   for (let i = 0; i < rows; i++) {

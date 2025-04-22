@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 const Contacts = () => {
     return (
@@ -75,13 +76,13 @@ const Contacts = () => {
                 flex-col w-10 h-10 grow-0 shrink-0 
                 basis-auto overflow-hidden"
             >
-                <img 
+                <Image 
                     src="/icons/footer/vk.svg" 
                     alt="" className="h-10 max-w-[initial] 
                     block grow-0 shrink-0 basis-auto" 
                 />
             </div>
-            <img 
+            <Image 
                 src="/icons/footer/telegram.svg" 
                 alt="" className="h-10 max-w-[initial] 
                 w-10 block grow-0 shrink-0 basis-auto 

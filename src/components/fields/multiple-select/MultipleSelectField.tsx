@@ -28,7 +28,6 @@ export function MultipleSelectField({
 
 }) {
   const [query, setQuery] = useState('')
-  const [showTags, setShowTags] = useState(!allRegions)
   const [regionMode, setRegionMode] = useState<'all' | 'specific'>(allRegions ? 'all' : 'specific');
   const isDisabled = isNeedRadio ? regionMode === 'all' : false
 
@@ -80,70 +79,6 @@ export function MultipleSelectField({
       onChange(event)
     }
   }
-  // const handleRegionModeChange = (mode: 'all' | 'specific') => {
-  //   if (mode === regionMode) return
-  //   setRegionMode(mode);
-
-  //   if (mode === 'all') {
-  //     setSelectedMultiple(options);
-  //     if (onChange) {
-  //       const events = [
-  //         {
-  //           target: {
-  //             name: name,
-  //             value: options
-  //           }
-  //         },
-  //         {
-  //           target: {
-  //             name: 'allRegions',
-  //             type: 'radio',
-  //             checked: true
-  //           }
-  //         },
-  //         {
-  //           target: {
-  //             name: 'specificRegions',
-  //             type: 'radio',
-  //             checked: false
-  //           }
-  //         }
-  //       ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
-        
-  //       events.forEach(event => onChange(event));
-  //     }
-  //   }
-  //   if (mode === 'specific')
-  //      {
-  //     setSelectedMultiple([])      
-  //     if (onChange) {
-  //       const events = [
-  //         {
-  //           target: {
-  //             name: name,
-  //             value: [] 
-  //           }
-  //         },
-  //         {
-  //           target: {
-  //             name: 'allRegions',
-  //             type: 'radio',
-  //             checked: false
-  //           }
-  //         },
-  //         {
-  //           target: {
-  //             name: 'specificRegions',
-  //             type: 'radio',
-  //             checked: true
-  //           }
-  //         }
-  //       ] as unknown as React.ChangeEvent<HTMLSelectElement>[];
-        
-  //       events.forEach(event => onChange(event));
-  //     }
-  //   }
-  // }
   const handleRegionModeChange = (mode: 'all' | 'specific') => {
     if (mode === regionMode) return
     
@@ -235,7 +170,7 @@ export function MultipleSelectField({
           isDisabled={isDisabled}
           placeholder={placeholder}
           setQuery={setQuery}
-          displayValue={(value: string[]) => value.join(', ')}
+          displayValue={(value: Option[]) => value.map(v => v.label).join(', ')}
           onBlur={onBlur}
         />
           {regionMode === 'specific' && selectedMultiple.length > 0 && ( 
@@ -257,18 +192,18 @@ export function MultipleSelectField({
 }
 
 function ComboboxInputBase({
-  value,
+  value,  // Change from any to Option[]
   isDisabled,
   placeholder,
   setQuery,
-  displayValue,
+  displayValue, // Change displayValue to expect Option[]
   onBlur
 }: {
-  value: any
+  value: Option[]  // Use Option[] instead of any
   isDisabled: boolean
   placeholder: string
   setQuery: (val: string) => void
-  displayValue: (val: any) => string,
+  displayValue: (val: Option[]) => string,  // Accept Option[] instead of any
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
 }) {
   return (
@@ -281,7 +216,7 @@ function ComboboxInputBase({
           ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed' : 'bg-white'}
           text-[#032C28]
         `}
-        displayValue={() => ''}
+        displayValue={() => displayValue(value)} // Pass value to displayValue
         onChange={(event) => setQuery(event.target.value)}
         placeholder={placeholder}
         disabled={isDisabled}
@@ -306,9 +241,10 @@ function ComboboxInputBase({
   )
 }
 
+
 function ComboboxOptionsList({
   options,
-  selected,
+
 }: {
   options: Option[]
   selected: Option[]

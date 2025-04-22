@@ -1,7 +1,7 @@
-import TermsOfUse from "../offer-page-elements/terms-of-use/TermsOfUse";
 import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useState } from "react";
 import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
+import Image from "next/image";
 
 
 interface Props{
@@ -19,7 +19,7 @@ interface PromoCode {
     code: string;
     partnerName: string; 
 }
-const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl, partnerId}: Props) => {
+const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl}: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = (promo: PromoCode) => {
         setSelectedPromo(promo);
@@ -59,13 +59,14 @@ const PartnerOfferContent = ({heading, subHeading, description, url, imageUrl, p
                     <div className="flex justify-start items-start flex-row grow-0 shrink-0 basis-auto mt-[25px]">
                         <div className="w-[589px] grow-0 shrink-0 basis-auto box-border pb-[11px]">
                             <div className="w-[100.00%] box-border">
-                                <img
+                                <Image
                                     src={imageUrl}
                                     className="border h-[260px] 
                                     max-w-[initial] object-cover 
                                     w-[100.00%] box-border block 
                                     rounded-[30px] border-solid 
                                     border-[rgba(0,0,0,0.20)]"
+                                    alt=""
                                 />
                                 <div className="w-[100.00%] box-border mt-5">
                                     <p 

@@ -1,6 +1,7 @@
 import StudentServicesSection from "../StudentServicesSection";
 import PartnerSection from "../PartnerSection";
 import "./style.css";
+import Image from "next/image";
 interface Props {
   isAuthenticated: boolean;
 }
@@ -14,7 +15,7 @@ function ServiceAudience({isAuthenticated}: Props) {
         <div className="feature-highlight-section">
           <StudentServicesSection />
           <div className="promo-banner">
-            <img src="/icons/ServiceAudience/yellow.svg" alt="" className="image-container4" />
+            <Image src="/icons/ServiceAudience/yellow.svg" alt="" className="image-container4" />
           </div>
         </div>
         <div className="partner-offers-section">

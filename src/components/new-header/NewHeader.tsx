@@ -126,7 +126,7 @@ function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: b
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setCities(data.suggestions.map((s: any) => s.value));
+        setCities(data.suggestions);
       });
   }, []);
   

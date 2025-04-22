@@ -1,6 +1,7 @@
 import React from 'react';
 import PromoCardsDescriprion from '../promo-card-description';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 type PromoCardProps = {
   id: number;
   imageUrl: string;
@@ -47,11 +48,9 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 
 type StylishWrapperProps = {
   imageUrl: string;
-  height?: number;
 };
 
-const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl, height = 203 }) => {
-  const imageHeight = `${Math.round(height * 0.6)}px`;
+const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl }) => {
   return (
     <div
       className="w-full rounded-t-[20px] px-[10px] pt-[10px] flex justify-end items-start"
@@ -64,7 +63,7 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl, height = 203 
         flex: '2 1 auto',
       }}
     >
-      <img src="/icons/home/star.svg" alt="icon" className="w-8 h-8" />
+      <Image src="/icons/home/star.svg" alt="icon" className="w-8 h-8" />
     </div>
   );
 };

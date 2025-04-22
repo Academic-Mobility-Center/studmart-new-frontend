@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
 const buttonBaseClasses =
   "w-full flex items-center gap-2.5 px-[19px] py-3 hover:bg-[#efefef] transition-colors h-16";
@@ -36,7 +37,7 @@ const StudentMenu = () => {
             <li key={icon}>
               <Link href={href}>
                 <div className={`${buttonBaseClasses} ${isActive ? "bg-[#efefef]" : ""}`}>
-                  <img src={`/icons/student-account/${icon}.svg`} className={iconClass} alt="" />
+                  <Image src={`/icons/student-account/${icon}.svg`} className={iconClass} alt="" />
                   <span className={textClass}>{label}</span>
                 </div>
               </Link>

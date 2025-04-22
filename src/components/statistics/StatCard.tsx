@@ -2,8 +2,6 @@ import React from "react";
 import ArrowForward from "../../../public/icons/partner-account/arrow-forward";
 import ArrowDown from "../../../public/icons/partner-account/arrow-down";
 import Link from "next/link";
-import Region from "@/types/Region";
-import University from "@/types/University";
 
 interface StatCardProps {
   width?: number | string;

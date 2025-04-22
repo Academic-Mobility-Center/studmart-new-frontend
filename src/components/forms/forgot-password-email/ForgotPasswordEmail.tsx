@@ -1,12 +1,12 @@
 import InputField from "@/components/fields/input/InputField";
 import LoginFormData from "@/types/LoginFormData";
-import React, { ChangeEvent, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface ForgotPasswordEmailProps {
     onClose: () => void;
     onClick: () => void;
     formData: LoginFormData;
-    handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({

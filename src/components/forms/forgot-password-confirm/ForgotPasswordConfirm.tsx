@@ -1,6 +1,6 @@
 import PasswordField from "@/components/fields/password/PasswordField";
 import LoginFormData from "@/types/LoginFormData";
-import React, { ChangeEvent, useState, useEffect, useRef } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 interface ForgotPasswordConfirmProps {
     onClick: () => void;
@@ -48,7 +48,9 @@ const ForgotPasswordConfirm: React.FC<ForgotPasswordConfirmProps> = ({
                     placeholder="********"
                     name="passwordReset"
                     value={formData.passwordReset}
-                    onChange={handleChange}                    
+                    onChange={handleChange}  
+                    labelFontSize={14}      
+                    width={350}            
                 />
                     {errors?.passwordReset && (
                         <p className="text-red-600 text-sm font-medium mt-1">{errors.passwordReset}</p>
@@ -58,7 +60,9 @@ const ForgotPasswordConfirm: React.FC<ForgotPasswordConfirmProps> = ({
                     placeholder="********"
                     name="passwordResetConfirm"
                     value={formData.passwordResetConfirm}
-                    onChange={handleChange}                      
+                    onChange={handleChange}  
+                    width={350} 
+                    labelFontSize={14}                    
                 />
                 {errors?.passwordResetConfirm && (
                         <p className="text-red-600 text-sm font-medium mt-1">{errors.passwordResetConfirm}</p>
