@@ -3,6 +3,7 @@ import TermsOfUse from "../offer-page-elements/terms-of-use/TermsOfUse";
 import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useState } from "react";
 import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
+import Image from "next/image";
 
 
 const OfferPageContent = () => {
@@ -16,7 +17,8 @@ const OfferPageContent = () => {
                     <div className="flex justify-start items-start flex-row grow-0 shrink-0 basis-auto mt-[25px]">
                         <div className="w-[589px] grow-0 shrink-0 basis-auto box-border pb-[11px]">
                             <div className="w-[100.00%] box-border">
-                                <img
+                                <Image
+                                    alt=""
                                     src="/icons/offer/image.svg"
                                     className="border h-[260px] 
                                     max-w-[initial] object-cover 
@@ -43,7 +45,7 @@ const OfferPageContent = () => {
                                         text-sm font-normal text-left text-[#032c28] 
                                         max-w-[479px] box-border mt-5 m-0 p-0"
                                     >
-                                        "Шоколадница" — одна из самых известных и любимых сетей кофеен в России, которая уже более 20 лет радует своих гостей уютной атмосферой, вкусным кофе и изысканными десертами. Это
+                                        Шоколадница — одна из самых известных и любимых сетей кофеен в России, которая уже более 20 лет радует своих гостей уютной атмосферой, вкусным кофе и изысканными десертами. Это
                                         место, где каждый может насладиться качественными напитками, авторскими десертами и сытными блюдами в комфортной обстановке.
                                     </p>
                                 </div>

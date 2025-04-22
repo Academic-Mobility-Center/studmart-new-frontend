@@ -1,6 +1,6 @@
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount"
 import { Button } from "@mui/base"
-import { ChangeEvent, useState } from "react"
+import { useState } from "react"
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
@@ -142,21 +142,26 @@ const PartnerProfileForm: React.FC = () => {
     
         const newValue = type === 'checkbox' || type === 'radio' ? checked : value;
     
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: validateField(name, newValue, {
-                ...formData,
-                [name]: newValue,
-            }),
-        }));
-    };   
+        setErrors((prevErrors) => {
+            // Ensure newValue is not undefined
+            const validatedValue = newValue !== undefined ? newValue : '';
+            return {
+                ...prevErrors,
+                [name]: validateField(name, validatedValue, {
+                    ...formData,
+                    [name]: validatedValue,
+                }),
+            };
+        });
+    };
+    
     
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
     ) => {
-        const { name, value, type, checked } = event.target as HTMLInputElement;
-    
-        let newValue: any = type === 'checkbox' ? checked : value;
+        const { name, value, checked } = event.target as HTMLInputElement;
+        
+        let newValue: string | boolean | string[] | undefined;    
     
         if (name === 'allRegions' && checked) {
             setFormData(prev => ({
@@ -178,42 +183,41 @@ const PartnerProfileForm: React.FC = () => {
             return;
         }
     
+        // Handle the 'industry' field
         if (name === "industry") {
             const selectedIndustry = industryOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry
-                ? { value: selectedIndustry.id.toString(), label: selectedIndustry.name }
-                : undefined;
+            newValue = selectedIndustry ? selectedIndustry.id.toString() : undefined; // Extract value (string)
         }
     
+        // Handle the 'country' field
         if (name === "country") {
             const selectedCountry = countryOptions.find(option => option.id.toString() === value);
-            newValue = selectedCountry
-                ? { value: selectedCountry.id.toString(), label: selectedCountry.name }
-                : undefined;
+            newValue = selectedCountry ? selectedCountry.id.toString() : undefined; // Extract value (string)
         }
     
         setFormData(prev => ({
             ...prev,
-            [name]: newValue
+            [name]: newValue || '' // Ensure newValue is a valid type (string, boolean, or string[])
         }));
     
         setErrors(prev => ({
             ...prev,
-            [name]: validateField(name, newValue, {
+            [name]: validateField(name, newValue || '', {
                 ...formData,
-                [name]: newValue,
+                [name]: newValue || '',
             }),
         }));
     };
+    
 
     const handleSubmitForm = (event: React.FormEvent) => {
         event.preventDefault();
         let hasErrors = false;
-        const newErrors: typeof errors = {};
+        const newErrors: Record<string, string | string[]> = {}; // Изменили тип на Record
         Object.entries(formData).forEach(([key, value]) => {
             const error = validateField(key, value, formData);
             if (error) {
-                (newErrors as any)[key] = error;
+                newErrors[key] = error; // Теперь без any
                 hasErrors = true;
             }
         });
@@ -222,8 +226,8 @@ const PartnerProfileForm: React.FC = () => {
     
         if (hasErrors) return;
     
-        console.log("Отправка формы:", formData);     
-    };    
+        console.log("Отправка формы:", formData);
+    };   
 
     return(<>
         <form onSubmit={handleSubmitForm} className={profileCardClasses}>

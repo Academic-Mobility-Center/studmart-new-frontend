@@ -6,7 +6,6 @@ import { useState } from "react";
 const validateField = (
     name: string,
     value: string | boolean | string[],
-    fullFormData: StudentBankCredentialsFormData
 ): string | undefined => {
     switch (name) {
         case "fullname":
@@ -74,7 +73,7 @@ const CredentialsPage = () => {
     const hanldeChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target as HTMLInputElement;
         
-        let newValue: string | any = value;
+        const newValue: string  = value;
         
         setFormData((prevData) => ({
             ...prevData,
@@ -90,10 +89,7 @@ const CredentialsPage = () => {
     
         setErrors((prevErrors) => ({
             ...prevErrors,
-            [name]: validateField(name, newValue, {
-                ...formData,
-                [name]: newValue,
-            }),
+            [name]: validateField(name, newValue),
         }));
     };  
     const handleSubmitForm = (event: React.FormEvent) => {
@@ -101,9 +97,9 @@ const CredentialsPage = () => {
         let hasErrors = false;
         const newErrors: typeof errors = {};
         Object.entries(formData).forEach(([key, value]) => {
-            const error = validateField(key, value, formData);
+            const error = validateField(key, value);
             if (error) {
-                (newErrors as any)[key] = error;
+                (newErrors as typeof errors)[key as keyof typeof errors] = error;
                 hasErrors = true;
             }
         });

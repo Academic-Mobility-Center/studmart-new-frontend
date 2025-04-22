@@ -4,7 +4,7 @@ import MainInfo from '@/components/forms/student-profile-elements/main-info/Main
 import UniversityInfo from '@/components/forms/student-profile-elements/university-info/UniversityInfo';
 import { StudentFormData } from '@/types/StudentProfileData';
 import { Button } from '@mui/base';
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
 const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
@@ -14,6 +14,7 @@ import {
     universityOptions as newUniversityOptions
 } from '@/app/partner-personal-account/statistics/context';
 import { courseOptions, familyStatusOptions, genderOptions, isWorkOptions, languageProfiencyOptions, validateField } from '../context';
+import { Option } from '@/types/Option';
 
 const ProfilePage: React.FC = () => {
 
@@ -22,7 +23,7 @@ const ProfilePage: React.FC = () => {
         password: "",
         firstName: "",
         lastName: "",
-        date: null,
+        date: undefined,
         gender: undefined,
         region: undefined,
         city: undefined,
@@ -75,10 +76,7 @@ const ProfilePage: React.FC = () => {
     
         setErrors((prevErrors) => ({
             ...prevErrors,
-            [name]: validateField(name, newValue, {
-                ...formData,
-                [name]: newValue,
-            }),
+            [name]: validateField(name, newValue),
         }));
     };
     
@@ -88,7 +86,7 @@ const ProfilePage: React.FC = () => {
     ) => {
         const { name, value, type, files, checked } = event.target as HTMLInputElement;
     
-        let newValue: string | File | Date | any = value;
+        let newValue: string | boolean | File | Date | Option | undefined = value;
     
         if (type === "checkbox" || type === "radio") {
             newValue = checked;
@@ -120,7 +118,7 @@ const ProfilePage: React.FC = () => {
             if (name === "region" && formData.region?.value !== newValue?.value) {
                 setFormData((prevData) => ({
                     ...prevData,
-                    region: newValue,
+                    region: newValue as Option | undefined,
                     city: undefined,
                     university: undefined
                 }));
@@ -133,36 +131,52 @@ const ProfilePage: React.FC = () => {
             [name]: newValue,
         }));
     
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: validateField(name, newValue, {
-                ...formData,
-                [name]: newValue,
-            }),
-        }));
+        setErrors((prevErrors) => {
+            let validationValue: string | boolean | string[];
+            
+            if (newValue === undefined) {
+                validationValue = '';
+            } else if (newValue instanceof Date) {
+                validationValue = newValue.toISOString();
+            } else if (typeof newValue === 'object' && 'value' in newValue) {
+                validationValue = (newValue as Option).value;
+            } else if (newValue instanceof File) {
+                validationValue = newValue.name;
+            } else {
+                validationValue = newValue;
+            }
+        
+            return {
+                ...prevErrors,
+                [name]: validateField(name, validationValue),
+            };
+        });
     };
 
     const handleSubmitForm = (event: React.FormEvent) => {
         console.log("Отправка формы:", formData); 
         event.preventDefault();
-
+    
         let hasErrors = false;
-        const newErrors: Partial<typeof errors> = {};
+        const newErrors: Record<string, string | string[] | undefined> = {};
         
         Object.entries(formData).forEach(([key, value]) => {
-            const error = validateField(key, value, formData);
+            const error = validateField(key, value);
             if (error) {
-                (newErrors as any)[key] = error;
+                newErrors[key] = error;
                 hasErrors = true;
             }
         });
         
-        setErrors({ ...errors, ...newErrors });
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            ...newErrors
+        }));
     
         if (hasErrors) return;
     
         console.log("Отправка формы:", formData);     
-    };  
+    };
 
     return (
         <>

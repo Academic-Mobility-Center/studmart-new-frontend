@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "@mui/base";
 import "./style.css";
-import Link from "next/link";
 
 interface Props{
     heading: string;
@@ -9,12 +8,8 @@ interface Props{
     discount: string;
     id: number;
 }
-function BigCategory({ heading , description, discount, id }: Props) {
+function BigCategory({ heading , description, discount }: Props) {
   return (
-  //   <Link 
-  //   href={`/offer-page/${id}`}
-  //   className="big-category-link" // Добавляем класс для стилей
-  // >
     <div className="promo-card1">
       <div className="delivery-service-section">
         <p className="golden-apple-heading">{heading}</p>

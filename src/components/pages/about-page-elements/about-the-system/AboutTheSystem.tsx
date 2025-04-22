@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const AboutTheSystem = () => {
     return(
         <div 
@@ -33,7 +35,7 @@ const AboutTheSystem = () => {
                 </div>
             </div>
         </div>
-        <img 
+        <Image 
             src="/icons/about/main-screen.svg" 
             alt="" 
             className="h-[231px] max-w-[initial] 

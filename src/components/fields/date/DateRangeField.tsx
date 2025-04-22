@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { registerLocale } from "react-datepicker";
 import {ru} from "date-fns/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
+import Image from "next/image";
 
 registerLocale("ru", ru);
 
@@ -79,7 +80,7 @@ export function DateRangeField({
             className="absolute top-1/2 -translate-y-1/2 right-[20px]"
             aria-label="Открыть календарь"
           >
-            <img src="/icons/partner-account/calendar.svg"/>
+            <Image src="/icons/partner-account/calendar.svg" alt=""/>
           </button>
         )}
       </div>

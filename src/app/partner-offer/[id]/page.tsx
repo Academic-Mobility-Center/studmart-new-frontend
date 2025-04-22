@@ -2,7 +2,6 @@
 
 import NewFooter from "@/components/new-footer/NewFooter";
 import NewHeader from "@/components/new-header/NewHeader";
-import OfferPageContent from "@/components/pages/offer-page-content/OfferPageContent";
 import PartnerOfferContent from "@/components/pages/partner-offer-content/PartnerOfferContent";
 import { useAuth } from "@/context/AuthContext";
 import { useParams, useRouter } from "next/navigation";

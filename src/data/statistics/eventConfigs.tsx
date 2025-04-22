@@ -1,12 +1,7 @@
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Line, BarChart, Bar } from "recharts";
+import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Line } from "recharts";
 import { CustomTooltip } from "@/components/charts/CustomTooltip";
+import ChartDataItem from "@/types/ChartDataItem";
 
-type ChartDataItem = {
-  date: string;
-  new: number;
-  repeat: number;
-  [key: string]: any;
-};
 
 export type EventConfig = {
   title: string;
@@ -77,12 +72,12 @@ export const eventConfigs: Record<string, EventConfig> = {
   promocodes: {
     title: "Промокоды",
     chartData: [
-      { date: "07.10.24", new: 120, repeat: 320 },
-      { date: "08.10.24", new: 245, repeat: 320 },
-      { date: "09.10.24", new: 310, repeat: 390 },
-      { date: "10.10.24", new: 190, repeat: 450 },
-      { date: "11.10.24", new: 289, repeat: 480 },
-      { date: "12.10.24", new: 150, repeat: 200 },
+      { date: "07.10.24", new: 120, repeat: 320, unique: 200, views: 200 },
+      { date: "08.10.24", new: 245, repeat: 320, unique: 200, views: 200 },
+      { date: "09.10.24", new: 310, repeat: 390, unique: 200, views: 200 },
+      { date: "10.10.24", new: 190, repeat: 450, unique: 200, views: 200},
+      { date: "11.10.24", new: 289, repeat: 480, unique: 200, views: 200 },
+      { date: "12.10.24", new: 150, repeat: 200, unique: 200, views: 200},
     ],
     renderChart: (data) => {
       const maxValue = Math.max(...data.map(item => Math.max(item.new, item.repeat)));

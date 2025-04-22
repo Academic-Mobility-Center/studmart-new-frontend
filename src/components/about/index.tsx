@@ -1,6 +1,7 @@
 import { Button } from "@mui/base"
 import "./style.css"
 import Link from "next/link";
+import Image from "next/image";
 const aboutStudmart = "Про Студмарт"
 const studmartDescription = "«Студмарт» — это система лояльности. Студентам она предоставляет скидки, а бизнесу — возможность расширить аудиторию."
 interface Props {
@@ -37,8 +38,8 @@ export default function About({isAuthenticated}: Props){
             <Link href="registration"><Button className="primary-button-style" >Зарегистрироваться</Button></Link>
           </div>
           <div className="image-container-flex-row">
-          <img src="/icons/About/layout.svg" alt="" className="image-container"/>
-            <img src="/icons/About/girl.svg" alt="" className="image-container-with-blend-mode"/>
+          <Image src="/icons/About/layout.svg" alt="" className="image-container"/>
+            <Image src="/icons/About/girl.svg" alt="" className="image-container-with-blend-mode"/>
           </div>
         </div>
       </div>

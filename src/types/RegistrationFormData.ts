@@ -7,10 +7,10 @@ export default interface RegistrationFormData{
     promocode: string;
     name: string;
     fullname: string;
-    gender: Option | undefined;
+    gender: Option | null;
     date: Date | null;
-    university: Option | undefined;
+    university: Option | null;
     profession: string;
-    course: Option | undefined;
+    course: Option | null;
     file: File | null;
 }

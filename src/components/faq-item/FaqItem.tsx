@@ -1,4 +1,4 @@
-import { useState } from "react";
+import Image from "next/image";
 
 interface Props {
     heading: string;
@@ -19,7 +19,7 @@ const FaqItem = ({ p1, p2, heading, isOpen, onClick }: Props) => {
         >
             <div className="flex justify-between items-center w-full">
                 <p className="font-mulish text-base font-bold text-[#032c28] m-0 p-0">{heading}</p>
-                <img
+                <Image
                     src="/icons/faq/down.svg"
                     alt=""
                     className={`h-8 w-8 transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}

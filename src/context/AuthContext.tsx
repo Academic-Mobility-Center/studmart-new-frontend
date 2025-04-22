@@ -40,6 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setRole(decoded.role);
         setIsAuthenticated(true);
       } catch (error) {
+        console.log(error)
         setIsAuthenticated(false);
         setRole(null);
       } finally {

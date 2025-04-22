@@ -1,13 +1,11 @@
 "use client"
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import ForgotPasswordEmail from "../forgot-password-email/ForgotPasswordEmail";
 import InputField from "@/components/fields/input/InputField";
 import PasswordField from "@/components/fields/password/PasswordField";
-import ForgotPasswordConfirm from "../forgot-password-confirm/ForgotPasswordConfirm";
 import LoginFormData from "@/types/LoginFormData";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { setAuthToken } from "@/lib/auth";
 import { useAuth } from '@/context/AuthContext';
 
 export default function LoginForm() {
@@ -77,6 +75,7 @@ export default function LoginForm() {
           });
         }
       } catch (error) {
+        console.log(error)
         setErrors({
           email: ' ',
           password: 'Ошибка соединения'

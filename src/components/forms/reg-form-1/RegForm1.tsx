@@ -2,13 +2,12 @@ import InputField from "@/components/fields/input/InputField";
 import PasswordField from "@/components/fields/password/PasswordField";
 import RegFormProps from "@/types/RegFormProps";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 
 const RegForm1: React.FC<RegFormProps> = ({
     onClick,
     formData,
     handleChange,
-    onChange
 }) => {
 
     const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string; email?: string }>({

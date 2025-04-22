@@ -111,7 +111,7 @@ export function SelectField({
             }}
           />
         )}
-        renderOption={(props, option, { selected }) => (
+        renderOption={(props, option) => (
           <Box
             component="li"
             {...props}

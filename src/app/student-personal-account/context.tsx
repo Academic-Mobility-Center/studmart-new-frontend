@@ -1,4 +1,3 @@
-import { StudentFormData } from "@/types/StudentProfileData"
 
 export const genderOptions= [
     {id: 1, name: "Мужской"},
@@ -29,7 +28,6 @@ export const courseOptions = [
 export const validateField = (
     name: string,
     value: string | boolean | string[],
-    fullFormData: StudentFormData
 ): string | string[] | undefined => {
     switch (name) {
         case "email":

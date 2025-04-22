@@ -1,4 +1,5 @@
 import { Dialog } from "@headlessui/react";
+import Image from "next/image";
 import React, { useState } from "react"
 
 interface PromoCode {
@@ -52,7 +53,7 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode, 
                                     </p>
                                 </div>
                                 <button className="w-8 h-8 cursor-pointer" onClick={copyToClipboard}>
-                                    <img src="/icons/offer/copy.svg" alt="Копировать промокод" />
+                                    <Image src="/icons/offer/copy.svg" alt="Копировать промокод" />
                                 </button>
                             </div>
                             {copied && <p className="text-green-600 text-sm mt-2">Промокод скопирован!</p>}
@@ -82,7 +83,7 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode, 
                             )}
                         </div>
                     </div>
-                    <img src="/icons/offer/lines2.svg" className="h-[102px] w-[245px] object-cover mt-[150px] ml-[-50px]" />
+                    <Image alt="" src="/icons/offer/lines2.svg" className="h-[102px] w-[245px] object-cover mt-[150px] ml-[-50px]" />
                 </div>
             </div>
         </Dialog> 

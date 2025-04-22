@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface Props{
     width: number;
     url: string;
@@ -25,9 +27,10 @@ const NeedStudmartItem = ({
         p-5 rounded-[20px] min-h-[242px]"
         style={{width: `${width}px`}}
     >
-        <img 
+        <Image
+            alt="" 
             src={url} 
-            alt="" className="h-[70px]
+            className="h-[70px]
             max-w-[initial] w-[70px] 
             block grow-0 shrink-0 basis-auto 
             box-border" 

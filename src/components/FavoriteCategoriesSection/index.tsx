@@ -8,7 +8,6 @@ import ShoppingBar from "../../../public/icons/favourite-categories/ShoppingBarS
 import LunchDiningSvg from "../../../public/icons/favourite-categories/LunchDiningSvg";
 import SchoolSvg from "../../../public/icons/favourite-categories/SchoolSvg";
 import ExerciseSvg from "../../../public/icons/favourite-categories/ExerciseSvg";
-import HealthAndBeautySvg from "../../../public/icons/favourite-categories/HealthAndBeautySvg";
 import { useRef, WheelEvent as ReactWheelEvent, useEffect } from "react";
 
 interface FavoriteCategoriesSectionProps {
