@@ -8,19 +8,32 @@ interface ReferalData{
 }
 
 const ReferalProgramPage = () => {
-            // max-w-none whitespace-pre-line
-    const [formData, setFormData] = useState<ReferalData>({
-        account: "",
-        link: "",
-        promocode: ""
+    const [formData] = useState<ReferalData>({
+        account: "6 687 руб.",
+        link: "http://www.some-link.com",
+        promocode: "PROMO25"
     })
+
+    const [copiedText, setCopiedText] = useState<"link" | "promocode" | null>(null);
+    const [issueRequestVisible, setIssueRequestVisible] = useState(false);
+    const copyTextToClipboard = async (text: string, type: "link" | "promocode") => {
+    try {
+        await navigator.clipboard.writeText(text);
+        setCopiedText(type);
+        setTimeout(() => setCopiedText(null), 2000);
+        console.log('Текст успешно скопирован в буфер обмена!');
+    } catch (err) {
+        console.error('Ошибка:', err);
+    }
+    };
+
     return (<>
         <div className="flex flex-col gap-[40px]">
             <div 
                 className="border bg-[#f8f8f8] box-border 
                 flex justify-start items-stretch flex-col grow-0 
                 shrink-0 basis-auto pl-5 pr-5 rounded-[15px] 
-                border-solid border-[rgba(0,0,0,0.20)] w-[588px]"
+                border-solid border-[rgba(0,0,0,0.20)] w-[588px] pb-5"
             >
                 <h3 
                     className="font-['Nunito_Sans'] text-[24px] 
@@ -32,16 +45,22 @@ const ReferalProgramPage = () => {
                     className="font-['Nunito_Sans'] text-[48px] 
                     font-extrabold text-[#032c28] m-0 p-0 w-[125%]"
                 >
-                    6 687 руб.
+                   {formData?.account}
                 </h1>
                 <button 
                     className="bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] 
                     uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border 
                     grow-0 shrink-0 basis-auto mt-5 rounded-[15px] border-[none]"
+                    onClick={() => setIssueRequestVisible(true)}
                 >
                     Получить вознаграждение 
                 </button>
-                <p className="text-[#888888] font-[Mulish] text-left mt-[10px] mb-5">Заявка на выплату отправлена. Мы отправим платеж в течение 2 рабочих дней</p>
+                {issueRequestVisible && (                <p 
+                    className="text-[#888888] font-[Mulish] text-left mt-[10px]" 
+                >
+                    Заявка на выплату отправлена. Мы отправим платеж в течение 2 рабочих дней
+                </p>)}
+
             </div>
 
             <div 
@@ -51,16 +70,13 @@ const ReferalProgramPage = () => {
                 border-solid border-[rgba(0,0,0,0.20)] w-[588px]"
             >
 
-        <h3
-        className="font-['Nunito_Sans'] font-extrabold text-[24px] leading-[100%] tracking-[0%]
-                    text-[#032c28] mt-5 mb-5  
-                    [font-variant-numeric:lining-nums_proportional-nums]"
-        >
-        Как работает реферальная{'\n'}система?
-        </h3>
-
-
-
+                <h3
+                className="font-['Nunito_Sans'] font-extrabold text-[24px] leading-[100%] tracking-[0%]
+                            text-[#032c28] mt-5 mb-5  
+                            [font-variant-numeric:lining-nums_proportional-nums]"
+                >
+                Как работает реферальная{'\n'}система?
+                </h3>
                 <div className="flex flex-col gap-4 mb-10">
                     <p 
                         className="text-left font-[Mulish] text-[#032C28]"
@@ -88,20 +104,36 @@ const ReferalProgramPage = () => {
                     </p>            
                 </div>
                 <div className="flex flex-row gap-6 mb-5">
+                    <div className="flex flex-col">
                     <button 
                         className="bg-[#F8F8F8] font-[Mulish] text-sm font-bold tracking-[0.42px] 
                         uppercase text-[#032c28] min-w-[262px] h-12 cursor-pointer block box-border 
                         grow-0 shrink-0 basis-auto rounded-[15px] border border-[rgba(0,0,0,0.20)]"
+                        onClick={() => copyTextToClipboard(formData?.link, "link")}
                     >
                         Ссылка 
                     </button>
+                    {copiedText === "link" && (
+                        <p className="text-[#888888] font-[Mulish] text-sm ">
+                            Ссылка скопирована
+                        </p>
+                    )}                          
+                    </div>
+                    <div className="flex flex-col">
                     <button 
                         className="bg-[#F8F8F8] font-[Mulish] text-sm font-bold tracking-[0.42px] 
                         uppercase text-[#032c28] h-12 cursor-pointer block box-border 
                         grow-0 shrink-0 basis-auto rounded-[15px] min-w-[262px] border border-[rgba(0,0,0,0.20)]"
+                        onClick={() => copyTextToClipboard(formData?.promocode, "promocode")}
                     >
                         Промокод 
                     </button>
+                    {copiedText === "promocode" && (
+                        <p className="text-[#888888] font-[Mulish] text-sm ">
+                            Промокод скопирован
+                        </p>
+                    )}  
+                    </div>
                 </div>
             </div>
         </div>
