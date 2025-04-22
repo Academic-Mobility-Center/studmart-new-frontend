@@ -1,0 +1,8 @@
+services:
+  studmart-frontend:
+    build:
+      context: ../../
+      dockerfile: docker/production/Dockerfile
+    image: studmart-frontend
+    ports:
+      - "3003:3000"
