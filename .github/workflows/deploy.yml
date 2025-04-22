@@ -111,7 +111,10 @@ jobs:
           BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           GIT_SHA=$(git rev-parse HEAD)
           GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-          
+
+          ENV_ARG="${{ github.event.inputs.environment }}"
+
+          set -o pipefail
           docker buildx build \
             -t "${{ env.REGISTRY }}/${{ env.APP_NAME }}:${{ env.IMAGE_TAG }}" \
             -t "${{ env.REGISTRY }}/${{ env.APP_NAME }}:latest" \
@@ -119,9 +122,18 @@ jobs:
             --build-arg BUILD_DATE=$BUILD_DATE \
             --build-arg GIT_COMMIT=$GIT_SHA \
             --build-arg GIT_BRANCH=$GIT_BRANCH \
+            --build-arg ENV=$ENV_ARG \
             --progress plain \
             --push \
             -f ${{ env.DOCKERFILE_PATH }} ${{ env.CONTEXT_PATH }} 2>&1 | tee build.log
+          
+          if [ $? -ne 0 ]; then
+            echo "::error::❌ Сборка Docker образа завершилась с ошибкой"
+            echo "::group::📄 Логи сборки Docker"
+            cat build.log
+            echo "::endgroup::"
+            exit 1
+          fi
           
           echo "📝 Логи сборки сохранены в build.log"
           echo "::group::📄 Логи сборки Docker"

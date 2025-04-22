@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - ENV=local
     image: nextjs-app
     ports:
       - "3000:3000"
