@@ -17,6 +17,8 @@ const NewFooter = ({ isAuthenticated }: NewFooterProps) => {
                         src="/icons/footer/logo.svg" 
                         alt="Логотип" 
                         className="h-[59px] w-[282px] block" 
+                        height={59}
+                        width={282}
                     />
                 </div>
                 <div className="flex flex-row justify-center items-start w-3/4 pl-40">

@@ -37,7 +37,7 @@ const StudentMenu = () => {
             <li key={icon}>
               <Link href={href}>
                 <div className={`${buttonBaseClasses} ${isActive ? "bg-[#efefef]" : ""}`}>
-                  <Image src={`/icons/student-account/${icon}.svg`} className={iconClass} alt="" />
+                  <Image src={`/icons/student-account/${icon}.svg`} className={iconClass} alt="" width={24} height={24}/>
                   <span className={textClass}>{label}</span>
                 </div>
               </Link>

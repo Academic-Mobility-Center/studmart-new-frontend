@@ -40,7 +40,7 @@ const StudId: React.FC = () => {
                 <Image
                     src="/icons/student-account/lines.png"
                     className="absolute top-0 right-0 h-[57px] w-[186px] rotate-180 right-[-48px]"
-                    alt="lines"
+                    alt="lines" width={186} height={57}
                 />
                 <div className="flex justify-start items-start flex-row px-[30px] relative z-100">
                     <div
@@ -58,7 +58,7 @@ const StudId: React.FC = () => {
                         <label htmlFor="image-upload" className="border bg-[#f8f8f8] box-border flex justify-center items-center flex-col 
                         h-[50px] grow-0 shrink-0 basis-auto rounded-[360px] border-solid border-[rgba(0,0,0,0.20)] cursor-pointer">
                             <Image
-                                alt='' src="/icons/student-account/camera.svg" className="w-6 h-6 flex grow-0 shrink-0 basis-auto" />
+                                alt='' src="/icons/student-account/camera.svg" className="w-6 h-6 flex grow-0 shrink-0 basis-auto" width={24} height={24}/>
                             {isLoading && <div className="animate-spin h-6 w-6 border-t-2 border-solid border-[#888888] rounded-full mt-2"></div>}
                         </label>
                         <input
@@ -91,12 +91,12 @@ const StudId: React.FC = () => {
                                 src="/icons/student-account/lines.png" 
                                 className="h-[95px] max-w-[initial] w-[310px] 
                                 box-border block border-[none] transform scale-x-[-1]" 
-                            />
+                                height={95}  width={310}                          />
                         </div>
                         <div className="box-border flex justify-start items-center flex-row gap-2.5">
                             <Image 
                                 alt=''
-                                src="/icons/student-account/edit-square.svg" className="w-6 h-6 flex grow-0 shrink-0 basis-auto box-border" />
+                                src="/icons/student-account/edit-square.svg" width={32} height={32} className="w-6 h-6 flex grow-0 shrink-0 basis-auto box-border" />
                             <p className="[font-family:Mulish,sans-serif] text-sm font-normal text-[#888888] grow-0 shrink-0 basis-auto m-0 p-0">Редактировать</p>
                         </div>
                     </Link>

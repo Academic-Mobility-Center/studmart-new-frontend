@@ -63,7 +63,7 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl }) => {
         flex: '2 1 auto',
       }}
     >
-      <Image src="/icons/home/star.svg" alt="icon" className="w-8 h-8" />
+      <Image src="/icons/home/star.svg" alt="icon" className="w-8 h-8" width={32} height={32}/>
     </div>
   );
 };
