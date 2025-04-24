@@ -34,6 +34,8 @@ const DiscountBox = ({
                             src="/icons/offer/lines.svg" 
                             className="absolute top-0 right-0 h-[98px] w-[191px] object-cover z-0 pointer-events-none"
                             alt="Background Decoration"
+                            height={98}
+                            width={191}
                         />
 
                         <div 
@@ -91,6 +93,8 @@ const DiscountBox = ({
                                     shrink-0 basis-auto box-border cursor-pointer" 
                                     onClick={onClick}
                                     alt=""
+                                    width={32}
+                                    height={32}
                                 />
                             </div>
                         </div>

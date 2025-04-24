@@ -1,11 +1,15 @@
 "use client";
 import { Button } from "@mui/base";
 import "./style.css";
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { PromoCard } from "../promo-card/PromoCard";
+import { getPromocodePartners } from "@/lib/api/promocodes";
+import PromoCardType from "@/types/PromoCard";
+import { transformPromos } from "@/app/home/context";
 interface StylishWidgetSectionProps {
   selectedCategoryId: number | null;
 }
+
 
 function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps) {
   const [visibleRows, setVisibleRows] = useState(4);
@@ -14,7 +18,7 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   // Сюда фетч запрос на карточки
   // useEffect(() => {},[])
   
-  const [promoCards] = useState([
+  const promoCards = useMemo(() => [
     {
       id: 1,
       heading: "Самокат",
@@ -175,18 +179,34 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
       imageUrl: "/icons/home/cosmetic.svg",
       categoryId: 2
     }
-  ]);
-
+  ],[]);
+  const [fetchedPromoCards, setFetchedPromoCards] = useState<PromoCardType[]>(promoCards);
+  useEffect(()=> {
+        const fetchPromoCards = async () => {
+          const promoCardsArray = await getPromocodePartners();
+          console.log("promoCardsArray", promoCardsArray)
+          if (promoCardsArray) {
+            const trasformed = transformPromos(promoCardsArray)
+            if (trasformed?.length > 1){
+              setFetchedPromoCards(trasformed)
+            }
+            
+          } else {
+            setFetchedPromoCards(promoCards);
+          }
+        };
+        fetchPromoCards();  
+  },[promoCards])
   const filteredCards = selectedCategoryId !== null 
-    ? promoCards.filter(card => card.categoryId === selectedCategoryId)
-    : promoCards;
+    ? fetchedPromoCards.filter(card => card.categoryId === selectedCategoryId)
+    : fetchedPromoCards;
 
   const totalRows = Math.ceil(filteredCards.length / cardsPerRow);
 
   const showLoadMore = filteredCards.length > initialVisibleCards && 
                       visibleRows < totalRows;
 
-  const renderPromoCardsRow = (cards: typeof promoCards) => (
+  const renderPromoCardsRow = (cards: PromoCardType[]) => (
     <div className="promo-card-container">
         {cards.map((card) => (
           <PromoCard

@@ -2,12 +2,13 @@
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount"
 import { Button } from "@mui/base"
 import { useState, useEffect } from "react"
-import { getPartnerCategories } from "@/lib/api/partners"; 
+// import { getPartnerCategories } from "@/lib/api/partners"; 
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
 import { transformToOption, transformToOptions } from "@/utils/dataTransform"
 import { countryOptions, industryOptions, regionOptions, validateField } from "@/app/partner-personal-account/context";
+import { Option } from "@/types/Option";
 
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
@@ -57,8 +58,8 @@ const PartnerProfileForm: React.FC =  () => {
     useEffect(() => {
         const fetchCategories = async () => {
           try {
-            const categories = await getPartnerCategories();
-            setFetchingIndustryOptions(categories);
+            // const categories = await getPartnerCategories();
+            setFetchingIndustryOptions(industryOptions);
           } catch (err) {
             console.error("Ошибка загрузки категорий, используем из контекста:", err);
             setFetchingIndustryOptions(industryOptions)
@@ -137,7 +138,7 @@ const PartnerProfileForm: React.FC =  () => {
     ) => {
         const { name, type, value, checked } = event.target as HTMLInputElement;
     
-        let newValue: any = value;
+        let newValue: string | boolean | File | Date | Option | undefined = value;
     
         if (type === "checkbox") {
             newValue = checked;
@@ -179,13 +180,27 @@ const PartnerProfileForm: React.FC =  () => {
             [name]: newValue,
         }));
     
-        setErrors(prev => ({
-            ...prev,
-            [name]: validateField(name, newValue, {
-                ...formData,
-                [name]: newValue,
-            }),
-        }));
+        setErrors((prevErrors) => {
+            let validationValue: string | boolean | string[];
+            
+            if (newValue === undefined) {
+                validationValue = '';
+            } else if (newValue instanceof Date) {
+                validationValue = newValue.toISOString();
+            } else if (typeof newValue === 'object' && 'value' in newValue) {
+                validationValue = (newValue as Option).value;
+            } else {
+                validationValue = newValue;
+            }
+        
+            return {
+                ...prevErrors,
+                [name]: validateField(name, validationValue,{
+                    ...formData,
+                    [name]: newValue,
+                }),
+            };
+        });
     };
       
     const handleSubmitForm = (event: React.FormEvent) => {

@@ -1,19 +1,59 @@
-import { httpClient } from "../httpClient";
-const API_BASE_URL = process.env.NEXT_PUBLIC_PROMOCODES_SERVICE
+export const getPromocodeCategories = async () => {
+    try {
+      const res = await fetch("/api/promocodes/Categories");
+  
+      if (!res.ok) {
+        throw new Error(`Ошибка при получении категорий: ${res.status}`);
+      }
+      const data = await res.json();
+      console.log("Категории промокодов:", data);
+      return data;
+    } catch (error) {
+      console.error("Ошибка в getPromocodeCategories:", error);
+      return null;
+    }
+};
+export const getPromocodePartners = async () => {
+    try {
+      const res = await fetch("/api/promocodes/Partners");
+      if (!res.ok) {
+        throw new Error(`Ошибка при получении партнеров: ${res.status}`);
+      }
+      const data = await res.json();
+      console.log("Партнеры:", data);
+      return data;
+    } catch (error) {
+      console.error("Ошибка в getPromocodePartners:", error);
+      return null;
+    }
+};
+export const getPromocodeDiscounts = async () => {
+    try {
+        const res = await fetch("/api/promocodes/Discounts");
+        if (!res.ok) {
+          throw new Error(`Ошибка при получении купонов партнера: ${res.status}`);
+        }
+        const data = await res.json();
+        console.log("Купоны:", data);
+        return data;
+      } catch (error) {
+        console.error("Ошибка в getPromocodeDiscounts:", error);
+        return null;
+    }
+}
+export const getPromocodeRegions = async () => {
+    try {
+        const res = await fetch("/api/promocodes/Regions");
+        if (!res.ok) {
+          throw new Error(`Ошибка при получении городов: ${res.status}`);
+        }
+        const data = await res.json();
+        console.log("Купоны:", data);
+        return data;
+      } catch (error) {
+        console.error("Ошибка в getPromocodeRegions:", error);
+        return null;
+    }
+}
 
-export const getPromocodeCategory = httpClient.get("/Categories", API_BASE_URL);
-export const getPromocodeCategoryById = (id: string) => httpClient.get(`/Categories/${id}`, API_BASE_URL);
 
-export const getPromocodeDiscounts = httpClient.get("/Discounts", API_BASE_URL);
-export const updatePromocodeDiscount = (data: any) =>  httpClient.post("/Discounts", data, API_BASE_URL);
-export const getPromocodeDiscountById = (id: string) => httpClient.get(`/Discounts/${id}`, API_BASE_URL);
-
-export const getPromocodePartners = httpClient.get("/Partners", API_BASE_URL);
-export const getPromocodePartnerById = (id: string) => httpClient.get(`/Partners${id}`, API_BASE_URL);
-
-export const getPromocode = httpClient.get("Promocodes", API_BASE_URL);
-export const updatePromocode = (data: any) => httpClient.post("/Promocodes", data, API_BASE_URL);
-export const getPromocodeById = (id: string) => httpClient.get(`Promocodes/${id}`, API_BASE_URL);
-
-export const getPromocodeRegions = httpClient.get("/Regions", API_BASE_URL);
-export const getPromocodeRegionById = (id: string) => httpClient.get(`/Regions/${id}`, API_BASE_URL);
