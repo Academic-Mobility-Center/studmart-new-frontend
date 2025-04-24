@@ -11,7 +11,7 @@ const validateField = (
         case "fullname":
         case "name":
         case "middleName":
-            return /^[А-Яа-яA-Za-z\s\-]{2,}$/.test(value as string)
+            return /^[А-Яа-яA-Za-z\s-]{2,}$/.test(value as string)
                 ? undefined
                 : "Введите корректное значение (минимум 2 буквы)";
 

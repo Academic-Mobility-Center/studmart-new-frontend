@@ -28,4 +28,50 @@ const eslintConfig = [
   },
 ];
 
-export default eslintConfig;
+// import js from "@eslint/js";
+// import globals from "globals";
+// import tseslint from "typescript-eslint";
+// import nextPlugin from "@next/eslint-plugin-next";
+// import reactHooksPlugin from "eslint-plugin-react-hooks";
+
+// export default [
+//   // Базовые настройки
+//   js.configs.recommended,
+//   ...tseslint.configs.recommended,
+  
+//   // Next.js специфичные настройки
+//   {
+//     plugins: {
+//       "@next/next": nextPlugin,
+//       "react-hooks": reactHooksPlugin,
+//     },
+//     rules: {
+//       ...nextPlugin.configs.recommended.rules,
+//       ...nextPlugin.configs["core-web-vitals"].rules,
+//       "react-hooks/exhaustive-deps": "error",
+//     },
+//   },
+  
+//   // Глобальные переменные
+//   {
+//     languageOptions: {
+//       globals: {
+//         ...globals.browser,
+//         ...globals.node,
+//       },
+//     },
+//   },
+  
+//   // Правила для route.ts файлов
+//   {
+//     files: ["src/app/api/**/route.ts"],
+//     rules: {
+//       "@typescript-eslint/ban-ts-comment": [
+//         "error",
+//         {
+//           "ts-ignore": "allow-with-description",
+//         },
+//       ],
+//     },
+//   },
+// ];

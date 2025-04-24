@@ -7,83 +7,69 @@ import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
 import { transformToOption, transformToOptions } from "@/utils/dataTransform"
-import { countryOptions, industryOptions, regionOptions, validateField } from "@/app/partner-personal-account/context";
+import { countryOptions, industryOptions, profileCardClasses, profileTitleClasses, regionOptions, saveButtonClasses, testData, validateField } from "@/app/partner-personal-account/context";
 import { Option } from "@/types/Option";
-
-const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
-const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
-const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
-
-const testData = {
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "firstName": "string",
-    "lastName": "string",
-    "email": "string",
-    "partner": {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "name": "string",
-      "subtitle": "string",
-      "description": "string",
-      "priority": 0,
-      "email": "string",
-      "site": "string",
-      "inn": 0,
-      "phone": "string",
-      "category": {
-        "id": 0,
-        "name": "string"
-      },
-      "country": { "id": 1, "name": "Россия" },
-      "paymentInformation": {
-        "bik": "string",
-        "accountNumber": "string",
-        "correspondentAccountNumber": "string"
-      },
-      "hasAllRegions": false,
-      "regions": [
-        {
-          "id": 0,
-          "name": "string"
-        },
-        {
-            "id": 1,
-            "name": "string"
-          },
-      ]
-    }
-}
+import { getPartner, getPartnerCategories, getPartnerCountries, getPartnerRegions } from "@/lib/api/partners";
 
 const PartnerProfileForm: React.FC =  () => {
+    const [fetchRegionOptions, setFetchRegionOptions] = useState(regionOptions)
     const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
+    const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
+    const [fetchedPartnerInfo, setFetchedPartnerInfo] = useState(testData)
     useEffect(() => {
-        const fetchCategories = async () => {
-          try {
-            // const categories = await getPartnerCategories();
-            setFetchingIndustryOptions(industryOptions);
-          } catch (err) {
-            console.error("Ошибка загрузки категорий, используем из контекста:", err);
-            setFetchingIndustryOptions(industryOptions)
-          }
+        const fetchData = async () => {
+            try {
+                const partnerInfo = await getPartner();
+                setFetchedPartnerInfo(partnerInfo[0]);
+            } catch (e) {
+                console.error("Ошибка загрузки партнера", e);
+                setFetchedPartnerInfo(testData);
+            }
+    
+            try {
+                const countries = await getPartnerCountries();
+                setFetchingCountryOptions(countries);
+            } catch (e) {
+                console.error("Ошибка загрузки стран", e);
+                setFetchingCountryOptions(countryOptions);
+            }
+    
+            try {
+                const regions = await getPartnerRegions();
+                setFetchRegionOptions(regions);
+            } catch (e) {
+                console.error("Ошибка загрузки регионов", e);
+                setFetchRegionOptions(regionOptions);
+            }
+    
+            try {
+                const categories = await getPartnerCategories();
+                setFetchingIndustryOptions(categories);
+            } catch (e) {
+                console.error("Ошибка загрузки категорий", e);
+                setFetchingIndustryOptions(industryOptions);
+            }
         };
-      
-        fetchCategories();
-      }, []);
+    
+        fetchData();
+    }, []);
+    
       
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
-        personalEmail: testData?.email,
+        personalEmail: fetchedPartnerInfo?.email,
         password: "securePass123",
-        companyName: testData?.partner?.name,
-        site: testData?.partner?.site,
-        phoneNumber: testData?.partner?.phone,
-        companyEmail: testData?.partner?.email,
-        industry: transformToOption(testData?.partner?.category),
-        country: transformToOption(testData?.partner?.country),
-        regions: transformToOptions(testData?.partner?.regions),
-        inn: testData?.partner?.inn.toString(),
-        currentAccount: testData?.partner?.paymentInformation?.accountNumber,
-        corAccount: testData?.partner?.paymentInformation?.correspondentAccountNumber,
-        bic: testData?.partner?.paymentInformation?.bik,
-        allRegions: testData?.partner?.hasAllRegions,
+        companyName: fetchedPartnerInfo?.name,
+        site: fetchedPartnerInfo?.site,
+        phoneNumber: fetchedPartnerInfo?.phone,
+        companyEmail: fetchedPartnerInfo?.email,
+        industry: transformToOption(fetchedPartnerInfo?.category),
+        country: transformToOption(fetchedPartnerInfo?.country),
+        regions: transformToOptions(fetchedPartnerInfo?.regions),
+        inn: fetchedPartnerInfo?.inn.toString(),
+        currentAccount: fetchedPartnerInfo?.paymentInformation?.accountNumber,
+        corAccount: fetchedPartnerInfo?.paymentInformation?.correspondentAccountNumber,
+        bic: fetchedPartnerInfo?.paymentInformation?.bik,
+        allRegions: fetchedPartnerInfo?.hasAllRegions,
         specificRegions: false
     });
 
@@ -239,8 +225,8 @@ const PartnerProfileForm: React.FC =  () => {
                         errors={errors} 
                         handleBlur={handleBlur}
                         industryOptions={fetchedIndustyOptions}
-                        countryOptions={countryOptions}
-                        regionOptions={regionOptions}
+                        countryOptions={fetchedCountryOptions}
+                        regionOptions={fetchRegionOptions}
                     />
                     <PaymentInfo 
                         formData={formData} 
@@ -258,38 +244,3 @@ const PartnerProfileForm: React.FC =  () => {
 }
 
 export default PartnerProfileForm;
-
-    // const [industryOptionsState, setIndustryOptionsState] = useState(industryOptions);
-    // useEffect(() => {
-    //     const fetchCategories = async () => {
-    //       try {
-    //         const categories = await getPartnerCategories();
-    //         setIndustryOptionsState(categories);
-    //         // const currentCategory = categories.find((cat: any) => cat.id === testData.partner.category.id);
-    //         // if (currentCategory) {
-    //         //   setFormData(prev => ({
-    //         //     ...prev,
-    //         //     industry: transformToOption(currentCategory)
-    //         //   }));
-    //         // }
-    //       } catch (err) {
-    //         console.error("Ошибка загрузки категорий, используем из контекста:", err);
-    //         // const fallbackCategory = industryOptions.find(
-    //         //     (cat: any) => cat.id === testData.partner.category.id
-    //         //   );
-              
-    //         //   if (fallbackCategory) {
-    //         //     setFormData(prev => ({
-    //         //       ...prev,
-    //         //       industry: transformToOption(fallbackCategory)
-    //         //     }));
-    //         //   }
-    //         setFormData(prev => ({
-    //                 ...prev,
-    //                 industry: transformToOption(testData?.partner?.category)
-    //         }));
-    //       }
-    //     };
-      
-    //     fetchCategories();
-    //   }, []);

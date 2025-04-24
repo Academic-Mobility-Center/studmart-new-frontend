@@ -31,7 +31,7 @@ export const validateField = (
 ): string | string[] | undefined => {
     switch (name) {
         case "email":
-            return /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(value as string)
+            return /^\s*[\w\-+_']+(\.[\w\-+_']+)*@[A-Za-z0-9]([\w.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z.]*[A-Za-z]$/.test(value as string)
                 ? undefined : "Некорректный email";
 
         case "password":
@@ -39,7 +39,7 @@ export const validateField = (
 
         case "firstName":
         case "lastName":
-            return /^[a-zA-Zа-яА-ЯёЁ\s\-']+$/.test(value as string)
+            return /^[a-zA-Zа-яА-ЯёЁ\s-']+$/.test(value as string)
                 ? undefined : "Некорректное имя или фамилия";
 
         case "date":
@@ -76,7 +76,6 @@ export const validateField = (
             return undefined;
     }
 };
-
 export const personalDataItems = [
     "Университет",
     "Специальность",
