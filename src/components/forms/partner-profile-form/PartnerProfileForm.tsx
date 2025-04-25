@@ -2,30 +2,29 @@
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount"
 import { Button } from "@mui/base"
 import { useState, useEffect } from "react"
-// import { getPartnerCategories } from "@/lib/api/partners"; 
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
 import { transformToOption, transformToOptions } from "@/utils/dataTransform"
-import { countryOptions, industryOptions, profileCardClasses, profileTitleClasses, regionOptions, saveButtonClasses, testData, validateField } from "@/app/partner-personal-account/context";
+import { countryOptions, defaultUser, industryOptions, profileCardClasses, profileTitleClasses, regionOptions, saveButtonClasses, validateField } from "@/app/partner-personal-account/context";
 import { Option } from "@/types/Option";
-import { getPartner, getPartnerCategories, getPartnerCountries, getPartnerRegions } from "@/lib/api/partners";
+import {  getPartnerCategories, getPartnerCountries, getPartnerInfo, getPartnerRegions } from "@/lib/api/partners";
 
 const PartnerProfileForm: React.FC =  () => {
     const [fetchRegionOptions, setFetchRegionOptions] = useState(regionOptions)
     const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
     const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
-    const [fetchedPartnerInfo, setFetchedPartnerInfo] = useState(testData)
+    const [fetchPartner, setFetchPartner] = useState(defaultUser)
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const partnerInfo = await getPartner();
-                setFetchedPartnerInfo(partnerInfo[0]);
-            } catch (e) {
-                console.error("Ошибка загрузки партнера", e);
-                setFetchedPartnerInfo(testData);
+            try{
+                const partner = await getPartnerInfo("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+                setFetchPartner(partner)
+
+            } catch(error){
+                console.log(error)
+                setFetchPartner(defaultUser)
             }
-    
             try {
                 const countries = await getPartnerCountries();
                 setFetchingCountryOptions(countries);
@@ -56,20 +55,20 @@ const PartnerProfileForm: React.FC =  () => {
     
       
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
-        personalEmail: fetchedPartnerInfo?.email,
+        personalEmail: fetchPartner?.email,
         password: "securePass123",
-        companyName: fetchedPartnerInfo?.name,
-        site: fetchedPartnerInfo?.site,
-        phoneNumber: fetchedPartnerInfo?.phone,
-        companyEmail: fetchedPartnerInfo?.email,
-        industry: transformToOption(fetchedPartnerInfo?.category),
-        country: transformToOption(fetchedPartnerInfo?.country),
-        regions: transformToOptions(fetchedPartnerInfo?.regions),
-        inn: fetchedPartnerInfo?.inn.toString(),
-        currentAccount: fetchedPartnerInfo?.paymentInformation?.accountNumber,
-        corAccount: fetchedPartnerInfo?.paymentInformation?.correspondentAccountNumber,
-        bic: fetchedPartnerInfo?.paymentInformation?.bik,
-        allRegions: fetchedPartnerInfo?.hasAllRegions,
+        companyName: fetchPartner?.partner?.name,
+        site: fetchPartner?.partner.site,
+        phoneNumber: fetchPartner?.partner.phone,
+        companyEmail: fetchPartner?.partner.email,
+        industry: transformToOption(defaultUser?.partner.category),
+        country: transformToOption(defaultUser?.partner.country),
+        regions: transformToOptions(defaultUser?.partner.regions),
+        inn: fetchPartner?.partner.inn.toString(),
+        currentAccount: fetchPartner?.partner.paymentInformation?.accountNumber,
+        corAccount: fetchPartner?.partner.paymentInformation?.correspondentAccountNumber,
+        bic: fetchPartner?.partner.paymentInformation?.bik,
+        allRegions: fetchPartner?.partner.hasAllRegions,
         specificRegions: false
     });
 

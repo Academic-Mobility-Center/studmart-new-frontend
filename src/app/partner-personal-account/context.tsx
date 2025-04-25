@@ -112,6 +112,44 @@ export const testData = {
     ]
 }
 
+export const defaultUser = {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "firstName": "Vlad",
+    "lastName": "Pivnenko",
+    "email": "test@example.com",
+    "partner": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "OOOO",
+      "subtitle": "string",
+      "description": "string",
+      "priority": 0,
+      "email": "string",
+      "site": "string",
+      "inn": 0,
+      "phone": "string",
+      "category": {
+        "id": 0,
+        "name": "string"
+      },
+      "country": {
+        "id": 0,
+        "name": "string"
+      },
+      "paymentInformation": {
+        "bik": "string",
+        "accountNumber": "string",
+        "correspondentAccountNumber": "string"
+      },
+      "hasAllRegions": true,
+      "regions": [
+        {
+          "id": 0,
+          "name": "string"
+        }
+      ]
+    }
+}
+
 export const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 export const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
 export const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";

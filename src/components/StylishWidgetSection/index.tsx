@@ -15,8 +15,6 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   const [visibleRows, setVisibleRows] = useState(4);
   const cardsPerRow = 4;
   const initialVisibleCards = 16; 
-  // Сюда фетч запрос на карточки
-  // useEffect(() => {},[])
   
   const promoCards = useMemo(() => [
     {

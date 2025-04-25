@@ -58,3 +58,18 @@ export const getPartnerRegions = async () => {
       return null;
     }
 };
+export const getPartnerInfo = async (id: string) => {
+  try {
+    const res = await fetch(`/api/partners/Employees?id=${id}`);
+
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении партнера: ${res.status}`);
+    }
+    const data = await res.json();
+    console.log("Партнер:", data);
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getPartnerInfo:", error);
+    return null;
+  }  
+}
