@@ -80,7 +80,7 @@ export function DateRangeField({
             className="absolute top-1/2 -translate-y-1/2 right-[20px]"
             aria-label="Открыть календарь"
           >
-            <Image src="/icons/partner-account/calendar.svg" alt=""/>
+            <Image src="/icons/partner-account/calendar.svg" alt="" width={24} height={24}/>
           </button>
         )}
       </div>
