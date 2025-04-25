@@ -3,9 +3,8 @@ import "./style.css";
 import FavoriteSvg from "../../../public/icons/favourite-categories/FavoriteSvg";
 import { useRef, WheelEvent as ReactWheelEvent, useEffect, useState } from "react";
 import { getPromocodeCategories } from "@/lib/api/promocodes";
-import { iconMapper, menuItems, ScrollContainer, StyledButton } from "@/app/home/context";
+import { iconMapper, ScrollContainer, StyledButton } from "@/app/home/context";
 import MenuItem from "@/types/MenuItem";
-import { ClipLoader } from 'react-spinners';
 interface FavoriteCategoriesSectionProps {
   selectedCategoryId: number | null;
   onSelectCategory: (id: number | null) => void;
@@ -51,7 +50,7 @@ export default function FavoriteCategoriesSection({
         const categories = await getPromocodeCategories();
         if (categories) {
           const menuItemsWithIcons = categories
-            .sort((a: Category,b: Category ) => {
+            .sort((a: Category ) => {
               if (a.name === "Избранное") return -1;
               if (a.name !== "Избранное") return 1;
               return 0;

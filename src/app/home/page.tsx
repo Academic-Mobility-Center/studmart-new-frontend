@@ -10,12 +10,11 @@ import StylishShoppingSection from "@/components/StylishShoppingSection";
 import { ClipLoader } from "react-spinners";
 
 export default function Home() {
-    const { isAuthenticated, isLoading, role } = useAuth();
+    const { isAuthenticated, isLoading } = useAuth();
 
     if (isLoading) {
       return <div className="loader-container"> <ClipLoader size={50} color="#36d7b7" /> </div>;
     }
-    console.log(role)
     return (
       <div className="main-content">
           <div className="content">
