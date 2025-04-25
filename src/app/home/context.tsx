@@ -12,11 +12,13 @@ import promoCard from "@/types/PromoCard";
 
 export const iconMapper: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     "Рестораны и доставка": LunchDiningSvg,
-    "Техника и Электроника": DevicesSvg,
+    "Техника и электроника": DevicesSvg,
     "Товары": ShoppingBarSvg,
     "Обучение": SchoolSvg,
     "Спорт": ExerciseSvg,
     "Избранное": FavoriteSvg,
+    "Отдых":ExerciseSvg,
+    "Развлечения": ExerciseSvg
 };
 
 export const ScrollContainer = styled(Box)({

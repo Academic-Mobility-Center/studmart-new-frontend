@@ -4,7 +4,8 @@ import FavoriteSvg from "../../../public/icons/favourite-categories/FavoriteSvg"
 import { useRef, WheelEvent as ReactWheelEvent, useEffect, useState } from "react";
 import { getPromocodeCategories } from "@/lib/api/promocodes";
 import { iconMapper, menuItems, ScrollContainer, StyledButton } from "@/app/home/context";
-
+import MenuItem from "@/types/MenuItem";
+import { ClipLoader } from 'react-spinners';
 interface FavoriteCategoriesSectionProps {
   selectedCategoryId: number | null;
   onSelectCategory: (id: number | null) => void;
@@ -20,69 +21,89 @@ export default function FavoriteCategoriesSection({
   selectedCategoryId,
   onSelectCategory
 }: FavoriteCategoriesSectionProps) {
-  const [fetchedMenuItems, setFetchedMenuItems] = useState(menuItems);
+  const [fetchedMenuItems, setFetchedMenuItems] = useState<MenuItem[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const isTouchDevice = useRef(false);
+  const [loading, setLoading] = useState(true);
+  const handleWheelScroll = (event: ReactWheelEvent<HTMLDivElement>) => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
 
-  const handleWheelScroll = (event: ReactWheelEvent) => {
-    if (scrollRef.current) {
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+
+    const atStart = scrollLeft === 0;
+    const atEnd = scrollLeft + clientWidth >= scrollWidth;
+
+    const scrollingLeft = event.deltaY < 0;
+    const scrollingRight = event.deltaY > 0;
+
+    const prevent =
+      (scrollingLeft && !atStart) || (scrollingRight && !atEnd);
+
+    if (prevent) {
       event.preventDefault();
-      scrollRef.current.scrollLeft += event.deltaY;
+      scrollContainer.scrollLeft += event.deltaY;
     }
   };
-  
+
   useEffect(() => {
     const fetchCategories = async () => {
-      const categories = await getPromocodeCategories();
-
-      if (categories) {
-        const menuItemsWithIcons = categories.map((category: Category) => {
-          const Icon = iconMapper[category.name] || FavoriteSvg;
-          return { ...category, Icon };
-        });
-
-        setFetchedMenuItems(menuItemsWithIcons);
-      } else {
+      try {
+        const categories = await getPromocodeCategories();
+        if (categories) {
+          const menuItemsWithIcons = categories
+            .sort((a: Category,b: Category ) => {
+              if (a.name === "Избранное") return -1;
+              if (a.name !== "Избранное") return 1;
+              return 0;
+            })
+          .map((category: Category) => {
+            const Icon = iconMapper[category.name] || FavoriteSvg;
+            return { ...category, Icon };
+          });
+          setFetchedMenuItems(menuItemsWithIcons);
+        } 
+      } catch(error){
+        console.log(error)
         setFetchedMenuItems([]);
+      } finally {
+        setLoading(false);
       }
     };
 
-  
-    fetchCategories();  
-    isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  
+    fetchCategories();
+
     const scrollContainer = scrollRef.current;
-    if (!scrollContainer || isTouchDevice.current) return;
-  
+    if (!scrollContainer) return;
+
     const handleWheel = (event: WheelEvent) => {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
-  
+
       const atStart = scrollLeft === 0;
       const atEnd = scrollLeft + clientWidth >= scrollWidth;
-  
+
       const scrollingLeft = event.deltaY < 0;
       const scrollingRight = event.deltaY > 0;
-  
+
       const prevent =
         (scrollingLeft && !atStart) || (scrollingRight && !atEnd);
-  
+
       if (prevent) {
         event.preventDefault();
-        scrollContainer.scrollLeft += event.deltaY * 1.5;
+        scrollContainer.scrollLeft += event.deltaY;
       }
     };
-  
+
     scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
-  
+
     return () => {
       scrollContainer.removeEventListener("wheel", handleWheel);
     };
   }, []);
-  
 
   return (
     <div className="beauty-health-container">
-      <ScrollContainer ref={scrollRef} onWheel={handleWheelScroll}>
+      {!loading && (
+        <ScrollContainer ref={scrollRef} onWheel={handleWheelScroll}>
         {fetchedMenuItems.map(({ name, Icon, id }) => (
           <StyledButton 
             key={id}
@@ -96,7 +117,8 @@ export default function FavoriteCategoriesSection({
             {name}
           </StyledButton>
         ))}
-      </ScrollContainer>
+        </ScrollContainer>
+      )}
     </div>
   );
 }
