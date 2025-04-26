@@ -1,5 +1,7 @@
 import { DateField } from "@/components/fields/date/DateField";
 import InputField from "@/components/fields/input/InputField"
+import { MultipleSelectField } from "@/components/fields/multiple-select/MultipleSelectField";
+import { MultipleSelectV2 } from "@/components/fields/multiple-selectv2/MultipleSelectV2";
 import { SelectField } from "@/components/fields/select/SelectField";
 import City from "@/types/Cities";
 import Region from "@/types/Region";
@@ -171,7 +173,18 @@ const MainInfo: React.FC<Props> = ({
                 </div>
             </div> 
             <div>
-                <SelectField
+                {/* <SelectField
+                    name="languageProfiency"
+                    value={formData.languageProfiency}
+                    options={transformToOptions(languageProfiencyOptions)}
+                    width={262}
+                    labelFontSize={16}
+                    label="Владение иностранными языками"
+                    placeholder="Владение иностранными языками"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                /> */}
+                <MultipleSelectV2
                     name="languageProfiency"
                     value={formData.languageProfiency}
                     options={transformToOptions(languageProfiencyOptions)}

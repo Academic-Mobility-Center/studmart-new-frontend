@@ -167,3 +167,66 @@ export const FaqQuestions = [
     },
 
 ]
+
+export default interface IStudentFormData {
+    id: string;
+    firstName: string;
+    lastName: string;
+    sex: boolean;
+    birthDate: string;
+    email: string;
+    specialisation: string;
+    university: {
+        id: number,
+        name: string,
+        shortName: string,
+        city: {
+            id: number,
+            name: string
+          region: {
+            id: number,
+            name: string
+            country: {
+                id: number,
+                name: string
+            }
+          }
+        }
+      },
+      course: {
+        id: number,
+        name: string
+      }
+}
+
+
+export const defaultStudent: IStudentFormData = {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "firstName": "string",
+    "lastName": "string",
+    "sex": true,
+    "birthDate": "2025-04-26",
+    "email": "string",
+    "specialisation": "string",
+    "university": {
+      "id": 0,
+      "name": "string",
+      "shortName": "string",
+      "city": {
+        "id": 0,
+        "name": "string",
+        "region": {
+          "id": 0,
+          "name": "string",
+          "country": {
+            "id": 0,
+            "name": "string"
+          }
+        }
+      }
+    },
+    "course": {
+      "id": 0,
+      "name": "string"
+    }
+}
