@@ -4,7 +4,7 @@ import "./globals.css";
 import { AuthProvider } from '@/context/AuthContext';
 import { Nunito_Sans } from 'next/font/google'
 import { Mulish } from 'next/font/google'
-
+import { CityProvider } from "@/context/CityContext";
 const mulish = Mulish({
   subsets: ['latin'],
   weight: ['400', '600', '700'], // выбери нужные веса, которые используешь
@@ -41,7 +41,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunitoSans.variable} ${mulish.variable} antialiased `}
       >
-        <AuthProvider>{children}</AuthProvider>
+        <CityProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </CityProvider>
+
       </body>
     </html>
   );

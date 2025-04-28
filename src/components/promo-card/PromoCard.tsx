@@ -3,7 +3,7 @@ import PromoCardsDescriprion from '../promo-card-description';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 type PromoCardProps = {
-  id: number;
+  id: string;
   imageUrl: string;
   heading: string;
   description: string;
@@ -63,7 +63,7 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl }) => {
         flex: '2 1 auto',
       }}
     >
-      <Image src="/icons/home/star.svg" alt="icon" className="w-8 h-8" />
+      <Image src="/icons/home/star.svg" alt="icon" className="w-8 h-8" width={32} height={32}/>
     </div>
   );
 };

@@ -13,9 +13,10 @@ type SimulatedFetchReturnType<K extends SimulatedFetchKey> =
   K extends "devices" ? typeof defaultDevicesData :
   K extends "eventStats" ? typeof defaultEventStats :
   never;
+
 const country: Country = {
-    id: 1,
-    name: "Россия"
+  id: 1,
+  name: "Россия"
 };
 
 export const regionOptions: Region[] = [
@@ -140,7 +141,7 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
     },
     []
   );
-
+  
   useEffect(() => {
     const [start, end] = formData?.dateRange;
     if (!start || !end) return;
@@ -195,51 +196,6 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
           }, 800);
         });
       
-      // const simulatedFetch = (key: string) =>
-      //   new Promise<any>((resolve) => {
-      //     setTimeout(() => {
-      //       switch (key) {
-      //         case "demography":
-      //           resolve(defaultDemographyData.map(item => ({
-      //             ...item,
-      //             male: Math.floor(item.male * totalMultiplier),
-      //             female: Math.floor(item.female * totalMultiplier),
-      //           })));
-      //           break;
-      //         case "geography":
-      //           resolve(defaultGeographyData.map(item => ({
-      //             ...item,
-      //             value: +(item.value * totalMultiplier).toFixed(2),
-      //           })));
-      //           break;
-      //         case "devices":
-      //           resolve(defaultDevicesData.map(item => ({
-      //             ...item,
-      //             value: Math.floor(item.value * totalMultiplier),
-      //           })));
-      //           break;
-      //         case "eventStats":
-      //           const randomStat = (base: number): EventStatItem => {
-      //             const value = Math.floor(base * totalMultiplier);
-      //             const percentage = Math.floor(Math.random() * 50);
-      //             const isUp = Math.random() > 0.5;
-      //             return { value, percentage, isUp };
-      //           };
-      //           resolve({
-      //             visitors: randomStat(2000),
-      //             repeatVisits: randomStat(1567),
-      //             uniqueVisitors: randomStat(1800),
-      //             promocodes: randomStat(521),
-      //             repeatPromocodes: randomStat(346),
-      //             siteVisits: randomStat(168),
-      //           });
-      //           break;
-      //         default:
-      //           resolve([]);
-      //       }
-      //     }, 800);
-      //   });
-
       const [demographyData, geographyData, devicesData, eventStats] = await Promise.all([
         simulatedFetch("demography"),
         simulatedFetch("geography"),

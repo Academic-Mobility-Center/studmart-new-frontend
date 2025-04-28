@@ -111,10 +111,12 @@ export function SelectField({
             }}
           />
         )}
-        renderOption={(props, option) => (
-          <Box
+        renderOption={(props, option) => {
+          const { key, ...rest } = props
+          return(
+            <Box
             component="li"
-            {...props}
+            key={key} {...rest}
             sx={{
               px: 2,
               py: 1,
@@ -132,7 +134,9 @@ export function SelectField({
           >
             {option.label}
           </Box>
-        )}
+          )
+
+        }}
       />
     </Box>
   );

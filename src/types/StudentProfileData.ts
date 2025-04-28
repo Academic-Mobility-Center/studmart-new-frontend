@@ -12,18 +12,18 @@ export interface UserData {
 import { Option } from "./Option";
 
 export interface StudentFormData{
-  email: string;
-  password: string;
-  firstName: string,
-  lastName: string,
+  email: string | undefined;
+  password: string | undefined;
+  firstName: string | undefined,
+  lastName: string | undefined,
   date: Date | undefined;
   gender: Option | undefined;
   region: Option | undefined;
   city: Option | undefined;
   familyStatus: Option | undefined;
   isWork: Option | undefined
-  languageProfiency: Option | undefined;
+  languageProfiency: Option[] | undefined;
   university: Option | undefined;
-  profession: string;
+  profession: string | undefined;
   course: Option | undefined;
 }

@@ -4,16 +4,22 @@ import Link from "next/link";
 import { Dialog } from "@headlessui/react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { getPromocodeRegions } from "@/lib/api/promocodes";
+import { useCity } from "@/context/CityContext";
 interface NewHeaderProps {
   isAuthenticated: boolean;
 }
+
+const citiesInModal = [
+  {id: 1, name: "Новосибирская область"},
+  {id: 2, name: "Московская область"}
+]
 
 export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
   const { role } = useAuth();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
-
+  const { city } = useCity();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const isAuth = (isAuthenticated && role && role === "partner") 
@@ -42,7 +48,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
         >
           <Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
           <p className="text-sm text-[#032c28] max-w-[110px]">
-            {selectedCity || "Выберите город"}
+            {city || "Выберите город"}
           </p>
         </div>
         <SearchBar isAuthenticated={isAuthenticated} />
@@ -66,7 +72,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
         </div>
       </div>
       {isAuthenticated && (
-        <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} setSelectedCity={setSelectedCity} />
+        <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} />
       )}
     </header>
   );
@@ -103,36 +109,32 @@ function SearchBar({ isAuthenticated }: SearchBarProps) {
     </div>
   );
 }
-function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: boolean; closeModal: () => void; setSelectedCity: (city: string) => void }) {
-  const [cities, setCities] = useState<string[]>([]);
+function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModal: () => void; }) {
+  const [cities, setCities] = useState<{id: number; name: string}[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const { setCity } = useCity();
   const filteredCities = cities.filter(city =>
-    city.toLowerCase().includes(searchQuery.toLowerCase())
+    city.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
   
   useEffect(() => {
-    fetch("http://to-your-api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": "Token Some-Token-bla-bla-bla"
-      },
-      body: JSON.stringify({
-        // какие нибудь параметры
-      })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setCities(data.suggestions);
-      });
+    const fetchCities = async () => {
+      try{
+        const response = await getPromocodeRegions();
+        console.log(response)
+        setCities(citiesInModal);
+      } catch (error) {
+        console.error(error)
+        setCities(citiesInModal)
+      }
+      
+    };
+    fetchCities();
   }, []);
   
   return (
     <Dialog open={isOpen} onClose={closeModal} className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs">
-      <div className="bg-white p-6 rounded-lg w-[700px] h-[700px] flex flex-col items-center">
+      <div className="bg-white p-10 rounded-lg w-[700px] h-[700px] flex flex-col items-center">
         <h2 className="text-lg font-bold text-black">Выберите город</h2>
         <input
           type="text"
@@ -145,8 +147,8 @@ function CitySelectionModal({ isOpen, closeModal, setSelectedCity }: { isOpen: b
           {filteredCities.length > 0 ? (
             filteredCities.map((city, index) => (
               <li key={index} className="cursor-pointer p-2 hover:bg-gray-200 text-black"
-                  onClick={() => { setSelectedCity(city); closeModal(); }}>
-                {city}
+                  onClick={() => { setCity(city.name); closeModal(); }}>
+                {city.name}
               </li>
             ))
           ) : (

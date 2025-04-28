@@ -1,108 +1,109 @@
+"use client";
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount"
 import { Button } from "@mui/base"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
+import { transformToOption, transformToOptions } from "@/utils/dataTransform"
+import { 
+    countryOptions, 
+    // defaultPartner, 
+    defaultUser, 
+    industryOptions, 
+    profileCardClasses, 
+    profileTitleClasses, 
+    regionOptions, 
+    saveButtonClasses, 
+    validateField 
+} from "@/app/partner-personal-account/context";
+import { Option } from "@/types/Option";
+import {  
+    // getPartner, 
+    getPartnerCategories, 
+    getPartnerCountries, 
+    getPartnerInfo, 
+    getPartnerRegions 
+} from "@/lib/api/partners";
 
-const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
-const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
-const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
+const PartnerProfileForm: React.FC =  () => {
+    const [fetchRegionOptions, setFetchRegionOptions] = useState(regionOptions)
+    const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
+    const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
+    const [fetchPartner, setFetchPartner] = useState(defaultUser)
+    useEffect(() => {
+        const fetchData = async () => {
+            try{
+                // const partnerData = await getPartner("1a9b52cc-719c-4e46-b6a5-ba0918c0e1a2")
+                // console.log(partnerData)
+                const partner = await getPartnerInfo("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+                setFetchPartner(partner)
+                // setFetchPartnerData(partnerData)
 
-const industryOptions = [
-    { id: 1, name: "ИТ-услуги" },
-    { id: 2, name: "Финансы" },
-];
-
-const countryOptions = [
-    { id: 1, name: "Россия" },
-    { id: 2, name: "США" },
-    { id: 3, name: "ОАЭ" },
-];
-
-const regionOptions = [
-    { id: 1, name: "НСК" },
-    { id: 2, name: "СПБ" },
-    { id: 3, name: "МСК" },
-    { id: 4, name: "ЕКБ" },
-];
-
-const validateField = (
-    name: string,
-    value: string | boolean | string[],
-    fullFormData: PartnerPersonalAccountFormData
-): string | string[] | undefined => {
-    switch (name) {
-        case "personalEmail":
-            return /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(value as string)
-                ? undefined : "Некорректный email";
-
-        case "password":
-            return (value as string).length >= 6 ? undefined : "Пароль должен содержать минимум 6 символов";
-
-        case "companyName":
-            return /^[a-zA-Zа-яА-Я0-9\s\'-]+$/.test(value as string) ? undefined : "Некорректное название компании";
-
-        case "site":
-            return /^(https?:\/\/)?(www\.)?(([\w-]+\.)+[\w-]+|localhost)(\.\w{2,})?(:[0-9]{1,5})?(\/[^\s<>]*)?(\?[^\s<>]*)?$/.test(value as string)
-                ? undefined : "Некорректный URL";
-
-        case "phoneNumber":
-            return /^(\+7|8)?[\s-]?\(?9\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/.test(value as string)
-                ? undefined : "Некорректный номер телефона";
-
-        case "companyEmail":
-            return /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(value as string)
-                ? undefined : "Некорректный email компании";
-
-        case "country":
-            if (!value) return "Выберите страну";
-            return undefined;
-
-        case "industry":
-            if (!value) return ["Выберите отрасль"];
-            return undefined;
-
-        case "inn":
-            return /^\d{10}$/.test(value as string) ? undefined : "Некорректный ИНН";
-
-        case "currentAccount":
-        case "corAccount":
-            return /^\d{20}$/.test(value as string) ? undefined : `Некорректный ${name === "currentAccount" ? "расчетный" : "корреспондентский"} счет`;
-
-        case "bic":
-            return /^\d{9}$/.test(value as string) ? undefined : "Некорректный БИК";
-
-        case "regions":
-            if (fullFormData.specificRegions && (!Array.isArray(value) || value?.length < 1))
-                {
-                return ["Выберите хотя бы один регион"];
+            } catch(error){
+                console.log(error)
+                setFetchPartner(defaultUser)
+                // setFetchPartnerData(defaultPartner)
             }
-            return undefined;             
-
-        default:
-            return undefined;
-    }
-};
-
-const PartnerProfileForm: React.FC = () => {
-
+            try {
+                const countries = await getPartnerCountries();
+                setFetchingCountryOptions(countries);
+            } catch (e) {
+                console.error("Ошибка загрузки стран", e);
+                setFetchingCountryOptions(countryOptions);
+            }
+    
+            try {
+                const regions = await getPartnerRegions();
+                setFetchRegionOptions(regions);
+            } catch (e) {
+                console.error("Ошибка загрузки регионов", e);
+                setFetchRegionOptions(regionOptions);
+            }
+    
+            try {
+                const categories = await getPartnerCategories();
+                setFetchingIndustryOptions(categories);
+            } catch (e) {
+                console.error("Ошибка загрузки категорий", e);
+                setFetchingIndustryOptions(industryOptions);
+            }
+        };
+    
+        fetchData();
+    }, []);
+    
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
-        personalEmail: "test.partner@example.com",
+        personalEmail: fetchPartner?.email,
         password: "securePass123",
-        companyName: "ООО Тестовая Компания",
-        site: "https://test-company.ru",
-        phoneNumber: "+7 (912) 345-67-89",
-        companyEmail: "info@test-company.ru",
-        industry: undefined,
-        country: undefined,
-        regions: undefined,
-        inn: "7701234567",
-        currentAccount: "40702810900000012345",
-        corAccount: "30101810400000000225",
-        bic: "044525225",
-        allRegions: true,
+        companyName: fetchPartner?.partner?.name,
+        site: fetchPartner?.partner.site,
+        phoneNumber: fetchPartner?.partner.phone,
+        companyEmail: fetchPartner?.partner.email,
+        industry: transformToOption(defaultUser?.partner.category),
+        country: transformToOption(defaultUser?.partner.country),
+        regions: transformToOptions(defaultUser?.partner.regions),
+        inn: fetchPartner?.partner.inn.toString(),
+        currentAccount: fetchPartner?.partner.paymentInformation?.accountNumber,
+        corAccount: fetchPartner?.partner.paymentInformation?.correspondentAccountNumber,
+        bic: fetchPartner?.partner.paymentInformation?.bik,
+        allRegions: fetchPartner?.partner.hasAllRegions,
         specificRegions: false
+        // personalEmail: fetchPartnerData?.employees[0].email,
+        // password: "securePass123",
+        // companyName: fetchPartnerData.name,
+        // site: fetchPartnerData.site,
+        // phoneNumber: fetchPartnerData.phone,
+        // companyEmail: fetchPartnerData.email,
+        // industry: transformToOption(fetchPartnerData.category),
+        // country: transformToOption(fetchPartnerData.country),
+        // regions: transformToOptions(fetchPartnerData.regions),
+        // inn: fetchPartnerData.inn.toString(),
+        // currentAccount: fetchPartnerData.paymentInformation?.accountNumber,
+        // corAccount: fetchPartnerData.paymentInformation?.correspondentAccountNumber,
+        // bic: fetchPartnerData.paymentInformation?.bik,
+        // allRegions: fetchPartnerData.hasAllRegions,
+        // specificRegions: !fetchPartnerData.hasAllRegions
     });
 
     const [errors, setErrors] = useState<{ 
@@ -138,37 +139,47 @@ const PartnerProfileForm: React.FC = () => {
     const handleBlur = (
         event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
     ) => {
-        const { name, value, type, checked } = event.target as HTMLInputElement;
+        const { name, type, value, checked } = event.target as HTMLInputElement;
     
-        const newValue = type === 'checkbox' || type === 'radio' ? checked : value;
+        const newValue = type === "checkbox" ? checked : value;
     
-        setErrors((prevErrors) => {
-            // Ensure newValue is not undefined
-            const validatedValue = newValue !== undefined ? newValue : '';
-            return {
-                ...prevErrors,
-                [name]: validateField(name, validatedValue, {
-                    ...formData,
-                    [name]: validatedValue,
-                }),
-            };
-        });
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [name]: validateField(name, newValue, {
+                ...formData,
+                [name]: newValue,
+            }),
+        }));
     };
-    
-    
+
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
     ) => {
-        const { name, value, checked } = event.target as HTMLInputElement;
-        
-        let newValue: string | boolean | string[] | undefined;    
+        const { name, type, value, checked } = event.target as HTMLInputElement;
     
+        let newValue: string | boolean | File | Date | Option | undefined = value;
+    
+        if (type === "checkbox") {
+            newValue = checked;
+        }
+    
+        const selectMap = {
+            industry: industryOptions,
+            country: countryOptions,
+        };
+    
+        if (selectMap[name as keyof typeof selectMap]) {
+            const selected = selectMap[name as keyof typeof selectMap].find(opt => opt.id.toString() === value);
+            newValue = selected ? { value: selected.id.toString(), label: selected.name } : "";
+        }
+    
+        // Логика "все регионы" / "выбранные регионы"
         if (name === 'allRegions' && checked) {
             setFormData(prev => ({
                 ...prev,
                 allRegions: true,
                 specificRegions: false,
-                regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name }))
+                regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name })),
             }));
             return;
         }
@@ -178,38 +189,39 @@ const PartnerProfileForm: React.FC = () => {
                 ...prev,
                 allRegions: false,
                 specificRegions: true,
-                regions: []
+                regions: [],
             }));
             return;
         }
     
-        // Handle the 'industry' field
-        if (name === "industry") {
-            const selectedIndustry = industryOptions.find(option => option.id.toString() === value);
-            newValue = selectedIndustry ? selectedIndustry.id.toString() : undefined; // Extract value (string)
-        }
-    
-        // Handle the 'country' field
-        if (name === "country") {
-            const selectedCountry = countryOptions.find(option => option.id.toString() === value);
-            newValue = selectedCountry ? selectedCountry.id.toString() : undefined; // Extract value (string)
-        }
-    
         setFormData(prev => ({
             ...prev,
-            [name]: newValue || '' // Ensure newValue is a valid type (string, boolean, or string[])
+            [name]: newValue,
         }));
     
-        setErrors(prev => ({
-            ...prev,
-            [name]: validateField(name, newValue || '', {
-                ...formData,
-                [name]: newValue || '',
-            }),
-        }));
+        setErrors((prevErrors) => {
+            let validationValue: string | boolean | string[];
+            
+            if (newValue === undefined) {
+                validationValue = '';
+            } else if (newValue instanceof Date) {
+                validationValue = newValue.toISOString();
+            } else if (typeof newValue === 'object' && 'value' in newValue) {
+                validationValue = (newValue as Option).value;
+            } else {
+                validationValue = newValue;
+            }
+        
+            return {
+                ...prevErrors,
+                [name]: validateField(name, validationValue,{
+                    ...formData,
+                    [name]: newValue,
+                }),
+            };
+        });
     };
-    
-
+      
     const handleSubmitForm = (event: React.FormEvent) => {
         event.preventDefault();
         let hasErrors = false;
@@ -245,9 +257,9 @@ const PartnerProfileForm: React.FC = () => {
                         handleChange={handleChange} 
                         errors={errors} 
                         handleBlur={handleBlur}
-                        industryOptions={industryOptions}
-                        countryOptions={countryOptions}
-                        regionOptions={regionOptions}
+                        industryOptions={fetchedIndustyOptions}
+                        countryOptions={fetchedCountryOptions}
+                        regionOptions={fetchRegionOptions}
                     />
                     <PaymentInfo 
                         formData={formData} 

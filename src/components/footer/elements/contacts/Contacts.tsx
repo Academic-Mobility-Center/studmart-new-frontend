@@ -77,13 +77,13 @@ const Contacts = () => {
                 basis-auto overflow-hidden"
             >
                 <Image 
-                    src="/icons/footer/vk.svg" 
+                    src="/icons/footer/vk.svg" width={40} height={40}
                     alt="" className="h-10 max-w-[initial] 
                     block grow-0 shrink-0 basis-auto" 
                 />
             </div>
             <Image 
-                src="/icons/footer/telegram.svg" 
+                src="/icons/footer/telegram.svg" width={40} height={40}
                 alt="" className="h-10 max-w-[initial] 
                 w-10 block grow-0 shrink-0 basis-auto 
                 box-border overflow-hidden" /

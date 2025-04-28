@@ -31,7 +31,7 @@ export const validateField = (
 ): string | string[] | undefined => {
     switch (name) {
         case "email":
-            return /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/.test(value as string)
+            return /^\s*[\w\-+_']+(\.[\w\-+_']+)*@[A-Za-z0-9]([\w.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z.]*[A-Za-z]$/.test(value as string)
                 ? undefined : "Некорректный email";
 
         case "password":
@@ -39,7 +39,7 @@ export const validateField = (
 
         case "firstName":
         case "lastName":
-            return /^[a-zA-Zа-яА-ЯёЁ\s\-']+$/.test(value as string)
+            return /^[a-zA-Zа-яА-ЯёЁ\s-']+$/.test(value as string)
                 ? undefined : "Некорректное имя или фамилия";
 
         case "date":
@@ -76,7 +76,6 @@ export const validateField = (
             return undefined;
     }
 };
-
 export const personalDataItems = [
     "Университет",
     "Специальность",
@@ -168,3 +167,66 @@ export const FaqQuestions = [
     },
 
 ]
+
+export default interface IStudentFormData {
+    id: string;
+    firstName: string;
+    lastName: string;
+    sex: boolean;
+    birthDate: string;
+    email: string;
+    specialisation: string;
+    university: {
+        id: number,
+        name: string,
+        shortName: string,
+        city: {
+            id: number,
+            name: string
+          region: {
+            id: number,
+            name: string
+            country: {
+                id: number,
+                name: string
+            }
+          }
+        }
+      },
+      course: {
+        id: number,
+        name: string
+      }
+}
+
+
+export const defaultStudent: IStudentFormData = {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "firstName": "string",
+    "lastName": "string",
+    "sex": true,
+    "birthDate": "2025-04-26",
+    "email": "string",
+    "specialisation": "string",
+    "university": {
+      "id": 0,
+      "name": "string",
+      "shortName": "string",
+      "city": {
+        "id": 0,
+        "name": "string",
+        "region": {
+          "id": 0,
+          "name": "string",
+          "country": {
+            "id": 0,
+            "name": "string"
+          }
+        }
+      }
+    },
+    "course": {
+      "id": 0,
+      "name": "string"
+    }
+}

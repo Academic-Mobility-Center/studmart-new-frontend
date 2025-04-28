@@ -29,4 +29,10 @@
     padding-left: 40px;
     padding-right: 40px;
   }
-  
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Центрируем лоадер по экрану */
+    background: #f8f8f8
+  }
