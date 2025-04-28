@@ -10,6 +10,11 @@ interface NewHeaderProps {
   isAuthenticated: boolean;
 }
 
+const citiesInModal = [
+  {id: 1, name: "Новосибирская область"},
+  {id: 2, name: "Московская область"}
+]
+
 export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
   const { role } = useAuth();
 
@@ -116,9 +121,11 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
     const fetchCities = async () => {
       try{
         const response = await getPromocodeRegions();
-        setCities(response);
+        console.log(response)
+        setCities(citiesInModal);
       } catch (error) {
         console.error(error)
+        setCities(citiesInModal)
       }
       
     };

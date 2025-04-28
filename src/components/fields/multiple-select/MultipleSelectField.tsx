@@ -33,29 +33,12 @@ export function MultipleSelectField({
 
   const [selectedMultiple, setSelectedMultiple] = useState<Option[]>(value || [])
   
-  // useEffect(() => {
-  //   if (allRegions) {
-  //     setSelectedMultiple(options);
-  //   } else {
-  //     setSelectedMultiple(Array.isArray(value) ? value : []);
-  //   }
-  // }, [allRegions, options, value]);
-
-  // useEffect(() => {
-  //   if (Array.isArray(value)) {
-  //     const selected = options.filter((opt) =>
-  //       value.some((v) => v.value === opt.value)
-  //     )
-  //     setSelectedMultiple(selected)
-  //   }
-  // }, [value, options])
   useEffect(() => {
     if (value) {
       setSelectedMultiple(value)
     }
   }, [value])
 
-  // Sync region mode with allRegions prop
   useEffect(() => {
     setRegionMode(allRegions ? 'all' : 'specific')
   }, [allRegions])
@@ -81,10 +64,7 @@ export function MultipleSelectField({
   }
   const handleRegionModeChange = (mode: 'all' | 'specific') => {
     if (mode === regionMode) return
-    
     setRegionMode(mode)
-
-    // Create synthetic events to update form state
     const events = [
       {
         target: {
@@ -101,8 +81,6 @@ export function MultipleSelectField({
         }
       }
     ] as unknown as React.ChangeEvent<HTMLSelectElement>[]
-
-    // If switching to "all regions", select all options
     if (mode === 'all') {
       setSelectedMultiple(options)
       events.push({
@@ -112,7 +90,6 @@ export function MultipleSelectField({
         }
       } as unknown as React.ChangeEvent<HTMLSelectElement>)
     } else {
-      // If switching to "specific regions", clear selection
       setSelectedMultiple([])
       events.push({
         target: {
@@ -121,8 +98,6 @@ export function MultipleSelectField({
         }
       } as unknown as React.ChangeEvent<HTMLSelectElement>)
     }
-
-    // Trigger all changes
     events.forEach((event) => onChange?.(event))
   }
   return (
@@ -173,14 +148,6 @@ export function MultipleSelectField({
           displayValue={(value: Option[]) => value.map(v => v.label).join(', ')}
           onBlur={onBlur}
         />
-          {regionMode === 'specific' && selectedMultiple.length > 0 && ( 
-            <SelectedTags
-              selected={selectedMultiple}
-              onRemove={(val) =>
-                handleMultipleChange(selectedMultiple.filter((v) => v !== val))
-              }
-            />
-          )}
         <ComboboxOptionsList
           options={filteredOptions}
           selected={selectedMultiple}
@@ -192,18 +159,18 @@ export function MultipleSelectField({
 }
 
 function ComboboxInputBase({
-  value,  // Change from any to Option[]
+  value,  
   isDisabled,
   placeholder,
   setQuery,
-  displayValue, // Change displayValue to expect Option[]
+  displayValue, 
   onBlur
 }: {
-  value: Option[]  // Use Option[] instead of any
+  value: Option[]  
   isDisabled: boolean
   placeholder: string
   setQuery: (val: string) => void
-  displayValue: (val: Option[]) => string,  // Accept Option[] instead of any
+  displayValue: (val: Option[]) => string,  
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
 }) {
   return (
@@ -213,10 +180,9 @@ function ComboboxInputBase({
           w-full pl-[20px] pr-10 border border-gray-300 p-2 
           rounded-2xl focus:outline-none h-[48px] 
           placeholder:text-[#888888]
-          ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed' : 'bg-white'}
-          text-[#032C28]
+          ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed text-[#EFEFEF]' : 'bg-white text-[#032C28]'}
         `}
-        displayValue={() => displayValue(value)} // Pass value to displayValue
+        displayValue={() => displayValue(value)} 
         onChange={(event) => setQuery(event.target.value)}
         placeholder={placeholder}
         disabled={isDisabled}
@@ -240,7 +206,6 @@ function ComboboxInputBase({
     </div>
   )
 }
-
 
 function ComboboxOptionsList({
   options,
@@ -280,32 +245,156 @@ function ComboboxOptionsList({
   )
 }
 
-function SelectedTags({
-  selected,
-  onRemove,
-}: {
-  selected: Option[]
-  onRemove: (val: Option) => void
-}) {
-  if (selected.length === 0) return null
+// import { Option } from '@/types/Option'
+// import { useState, useEffect } from 'react'
+// import { 
+//   Box, 
+//   OutlinedInput, 
+//   MenuItem, 
+//   FormControl, 
+//   Select, 
+//   Checkbox, 
+//   ListItemText, 
+//   RadioGroup, 
+//   FormControlLabel, 
+//   Radio, 
+//   SelectChangeEvent 
+// } from '@mui/material'
 
-  return (
-    <div className="flex flex-wrap gap-2 mt-2">
-      {selected.map((item) => (
-        <div
-          key={item.value}
-          className="flex items-center gap-1 bg-[#032C28] text-white text-sm px-3 py-1 rounded-full"
-        >
-          {item.label}
-          <button
-            type="button"
-            onClick={() => onRemove(item)}
-            className="ml-1 text-white hover:text-gray-300"
-          >
-            ✕
-          </button>
-        </div>
-      ))}
-    </div>
-  )
-}
+// export function MultipleSelectField({
+//   label,
+//   options,
+//   value,
+//   name,
+//   onChange,
+//   width,
+//   labelFontSize,
+//   placeholder,
+//   isNeedRadio,
+//   onBlur,
+//   allRegions
+// }: {
+//   label: string
+//   options: Option[]
+//   value?: Option[]
+//   name: string
+//   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
+//   width: number
+//   labelFontSize: number
+//   placeholder: string
+//   isNeedRadio?: boolean
+//   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+//   allRegions: boolean
+// }) {
+//   const [query, setQuery] = useState('')
+//   const [regionMode, setRegionMode] = useState<'all' | 'specific'>(allRegions ? 'all' : 'specific')
+//   const isDisabled = isNeedRadio ? regionMode === 'all' : false
+
+//   const [selectedMultiple, setSelectedMultiple] = useState<Option[]>(value || [])
+
+//   useEffect(() => {
+//     if (value) {
+//       setSelectedMultiple(value)
+//     }
+//   }, [value])
+
+//   useEffect(() => {
+//     setRegionMode(allRegions ? 'all' : 'specific')
+//   }, [allRegions])
+
+//   const filteredOptions =
+//     query === ''
+//       ? options
+//       : options.filter((option) =>
+//           option.label.toLowerCase().includes(query.toLowerCase())
+//         )
+
+//   const handleMultipleChange = (event: SelectChangeEvent<typeof selectedMultiple>) => {
+//     const selected = event.target.value as Option[]
+//     setSelectedMultiple(selected)
+//     if (onChange) {
+//       onChange({
+//         target: { name, value: selected }
+//       } as unknown as React.ChangeEvent<HTMLSelectElement>)
+//     }
+//   }
+
+//   const handleRegionModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     const mode = event.target.value as 'all' | 'specific'
+//     if (mode === regionMode) return
+//     setRegionMode(mode)
+//     if (mode === 'all') {
+//       setSelectedMultiple(options)
+//       onChange?.({
+//         target: { name, value: options }
+//       } as unknown as React.ChangeEvent<HTMLSelectElement>)
+//     } else {
+//       setSelectedMultiple([])
+//       onChange?.({
+//         target: { name, value: [] }
+//       } as unknown as React.ChangeEvent<HTMLSelectElement>)
+//     }
+//   }
+
+//   return (
+//     <Box className="flex flex-col gap-2 relative" style={{ width: `${width}px` }}>
+//       <label style={{ fontSize: `${labelFontSize}px`, color: '#032c28' }}>{label}</label>
+
+//       {isNeedRadio && (
+//         <FormControl component="fieldset" style={{ marginBottom: '10px' }}>
+//           <RadioGroup
+//             row
+//             value={regionMode}
+//             onChange={handleRegionModeChange}
+//           >
+//             <FormControlLabel
+//               value="all"
+//               control={<Radio />}
+//               label="Все регионы"
+//               style={{ fontSize: '14px', color: "#032C28" }}
+//             />
+//             <FormControlLabel
+//               value="specific"
+//               control={<Radio />}
+//               label="Конкретные регионы"
+//               style={{ fontSize: '14px',  color: "#032C28" }}
+//             />
+//           </RadioGroup>
+//         </FormControl>
+//       )}
+
+//       <FormControl fullWidth variant="outlined" disabled={isDisabled}>
+//         <Select
+//           multiple
+//           value={selectedMultiple}
+//           onChange={handleMultipleChange}
+//           name={name}
+//           input={<OutlinedInput />}
+//           displayEmpty
+//           renderValue={(selected) => (selected as Option[]).map((v) => v.label).join(', ')}
+//           onBlur={onBlur}
+//           MenuProps={{
+//             PaperProps: {
+//               style: {
+//                 maxHeight: 200,
+//                 width: 'auto',
+//                 color: "#032C28"
+//               },
+//             },
+//           }}
+//           style={{
+//             backgroundColor: regionMode === 'all' ? '#EFEFEF' : 'white',  // Изменение фона для всех регионов
+//             color: regionMode === 'all' ? '#B0B0B0' : '#032C28',  // Цвет текста при всех регионах
+//           }}
+//         >
+//           {filteredOptions.map((option) => (
+//             <MenuItem key={option.value} value={option.value}>
+//               <Checkbox checked={selectedMultiple.includes(option)} />
+//               <ListItemText primary={option.label} />
+//             </MenuItem>
+//           ))}
+//         </Select>
+//       </FormControl>
+//     </Box>
+//   )
+// }

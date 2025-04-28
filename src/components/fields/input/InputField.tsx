@@ -30,26 +30,6 @@ export default function InputField({
 }: InputFieldProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    const textarea = inputRef.current;
-    if (textarea) {
-      textarea.style.height = "auto";
-      textarea.style.overflowY = "hidden";
-
-      const computed = window.getComputedStyle(textarea);
-      const lineHeight = parseFloat(computed.lineHeight || "20");
-      const maxHeight = (maxRows ?? 6) * lineHeight;
-
-      if (textarea.scrollHeight > maxHeight) {
-        textarea.style.height = `${maxHeight}px`;
-        textarea.style.overflowY = "auto";
-      } else {
-        textarea.style.height = `${textarea.scrollHeight}px`;
-        textarea.style.overflowY = "hidden";
-      }
-    }
-  }, [value, maxRows]);
-
   return (
     <Box display="flex" flexDirection="column" gap={1} width={width}>
       <Typography sx={{ fontSize: labelFontSize, color: "#032c28" }}>
