@@ -38,11 +38,11 @@ const PartnerOffer = () => {
   const id = params?.id as string;
   const { isAuthenticated, isLoading } = useAuth();
   const [currentOffer, setCurrentOffer] = useState<PartnerOffer | null>(null);
-
   useEffect(() => {
     const fetchOffer = async () => {
       try {
         const promoCardsArray = await getPromocodePartners();
+        console.log(promoCardsArray)
         const found = promoCardsArray?.find((promo: PartnerOffer) => promo.id === id);
         setCurrentOffer(found ?? defaultOffer);
       } catch (error) {
@@ -63,12 +63,8 @@ const PartnerOffer = () => {
       <NewHeader isAuthenticated={isAuthenticated} />
       <div className="flex flex-col items-center min-w-[1280px]">
         <PartnerOfferContent
-          heading={currentOffer.companyName}
-          subHeading={currentOffer.subtitle}
-          description={currentOffer.description}
-          url={currentOffer.site}
-          imageUrl={"https://picsum.photos/1920/1080"}
-          partnerId={currentOffer.id}
+          imageUrl={`https://files.studmart-dev.inxan.ru/Partners/${id}`}
+          partnerId={id}
         />
       </div>
       <div className="max-w-7xl w-full">

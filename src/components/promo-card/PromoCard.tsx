@@ -3,7 +3,7 @@ import PromoCardsDescriprion from '../promo-card-description';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 type PromoCardProps = {
-  id: number;
+  id: string;
   imageUrl: string;
   heading: string;
   description: string;

@@ -6,9 +6,25 @@ import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
 import { transformToOption, transformToOptions } from "@/utils/dataTransform"
-import { countryOptions, defaultUser, industryOptions, profileCardClasses, profileTitleClasses, regionOptions, saveButtonClasses, validateField } from "@/app/partner-personal-account/context";
+import { 
+    countryOptions, 
+    // defaultPartner, 
+    defaultUser, 
+    industryOptions, 
+    profileCardClasses, 
+    profileTitleClasses, 
+    regionOptions, 
+    saveButtonClasses, 
+    validateField 
+} from "@/app/partner-personal-account/context";
 import { Option } from "@/types/Option";
-import {  getPartnerCategories, getPartnerCountries, getPartnerInfo, getPartnerRegions } from "@/lib/api/partners";
+import {  
+    // getPartner, 
+    getPartnerCategories, 
+    getPartnerCountries, 
+    getPartnerInfo, 
+    getPartnerRegions 
+} from "@/lib/api/partners";
 
 const PartnerProfileForm: React.FC =  () => {
     const [fetchRegionOptions, setFetchRegionOptions] = useState(regionOptions)
@@ -18,12 +34,16 @@ const PartnerProfileForm: React.FC =  () => {
     useEffect(() => {
         const fetchData = async () => {
             try{
+                // const partnerData = await getPartner("1a9b52cc-719c-4e46-b6a5-ba0918c0e1a2")
+                // console.log(partnerData)
                 const partner = await getPartnerInfo("3fa85f64-5717-4562-b3fc-2c963f66afa6");
                 setFetchPartner(partner)
+                // setFetchPartnerData(partnerData)
 
             } catch(error){
                 console.log(error)
                 setFetchPartner(defaultUser)
+                // setFetchPartnerData(defaultPartner)
             }
             try {
                 const countries = await getPartnerCountries();
@@ -53,7 +73,6 @@ const PartnerProfileForm: React.FC =  () => {
         fetchData();
     }, []);
     
-      
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
         personalEmail: fetchPartner?.email,
         password: "securePass123",
@@ -70,6 +89,21 @@ const PartnerProfileForm: React.FC =  () => {
         bic: fetchPartner?.partner.paymentInformation?.bik,
         allRegions: fetchPartner?.partner.hasAllRegions,
         specificRegions: false
+        // personalEmail: fetchPartnerData?.employees[0].email,
+        // password: "securePass123",
+        // companyName: fetchPartnerData.name,
+        // site: fetchPartnerData.site,
+        // phoneNumber: fetchPartnerData.phone,
+        // companyEmail: fetchPartnerData.email,
+        // industry: transformToOption(fetchPartnerData.category),
+        // country: transformToOption(fetchPartnerData.country),
+        // regions: transformToOptions(fetchPartnerData.regions),
+        // inn: fetchPartnerData.inn.toString(),
+        // currentAccount: fetchPartnerData.paymentInformation?.accountNumber,
+        // corAccount: fetchPartnerData.paymentInformation?.correspondentAccountNumber,
+        // bic: fetchPartnerData.paymentInformation?.bik,
+        // allRegions: fetchPartnerData.hasAllRegions,
+        // specificRegions: !fetchPartnerData.hasAllRegions
     });
 
     const [errors, setErrors] = useState<{ 

@@ -16,7 +16,7 @@ function StylishShoppingSection() {
       />
       <div className="promo-card-container2">
         <PromoCard
-          id={2}
+          id={"2"}
           width={384} 
           height={246}
           heading= "Золотое Яблоко"
@@ -25,7 +25,7 @@ function StylishShoppingSection() {
           imageUrl="/icons/home/golden-apple.svg"
         />
         <PromoCard 
-          id={1}
+          id={"1"}
           width={384} 
           height={246}
           heading= "Шоколадница"
@@ -34,7 +34,7 @@ function StylishShoppingSection() {
           imageUrl="/icons/home/chocolate.svg"
         />
         <PromoCard 
-          id={3}
+          id={"3"}
           width={384} 
           height={246}
           heading= "Рив Гош"

@@ -1,6 +1,6 @@
-export const getPartner = async () => {
+export const getPartner = async (id: string) => {
     try {
-      const res = await fetch("/api/partners/Partners");
+      const res = await fetch(`/api/partners/Partners?id=${id}`);
   
       if (!res.ok) {
         throw new Error(`Ошибка при получении партнеров: ${res.status}`);

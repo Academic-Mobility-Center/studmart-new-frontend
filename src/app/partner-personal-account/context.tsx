@@ -185,3 +185,79 @@ export const FaqQuestions = [
   },
 
 ]
+
+export const defaultPartner = {
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "string",
+  "subtitle": "string",
+  "description": "string",
+  "priority": 0,
+  "email": "string",
+  "site": "string",
+  "inn": 0,
+  "phone": "string",
+  "country": {
+    "id": 0,
+    "name": "string"
+  },
+  "category": {
+    "id": 0,
+    "name": "string"
+  },
+  "paymentInformation": {
+    "bik": "string",
+    "accountNumber": "string",
+    "correspondentAccountNumber": "string"
+  },
+  "employees": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "firstName": "string",
+      "lastName": "string",
+      "email": "string"
+    }
+  ],
+  "hasAllRegions": true,
+  "regions": [
+    {
+      "id": 0,
+      "name": "string",
+      "country": {
+        "id": 0,
+        "name": "string"
+      }
+    }
+  ]
+}
+
+export const defaultPartnerWithId = {
+  "id": "1a9b52cc-719c-4e46-b6a5-ba0918c0e1a2",
+  "companyName": "Яндекс",
+  "subtitle": "ИТ компания",
+  "description": "\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dui leo, tincidunt in cursus nec, luctus eu arcu. Suspendisse placerat vehicula lectus ac faucibus. Etiam vulputate ligula vel elit sollicitudin, dapibus ornare lacus ullamcorper. Vestibulum libero magna, cursus vitae placerat vel, facilisis sed nulla. Duis aliquet lorem ligula. Phasellus vitae luctus ex. Sed ex est, lobortis vel varius ut, dignissim et enim.\n\nNunc condimentum urna sapien, id ultricies dui dapibus ac. Fusce facilisis dictum quam, eget commodo ex faucibus quis. Sed varius ligula auctor massa ultricies, eu dapibus nam. ",
+  "site": "https://yandex.ru",
+  "category": {
+    "id": 9,
+    "name": "Рестораны и доставка"
+  },
+  "hasAllRegions": true,
+  "discounts": [
+    {
+      "id": "991fb1e2-d33b-4262-ac4d-037218f4d189",
+      "name": "Скидка на доставку еды по городу 10%",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mattis varius libero sed. ",
+      "size": 10,
+      "promocodeValue": "SPRING2025",
+      "partner": {
+        "id": "1a9b52cc-719c-4e46-b6a5-ba0918c0e1a2",
+        "companyName": "Яндекс",
+        "subtitle": "ИТ компания",
+        "maxDiscount": 10,
+        "isFixed": true
+      },
+      "hasAllRegions": true,
+      "regions": []
+    }
+  ],
+  "regions": []
+}

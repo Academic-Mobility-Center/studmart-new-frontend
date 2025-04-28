@@ -74,7 +74,7 @@ export const menuItems: MenuItem[] = [
 type PromoPartners ={
     id: string;
     companyName: string;
-    description: string;
+    subtitle: string;
     maxDiscount: string;
     category: {
         id: number;
@@ -84,13 +84,13 @@ type PromoPartners ={
     regions: { id: number; name: string }[];
 }
 export const transformPromos = (data: PromoPartners[]): promoCard[] => {
-  return data.map((item, index) => ({
-    id: index,
+  return data.map((item) => ({
+    id: item.id,
     heading: item.companyName,
     discount: item.maxDiscount,
-    description: item.description,
+    subtitle: item.subtitle,
     imageUrl: "/icons/home/delivery.svg", 
-    categoryId: item.category.id,
+    categoryId: 0,
   }));
 };
 interface DiscountRegion {

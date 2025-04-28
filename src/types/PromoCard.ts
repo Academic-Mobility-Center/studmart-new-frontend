@@ -1,8 +1,8 @@
 export default interface PromoCardType {
-    id: number;
+    id: string;
     heading: string;
     discount: string;
-    description: string;
+    subtitle: string;
     imageUrl: string;
     categoryId: number;
 }
