@@ -27,7 +27,7 @@ env:
   HELM_CHART_REPO: "https://github.com/Academic-Mobility-Center/helm-charts.git"
   HELM_CHART_NAME: "studmart-frontend"
   REGISTRY: "cr.yandex/crphujqn4a371i0ve0b5"
-  K8S_NAMESPACE: "studmart-frontend-${{ github.event.inputs.environment }}"
+  K8S_NAMESPACE: "${{ github.event.inputs.environment }}"
   IMAGE_TAG: ${{ github.event.inputs.image-tag || github.sha }}
   DOCKERFILE_PATH: "./Dockerfile"
   CONTEXT_PATH: "."
@@ -111,10 +111,9 @@ jobs:
           BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           GIT_SHA=$(git rev-parse HEAD)
           GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
           ENV_ARG="${{ github.event.inputs.environment }}"
 
-          set -o pipefail
+          echo "::group::🚀 Выполнение сборки Docker"
           docker buildx build \
             -t "${{ env.REGISTRY }}/${{ env.APP_NAME }}:${{ env.IMAGE_TAG }}" \
             -t "${{ env.REGISTRY }}/${{ env.APP_NAME }}:latest" \
@@ -125,24 +124,20 @@ jobs:
             --build-arg ENV=$ENV_ARG \
             --progress plain \
             --push \
-            -f ${{ env.DOCKERFILE_PATH }} ${{ env.CONTEXT_PATH }} 2>&1 | tee build.log
+            -f ${{ env.DOCKERFILE_PATH }} ${{ env.CONTEXT_PATH }}
           
-          if [ $? -ne 0 ]; then
+          BUILD_STATUS=$?
+          echo "::endgroup::"
+          
+          if [ $BUILD_STATUS -ne 0 ]; then
             echo "::error::❌ Сборка Docker образа завершилась с ошибкой"
-            echo "::group::📄 Логи сборки Docker"
-            cat build.log
-            echo "::endgroup::"
             exit 1
           fi
           
-          echo "📝 Логи сборки сохранены в build.log"
-          echo "::group::📄 Логи сборки Docker"
-          cat build.log
-          echo "::endgroup::"
-          
           echo "image-built=true" >> $GITHUB_OUTPUT
           echo "✅ Образ успешно собран и отправлен"
-
+          
+  
       - name: ⚙️ Установка Helm
         uses: azure/setup-helm@v4.3.0
 
@@ -150,7 +145,6 @@ jobs:
         run: |
           mkdir ${HOME}/.kube
           echo ${{ secrets.YC_KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-          cat ${HOME}/.kube/config
           kubectl config use-context default
 
       - name: 🚀 Деплой с помощью Helm
@@ -162,6 +156,7 @@ jobs:
           echo "🏷 Версия образа: ${{ env.IMAGE_TAG }}"
           echo "📝 Использую конфигурацию: ${{ env.VALUES_FILE }}"
           
+          echo "::group::🚀 Выполнение Helm деплоя"
           helm upgrade --install ${{ env.APP_NAME }} ./helm-chart/charts/${{ env.HELM_CHART_NAME }} \
             --namespace ${{ env.K8S_NAMESPACE }} \
             --create-namespace \
@@ -172,27 +167,24 @@ jobs:
             --set image.verify=true \
             --wait \
             --timeout 5m \
-            --debug 2>&1 | tee helm-deploy.log
+            --debug
           
-          echo "::group::📄 Логи деплоя Helm"
-          cat helm-deploy.log
+          HELM_STATUS=$?
           echo "::endgroup::"
           
+          if [ $HELM_STATUS -ne 0 ]; then
+            echo "::error::❌ Деплой Helm завершился с ошибкой"
+            exit 1
+          fi
+          
           echo "deployment-status=success" >> $GITHUB_OUTPUT
+          echo "✅ Деплой успешно завершен"
 
       - name: 📊 Проверка деплоя
         if: always()
         run: |
           echo "🔍 Проверяю состояние деплоя..."
           kubectl rollout status deployment/${{ env.APP_NAME }} -n ${{ env.K8S_NAMESPACE }} --timeout=120s || true
-          
-          echo ""
-          echo "📦 Состояние подов:"
-          kubectl get pods -n ${{ env.K8S_NAMESPACE }} -o wide
-          
-          echo ""
-          echo "📡 Сервисные endpoints:"
-          kubectl get svc -n ${{ env.K8S_NAMESPACE }}
           
           echo ""
           echo "📊 Детали деплоя:"
@@ -215,3 +207,4 @@ jobs:
             echo "❌ Деплой завершен с ошибкой"
             echo "::error::Деплой завершен с ошибкой"
           fi
+  
