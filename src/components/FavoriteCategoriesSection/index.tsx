@@ -5,6 +5,7 @@ import { useRef, WheelEvent as ReactWheelEvent, useEffect, useState } from "reac
 import { getPromocodeCategories } from "@/lib/api/promocodes";
 import { iconMapper, ScrollContainer, StyledButton } from "@/app/home/context";
 import MenuItem from "@/types/MenuItem";
+import { useHorizontalScroll } from "@/utils/horizontalScroll";
 interface FavoriteCategoriesSectionProps {
   selectedCategoryId: number | null;
   onSelectCategory: (id: number | null) => void;
@@ -21,28 +22,8 @@ export default function FavoriteCategoriesSection({
   onSelectCategory
 }: FavoriteCategoriesSectionProps) {
   const [fetchedMenuItems, setFetchedMenuItems] = useState<MenuItem[]>([]);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useHorizontalScroll();
   const [loading, setLoading] = useState(true);
-  const handleWheelScroll = (event: ReactWheelEvent<HTMLDivElement>) => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
-
-    const atStart = scrollLeft === 0;
-    const atEnd = scrollLeft + clientWidth >= scrollWidth;
-
-    const scrollingLeft = event.deltaY < 0;
-    const scrollingRight = event.deltaY > 0;
-
-    const prevent =
-      (scrollingLeft && !atStart) || (scrollingRight && !atEnd);
-
-    if (prevent) {
-      event.preventDefault();
-      scrollContainer.scrollLeft += event.deltaY;
-    }
-  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -70,54 +51,25 @@ export default function FavoriteCategoriesSection({
     };
 
     fetchCategories();
-
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    const handleWheel = (event: WheelEvent) => {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
-
-      const atStart = scrollLeft === 0;
-      const atEnd = scrollLeft + clientWidth >= scrollWidth;
-
-      const scrollingLeft = event.deltaY < 0;
-      const scrollingRight = event.deltaY > 0;
-
-      const prevent =
-        (scrollingLeft && !atStart) || (scrollingRight && !atEnd);
-
-      if (prevent) {
-        event.preventDefault();
-        scrollContainer.scrollLeft += event.deltaY;
-      }
-    };
-
-    scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      scrollContainer.removeEventListener("wheel", handleWheel);
-    };
   }, []);
 
   return (
     <div className="beauty-health-container">
-      {!loading && (
-        <ScrollContainer ref={scrollRef} onWheel={handleWheelScroll}>
-        {fetchedMenuItems.map(({ name, Icon, id }) => (
+      <ScrollContainer ref={scrollRef}>
+      {fetchedMenuItems.map(({ name, Icon, id }) => (
           <StyledButton 
             key={id}
             onClick={() => onSelectCategory(id === selectedCategoryId ? null : id || null)}
             style={{ 
               background: id === selectedCategoryId ? '#e0f7fa' : '#f8f8f8',
-              borderColor: id === selectedCategoryId ? '#4dd0e1' : 'rgba(0, 0, 0, 0.2)'
-            }}
+              borderColor: id === selectedCategoryId ? '#4dd0e1' : 'rgba(0, 0, 0, 0.2)',
+          }}
           >
             <Icon className="icon" />
             {name}
           </StyledButton>
         ))}
-        </ScrollContainer>
-      )}
+      </ScrollContainer>
     </div>
   );
 }

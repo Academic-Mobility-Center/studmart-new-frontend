@@ -7,9 +7,10 @@ import ShoppingBarSvg from "../../../public/icons/favourite-categories/ShoppingB
 import ShoppingBar from "../../../public/icons/favourite-categories/ShoppingBarSvg"
 import MenuItem from "@/types/MenuItem";
 import styled from "@emotion/styled";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import promoCard from "@/types/PromoCard";
-
+import { forwardRef } from 'react';
+import Box from '@mui/material/Box';
 export const iconMapper: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     "Рестораны и доставка": LunchDiningSvg,
     "Техника и электроника": DevicesSvg,
@@ -21,7 +22,9 @@ export const iconMapper: Record<string, React.ComponentType<React.SVGProps<SVGSV
     "Развлечения": ExerciseSvg
 };
 
-export const ScrollContainer = styled(Box)({
+export const ScrollContainer = styled(forwardRef<HTMLDivElement, any>((props, ref) => (
+  <Box ref={ref} {...props} />
+)))({
 display: "flex",
 overflowX: "auto",
 gap: "10px",
@@ -32,7 +35,7 @@ scrollbarWidth: "none",
 maxWidth: "1200px",
 whiteSpace: "nowrap",
 scrollBehavior: "smooth",
-WebkitOverflowScrolling: "touch"
+WebkitOverflowScrolling: "touch",
 });
 
 export const StyledButton = styled(Button)({
