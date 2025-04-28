@@ -90,7 +90,7 @@ export const transformPromos = (data: PromoPartners[]): promoCard[] => {
     discount: item.maxDiscount,
     subtitle: item.subtitle,
     imageUrl: "/icons/home/delivery.svg", 
-    categoryId: 0,
+    categoryId: item?.category?.id ?? 0,
   }));
 };
 interface DiscountRegion {
