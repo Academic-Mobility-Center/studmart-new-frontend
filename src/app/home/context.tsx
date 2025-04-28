@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import promoCard from "@/types/PromoCard";
 import { forwardRef } from 'react';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 export const iconMapper: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     "Рестораны и доставка": LunchDiningSvg,
     "Техника и электроника": DevicesSvg,
@@ -22,20 +22,24 @@ export const iconMapper: Record<string, React.ComponentType<React.SVGProps<SVGSV
     "Развлечения": ExerciseSvg
 };
 
-export const ScrollContainer = styled(forwardRef<HTMLDivElement, any>((props, ref) => (
+const ScrollContainerBase = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
   <Box ref={ref} {...props} />
-)))({
-display: "flex",
-overflowX: "auto",
-gap: "10px",
-scrollbarWidth: "none",
-"&::-webkit-scrollbar": {
+));
+
+ScrollContainerBase.displayName = 'ScrollContainerBase';
+
+export const ScrollContainer = styled(ScrollContainerBase)({
+  display: "flex",
+  overflowX: "auto",
+  gap: "10px",
+  scrollbarWidth: "none",
+  "&::-webkit-scrollbar": {
     display: "none",
-},
-maxWidth: "1200px",
-whiteSpace: "nowrap",
-scrollBehavior: "smooth",
-WebkitOverflowScrolling: "touch",
+  },
+  maxWidth: "1200px",
+  whiteSpace: "nowrap",
+  scrollBehavior: "smooth",
+  WebkitOverflowScrolling: "touch",
 });
 
 export const StyledButton = styled(Button)({

@@ -1,7 +1,7 @@
 "use client";
 import "./style.css";
 import FavoriteSvg from "../../../public/icons/favourite-categories/FavoriteSvg";
-import { useRef, WheelEvent as ReactWheelEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getPromocodeCategories } from "@/lib/api/promocodes";
 import { iconMapper, ScrollContainer, StyledButton } from "@/app/home/context";
 import MenuItem from "@/types/MenuItem";
@@ -55,21 +55,23 @@ export default function FavoriteCategoriesSection({
 
   return (
     <div className="beauty-health-container">
-      <ScrollContainer ref={scrollRef}>
-      {fetchedMenuItems.map(({ name, Icon, id }) => (
-          <StyledButton 
-            key={id}
-            onClick={() => onSelectCategory(id === selectedCategoryId ? null : id || null)}
-            style={{ 
-              background: id === selectedCategoryId ? '#e0f7fa' : '#f8f8f8',
-              borderColor: id === selectedCategoryId ? '#4dd0e1' : 'rgba(0, 0, 0, 0.2)',
-          }}
-          >
-            <Icon className="icon" />
-            {name}
-          </StyledButton>
-        ))}
-      </ScrollContainer>
+      {!loading && (
+              <ScrollContainer ref={scrollRef}>
+              {fetchedMenuItems.map(({ name, Icon, id }) => (
+                  <StyledButton 
+                    key={id}
+                    onClick={() => onSelectCategory(id === selectedCategoryId ? null : id || null)}
+                    style={{ 
+                      background: id === selectedCategoryId ? '#e0f7fa' : '#f8f8f8',
+                      borderColor: id === selectedCategoryId ? '#4dd0e1' : 'rgba(0, 0, 0, 0.2)',
+                  }}
+                  >
+                    <Icon className="icon" />
+                    {name}
+                  </StyledButton>
+                ))}
+              </ScrollContainer>
+      )}
     </div>
   );
 }

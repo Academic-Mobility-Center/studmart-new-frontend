@@ -1,6 +1,5 @@
 import { DateField } from "@/components/fields/date/DateField";
 import InputField from "@/components/fields/input/InputField"
-import { MultipleSelectField } from "@/components/fields/multiple-select/MultipleSelectField";
 import { MultipleSelectV2 } from "@/components/fields/multiple-selectv2/MultipleSelectV2";
 import { SelectField } from "@/components/fields/select/SelectField";
 import City from "@/types/Cities";
@@ -8,7 +7,6 @@ import Region from "@/types/Region";
 import { SelectOption } from "@/types/SelectOption";
 import { StudentFormData } from "@/types/StudentProfileData";
 import { transformToOptions } from "@/utils/dataTransform";
-import { ChangeEvent } from "react";
 
 interface Props{
     formData: StudentFormData

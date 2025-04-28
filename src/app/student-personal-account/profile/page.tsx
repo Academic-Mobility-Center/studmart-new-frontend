@@ -25,14 +25,14 @@ import IStudentFormData, {
     defaultStudent 
 } from '../context';
 import { Option } from '@/types/Option';
-import { getStudent, getStudentCities, getStudentCourses, getStudentUniversities } from '@/lib/api/students';
+import { getStudent } from '@/lib/api/students';
 import { transformToOption } from '@/utils/dataTransform';
 
 const ProfilePage: React.FC = () => {
     const [fetchStudent, setFetchStudent] = useState<IStudentFormData>(defaultStudent)
-    const [fetchCourses, setFetchCourses] = useState(courseOptions)
-    const [fetchUniversities, setFetchUniversities] = useState(universityOptions)
-    const [fetchCities, setFetchCities] = useState(cityOptions)
+    const [fetchCourses] = useState(courseOptions)
+    const [fetchUniversities] = useState(universityOptions)
+    const [fetchCities] = useState(cityOptions)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -40,8 +40,9 @@ const ProfilePage: React.FC = () => {
                 if (student && student?.length > 1) {
                     setFetchStudent(student);
                 }
-            } catch (e: any) {
-                if (e?.response?.status === 400) {
+            } catch (e:unknown ) {
+                const error = e as { response?: { status: number } };
+                if (error?.response?.status === 400) {
                     console.warn("Ошибка 400 при загрузке студентов:", e);
                 } else {
                     console.error("Ошибка при загрузке студентов:", e);
