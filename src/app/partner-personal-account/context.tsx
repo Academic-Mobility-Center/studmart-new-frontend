@@ -153,3 +153,35 @@ export const defaultUser = {
 export const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 export const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
 export const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
+
+export const faqCategoryOptions = [
+  {id: 1, name: "Первая категория"},
+  {id: 2, name: "Вторая категория"},
+  {id: 3, name: "Третья категория"},
+  {id: 4, name: "Четвертая категория"},
+  {id: 5, name: "Пятая категория"}
+]
+
+export const FaqQuestions = [
+  {
+      title: "Вопрос 1",
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus, dui a ultricies commodo, erat ligula placerat lorem, at dictum purus sapien vel risus. Fusce faucibus, arcu id lacinia finibus, tortor risus facilisis eros, a viverra sapien tortor vitae justo. Duis rhoncus enim vel sapien viverra luctus. Donec vel rutrum turpis. Praesent ac risus enim. Nam vestibulum tempus finibus. Phasellus augue nulla, vulputate sit amet malesuada a, fringilla eu felis. Phasellus ullamcorper quam sit amet eros tristique tempor. Pellentesque nulla risus, pulvinar nec elit a, varius bibendum massa. Vivamus eu enim eu turpis euismod efficitur vel eu neque. Duis eget efficitur eros. Donec nec magna massa. Donec a vulputate augue, ac egestas nisi. Nulla mattis egestas turpis id condimentum."       
+  },
+  {
+      title: "Вопрос 2",
+      text: "Phasellus nibh nibh, mattis sed convallis eget, lacinia porta mauris. Proin congue sed nisi sit amet finibus. Vivamus cursus dapibus rutrum. Nulla justo ligula, rutrum vel lacus non, semper condimentum enim. Nunc nec finibus arcu. Mauris quis imperdiet leo, a posuere elit. Pellentesque nec maximus elit, ut eleifend est. Nullam tincidunt augue eget nunc accumsan, sit amet volutpat ex fringilla. Fusce et mi sit amet sapien porta euismod. Curabitur diam mi, tempus et eleifend id, ullamcorper ut nunc. Nulla eu lectus ut augue consequat ultricies. Nullam eget sodales nulla."       
+  },
+  {
+      title: "Вопрос 3",
+      text: "Proin pretium massa vel sapien scelerisque consequat. Proin iaculis egestas erat, non condimentum ex sagittis et. Duis posuere vitae nisi sit amet tristique. Suspendisse ut vehicula diam, at convallis turpis. Phasellus massa diam, pharetra feugiat risus non, ultricies blandit nunc. Suspendisse potenti. Donec maximus erat ex, nec ultricies nisl lobortis vitae."       
+  },
+  {
+      title: "Вопрос 4",
+      text: "Etiam porta dolor mauris, sit amet finibus dui varius sit amet. Nunc vel dapibus dui, ultrices condimentum libero. Suspendisse potenti. Donec felis diam, accumsan nec feugiat quis, cursus non metus. Aliquam nec ex pharetra, pellentesque felis sit amet, interdum massa. Vivamus fringilla, diam vel interdum efficitur, dolor ipsum molestie ex, vitae auctor sem nunc a velit. Proin lacinia nibh vel purus mattis, dictum maximus nisi scelerisque."       
+  },
+  {
+      title: "Вопрос 5",
+      text: "Ut nec urna quis lacus convallis porttitor quis quis dui. Donec aliquet, neque vel venenatis consequat, massa arcu bibendum magna, et hendrerit enim velit sit amet nibh. Cras ut lorem enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum, tellus pretium imperdiet pharetra, ipsum dolor rutrum risus, sit amet ullamcorper ligula nulla ut enim. Maecenas luctus orci a venenatis condimentum. Nulla accumsan nec lacus vel placerat. Sed finibus porttitor diam at fringilla. Praesent eget risus dolor. Suspendisse malesuada commodo diam ut eleifend. Vivamus at egestas justo, ac sollicitudin justo. Vivamus eu nisi diam. Integer vel ligula at leo convallis condimentum."       
+  },
+
+]
