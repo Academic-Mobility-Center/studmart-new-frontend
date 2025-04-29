@@ -9,6 +9,7 @@ import { defaultPartnerWithId } from "@/app/partner-personal-account/context";
 interface Props{
     imageUrl: string;
     partnerId: string;
+    isAuth: boolean
 }
 
 interface PromoCode {
@@ -18,7 +19,7 @@ interface PromoCode {
     code: string;
     partnerName: string; 
 }
-const PartnerOfferContent = ({ imageUrl, partnerId}: Props) => {
+const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPromo, setSelectedPromo] = useState<PromoCode | undefined>(undefined);
     const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
@@ -132,6 +133,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId}: Props) => {
                                     title={promo.title}
                                     description={promo.description}
                                     onClick={() => openModal(promo)}
+                                    isAuth={isAuth}
                                 />
                             ))}
                         </div>

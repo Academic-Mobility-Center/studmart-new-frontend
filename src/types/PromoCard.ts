@@ -5,4 +5,5 @@ export default interface PromoCardType {
     subtitle: string;
     imageUrl: string;
     categoryId: number;
+    isFixed: boolean;
 }

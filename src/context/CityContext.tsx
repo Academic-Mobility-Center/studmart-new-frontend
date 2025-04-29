@@ -3,30 +3,41 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 type CityContextType = {
   city: string;
-  setCity: (city: string) => void;
+  regionId: string;
+  setCity: (city: string, regionId: string) => void;
 };
 
 const CityContext = createContext<CityContextType | undefined>(undefined);
 
 export const CityProvider = ({ children }: { children: React.ReactNode }) => {
   const [city, setCityState] = useState("");
-
+  const [regionId, setRegionIdState] = useState("");
   // Загружаем город из localStorage при старте
   useEffect(() => {
     const storedCity = localStorage.getItem("selectedCity");
+    const storedRegionId = localStorage.getItem("selectedRegionId");
+
     if (storedCity) {
       setCityState(storedCity);
+    }
+    if (storedRegionId) {
+      setRegionIdState(storedRegionId);
     }
   }, []);
 
   // Оборачиваем setCity и сохраняем в localStorage
-  const setCity = (newCity: string) => {
+  const setCity = (newCity: string, newRegionId?: string) => {
     setCityState(newCity);
     localStorage.setItem("selectedCity", newCity);
+    
+    if (newRegionId !== undefined) {
+      setRegionIdState(newRegionId);
+      localStorage.setItem("selectedRegionId", newRegionId);
+    }
   };
 
   return (
-    <CityContext.Provider value={{ city, setCity }}>
+    <CityContext.Provider value={{ city, regionId, setCity }}>
       {children}
     </CityContext.Provider>
   );

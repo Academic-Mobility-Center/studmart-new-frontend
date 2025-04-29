@@ -10,7 +10,13 @@ const InCooperation = () => {
                 </p>
             </div>
             <div className="mt-[-70px] self-end grow-0 shrink-0 basis-auto">
-                <Image alt="" src="/icons/partners/what-gives.svg" className="h-[127px] max-w-[initial] object-cover w-[411px] box-border block border-[none]" />
+                <Image 
+                alt="" 
+                src="/icons/partners/what-gives.svg" 
+                className="h-[127px] max-w-[initial] object-cover w-[411px] box-border block border-[none]" 
+                width={411}
+                height={127}
+                />
             </div>
             <div className="mt-[-107px] grow-0 shrink-0 basis-auto px-10">
                 <div className="bg-[#fee200] box-border flex justify-center items-center flex-row gap-2.5 w-[504px] px-[30px] py-5 rounded-[30px]">
@@ -20,7 +26,7 @@ const InCooperation = () => {
                 </div>
             </div>
             </div>
-            <Image src="/icons/partners/main.svg" alt="" className="h-[231px] max-w-[initial] w-[268px] block box-border ml-[1.25px]" />
+            <Image src="/icons/partners/main.svg" alt="" className="h-[231px] max-w-[initial] w-[268px] block box-border ml-[1.25px]" height={231} width={268}/>
         </div>
     )
 }

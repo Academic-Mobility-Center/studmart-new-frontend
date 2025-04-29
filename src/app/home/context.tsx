@@ -82,6 +82,7 @@ type PromoPartners ={
     };
     hasAllRegions: boolean;
     regions: { id: number; name: string }[];
+    isFixed: boolean;
 }
 export const transformPromos = (data: PromoPartners[]): promoCard[] => {
   return data.map((item) => ({
@@ -90,7 +91,8 @@ export const transformPromos = (data: PromoPartners[]): promoCard[] => {
     discount: item.maxDiscount,
     subtitle: item.subtitle,
     imageUrl: "/icons/home/delivery.svg", 
-    categoryId: item?.category?.id ?? 0,
+    categoryId: item?.category?.id || 0,
+    isFixed: item.isFixed || false
   }));
 };
 interface DiscountRegion {

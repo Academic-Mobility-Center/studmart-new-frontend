@@ -21,7 +21,7 @@ export const getCategoryById = async (id: string) => {
       throw new Error(`Ошибка при получении категорий: ${res.status}`);
     }
     const data = await res.json();
-    console.log("Категории промокодов:", data);
+    console.log("Категория по id:", data);
     return data;
   } catch (error) {
     console.error("Ошибка в getPromocodeCategories:", error);
@@ -63,7 +63,7 @@ export const getPromocodeRegions = async () => {
           throw new Error(`Ошибка при получении городов: ${res.status}`);
         }
         const data = await res.json();
-        console.log("Купоны:", data);
+        console.log("Регионы:", data);
         return data;
       } catch (error) {
         console.error("Ошибка в getPromocodeRegions:", error);
@@ -84,4 +84,17 @@ export const getPromocodePartnerById = async (id: string) => {
     return null;
 }
 }
-
+export const getPromocodePartnersByRegionId = async (id: string) => {
+  try {
+    const res = await fetch(`/api/promocodes/Partners?RegionId=${id}`);
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении партнеров по региону: ${res.status}`);
+    }
+    const data = await res.json();
+    console.log("Партнеры по региону:", data);
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getPromocodePartnersByRegionId:", error);
+    return null;
+}
+}

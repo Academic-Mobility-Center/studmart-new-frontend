@@ -5,12 +5,14 @@ interface Props{
     title: string;
     description: string;
     onClick?: () => void;
+    isAuth: boolean
 }
 
 const DiscountBox = ({
     title, 
     description,
-    onClick
+    onClick,
+    isAuth
 }: Props) => {
     return (
         <div 
@@ -21,14 +23,14 @@ const DiscountBox = ({
         >
             <div 
                 className="border box-border 
-                h-[227px] self-stretch grow-0 
+                self-stretch grow-0 
                 shrink-0 basis-auto overflow-hidden 
                 rounded-[30px] border-solid border-[rgba(0,0,0,0.20)]"
             >
                 <div className="w-full box-border">
                     <div 
                         className="relative bg-[#f0e9e2] box-border w-full 
-                        max-w-[588px] pb-[30px] pl-[30px] rounded-[30px] overflow-hidden"
+                        max-w-[588px] p-[30px] rounded-[30px] overflow-hidden"
                     >
                         <Image 
                             src="/icons/offer/lines.svg" 
@@ -39,17 +41,15 @@ const DiscountBox = ({
                         />
 
                         <div 
-                            className="flex justify-start items-stretch 
-                            flex-row w-full h-[109px] box-border relative z-10"
+                            className="flex flex-col w-full box-border relative z-10 min-h-[109px]"
                         >
-                            <div 
-                                className="flex justify-end items-stretch 
-                                flex-col grow-0 shrink basis-auto"
-                            >
+                            <div className="flex flex-col">
                                 <p className="[font-family:'Nunito_Sans',sans-serif] 
                                     text-[24px] font-extrabold text-[#032c28] 
-                                    m-0 p-0 tracking-wider proportional-nums 
-                                    whitespace-nowrap overflow-hidden text-ellipsis w-full"
+                                    m-0 p-0
+                                    tracking-wider proportional-nums 
+                                    break-words overflow-wrap-break-word
+                                    w-full leading-tight"
                                 >
                                     {title}
                                 </p>
@@ -64,28 +64,31 @@ const DiscountBox = ({
                         </div>
 
                         <div 
-                            className="flex justify-start items-stretch 
-                            flex-row h-12 box-border mt-10 relative z-10"
+                            className="flex items-center 
+                            box-border mt-8 relative z-10"
                         >
                             <Button 
-                                className="border bg-[#f8f8f8] hover:brightness-90 transition  
-                                [font-family:Mulish,sans-serif] 
-                                text-sm font-bold tracking-[0.42px] 
-                                uppercase text-[#032c28] min-w-[438px] 
-                                h-12 w-[438px] cursor-pointer block 
-                                box-border grow-0 shrink-0 basis-auto 
-                                rounded-[15px] border-solid border-[rgba(0,0,0,0.20)] "
+                                className={`border bg-[#f8f8f8] hover:brightness-90 transition  
+                                    [font-family:Mulish,sans-serif] 
+                                    text-sm font-bold tracking-[0.42px] 
+                                    uppercase text-[#032c28] min-w-[438px] 
+                                    h-12 w-[438px] cursor-pointer block 
+                                    box-border rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]
+                                    ${!isAuth ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 onClick={onClick}
+                                disabled={!isAuth}
                             >
                                 Получить скидку
                             </Button>
-                            <div 
-                                className="border bg-[#f8f8f8] hover:brightness-90 transition 
-                                box-border flex justify-center 
-                                items-center flex-row gap-2.5 
-                                grow-0 shrink-0 basis-auto ml-6 px-6 
-                                py-3 rounded-[15px] border-solid 
-                                border-[rgba(0,0,0,0.20)]"
+                            <button 
+                                className={`border bg-[#f8f8f8] hover:brightness-90 transition 
+                                    box-border flex justify-center 
+                                    items-center flex-row gap-2.5 
+                                    grow-0 shrink-0 basis-auto ml-4 px-6 
+                                    py-3 rounded-[15px] border-solid 
+                                    border-[rgba(0,0,0,0.20)]
+                                    ${!isAuth ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={!isAuth}
                             >
                                 <Image 
                                     src="/icons/offer/eye.svg" 
@@ -93,10 +96,11 @@ const DiscountBox = ({
                                     shrink-0 basis-auto box-border cursor-pointer" 
                                     onClick={onClick}
                                     alt=""
-                                    width={32}
-                                    height={32}
+                                    width={24}
+                                    height={24}
+                                    
                                 />
-                            </div>
+                            </button>
                         </div>
                     </div>
                 </div>
