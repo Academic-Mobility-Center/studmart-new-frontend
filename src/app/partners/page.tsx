@@ -42,6 +42,8 @@ const PartnersPage = () => {
                                 alt="" 
                                 src="/icons/partners/access-procent.svg"
                                 className="absolute z-20 pt-[190px] transform -translate-x-[114px]"
+                                width={221}
+                                height={162}
                             />
                             <div 
                                 className="relative z-10 bg-[#f0e9e2] box-border flex justify-center 

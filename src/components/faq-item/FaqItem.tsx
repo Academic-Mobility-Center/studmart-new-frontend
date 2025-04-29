@@ -23,6 +23,8 @@ const FaqItem = ({ p1, p2, heading, isOpen, onClick }: Props) => {
                     src="/icons/faq/down.svg"
                     alt=""
                     className={`h-8 w-8 transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                    width={32}
+                    height={32}
                 />
             </div>
             <div

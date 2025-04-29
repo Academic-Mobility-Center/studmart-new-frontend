@@ -1,5 +1,6 @@
 "use client";
 
+import { loaderStyle } from "@/app/context";
 import NewFooter from "@/components/new-footer/NewFooter";
 import NewHeader from "@/components/new-header/NewHeader";
 import PartnerOfferContent from "@/components/pages/partner-offer-content/PartnerOfferContent";
@@ -9,6 +10,7 @@ import Category from "@/types/Category";
 import RegionWithoutCountry from "@/types/RegionWithoutCountry";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 interface PartnerOffer {
   id: string;
@@ -55,7 +57,7 @@ const PartnerOffer = () => {
   }, [id]);
 
   if (isLoading || !currentOffer) {
-    return <div>Загрузка...</div>;
+    return <div className={loaderStyle}> <ClipLoader size={50} color="#36d7b7" /> </div>;
   }
 
   return (

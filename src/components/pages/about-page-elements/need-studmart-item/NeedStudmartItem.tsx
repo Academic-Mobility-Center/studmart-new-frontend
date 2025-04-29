@@ -34,6 +34,8 @@ const NeedStudmartItem = ({
             max-w-[initial] w-[70px] 
             block grow-0 shrink-0 basis-auto 
             box-border" 
+            height={70}
+            width={70}    
         />
         <div className="box-border flex justify-start items-center flex-col gap-2.5 self-stretch grow-0 shrink-0 basis-auto">
             <p 

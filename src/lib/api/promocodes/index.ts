@@ -21,7 +21,7 @@ export const getCategoryById = async (id: string) => {
       throw new Error(`Ошибка при получении категорий: ${res.status}`);
     }
     const data = await res.json();
-    console.log("Категории промокодов:", data);
+    console.log("Категория по id:", data);
     return data;
   } catch (error) {
     console.error("Ошибка в getPromocodeCategories:", error);
@@ -63,7 +63,7 @@ export const getPromocodeRegions = async () => {
           throw new Error(`Ошибка при получении городов: ${res.status}`);
         }
         const data = await res.json();
-        console.log("Купоны:", data);
+        console.log("Регионы:", data);
         return data;
       } catch (error) {
         console.error("Ошибка в getPromocodeRegions:", error);

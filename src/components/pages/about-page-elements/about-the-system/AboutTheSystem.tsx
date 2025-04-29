@@ -36,6 +36,8 @@ const AboutTheSystem = () => {
             </div>
         </div>
         <Image 
+            height={231}
+            width={268}
             src="/icons/about/main-screen.svg" 
             alt="" 
             className="h-[231px] max-w-[initial] 
