@@ -72,10 +72,6 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
         ))}
     </div>
   );
-  // const chunks = Array.from(
-  //   { length: totalRows },
-  //   (_, i) => filteredCards.slice(i * cardsPerRow, (i + 1) * cardsPerRow)
-  // );
   const regularChunks = Array.from(
     { length: totalRows },
     (_, i) => regularCards.slice(i * regularCardsPerRow, (i + 1) * regularCardsPerRow)
@@ -113,52 +109,6 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
           {renderFixedCards(chunk)}
         </div>
       ))}
-          {/* {fixedCards.length > 0 && (
-        <div className="promo-card-container">
-          {fixedCards.map((card) => (
-            <PromoCard
-              id={card.id}
-              key={`fixed-${card.id}`}
-              width={384}
-              height={246}
-              heading={card.heading}
-              description={card.subtitle}
-              discount={card.discount}
-              categoryId={card.categoryId}
-              imageUrl={`https://files.studmart-dev.inxan.ru/Partners/${card.id}`}
-            />
-          ))}
-        </div>
-          )} */}
-          {/* <div className="promo-card-container2">
-        <PromoCard
-          id={"2"}
-          width={384} 
-          height={246}
-          heading= "Золотое Яблоко"
-          discount="10"
-          description= "Магазин косметики"
-          imageUrl="/icons/home/golden-apple.svg"
-        />
-        <PromoCard 
-          id={"1"}
-          width={384} 
-          height={246}
-          heading= "Шоколадница"
-          discount="15"
-          description= "Сеть кофеен"
-          imageUrl="/icons/home/chocolate.svg"
-        />
-        <PromoCard 
-          id={"3"}
-          width={384} 
-          height={246}
-          heading= "Рив Гош"
-          discount="15"
-          description= "Магазин косметики"
-          imageUrl="/icons/home/cosmetic.svg"
-        />
-      </div> */}
       <div className="vertical-center-column">
         <div className="hierarchical-text-container">
           <div className="hierarchical-content-container">
