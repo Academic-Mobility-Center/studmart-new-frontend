@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
 import { fallbackPromoCodes } from "@/app/home/context";
-import { getPromocodePartnerById } from "@/lib/api/promocodes";
+import { getPromocodePartnerByIdAndRegionId } from "@/lib/api/promocodes";
 import { defaultPartnerWithId } from "@/app/partner-personal-account/context";
+import { useCity } from "@/context/CityContext";
 interface Props{
     imageUrl: string;
     partnerId: string;
@@ -24,10 +25,11 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
     const [selectedPromo, setSelectedPromo] = useState<PromoCode | undefined>(undefined);
     const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
     const [partnerData, setPartnerData] = useState(defaultPartnerWithId)
+    const {regionId} = useCity();
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const partnerInfo = await getPromocodePartnerById(partnerId);
+                const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId);
                 console.log("partnerInfo", partnerInfo)
                 setPartnerData(partnerInfo);
             } catch (error) {
@@ -36,7 +38,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
             }
         };
         fetchData();
-    }, [partnerId]);
+    }, [partnerId, regionId]);
 
     useEffect(() => {
         if (partnerData?.discounts && partnerData.discounts.length > 0) {
