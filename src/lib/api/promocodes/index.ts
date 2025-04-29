@@ -96,5 +96,19 @@ export const getPromocodePartnersByRegionId = async (id: string) => {
   } catch (error) {
     console.error("Ошибка в getPromocodePartnersByRegionId:", error);
     return null;
+  }
 }
+export const getPromocodePartnerByIdAndRegionId = async(partnerId: string, regionId: string) => {
+  try {
+    const res = await fetch(`/api/promocodes/Partners?Id=${partnerId}&RegionId=${regionId}`);
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении партнеров по региону: ${res.status}`);
+    }
+    const data = await res.json();
+    console.log("Партнеры по региону:", data);
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getPromocodePartnersByRegionId:", error);
+    return null;
+  }
 }

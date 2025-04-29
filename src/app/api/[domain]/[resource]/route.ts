@@ -13,14 +13,23 @@ export async function GET(
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
     return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });
   }
-
   const url = new URL(request.url);
-  const id = url.searchParams.get("Id"); // <--- ВАЖНО: получаем id из query
+  const id = url.searchParams.get("Id");
+  const regionId = url.searchParams.get("RegionId");
 
   let externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}`;
 
+  // Добавляем параметры к URL, если они есть
+  const queryParams = new URLSearchParams();
   if (id) {
-    externalUrl += `?id=${id}`; // Если есть id, добавляем его к урлу
+    queryParams.append("id", id);
+  }
+  if (regionId) {
+    queryParams.append("RegionId", regionId);
+  }
+
+  if (queryParams.toString()) {
+    externalUrl += `?${queryParams.toString()}`;
   }
   // return NextResponse.json({ externalUrl });
   try {

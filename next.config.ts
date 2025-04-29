@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "files.studmart-dev.inxan.ru",
+        pathname: "/Categories/**"
+      },
+      {
+        protocol: "https",
         hostname: "picsum.photos",
         pathname: "/**",
       },

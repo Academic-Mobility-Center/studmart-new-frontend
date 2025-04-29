@@ -25,7 +25,6 @@ export const CityProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  // Оборачиваем setCity и сохраняем в localStorage
   const setCity = (newCity: string, newRegionId?: string) => {
     setCityState(newCity);
     localStorage.setItem("selectedCity", newCity);
@@ -48,3 +47,4 @@ export const useCity = () => {
   if (!context) throw new Error("useCity must be used within a CityProvider");
   return context;
 };
+
