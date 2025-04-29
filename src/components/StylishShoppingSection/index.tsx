@@ -14,7 +14,6 @@ function StylishShoppingSection() {
         selectedCategoryId={selectedCategoryId}
         onSelectCategory={setSelectedCategoryId}
       />
-
       <StylishWidgetSection 
         selectedCategoryId={selectedCategoryId}
       />

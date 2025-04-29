@@ -67,6 +67,7 @@ const PartnerOffer = () => {
         <PartnerOfferContent
           imageUrl={`https://files.studmart-dev.inxan.ru/Partners/${id}`}
           partnerId={id}
+          isAuth={isAuthenticated}
         />
       </div>
       <div className="max-w-7xl w-full">

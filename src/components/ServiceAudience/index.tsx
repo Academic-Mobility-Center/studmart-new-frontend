@@ -15,7 +15,10 @@ function ServiceAudience({isAuthenticated}: Props) {
         <div className="feature-highlight-section">
           <StudentServicesSection />
           <div className="promo-banner">
-            <Image src="/icons/ServiceAudience/yellow.svg" alt="" className="image-container4" />
+            <Image 
+              width={250}
+              height={210}
+            src="/icons/ServiceAudience/yellow.svg" alt="" className="image-container4" />
           </div>
         </div>
         <div className="partner-offers-section">

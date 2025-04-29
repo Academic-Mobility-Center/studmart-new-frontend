@@ -43,8 +43,8 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
 
       <div className="w-[481px] flex items-center gap-[24px]">
         <div 
-          className={`flex items-center gap-2 ${isAuthenticated ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`} 
-          onClick={isAuthenticated ? openModal : undefined}
+          className={`flex items-center gap-2 cursor-pointer`} 
+          onClick={openModal}
         >
           <Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
           <p className="text-sm text-[#032c28] max-w-[110px]">
@@ -71,9 +71,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
           />
         </div>
       </div>
-      {isAuthenticated && (
-        <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} />
-      )}
+      <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} />
     </header>
   );
 }
@@ -122,7 +120,7 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
       try{
         const response = await getPromocodeRegions();
         console.log(response)
-        setCities(citiesInModal);
+        setCities(response);
       } catch (error) {
         console.error(error)
         setCities(citiesInModal)
@@ -147,7 +145,9 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
           {filteredCities.length > 0 ? (
             filteredCities.map((city, index) => (
               <li key={index} className="cursor-pointer p-2 hover:bg-gray-200 text-black"
-                  onClick={() => { setCity(city.name); closeModal(); }}>
+                  onClick={() => { 
+                  setCity(city.name, city.id.toString()); 
+                  closeModal(); }}>
                 {city.name}
               </li>
             ))

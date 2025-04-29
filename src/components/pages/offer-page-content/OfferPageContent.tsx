@@ -4,10 +4,12 @@ import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useState } from "react";
 import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 
 const OfferPageContent = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {isAuthenticated} = useAuth()
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     return (
@@ -79,16 +81,19 @@ const OfferPageContent = () => {
                                 title={"-15% на покупку от 700 руб."} 
                                 description={"Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!"}
                                 onClick={openModal}
+                                isAuth={isAuthenticated}
                             />
                             <DiscountBox 
                                 title={"-15% на покупку от 700 руб."} 
                                 description={"Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!"}
                                 onClick={openModal}
+                                isAuth={isAuthenticated}
                             />
                             <DiscountBox 
                                 title={"-15% на покупку от 700 руб еще сиvf1234"} 
                                 description={"Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!"}
                                 onClick={openModal}
+                                isAuth={isAuthenticated}
                             />
                         </div>
                     </div>

@@ -38,8 +38,8 @@ export default function About({isAuthenticated}: Props){
             <Link href="registration"><Button className="primary-button-style" >Зарегистрироваться</Button></Link>
           </div>
           <div className="image-container-flex-row">
-          <Image src="/icons/About/layout.svg" alt="" className="image-container"/>
-            <Image src="/icons/About/girl.svg" alt="" className="image-container-with-blend-mode"/>
+          <Image src="/icons/About/layout.svg" alt="" className="image-container" width={282} height={368}/>
+            <Image src="/icons/About/girl.svg" alt="" className="image-container-with-blend-mode"height={386} width={386}/>
           </div>
         </div>
       </div>

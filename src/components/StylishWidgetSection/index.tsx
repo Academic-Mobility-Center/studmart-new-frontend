@@ -3,9 +3,10 @@ import { Button } from "@mui/base";
 import "./style.css";
 import React, { useEffect, useState } from 'react';
 import { PromoCard } from "../promo-card/PromoCard";
-import { getPromocodePartners } from "@/lib/api/promocodes";
+import { getPromocodePartners, getPromocodePartnersByRegionId } from "@/lib/api/promocodes";
 import PromoCardType from "@/types/PromoCard";
 import { transformPromos } from "@/app/home/context";
+import { useCity } from "@/context/CityContext";
 interface StylishWidgetSectionProps {
   selectedCategoryId: number | null;
 }
@@ -16,21 +17,36 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   const fixedCardsPerRow = 3;
   const regularCardsPerRow = 4;
   const initialVisibleCards = 16; 
-
+  const {regionId} = useCity()
+  console.log(regionId)
   const [partners, setPartners] = useState<PromoCardType[]>([])
   useEffect(() => {
     const fetchPromoCards = async () => {
-      const promoCardsArray = await getPromocodePartners();
-      console.log("promoCardsArray", promoCardsArray)
-      if (promoCardsArray) {
-        const transformed = transformPromos(promoCardsArray);
-        setPartners(transformed);
-      } else {
+      try {
+        let promoCardsArray;
+        
+        if (regionId) {
+          promoCardsArray = await getPromocodePartnersByRegionId(regionId);
+        } else {
+          promoCardsArray = await getPromocodePartners();
+        }
+  
+        console.log("promoCardsArray", promoCardsArray);
+        
+        if (promoCardsArray) {
+          const transformed = transformPromos(promoCardsArray);
+          setPartners(transformed);
+        } else {
+          setPartners([]);
+        }
+      } catch (error) {
+        console.error("Error fetching promocodes:", error);
         setPartners([]);
       }
     };
+  
     fetchPromoCards();  
-  }, []);
+  }, [regionId]);
   const filteredCards = selectedCategoryId !== null 
   ? partners.filter(card => card.categoryId === selectedCategoryId)
   : partners;
