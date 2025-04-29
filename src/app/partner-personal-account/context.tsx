@@ -261,3 +261,70 @@ export const defaultPartnerWithId = {
   ],
   "regions": []
 }
+export interface PartnerType  {
+  id: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  priority: number;
+  email: string;
+  site: string;
+  inn: number;
+  phone: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  country: {
+    id: number;
+    name: string;
+  };
+  paymentInformation: {
+    bik: string;
+    accountNumber: string;
+    correspondentAccountNumber: string;
+  };
+  hasAllRegions: boolean;
+  regions: {
+    id: number;
+    name: string;
+  }[]; 
+};
+
+type Partner = {
+  id: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  priority: number;
+  email: string;
+  site: string;
+  inn: number;
+  phone: string;
+  category: {
+    id: number;
+    name: string;
+  } | null;
+  country: {
+    id: number;
+    name: string;
+  } | null;
+  paymentInformation: {
+    bik: string;
+    accountNumber: string;
+    correspondentAccountNumber: string;
+  };
+  hasAllRegions: boolean;
+  regions: {
+    id: number;
+    name: string;
+  }[]; 
+};
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  partner: Partner; 
+};

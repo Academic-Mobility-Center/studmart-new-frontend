@@ -1,7 +1,6 @@
 import InputField from "@/components/fields/input/InputField"
 import PasswordField from "@/components/fields/password/PasswordField"
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount";
-import { ChangeEvent } from "react";
 
 interface Props{
     formData: PartnerPersonalAccountFormData
@@ -29,7 +28,7 @@ const LoginInfo: React.FC<Props> = ({handleChange, formData, errors, handleBlur}
                         placeholder="ivanov@gmail.com" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.personalEmail}
+                        value={formData?.personalEmail}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         maxRows={1}
