@@ -166,6 +166,7 @@ jobs:
             --set image.verify=true \
             --wait \
             --timeout 5m \
+            --atomic \
             --debug
           
           HELM_STATUS=$?
