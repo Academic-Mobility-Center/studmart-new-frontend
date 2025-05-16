@@ -23,18 +23,6 @@ interface PartnerOffer {
   regions: RegionWithoutCountry[];
 }
 
-const defaultOffer: PartnerOffer = {
-  id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  companyName: "Шоколадница",
-  subtitle: "Сеть кофеен",
-  description:
-    "Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!",
-  site: "https://shoko.ru/",
-  category: { id: 1, name: "Кафе и рестораны" },
-  hasAllRegions: true,
-  regions: [{ id: 1, name: "Москва" }],
-};
-
 const PartnerOffer = () => {
   const params = useParams();
   const id = params?.id as string;
@@ -44,12 +32,12 @@ const PartnerOffer = () => {
     const fetchOffer = async () => {
       try {
         const promoCardsArray = await getPromocodePartners();
-        console.log(promoCardsArray)
+        console.log("promoCardsArray", promoCardsArray)
         const found = promoCardsArray?.find((promo: PartnerOffer) => promo.id === id);
-        setCurrentOffer(found ?? defaultOffer);
+        setCurrentOffer(found);
       } catch (error) {
         console.error("Ошибка при получении данных: ", error);
-        setCurrentOffer(defaultOffer);
+        // setCurrentOffer(defaultOffer);
       }
     };
 

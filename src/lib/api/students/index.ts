@@ -16,7 +16,7 @@ export const getStudent = async () => {
 
 export const getStudentById = async (id: string) => {
     try {
-        const res = await fetch(`/api/students/Students?id=${id}`);
+        const res = await fetch(`/api/students/Students?Id=${id}`);
     
         if (!res.ok) {
           throw new Error(`Ошибка при получении студента по id: ${res.status}`);

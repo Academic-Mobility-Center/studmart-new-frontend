@@ -7,7 +7,7 @@ import { transformToOptions } from "@/utils/dataTransform";
 import { ChangeEvent } from "react";
 
 interface Props{
-    formData: StudentFormData
+    formData: StudentFormData | null;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         university: string[];
@@ -26,7 +26,7 @@ const inputContainerClasses = "box-border flex justify-start items-start flex-co
 const UniversityInfo: React.FC<Props> = ({
     formData, handleBlur, handleChange, courseOptions, errors, newUniversityOptions
 }) => {
-    const filteredUniversityOptions = formData.region ? 
+    const filteredUniversityOptions = formData?.region ? 
     newUniversityOptions.filter(u => 
         u.city.region.id.toString() === formData.region?.value
     ) : 
@@ -42,7 +42,7 @@ const UniversityInfo: React.FC<Props> = ({
                         placeholder="Университет" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.university}
+                        value={formData?.university}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         options={transformToOptions(filteredUniversityOptions)}
@@ -56,7 +56,7 @@ const UniversityInfo: React.FC<Props> = ({
                         placeholder="Специальность" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.profession}
+                        value={formData?.profession}
                         maxRows={1}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -71,7 +71,7 @@ const UniversityInfo: React.FC<Props> = ({
                     placeholder="Курс" 
                     width={262}
                     labelFontSize={16}
-                    value={formData.course}
+                    value={formData?.course}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     options={transformToOptions(courseOptions)}

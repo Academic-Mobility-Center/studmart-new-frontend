@@ -229,7 +229,35 @@ export const defaultPartner = {
     }
   ]
 }
-
+export type PartnerWithIdType = {
+  id: string;
+  companyName: string;
+  subtitle: string;
+  description: string;
+  site: string;
+  category: {
+      id: number;
+      name: string;
+  };
+  hasAllRegions: boolean;
+  discounts: {
+      id: string;
+      name: string;
+      description: string;
+      size: number;
+      promocodeValue: string,
+      partner: {
+        id: string,
+        companyName: string,
+        subtitle: string,
+        maxDiscount: number,
+        isFixed: boolean
+      },
+      hasAllRegions: boolean,
+      regions: [];
+  }[];
+  regions: [];
+}
 export const defaultPartnerWithId = {
   "id": "1a9b52cc-719c-4e46-b6a5-ba0918c0e1a2",
   "companyName": "Яндекс",
@@ -261,3 +289,70 @@ export const defaultPartnerWithId = {
   ],
   "regions": []
 }
+export interface PartnerType  {
+  id: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  priority: number;
+  email: string;
+  site: string;
+  inn: number;
+  phone: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  country: {
+    id: number;
+    name: string;
+  };
+  paymentInformation: {
+    bik: string;
+    accountNumber: string;
+    correspondentAccountNumber: string;
+  };
+  hasAllRegions: boolean;
+  regions: {
+    id: number;
+    name: string;
+  }[]; 
+};
+
+type Partner = {
+  id: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  priority: number;
+  email: string;
+  site: string;
+  inn: number;
+  phone: string;
+  category: {
+    id: number;
+    name: string;
+  } | null;
+  country: {
+    id: number;
+    name: string;
+  } | null;
+  paymentInformation: {
+    bik: string;
+    accountNumber: string;
+    correspondentAccountNumber: string;
+  };
+  hasAllRegions: boolean;
+  regions: {
+    id: number;
+    name: string;
+  }[]; 
+};
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  partner: Partner; 
+};

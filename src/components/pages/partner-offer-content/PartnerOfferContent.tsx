@@ -3,9 +3,8 @@ import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useEffect, useState } from "react";
 import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
-import { fallbackPromoCodes } from "@/app/home/context";
 import { getPromocodePartnerByIdAndRegionId } from "@/lib/api/promocodes";
-import { defaultPartnerWithId } from "@/app/partner-personal-account/context";
+import { PartnerWithIdType } from "@/app/partner-personal-account/context";
 import { useCity } from "@/context/CityContext";
 interface Props{
     imageUrl: string;
@@ -24,7 +23,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPromo, setSelectedPromo] = useState<PromoCode | undefined>(undefined);
     const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
-    const [partnerData, setPartnerData] = useState(defaultPartnerWithId)
+    const [partnerData, setPartnerData] = useState<PartnerWithIdType | null>(null);
     const {regionId} = useCity();
     useEffect(() => {
         const fetchData = async () => {
@@ -34,15 +33,14 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
                 setPartnerData(partnerInfo);
             } catch (error) {
                 console.log(error);
-                setPartnerData(defaultPartnerWithId);
             }
         };
         fetchData();
-    }, [partnerId, regionId]);
+    }, [partnerId, regionId, setPartnerData]);
 
     useEffect(() => {
         if (partnerData?.discounts && partnerData.discounts.length > 0) {
-            const mapped = partnerData.discounts.map((discount) => ({
+            const mapped = partnerData?.discounts?.map((discount) => ({
                 id: discount.id,
                 title: discount.name,
                 description: discount.description,
@@ -50,17 +48,8 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
                 partnerName: discount.partner.companyName,
             }));
             setPromoCodes(mapped);
-        } else {
-            const mapped = fallbackPromoCodes.map((discount) => ({
-                id: discount.id,
-                title: discount.name,
-                description: discount.description,
-                code: discount.promocodeValue,
-                partnerName: discount.partner.companyName,
-            }));
-            setPromoCodes(mapped);
-        }
-    }, [partnerData]);
+        } 
+    }, [partnerData?.discounts]);
 
     const openModal = (promo: PromoCode) => {
         setSelectedPromo(promo);

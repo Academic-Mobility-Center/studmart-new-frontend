@@ -1,7 +1,7 @@
 import { Option } from "./Option";
 
 export interface PartnerPersonalAccountFormData{
-    personalEmail: string;
+    personalEmail: string | undefined;
     password: string;
     companyName: string;
     site: string;
