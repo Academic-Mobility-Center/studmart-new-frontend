@@ -21,13 +21,13 @@ export const iconMapper: Record<string, React.ComponentType<React.SVGProps<SVGSV
     "Отдых":ExerciseSvg,
     "Развлечения": ExerciseSvg
 };
-
 const ScrollContainerBase = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
-  <Box ref={ref} {...props} />
+  <Box ref={ref} component="div" {...props} />
 ));
 
 ScrollContainerBase.displayName = 'ScrollContainerBase';
 
+// Стилизация
 export const ScrollContainer = styled(ScrollContainerBase)({
   display: "flex",
   overflowX: "auto",
@@ -39,8 +39,27 @@ export const ScrollContainer = styled(ScrollContainerBase)({
   maxWidth: "1200px",
   whiteSpace: "nowrap",
   scrollBehavior: "smooth",
-  WebkitOverflowScrolling: "touch",
 });
+// const ScrollContainerBase = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
+//   <Box ref={ref} {...props} />
+// ));
+
+// ScrollContainerBase.displayName = 'ScrollContainerBase';
+
+// export const ScrollContainer = styled(ScrollContainerBase)({
+//   display: "flex",
+//   overflowX: "auto",
+//   gap: "10px",
+//   scrollbarWidth: "none",
+//   "&::-webkit-scrollbar": {
+//     display: "none",
+//   },
+//   maxWidth: "1200px",
+//   whiteSpace: "nowrap",
+//   scrollBehavior: "smooth",
+//   // touchAction: "none"
+//   // WebkitOverflowScrolling: "touch",
+// });
 
 export const StyledButton = styled(Button)({
 display: "flex",

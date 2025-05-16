@@ -25,7 +25,7 @@ import IStudentFormData, {
     defaultStudent 
 } from '../context';
 import { Option } from '@/types/Option';
-import { getStudent } from '@/lib/api/students';
+import { getStudentById } from '@/lib/api/students';
 import { transformToOption } from '@/utils/dataTransform';
 
 const ProfilePage: React.FC = () => {
@@ -33,10 +33,11 @@ const ProfilePage: React.FC = () => {
     const [fetchCourses] = useState(courseOptions)
     const [fetchUniversities] = useState(universityOptions)
     const [fetchCities] = useState(cityOptions)
+    const [formData, setFormData] = useState<StudentFormData>({});
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const student = await getStudent();
+                const student = await getStudentById("c8963614-8804-4713-ac3d-140c3ec534d5");
                 if (student && student?.length > 1) {
                     setFetchStudent(student);
                 }
@@ -47,103 +48,32 @@ const ProfilePage: React.FC = () => {
                 } else {
                     console.error("Ошибка при загрузке студентов:", e);
                 }
-                setFetchStudent(defaultStudent);
             }
-    
-            // try {
-            //     const courses = await getStudentCourses();
-            //     setFetchCourses(courses);
-            // } catch (e: any) {
-            //     if (e?.response?.status === 400) {
-            //         console.warn("Ошибка 400 при загрузке курсов:", e);
-            //     } else {
-            //         console.error("Ошибка при загрузке курсов:", e);
-            //     }
-            //     setFetchCourses(courseOptions);
-            // }
-    
-            // try {
-            //     const universities = await getStudentUniversities();
-            //     setFetchUniversities(universities);
-            // } catch (e: any) {
-            //     if (e?.response?.status === 400) {
-            //         console.warn("Ошибка 400 при загрузке университетов:", e);
-            //     } else {
-            //         console.error("Ошибка при загрузке университетов:", e);
-            //     }
-            //     setFetchUniversities(universityOptions);
-            // }
-    
-            // try {
-            //     const cities = await getStudentCities();
-            //     setFetchCities(cities);
-            // } catch (e: any) {
-            //     if (e?.response?.status === 400) {
-            //         console.warn("Ошибка 400 при загрузке городов:", e);
-            //     } else {
-            //         console.error("Ошибка при загрузке городов:", e);
-            //     }
-            //     setFetchCities(cityOptions);
-            // }
         };
     
         fetchData();
     }, []);
-    
-    // useEffect(()=>{
-    //     const fetchData = async () => {
-    //         try{
-    //             const student = await getStudent();
-    //             if (student && student?.length > 1){
-    //                 setFetchStudent(student)
-    //             }
-    //         } catch (e){
-    //             console.log(e)
-    //             setFetchStudent(defaultStudent)
-    //         }
-    //         try{
-    //             const courses = await getStudentCourses();
-    //             setFetchCourses(courses)
-    //         } catch (e){
-    //             console.log(e)
-    //             setFetchCourses(courseOptions)
-    //         }
-    //         try{
-    //             const univestities = await getStudentUniversities();
-    //             setFetchUniversities(univestities)
-    //         } catch (e){
-    //             console.log(e)
-    //             setFetchUniversities(universityOptions)
-    //         }
-    //         try{
-    //             const cities = await getStudentCities();
-    //             setFetchCourses(cities)
-    //         } catch (e){
-    //             console.log(e)
-    //             setFetchCities(cityOptions)
-    //         }
-
-
-    //     };
-    //     fetchData();
-    // },[])
-    const genderOption = fetchStudent?.sex ? {id: 1, name: "Мужской"} : {id: 2, name: "Женский"}
-    const [formData, setFormData] = useState<StudentFormData>({
-        email: fetchStudent?.email,
-        password: "",
-        firstName: fetchStudent?.firstName,
-        lastName: fetchStudent?.lastName,
-        date: new Date(fetchStudent.birthDate),
-        gender: transformToOption(genderOption),
-        region: transformToOption(fetchStudent?.university?.city?.region),
-        city: transformToOption(fetchStudent?.university?.city),
-        familyStatus: undefined,
-        isWork: undefined,
-        languageProfiency: undefined,
-        university: transformToOption(fetchStudent?.university),
-        profession: fetchStudent?.specialisation,
-        course: transformToOption(fetchStudent.course)
-    });
+    console.log(fetchStudent)
+    useEffect(() => {
+        if (!fetchStudent) return;
+        const genderOption = fetchStudent?.sex ? { id: 1, name: "Мужской" } : { id: 2, name: "Женский" };
+        setFormData({
+            email: fetchStudent?.email,
+            password: "",
+            firstName: fetchStudent?.firstName,
+            lastName: fetchStudent?.lastName,
+            date: new Date(fetchStudent.birthDate),
+            gender: transformToOption(genderOption),
+            region: transformToOption(fetchStudent?.university?.city?.region),
+            city: transformToOption(fetchStudent?.university?.city),
+            familyStatus: undefined,
+            isWork: undefined,
+            languageProfiency: undefined,
+            university: transformToOption(fetchStudent?.university),
+            profession: fetchStudent?.specialisation,
+            course: transformToOption(fetchStudent.course)
+        });
+    }, [fetchStudent]);    
 
     const [errors, setErrors] = useState<{ 
         email: string; 

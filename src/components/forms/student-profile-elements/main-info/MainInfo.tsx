@@ -9,7 +9,7 @@ import { StudentFormData } from "@/types/StudentProfileData";
 import { transformToOptions } from "@/utils/dataTransform";
 
 interface Props{
-    formData: StudentFormData
+    formData: StudentFormData | null;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         firstName: string,
@@ -46,7 +46,7 @@ const MainInfo: React.FC<Props> = ({
     newCityOptions,
     newRegionOptions
 }) => {
-    const filteredCityOptions = formData.region
+    const filteredCityOptions = formData?.region
     ? newCityOptions.filter(city => city.region.id === Number(formData.region?.value))
     : [];
     return(
@@ -60,7 +60,7 @@ const MainInfo: React.FC<Props> = ({
                         placeholder="Имя" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.firstName}
+                        value={formData?.firstName}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         maxRows={1}
@@ -74,7 +74,7 @@ const MainInfo: React.FC<Props> = ({
                         placeholder="Фамилия" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.lastName}
+                        value={formData?.lastName}
                         maxRows={1}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -103,7 +103,7 @@ const MainInfo: React.FC<Props> = ({
                         placeholder="Пол" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.gender}
+                        value={formData?.gender}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
@@ -119,7 +119,7 @@ const MainInfo: React.FC<Props> = ({
                         placeholder="Регион проживания" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.region}
+                        value={formData?.region}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
@@ -133,7 +133,7 @@ const MainInfo: React.FC<Props> = ({
                         placeholder="Город проживания" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.city}
+                        value={formData?.city}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
@@ -149,7 +149,7 @@ const MainInfo: React.FC<Props> = ({
                         placeholder="Семейное положение" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.familyStatus}
+                        value={formData?.familyStatus}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
@@ -163,7 +163,7 @@ const MainInfo: React.FC<Props> = ({
                         placeholder="Наличие работы" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.isWork}
+                        value={formData?.isWork}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
@@ -184,7 +184,7 @@ const MainInfo: React.FC<Props> = ({
                 /> */}
                 <MultipleSelectV2
                     name="languageProfiency"
-                    value={formData.languageProfiency}
+                    value={formData?.languageProfiency}
                     options={transformToOptions(languageProfiencyOptions)}
                     width={262}
                     labelFontSize={16}

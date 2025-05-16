@@ -229,7 +229,35 @@ export const defaultPartner = {
     }
   ]
 }
-
+export type PartnerWithIdType = {
+  id: string;
+  companyName: string;
+  subtitle: string;
+  description: string;
+  site: string;
+  category: {
+      id: number;
+      name: string;
+  };
+  hasAllRegions: boolean;
+  discounts: {
+      id: string;
+      name: string;
+      description: string;
+      size: number;
+      promocodeValue: string,
+      partner: {
+        id: string,
+        companyName: string,
+        subtitle: string,
+        maxDiscount: number,
+        isFixed: boolean
+      },
+      hasAllRegions: boolean,
+      regions: [];
+  }[];
+  regions: [];
+}
 export const defaultPartnerWithId = {
   "id": "1a9b52cc-719c-4e46-b6a5-ba0918c0e1a2",
   "companyName": "Яндекс",

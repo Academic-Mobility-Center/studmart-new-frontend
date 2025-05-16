@@ -3,7 +3,7 @@ import PasswordField from "@/components/fields/password/PasswordField"
 import { StudentFormData } from "@/types/StudentProfileData";
 
 interface Props{
-    formData: StudentFormData
+    formData: StudentFormData | null
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     errors: {
         email?: string;
@@ -28,7 +28,7 @@ const LoginInfo: React.FC<Props> = ({handleChange, formData, errors, handleBlur}
                         placeholder="ivanov@gmail.com" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.email}
+                        value={formData?.email}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         maxRows={1}
@@ -42,7 +42,7 @@ const LoginInfo: React.FC<Props> = ({handleChange, formData, errors, handleBlur}
                         placeholder="********" 
                         width={262}
                         labelFontSize={16}
-                        value={formData.password}
+                        value={formData?.password}
                         onChange={handleChange}  
                         onBlur={handleBlur}
                     />
