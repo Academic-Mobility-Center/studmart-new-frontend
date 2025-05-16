@@ -6,6 +6,7 @@ import Image from "next/image";
 import { getPromocodePartnerByIdAndRegionId } from "@/lib/api/promocodes";
 import { PartnerWithIdType } from "@/app/partner-personal-account/context";
 import { useCity } from "@/context/CityContext";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 interface Props{
     imageUrl: string;
     partnerId: string;
@@ -90,13 +91,9 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
                                     >
                                         {partnerData?.subtitle}
                                     </p>
-                                    <p 
-                                        className="[font-family:Mulish,sans-serif] 
-                                        text-sm font-normal text-left text-[#032c28] 
-                                        max-w-[479px] box-border mt-5 m-0 p-0"
-                                    >
-                                        {partnerData?.description}
-                                    </p>
+                                    <article className="[font-family:Mulish,sans-serif] prose font-normal text-left text-[#032c28] max-w-[479px] mt-5">
+                                        <MarkdownRenderer content={partnerData?.description} />
+                                    </article>
                                 </div>
                             </div>
                             <div className="w-[100.00%] box-border mt-5">
