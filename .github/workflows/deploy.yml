@@ -103,7 +103,6 @@ jobs:
       - name: 🏗️ Сборка Docker образа
         if: steps.image-check.outputs.image-exists == 'false' && github.event.inputs.build-image
         run: |
-          ls
           echo "🏗️ Начинаю сборку Docker образа..."
           echo "📦 Имя образа: ${{ env.REGISTRY }}/${{ env.APP_NAME }}:${{ env.IMAGE_TAG }}"
           echo "📂 Путь к Dockerfile: ${{ env.DOCKERFILE_PATH }}"
