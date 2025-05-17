@@ -2,19 +2,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useAuth } from "@/context/AuthContext";
 
 const StudId: React.FC = () => {
-    const userData = {
-        firstName: "Олег",
-        lastName: "Голенищев",
-        university: {
-            name: "МГУ"
-        },
-        course: {
-            name: "1 курс магистратуры"
-        }
-    };
-
+    const {firstName, lastName, universityShortName, year} = useAuth();
     const [image, setImage] = useState("/icons/student-account/d4eeae509bbfb902288411fb819999c2.jpeg");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +20,24 @@ const StudId: React.FC = () => {
             };
             reader.readAsDataURL(file);
         }
+    };    
+    const date = new Date();
+    if (!firstName || !lastName){
+        return
+    }
+    const userData = {
+        firstName: firstName,
+        lastName: lastName,
+        university: {
+            shortName: universityShortName
+        },
+        course: {
+            name: "1 курс магистратуры",
+            yearsBeforeEnding: date.getFullYear() + (year && year > 0 ? year : 0)
+        }
     };
+
+
 
     return (
         <>
@@ -75,11 +83,11 @@ const StudId: React.FC = () => {
                         </div>
                         <div className="flex-column">
                             <p className="text-[#888888]">Университет</p>
-                            <p className="text-[#032C28] text-xl font-bold">{userData.university.name}</p>
+                            <p className="text-[#032C28] text-xl font-bold">{userData.university.shortName}</p>
                         </div>
                         <div className="flex-column">
                             <p className="text-[#888888]">Год окончания</p>
-                            <p className="text-[#032C28] text-xl font-bold">2026</p>
+                            <p className="text-[#032C28] text-xl font-bold">{userData?.course?.yearsBeforeEnding}</p>
                         </div>
                     </div>
                 </div>  

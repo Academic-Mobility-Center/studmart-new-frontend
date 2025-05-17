@@ -37,8 +37,8 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
 
       <nav className="w-[430px] flex items-center gap-10">
         <NavItem text="Предложения" url={"/home"} isAuthenticated={true} />
-        <NavItem text="О сервисе" url={"/about"} isAuthenticated={isAuthenticated} />
-        <NavItem text="Партнерам" url={"/partners"} isAuthenticated={isAuthenticated} />
+        <NavItem text="О сервисе" url={"/about"} isAuthenticated={true} />
+        <NavItem text="Партнерам" url={"/partners"} isAuthenticated={true} />
       </nav>
 
       <div className="w-[481px] flex items-center gap-[24px]">

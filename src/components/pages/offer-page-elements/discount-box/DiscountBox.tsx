@@ -1,6 +1,6 @@
 import { Button } from "@mui/base"
 import Image from "next/image";
-
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 interface Props{
     title: string;
     description: string;
@@ -53,13 +53,20 @@ const DiscountBox = ({
                                 >
                                     {title}
                                 </p>
-                                <p 
+                                <article 
+                                    className="[font-family:Mulish,sans-serif] 
+                                    text-sm font-normal text-left text-[#032c28] 
+                                    mt-2.5 m-0 p-0"
+                                >
+                                        <MarkdownRenderer content={description} />
+                                </article>
+                                {/* <p 
                                     className="[font-family:Mulish,sans-serif] 
                                     text-sm font-normal text-left text-[#032c28] 
                                     mt-2.5 m-0 p-0"
                                 >
                                     {description}
-                                </p>
+                                </p> */}
                             </div>
                         </div>
 

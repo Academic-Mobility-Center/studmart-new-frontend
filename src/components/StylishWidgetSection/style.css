@@ -58,9 +58,15 @@
 }
 .fixed-cards-container {
   display: flex;
-  gap: 16px;
+  flex-direction: row;
+  /* gap: 16px;
   margin-bottom: 16px;
-  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  align-self: stretch;
+  justify-content: flex-start;
+  flex: 0 0 auto; */
+
 }
 
 .fixed-cards-container > * {

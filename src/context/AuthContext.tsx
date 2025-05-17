@@ -3,16 +3,27 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { verifyToken, getAuthToken, removeAuthToken, setAuthToken } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
-import {jwtDecode} from "jwt-decode"; // npm install jwt-decode
+import {jwtDecode} from "jwt-decode";
 
 type JwtPayload = {
   role: string;
   exp: number;
+  lastName: string;
+  firstName: string;
+  university?: {
+    shortName?: string;
+  }
+  yearsBeforeEnding?: number;
+  universityShortName?: string;
 };
 type AuthContextType = {
   isAuthenticated: boolean;
   isLoading: boolean;
   role: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  universityShortName?: string | null;
+  year?: number | null;
   login: (token: string, rememberMe?: boolean) => void;
   logout: () => void;
 };
@@ -23,6 +34,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState<string | null>(null);
+  const [firstName, setFirstName] = useState<string | null>(null);
+  const [lastName, setLastName] = useState<string | null>(null);
+  const [universityShortName, setUniversityShortName] = useState<string | undefined>(undefined);
+  const [year,setYear] = useState<number | undefined>(undefined);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,6 +53,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         const decoded = jwtDecode<JwtPayload>(token);
         setRole(decoded.role);
+        setFirstName(decoded.firstName)
+        setLastName(decoded.lastName)    
+        setUniversityShortName(decoded?.universityShortName)    
+        setYear(decoded?.yearsBeforeEnding);
         setIsAuthenticated(true);
       } catch (error) {
         console.log(error)
@@ -53,10 +72,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = (token: string, rememberMe = false) => {
     setAuthToken(token, {
-      maxAge: rememberMe ? 60 * 60 * 24 * 30 : undefined // 30 дней если "Запомнить меня"
+      maxAge: rememberMe ? 60 * 60 * 24 * 30 : undefined
     });
     const decoded = jwtDecode<JwtPayload>(token);
     setRole(decoded.role);
+    setFirstName(decoded.firstName)
+    setLastName(decoded.lastName)
+    setUniversityShortName(decoded?.universityShortName)    
+    setYear(decoded?.yearsBeforeEnding);
     setIsAuthenticated(true);
   };
 
@@ -67,7 +90,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, role, login, logout }}>
+    <AuthContext.Provider 
+      value={{ 
+        isAuthenticated, 
+        isLoading, 
+        role, 
+        firstName,
+        lastName,
+        universityShortName,
+        year,
+        login, 
+        logout 
+      }}>
       {children}
     </AuthContext.Provider>
   );

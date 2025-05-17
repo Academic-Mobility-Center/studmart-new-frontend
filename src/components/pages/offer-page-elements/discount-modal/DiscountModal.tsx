@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import React, { useState } from "react"
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 
 interface PromoCode {
     id: string;
@@ -40,9 +41,9 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode, 
                     <p className="text-[24px] font-extrabold text-[#032c28] m-0 p-0 tracking-widest">
                         {promoCode?.title || "Промокод"}
                     </p>
-                    <p className="text-sm text-[#032c28] mt-2.5 max-w-[370px]">
-                        {promoCode?.description || "Описание промокода"}
-                    </p>
+                    <article className="text-sm text-[#032c28] mt-2.5 max-w-[370px]">
+                        <MarkdownRenderer content={promoCode?.description} />
+                    </article>
                     {promoCode?.code && (
                         <>
                             <div className="border bg-[#f8f8f8] flex justify-between items-end gap-2 w-full mt-5 p-4 rounded-[20px] border-[rgba(0,0,0,0.20)]">

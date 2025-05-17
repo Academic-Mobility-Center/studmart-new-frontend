@@ -86,7 +86,7 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
     setVisibleRows(prev => prev + 1);
   };
   const renderFixedCards = (cards: PromoCardType[]) => (
-    <div className="fixed-cards-row">
+    <div className="promo-card-container">
       {cards.map((card) => (
         <PromoCard
           id={card.id}

@@ -7,6 +7,8 @@ import { getPromocodePartnerByIdAndRegionId } from "@/lib/api/promocodes";
 import { PartnerWithIdType } from "@/app/partner-personal-account/context";
 import { useCity } from "@/context/CityContext";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
+import { useAuth } from "@/context/AuthContext";
+
 interface Props{
     imageUrl: string;
     partnerId: string;
@@ -26,6 +28,8 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
     const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
     const [partnerData, setPartnerData] = useState<PartnerWithIdType | null>(null);
     const {regionId} = useCity();
+    const {firstName, lastName} = useAuth();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -133,7 +137,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
                 closeModal={closeModal}
                 promoCode={selectedPromo}
                 userInfo={{
-                    name: "Максим Орлов",
+                    name: `${firstName} ${lastName}`,
                     university: "Белгородский университет кооперации, экономики и права"
                 }}
             />

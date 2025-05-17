@@ -9,11 +9,19 @@ const USERS = [
     email: 'test@example.com',
     password: 'password',
     role: 'student',
+    firstName: "Олег",
+    lastName: "Голенищев",
+    university: {
+      shortName: "НГУ"
+    },
+    yearsBeforeEnding: 4
   },
   {
     email: 'partner@example.com',
     password: 'password',
     role: 'partner',
+    firstName: "Петр",
+    lastName: "Петров"
   },
 ];
 
@@ -29,11 +37,14 @@ export async function POST(request: Request) {
     );
   }
 
-  // Генерация JWT
   const token = jwt.sign(
     {
       email: user.email,
       role: user.role,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      universityShortName: user?.university?.shortName,
+      yearsBeforeEnding: user?.yearsBeforeEnding
     },
     SECRET_KEY,
     { expiresIn: '7d' }
