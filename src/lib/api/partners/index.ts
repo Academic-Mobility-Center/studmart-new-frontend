@@ -6,7 +6,6 @@ export const getPartner = async (id: string) => {
         throw new Error(`Ошибка при получении партнеров: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Категории промокодов:", data);
       return data;
     } catch (error) {
       console.error("Ошибка в getPartner:", error);
@@ -21,7 +20,6 @@ export const getPartnerCategories = async () => {
         throw new Error(`Ошибка при получении категорий партнеров: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Категории промокодов:", data);
       return data;
     } catch (error) {
       console.error("Ошибка в getPartnerCategories:", error);
@@ -36,7 +34,6 @@ export const getPartnerCountries = async () => {
         throw new Error(`Ошибка при получении стран: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Страны:", data);
       return data;
     } catch (error) {
       console.error("Ошибка в getPartnerCountries:", error);
@@ -51,7 +48,6 @@ export const getPartnerRegions = async () => {
         throw new Error(`Ошибка при получении регионов партнеров: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Регионы:", data);
       return data;
     } catch (error) {
       console.error("Ошибка в getPartnerRegions:", error);
@@ -66,7 +62,6 @@ export const getPartnerInfo = async (id: string) => {
       throw new Error(`Ошибка при получении партнера: ${res.status}`);
     }
     const data = await res.json();
-    console.log("Партнер:", data);
     return data;
   } catch (error) {
     console.error("Ошибка в getPartnerInfo:", error);

@@ -53,7 +53,6 @@ const ProfilePage: React.FC = () => {
     
         fetchData();
     }, []);
-    console.log(fetchStudent)
     useEffect(() => {
         if (!fetchStudent) return;
         const genderOption = fetchStudent?.sex ? { id: 1, name: "Мужской" } : { id: 2, name: "Женский" };

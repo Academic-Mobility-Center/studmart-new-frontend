@@ -32,7 +32,6 @@ const PartnerOffer = () => {
     const fetchOffer = async () => {
       try {
         const promoCardsArray = await getPromocodePartners();
-        console.log("promoCardsArray", promoCardsArray)
         const found = promoCardsArray?.find((promo: PartnerOffer) => promo.id === id);
         setCurrentOffer(found);
       } catch (error) {

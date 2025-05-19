@@ -119,7 +119,6 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
     const fetchCities = async () => {
       try{
         const response = await getPromocodeRegions();
-        console.log(response)
         setCities(response);
       } catch (error) {
         console.error(error)

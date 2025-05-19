@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+interface BodyData {
+  [key: string]: unknown;
+}
 
 export async function GET(
   request: Request,
@@ -46,7 +49,50 @@ export async function GET(
   }
 }
 
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ domain: string; resource: string }> }
+) {
+  const { domain, resource } = await params;
 
+  const allowedDomains = ["promocodes", "students", "partners"];
+  const allowedResources = ["Categories", "Discounts", "Regions", "Partners", "Countries", "Employees", "Students"];
+
+  if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
+    return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });
+  }
+
+  let body: BodyData;
+  try {
+    body = await request.json();
+  } catch (error) {
+    console.error(error)
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}`;
+
+  try {
+    const response = await fetch(externalUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      return NextResponse.json({ error: "Ошибка при отправке POST-запроса" }, { status: response.status });
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error(`Ошибка POST-запроса к ${externalUrl}:`, error);
+    return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
+  }
+}
 
 
   // const url = new URL(request.url);

@@ -6,7 +6,6 @@ export const getStudent = async () => {
         throw new Error(`Ошибка при получении партнеров: ${res.status}`);
       }
       const data = await res.json();
-      console.log("Студент:", data);
       return data;
     } catch (error) {
       console.error("Ошибка в getStudent:", error);
@@ -22,7 +21,6 @@ export const getStudentById = async (id: string) => {
           throw new Error(`Ошибка при получении студента по id: ${res.status}`);
         }
         const data = await res.json();
-        console.log("Студент:", data);
         return data;
       } catch (error) {
         console.error("Ошибка в getStudentById:", error);
@@ -37,7 +35,6 @@ export const getStudentCourses = async () => {
       throw new Error(`Ошибка при получении курсов: ${res.status}`);
     }
     const data = await res.json();
-    console.log("Курсы:", data);
     return data;
   } catch (error) {
     console.error("Ошибка в getStudentCourses:", error);
@@ -52,7 +49,6 @@ export const getStudentCities = async () => {
       throw new Error(`Ошибка при получении городов: ${res.status}`);
     }
     const data = await res.json();
-    console.log("Города:", data);
     return data;
   } catch (error) {
     console.error("Ошибка в getStudentCities:", error);
@@ -67,7 +63,6 @@ export const getStudentUniversities = async () => {
       throw new Error(`Ошибка при получении университетов: ${res.status}`);
     }
     const data = await res.json();
-    console.log("Студент:", data);
     return data;
   } catch (error) {
     console.error("Ошибка в getStudentUniversities:", error);

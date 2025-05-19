@@ -2,31 +2,20 @@ import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import React, { useState } from "react"
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-
-interface PromoCode {
-    id: string;
-    title: string;
-    description: string;
-    code: string; // Добавляем поле для кода промокода
-    partnerName?: string; // Название партнера (опционально)
-}
+import PersonalPromocode from "../../../../types/PersonalPromocode"
 
 interface Props {
     isOpen: boolean;
     closeModal: () => void;
-    promoCode?: PromoCode; // Принимаем объект промокода
-    userInfo?: { // Информация о пользователе (опционально)
-        name: string;
-        university: string;
-    };
+    promoCode?: PersonalPromocode; // Принимаем объект промокода
 }
 
-export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode, userInfo }) => {
+export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode }) => {
     const [copied, setCopied] = useState(false);
 
     const copyToClipboard = () => {
-        if (promoCode?.code) {
-            navigator.clipboard.writeText(promoCode.code).then(() => {
+        if (promoCode?.promocode) {
+            navigator.clipboard.writeText(promoCode.promocode).then(() => {
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
             });
@@ -39,18 +28,18 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode, 
             <div className="relative bg-[#f0e9e2] border border-[rgba(0,0,0,0.20)] rounded-[30px] pt-[30px] px-[29px] w-[588px] shadow-lg">
                 <div className="w-full">
                     <p className="text-[24px] font-extrabold text-[#032c28] m-0 p-0 tracking-widest">
-                        {promoCode?.title || "Промокод"}
+                        {promoCode?.discount.name || "Промокод"}
                     </p>
                     <article className="text-sm text-[#032c28] mt-2.5 max-w-[370px]">
-                        <MarkdownRenderer content={promoCode?.description} />
+                        <MarkdownRenderer content={promoCode?.discount.description} />
                     </article>
-                    {promoCode?.code && (
+                    {promoCode?.promocode && (
                         <>
                             <div className="border bg-[#f8f8f8] flex justify-between items-end gap-2 w-full mt-5 p-4 rounded-[20px] border-[rgba(0,0,0,0.20)]">
                                 <div>
                                     <p className="text-sm text-[#888888]">Промокод</p>
                                     <p className="text-2xl font-bold text-[#032c28] mt-1">
-                                        {promoCode.code}
+                                        {promoCode.promocode}
                                     </p>
                                 </div>
                                 <button className="w-8 h-8 cursor-pointer" onClick={copyToClipboard}>
@@ -64,27 +53,33 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode, 
                 <div className="flex justify-start items-start flex-row mt-10">
                     <div className="pb-[29px] w-full">
                         <div className="flex flex-col gap-5 w-[356px]">
-                            {userInfo?.name && (
+                            {promoCode?.student && (
+                                <>
                                 <div className="flex flex-col gap-[5px] w-[148px]">
                                     <p className="text-sm text-[#888888]">Пользователь</p>
-                                    <p className="text-xl font-bold text-[#032c28]">{userInfo.name}</p>
+                                    <p className="text-xl font-bold text-[#032c28]">{promoCode.student.lastName} {promoCode.student.firstName}</p>
                                 </div>
-                            )}
-                            {userInfo?.university && (
                                 <div className="flex flex-col gap-[5px]">
                                     <p className="text-sm text-[#888888]">Университет</p>
-                                    <p className="text-xl font-bold text-[#032c28]">{userInfo.university}</p>
+                                    <p className="text-xl font-bold text-[#032c28]">{promoCode?.student.university.name}</p>
                                 </div>
+                                </>
+
                             )}
-                            {promoCode?.partnerName && (
+                            {promoCode?.discount.partner.companyName && (
                                 <div className="flex flex-col gap-[5px]">
                                     <p className="text-sm text-[#888888]">Партнер</p>
-                                    <p className="text-xl font-bold text-[#032c28]">{promoCode.partnerName}</p>
+                                    <p className="text-xl font-bold text-[#032c28]">{promoCode.discount.partner.companyName}</p>
                                 </div>
                             )}
                         </div>
                     </div>
-                    <Image alt="" src="/icons/offer/lines2.svg" height={102} width={245} className="h-[102px] w-[245px] object-cover mt-[150px] ml-[-50px]" />
+                    <Image 
+                        alt="" 
+                        src="/icons/offer/lines2.svg" 
+                        height={102} 
+                        width={245} 
+                        className="h-[102px] w-[245px] object-cover mt-[150px] ml-[-50px]" />
                 </div>
             </div>
         </Dialog> 

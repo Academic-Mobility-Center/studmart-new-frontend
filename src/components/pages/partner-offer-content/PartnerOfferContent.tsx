@@ -3,60 +3,87 @@ import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useEffect, useState } from "react";
 import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
-import { getPromocodePartnerByIdAndRegionId } from "@/lib/api/promocodes";
+import { getPromocodePartnerByIdAndRegionId, getPromocodeDiscountByDiscountIdAndStudentId } from "@/lib/api/promocodes";
 import { PartnerWithIdType } from "@/app/partner-personal-account/context";
 import { useCity } from "@/context/CityContext";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { useAuth } from "@/context/AuthContext";
-
+import PersonalPromocode from "../../../types/PersonalPromocode"
+interface Discount{
+    id: string;
+    name: string;
+    description: string;
+    size: number;
+    promocodeValue: string;
+    partner: {
+        id: string;
+        companyName: string;
+        subtitle: string;
+        maxDiscount: number;
+        isFixed: boolean;
+    };
+    hasAllRegions: boolean;
+    regions: [];
+}
 interface Props{
     imageUrl: string;
     partnerId: string;
     isAuth: boolean
 }
 
-interface PromoCode {
-    id: string;
-    title: string;
-    description: string;
-    code: string;
-    partnerName: string; 
-}
 const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPromo, setSelectedPromo] = useState<PromoCode | undefined>(undefined);
-    const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
+    const [selectedPromo, setSelectedPromo] = useState<PersonalPromocode | undefined>(undefined);
+    const [personalPromocodes, setPersonalPromocodes] = useState<PersonalPromocode[]>([])
     const [partnerData, setPartnerData] = useState<PartnerWithIdType | null>(null);
     const {regionId} = useCity();
-    const {firstName, lastName} = useAuth();
+    const [discountsIds, setDiscountsIds] = useState<string[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId);
-                console.log("partnerInfo", partnerInfo)
                 setPartnerData(partnerInfo);
+
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
     }, [partnerId, regionId, setPartnerData]);
-
     useEffect(() => {
-        if (partnerData?.discounts && partnerData.discounts.length > 0) {
-            const mapped = partnerData?.discounts?.map((discount) => ({
-                id: discount.id,
-                title: discount.name,
-                description: discount.description,
-                code: discount.promocodeValue,
-                partnerName: discount.partner.companyName,
-            }));
-            setPromoCodes(mapped);
-        } 
-    }, [partnerData?.discounts]);
+        if (partnerData?.discounts) {
+            const ids = partnerData.discounts.map((d: Discount) => String(d.id));
+            setDiscountsIds(ids);
+        }
+    }, [partnerData]);
+    
+    useEffect(() => {
+        const fetchDiscounts = async () => {
+            if (!discountsIds.length) return;
+    
+            try {
+                const studentId = "81dd5999-455b-4eb2-af1d-15feb026655d"; // можешь вынести в переменную/стейт
+                const results: PersonalPromocode[] = [];
+    
+                for (const discountId of discountsIds) {
+                    try {
+                        const promocode = await getPromocodeDiscountByDiscountIdAndStudentId(discountId, studentId);
+                        results.push(promocode);
+                    } catch (error) {
+                        console.error(`Ошибка при получении промокода для discountId: ${discountId}`, error);
+                    }
+                }
+    
+                setPersonalPromocodes(results);
+            } catch (error) {
+                console.error("Ошибка при получении промокодов:", error);
+            }
+        };
+    
+        fetchDiscounts();
+    }, [discountsIds]);
 
-    const openModal = (promo: PromoCode) => {
+    const openModal = (promo: PersonalPromocode) => {
         setSelectedPromo(promo);
         setIsModalOpen(true);
     };
@@ -119,11 +146,11 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
                             </div>
                         </div>
                         <div className="box-border flex justify-start items-start flex-col gap-[30px] w-[588px] grow-0 shrink-0 basis-auto">
-                            {promoCodes.map((promo) => (
+                            {personalPromocodes.map((promo, index) => (
                                 <DiscountBox 
-                                    key={promo.id}
-                                    title={promo.title}
-                                    description={promo.description}
+                                    key={index}
+                                    title={promo.discount?.name}
+                                    description={promo.discount.description}
                                     onClick={() => openModal(promo)}
                                     isAuth={isAuth}
                                 />
@@ -136,10 +163,6 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
                 isOpen={isModalOpen} 
                 closeModal={closeModal}
                 promoCode={selectedPromo}
-                userInfo={{
-                    name: `${firstName} ${lastName}`,
-                    university: "Белгородский университет кооперации, экономики и права"
-                }}
             />
         </div>
     )

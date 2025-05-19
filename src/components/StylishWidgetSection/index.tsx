@@ -18,7 +18,6 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   const regularCardsPerRow = 4;
   const initialVisibleCards = 16; 
   const {regionId} = useCity()
-  console.log(regionId)
   const [partners, setPartners] = useState<PromoCardType[]>([])
   useEffect(() => {
     const fetchPromoCards = async () => {
@@ -30,9 +29,7 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
         } else {
           promoCardsArray = await getPromocodePartners();
         }
-  
-        console.log("promoCardsArray", promoCardsArray);
-        
+          
         if (promoCardsArray) {
           const transformed = transformPromos(promoCardsArray);
           setPartners(transformed);

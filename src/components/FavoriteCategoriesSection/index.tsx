@@ -30,7 +30,6 @@ export default function FavoriteCategoriesSection({
     const fetchCategories = async () => {
       try {
         const categories = await getPromocodeCategories();
-        console.log("categories: ", categories);
         if (categories) {
           const menuItemsWithIcons = categories
             .sort((a: Category) => {
@@ -59,10 +58,7 @@ export default function FavoriteCategoriesSection({
   
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
-  
-    console.log("Scroll width:", scrollContainer.scrollWidth);
-    console.log("Client width:", scrollContainer.clientWidth);
-  
+    
     const handleWheelScroll = (event: WheelEvent) => {
       if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
         scrollContainer.scrollLeft += event.deltaY;
