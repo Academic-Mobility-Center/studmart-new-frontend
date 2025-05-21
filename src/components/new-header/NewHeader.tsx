@@ -61,7 +61,9 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
               height={24} 
             />          
           </Link>
-          <Link href={isAuthenticated ? "/student-personal-account/referal-program" : "/login"}>
+          <Link href={isAuthenticated && role === "student" 
+            ? "/student-personal-account/referal-program" : 
+            isAuthenticated && role === "partner" ? "" : "/login"}>
           <Image 
             src="/icons/Header/wallet.svg" 
             alt="" 
