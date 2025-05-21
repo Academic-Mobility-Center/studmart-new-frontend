@@ -9,6 +9,14 @@ type MarkdownRendererProps = {
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
   if (!content) return null;
 
+  const prepareContent = (text: string) =>
+    text
+      .replace(/\r\n/g, '\n')
+      .replace(/\n/g, '  \n') // делает перенос строки видимым
+      .replace(/(\d+)\sруб\./g, '$1\u00A0руб.'); // неразрывный пробел
+
+  const fixedContent = prepareContent(content);
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -19,11 +27,16 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         h4: ({ children }) => <h4 className="text-[16px] font-semibold mt-4">{children}</h4>,
         h5: ({ children }) => <h5 className="text-[14px] font-semibold mt-4">{children}</h5>,
         p: ({ children }) => <p className="my-2">{children}</p>,
+        ol: ({ children }) => <ol className="list-decimal pl-6 my-2">{children}</ol>,
+        ul: ({ children }) => <ul className="list-disc pl-6 my-2">{children}</ul>,
+        li: ({ children }) => <li className="my-1">{children}</li>,
       }}
     >
-      {content}
+      {fixedContent}
     </ReactMarkdown>
   );
 };
+
+
 
 export default MarkdownRenderer;

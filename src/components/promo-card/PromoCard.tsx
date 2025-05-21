@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import PromoCardsDescriprion from '../promo-card-description';
 import { useRouter } from 'next/navigation';
 import Image from "next/image"
+import { useAuth } from "@/context/AuthContext";
+
 import {  
   getFavouritesPartners, 
   addToFavouritePartner, 
@@ -40,6 +42,8 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   const router = useRouter();
   const [isFavourite, setIsFavourite] = useState(false);
   const userId = "81dd5999-455b-4eb2-af1d-15feb026655d";
+  const { isAuthenticated } = useAuth();
+
   const handleClick = () => {
     router.prefetch(`/partner-offer/${id}`);
     router.push(`/partner-offer/${id}`);
@@ -67,17 +71,15 @@ export const PromoCard: React.FC<PromoCardProps> = ({
       if (newValue) {
         const result: ApiResponse = await addToFavouritePartner(id, userId);
         if (result.ignoredError) {
-          // игнорируем ошибку
         }
       } else {
         const result: ApiResponse = await deleteFavouritePartner(id, userId);
         if (result.ignoredError) {
-          // игнорируем ошибку
         }
       }
     } catch (error) {
       console.error("Ошибка при обновлении избранного:", error);
-      setIsFavourite(!newValue); // откат при ошибке
+      setIsFavourite(!newValue); 
     }
   };
   
@@ -89,7 +91,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
     style={{ width: `${width}px`, height: `${height}px` }}
       onClick={handleClick}
     >
-      <StylishWrapper imageUrl={imageUrl} isFavourite={isFavourite} onStarClick={handleStarClick}/>
+      <StylishWrapper imageUrl={imageUrl} isFavourite={isFavourite} onStarClick={handleStarClick} isAuthenticated={isAuthenticated}/>
       <PromoCardsDescriprion 
         heading={heading} 
         description={description} 
@@ -103,9 +105,15 @@ type StylishWrapperProps = {
   imageUrl: string;
   isFavourite: boolean;
   onStarClick: (e: React.MouseEvent) => void;
+  isAuthenticated: boolean
 };
 
-const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl, isFavourite, onStarClick }) => {
+const StylishWrapper: React.FC<StylishWrapperProps> = ({ 
+  imageUrl, 
+  isFavourite, 
+  onStarClick, 
+  isAuthenticated 
+}) => {
   return (
 <div
   className="w-full rounded-t-[20px] px-[10px] pt-[10px] flex justify-end items-start"
@@ -118,17 +126,19 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({ imageUrl, isFavourite, 
     flex: '2 1 auto'
   }}
 >
-  {/* Обёртка фиксированного размера */}
   <div
     className="cursor-pointer"
     style={{
       width: 32,
       height: 32,
-      flex: '0 0 auto', // Не даёт уменьшать элемент в flex-контейнере
+      flex: '0 0 auto',
     }}
     onClick={onStarClick}
-  >
-    {isFavourite ? <Image src="icons/home/yellowStar.svg" width={32} height={32} alt=''/> : <Image src="icons/home/whiteStar.svg" width={32} height={32} alt=''/>}
+  > {isAuthenticated && (
+    isFavourite ? 
+    <Image src="icons/home/yellowStar.svg" width={32} height={32} alt=''/> 
+    : <Image src="icons/home/whiteStar.svg" width={32} height={32} alt=''/>
+  )}
   </div>
 </div>
 

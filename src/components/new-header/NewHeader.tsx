@@ -26,7 +26,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
   ? "/partner-personal-account" 
   : isAuthenticated 
   ? "/student-personal-account" 
-  : "#";
+  : "/login";
     return (
     <header className="w-7xl bg-[#8fe248] flex items-center justify-start h-20 pl-[40px] rounded-b-[30px]">
       <div className="w-[320px]">
@@ -59,16 +59,16 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
               alt="" 
               width={24} 
               height={24} 
-              className={!isAuthenticated ? "opacity-50" : ""}
             />          
           </Link>
+          <Link href={isAuthenticated ? "/student-personal-account/referal-program" : "/login"}>
           <Image 
             src="/icons/Header/wallet.svg" 
             alt="" 
             width={24} 
             height={24} 
-            className={!isAuthenticated ? "opacity-50" : ""}
-          />
+          /></Link>
+
         </div>
       </div>
       <CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} />
