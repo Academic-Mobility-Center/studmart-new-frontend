@@ -132,3 +132,64 @@ export const getPromocodeDiscountByDiscountIdAndStudentId = async (
     return null;
   }
 };
+export const getFavouritesPartners = async (id: string) => {
+  try {
+    const res = await fetch(`/api/promocodes/Favourites/${id}`)
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении избранных партнеров: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getPromocodePartnersByRegionId:", error);
+    return null;
+  }  
+}
+export const addToFavouritePartner = async (partnerId: string, studentId: string) => {
+  try {
+    const res = await fetch(`/api/promocodes/Favourites`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ partnerId, studentId }),
+    });
+
+    if (!res.ok) {
+      // Возвращаем объект с ошибкой, но не кидаем исключение, если 500
+      if (res.status === 500) {
+        return { ignoredError: true, status: 500 };
+      }
+      throw new Error(`Ошибка: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в addToFavouritePartner:", error);
+    return null;
+  }
+};
+
+export const deleteFavouritePartner = async (partnerId: string, studentId: string) => {
+  try {
+    const res = await fetch('/api/promocodes/Favourites', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "studentId": studentId,
+        "partnerId": partnerId,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Ошибка: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в deleteFavouritePartner:", error);
+    return null;
+  }
+};

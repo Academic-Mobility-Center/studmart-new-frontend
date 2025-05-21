@@ -11,11 +11,11 @@ function StylishShoppingSection() {
   return (
     <div className="beauty-health-container2">
       <FavoriteCategoriesSection 
-        selectedCategoryId={selectedCategoryId}
+        selectedCategoryId={selectedCategoryId ?? null}
         onSelectCategory={setSelectedCategoryId}
       />
       <StylishWidgetSection 
-        selectedCategoryId={selectedCategoryId}
+        selectedCategoryId={selectedCategoryId ?? null}
       />
     </div>
   );
