@@ -26,7 +26,6 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   const favouritesFetchedRef = useRef(false);
 
   const [partners, setPartners] = useState<PromoCardType[]>([]);
-  const favouritesCacheRef = useRef<PromoCardType[] | null>(null);
   const [favouritePartners, setFavouritePartners] = useState<PromoCardType[]>([]);
   useEffect(() => {
     const fetchPromoCards = async () => {
@@ -50,7 +49,6 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   }, [regionId]);
   
   // Загружаем избранное только когда это нужно
-  const [hasFetchedFavourites, setHasFetchedFavourites] = useState(false);
 
 // вынесем id пользователя из хардкода (если возможно)
 const userId = "81dd5999-455b-4eb2-af1d-15feb026655d"; // можно потом вынести в пропсы или context
