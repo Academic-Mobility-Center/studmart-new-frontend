@@ -3,8 +3,7 @@ import PasswordField from "@/components/fields/password/PasswordField";
 import RegFormProps from "@/types/RegFormProps";
 import Link from "next/link";
 import React, { useState } from "react";
-
-const RegForm1: React.FC<RegFormProps> = ({
+const   RegForm1: React.FC<RegFormProps> = ({
     onClick,
     formData,
     handleChange,
@@ -17,29 +16,38 @@ const RegForm1: React.FC<RegFormProps> = ({
     });
     
     const validate = () => {
-        const newErrors: { email?: string, password?: string, confirmPassword?: string} = {};
-
-        if (!formData?.email){
+        const newErrors: { email?: string, password?: string, confirmPassword?: string } = {};
+    
+        const emailRegex = /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/;
+        const minEmailLength = 5;
+        const maxEmailLength = 70;
+    
+        if (!formData.email?.trim()) {
             newErrors.email = "Введите email";
-        }
-        if (!formData?.password){
-            newErrors.password = "Введите пароль";
-        }
-        if (!formData?.confirmPassword){
-            newErrors.password = "Подтвердите пароль"
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        } else if (!emailRegex.test(formData.email.trim())) {
             newErrors.email = "Некорректный email";
+        } else if (
+            formData.email.trim().length < minEmailLength ||
+            formData.email.trim().length > maxEmailLength
+        ) {
+            newErrors.email = `Email должен содержать от ${minEmailLength} до ${maxEmailLength} символов`;
         }
-        if (formData.password.length < 6) {
+    
+        if (!formData.password) {
+            newErrors.password = "Введите пароль";
+        } else if (formData.password.length < 6) {
             newErrors.password = "Пароль должен содержать минимум 6 символов";
         }
-        if (formData.password !== formData.confirmPassword){
+    
+        if (!formData.confirmPassword) {
+            newErrors.confirmPassword = "Подтвердите пароль";
+        } else if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = "Пароли не совпадают";
         }
+    
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };    
+    };
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();

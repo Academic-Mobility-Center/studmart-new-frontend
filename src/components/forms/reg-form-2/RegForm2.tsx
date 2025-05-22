@@ -17,50 +17,53 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
         name?: string; 
         fullname?: string;
         date?: string;
-        gender?: string[];
+        gender?: string;
     }>({
         name: "",
         fullname: "",
         date: "",
-        gender: undefined
+        gender: ""
     });
-
+    
     const validate = () => {
-        const newErrors: {
-            name?: string, 
-            fullname?: string,
-            date?: string,
-            gender?: undefined;
-        } ={};
-
-        const selectedDate = formData?.date ? new Date(formData?.date) : null;
-        const nameRegex = /^[A-Za-zА-Яа-яЁё]+$/;
-
-        if(!formData.name){
-            newErrors.name = "Введите имя"
-        }
-        
-        if(!formData.fullname){
-            newErrors.fullname = "Введите фамилию"
+        const newErrors: { name?: string, fullname?: string, date?: string, gender?: string } = {};
+    
+        const nameRegex = /^[а-яА-Я\s\'’-]+$/;
+        const minNameLength = 3;
+        const maxNameLength = 30;
+    
+        const name = formData.name?.trim() ?? "";
+        const fullname = formData.fullname?.trim() ?? "";
+        const selectedDate = formData.date ? new Date(formData.date) : null;
+    
+        if (!name) {
+            newErrors.name = "Введите имя";
+        } else if (!nameRegex.test(name)) {
+            newErrors.name = "Имя может содержать только русские буквы, пробелы, дефисы и апострофы";
+        } else if (name.length < minNameLength || name.length > maxNameLength) {
+            newErrors.name = `Имя должно содержать от ${minNameLength} до ${maxNameLength} символов`;
         }
     
-        if(!!selectedDate === false){
-            newErrors.date = "Введите дату рождения"
+        if (!fullname) {
+            newErrors.fullname = "Введите фамилию";
+        } else if (!nameRegex.test(fullname)) {
+            newErrors.fullname = "Фамилия может содержать только русские буквы, пробелы, дефисы и апострофы";
+        } else if (fullname.length < minNameLength || fullname.length > maxNameLength) {
+            newErrors.fullname = `Фамилия должна содержать от ${minNameLength} до ${maxNameLength} символов`;
         }
-
-        // if(!formData.gender){
-        //     newErrors.gender = "Выберете пол"
-        // }
-
-        if (!nameRegex.test(formData.name)){
-            newErrors.name = "Имя должно содержать только буквы без пробелов";
+    
+        if (!selectedDate) {
+            newErrors.date = "Введите дату рождения";
         }
-        if (!nameRegex.test(formData.fullname)){
-            newErrors.fullname = "Имя должно содержать только буквы без пробелов";
+    
+        if (!formData.gender) {
+            newErrors.gender = "Выберите пол";
         }
+    
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    }
+    };
+
     const handleSubmit = (event: React.FormEvent) =>{
         if(validate()){
             onClick(event);

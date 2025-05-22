@@ -11,6 +11,8 @@ import { Button } from "@mui/material";
 import promoCard from "@/types/PromoCard";
 import { forwardRef } from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
+import RegistrationFormData from "@/types/RegistrationFormData";
+
 export const iconMapper: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     "Рестораны и доставка": LunchDiningSvg,
     "Техника и электроника": DevicesSvg,
@@ -40,26 +42,6 @@ export const ScrollContainer = styled(ScrollContainerBase)({
   whiteSpace: "nowrap",
   scrollBehavior: "smooth",
 });
-// const ScrollContainerBase = forwardRef<HTMLDivElement, BoxProps>((props, ref) => (
-//   <Box ref={ref} {...props} />
-// ));
-
-// ScrollContainerBase.displayName = 'ScrollContainerBase';
-
-// export const ScrollContainer = styled(ScrollContainerBase)({
-//   display: "flex",
-//   overflowX: "auto",
-//   gap: "10px",
-//   scrollbarWidth: "none",
-//   "&::-webkit-scrollbar": {
-//     display: "none",
-//   },
-//   maxWidth: "1200px",
-//   whiteSpace: "nowrap",
-//   scrollBehavior: "smooth",
-//   // touchAction: "none"
-//   // WebkitOverflowScrolling: "touch",
-// });
 
 export const StyledButton = styled(Button)({
 display: "flex",
@@ -212,4 +194,64 @@ export const fallbackPromoCodes: Discount[] = [
       hasAllRegions: true,
       regions: [{ id: 1, name: "Москва" }]
     }
-  ];
+];
+
+interface ValidateProps1{
+  formData: RegistrationFormData;
+  setErrors: (value: React.SetStateAction<{
+    password?: string;
+    confirmPassword?: string;
+    email?: string;
+  }>) => void
+}
+
+const validateForm1: React.FC<ValidateProps1> = ({formData, setErrors}) => {
+  const newErrors: { email?: string, password?: string, confirmPassword?: string } = {};
+
+  const emailRegex = /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/;
+  const minEmailLength = 5;
+  const maxEmailLength = 70;
+
+  if (!formData.email?.trim()) {
+      newErrors.email = "Введите email";
+  } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = "Некорректный email";
+  } else if (
+      formData.email.trim().length < minEmailLength ||
+      formData.email.trim().length > maxEmailLength
+  ) {
+      newErrors.email = `Email должен содержать от ${minEmailLength} до ${maxEmailLength} символов`;
+  }
+
+  if (!formData.password) {
+      newErrors.password = "Введите пароль";
+  } else if (formData.password.length < 6) {
+      newErrors.password = "Пароль должен содержать минимум 6 символов";
+  }
+
+  if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Подтвердите пароль";
+  } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Пароли не совпадают";
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
+export default validateForm1;
+
+export function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+          const result = reader.result as string;
+          // result будет в формате: data:<content-type>;base64,<base64string>
+          // Если нужен только base64, можно отрезать префикс:
+          const base64String = result.split(',')[1];
+          resolve(base64String);
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+  });
+}

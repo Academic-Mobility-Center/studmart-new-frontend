@@ -11,5 +11,15 @@ export default interface RegFormProps{
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
     onBack?: () => void;
     onChange?: (setFormData: React.Dispatch<React.SetStateAction<FormDataType>>) => (event: FormEvent) => void;
+    univercitiesOptions?: {
+        label: string;
+        value: string;
+    }[]
+    coursesOptions?: {
+        label: string;
+        value: string;
+    }[]
+    validate?: () => boolean
+
 };
 

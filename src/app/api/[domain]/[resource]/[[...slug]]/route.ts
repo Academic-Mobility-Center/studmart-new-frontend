@@ -6,10 +6,11 @@ export async function GET(
 ) {
   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners"];
+  const allowedDomains = ["promocodes", "students", "partners", "files"];
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
-    "Countries", "Employees", "Students", "Favourites"
+    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
+    "EmailDomains", "Verifications" // добавлено
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
@@ -44,10 +45,11 @@ export async function POST(
 ) {
   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners"];
+  const allowedDomains = ["promocodes", "students", "partners", "files"];
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
-    "Countries", "Employees", "Students", "Favourites"
+    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
+    "EmailDomains", "Verifications" // добавлено
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
@@ -92,10 +94,11 @@ export async function DELETE(
 ) {
   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners"];
+  const allowedDomains = ["promocodes", "students", "partners", "files"];
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
-    "Countries", "Employees", "Students", "Favourites"
+    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
+    "EmailDomains", "Verifications" // добавлено
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {

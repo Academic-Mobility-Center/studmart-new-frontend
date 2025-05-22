@@ -13,4 +13,6 @@ export default interface RegistrationFormData{
     profession: string;
     course: Option | null;
     file: File | null;
+    sex: boolean;
+    needFile: boolean;
 }
