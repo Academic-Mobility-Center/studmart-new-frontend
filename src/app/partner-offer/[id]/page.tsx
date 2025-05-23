@@ -26,7 +26,7 @@ interface PartnerOffer {
 const PartnerOffer = () => {
   const params = useParams();
   const id = params?.id as string;
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, role } = useAuth();
   const [currentOffer, setCurrentOffer] = useState<PartnerOffer | null>(null);
   useEffect(() => {
     const fetchOffer = async () => {
@@ -55,6 +55,7 @@ const PartnerOffer = () => {
           imageUrl={`https://files.studmart-dev.inxan.ru/Partners/${id}`}
           partnerId={id}
           isAuth={isAuthenticated}
+          role={role}
         />
       </div>
       <div className="max-w-7xl w-full">

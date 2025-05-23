@@ -25,7 +25,7 @@ export default function FavoriteCategoriesSection({
   const [fetchedMenuItems, setFetchedMenuItems] = useState<MenuItem[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, role } = useAuth();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,7 +44,7 @@ export default function FavoriteCategoriesSection({
           };
           const others = withIcons.filter((c: Category) => c.name !== "Избранное");
 
-          const finalMenu = isAuthenticated && favorite
+          const finalMenu = isAuthenticated && favorite && role && role === "student"
             ? [favorite, ...others]
             : others;
 
@@ -59,7 +59,7 @@ export default function FavoriteCategoriesSection({
     };
 
     fetchCategories();
-  }, [isAuthenticated]);
+  },[isAuthenticated, role]);
 
   useEffect(() => {
     if (loading) return;

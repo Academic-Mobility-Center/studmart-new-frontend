@@ -243,11 +243,10 @@ const handleSubmitForm3 = async (event: React.FormEvent) => {
                 if (needFile && file instanceof File) {
                     const base64String = await fileToBase64(file);
                     const contentType = file.type;
-
                     const uploadResult = await sendStudentFile(studentId, base64String, contentType);
 
                     if (uploadResult) {
-                        console.log("Файл успешно загружен:", uploadResult);
+                        console.warn("Файл успешно загружен:", uploadResult);
                     } else {
                         console.warn("Ошибка при загрузке файла");
                     }

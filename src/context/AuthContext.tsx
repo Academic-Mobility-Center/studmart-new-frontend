@@ -1,21 +1,143 @@
+// 'use client';
+
+// import { createContext, useContext, useState, useEffect } from 'react';
+// import { verifyToken, getAuthToken, removeAuthToken, setAuthToken } from '@/lib/auth';
+// import { useRouter } from 'next/navigation';
+// import {jwtDecode} from "jwt-decode";
+
+// type JwtPayload = {
+//   role: string;
+//   exp: number;
+//   lastName: string;
+//   firstName: string;
+//   university?: {
+//     shortName?: string;
+//   }
+//   yearsBeforeEnding?: number;
+//   universityShortName?: string;
+// };
+// type AuthContextType = {
+//   isAuthenticated: boolean;
+//   isLoading: boolean;
+//   role: string | null;
+//   firstName: string | null;
+//   lastName: string | null;
+//   universityShortName?: string | null;
+//   year?: number | null;
+//   login: (token: string, rememberMe?: boolean) => void;
+//   logout: () => void;
+// };
+
+// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// export function AuthProvider({ children }: { children: React.ReactNode }) {
+
+// const isExpired = (token: string) => {
+//   try {
+//     const { exp } = jwtDecode<{ exp: number }>(token);
+//     return Date.now() >= exp * 1000;
+//   } catch {
+//     return true;
+//   }
+// };
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [role, setRole] = useState<string | null>(null);
+//   const [firstName, setFirstName] = useState<string | null>(null);
+//   const [lastName, setLastName] = useState<string | null>(null);
+//   const [universityShortName, setUniversityShortName] = useState<string | undefined>(undefined);
+//   const [year,setYear] = useState<number | undefined>(undefined);
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     const checkAuth = async () => {
+//       try {
+//         const token = getAuthToken();
+//         if (!token || typeof token !== 'string' || isExpired(token)) {
+//           throw new Error('Token is missing or expired');
+//         }
+  
+//         const isValid = await verifyToken();
+//         if (!isValid) {
+//           throw new Error('Token verification failed');
+//         }
+  
+//         const decoded = jwtDecode<JwtPayload>(token);
+//         setRole(decoded.role);
+//         setFirstName(decoded.firstName)
+//         setLastName(decoded.lastName)    
+//         setUniversityShortName(decoded?.universityShortName)    
+//         setYear(decoded?.yearsBeforeEnding);
+//         setIsAuthenticated(true);
+//       } catch (error) {
+//         console.log(error)
+//         setIsAuthenticated(false);
+//         setRole(null);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     checkAuth();
+//   }, []);
+
+//   const login = (token: string, rememberMe = false) => {
+//     setAuthToken(token, {
+//       maxAge: rememberMe ? 60 * 60 * 24 * 30 : undefined
+//     });
+//     const decoded = jwtDecode<JwtPayload>(token);
+//     setRole(decoded.role);
+//     setFirstName(decoded.firstName)
+//     setLastName(decoded.lastName)
+//     setUniversityShortName(decoded?.universityShortName)    
+//     setYear(decoded?.yearsBeforeEnding);
+//     setIsAuthenticated(true);
+//   };
+
+//   const logout = () => {
+//     removeAuthToken();
+//     setIsAuthenticated(false);
+//     router.push('/login');
+//   };
+
+//   return (
+//     <AuthContext.Provider 
+//       value={{ 
+//         isAuthenticated, 
+//         isLoading, 
+//         role, 
+//         firstName,
+//         lastName,
+//         universityShortName,
+//         year,
+//         login, 
+//         logout 
+//       }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// }
+
+// export const useAuth = () => {
+//   const context = useContext(AuthContext);
+//   if (context === undefined) {
+//     throw new Error('useAuth must be used within an AuthProvider');
+//   }
+//   return context;
+// };
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
-import { verifyToken, getAuthToken, removeAuthToken, setAuthToken } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
-import {jwtDecode} from "jwt-decode";
 
-type JwtPayload = {
+type UserPayload = {
   role: string;
-  exp: number;
   lastName: string;
   firstName: string;
-  university?: {
-    shortName?: string;
-  }
-  yearsBeforeEnding?: number;
   universityShortName?: string;
+  yearsBeforeEnding?: number;
 };
+
 type AuthContextType = {
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -24,8 +146,8 @@ type AuthContextType = {
   lastName: string | null;
   universityShortName?: string | null;
   year?: number | null;
-  login: (token: string, rememberMe?: boolean) => void;
   logout: () => void;
+  login: () => Promise<void>; 
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,30 +158,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [role, setRole] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
   const [lastName, setLastName] = useState<string | null>(null);
-  const [universityShortName, setUniversityShortName] = useState<string | undefined>(undefined);
-  const [year,setYear] = useState<number | undefined>(undefined);
+  const [universityShortName, setUniversityShortName] = useState<string | null>(null);
+  const [year, setYear] = useState<number | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = getAuthToken();
-        if (!token || typeof token !== 'string') {
-          throw new Error('No valid token');
-        }
+        const res = await fetch('/api/auth/verify', {
+          credentials: 'include',
+        });
 
-        const isValid = await verifyToken();
-        if (!isValid) throw new Error("Invalid token");
+        if (!res.ok) throw new Error('Not authenticated');
 
-        const decoded = jwtDecode<JwtPayload>(token);
-        setRole(decoded.role);
-        setFirstName(decoded.firstName)
-        setLastName(decoded.lastName)    
-        setUniversityShortName(decoded?.universityShortName)    
-        setYear(decoded?.yearsBeforeEnding);
+        const user: UserPayload = await res.json();
+
+        setRole(user.role);
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+        setUniversityShortName(user.universityShortName || null);
+        setYear(user.yearsBeforeEnding ?? null);
         setIsAuthenticated(true);
-      } catch (error) {
-        console.log(error)
+      } catch (err) {
+        console.error('Auth check failed:', err);
         setIsAuthenticated(false);
         setRole(null);
       } finally {
@@ -70,38 +192,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkAuth();
   }, []);
 
-  const login = (token: string, rememberMe = false) => {
-    setAuthToken(token, {
-      maxAge: rememberMe ? 60 * 60 * 24 * 30 : undefined
-    });
-    const decoded = jwtDecode<JwtPayload>(token);
-    setRole(decoded.role);
-    setFirstName(decoded.firstName)
-    setLastName(decoded.lastName)
-    setUniversityShortName(decoded?.universityShortName)    
-    setYear(decoded?.yearsBeforeEnding);
-    setIsAuthenticated(true);
-  };
-
-  const logout = () => {
-    removeAuthToken();
+  const logout = async () => {
     setIsAuthenticated(false);
     router.push('/login');
   };
-
+  const login = async () => {
+    try {
+      const res = await fetch('/api/auth/verify', {
+        credentials: 'include',
+      });
+  
+      if (!res.ok) throw new Error('Not authenticated');
+  
+      const user: UserPayload = await res.json();
+  
+      setRole(user.role);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setUniversityShortName(user.universityShortName || null);
+      setYear(user.yearsBeforeEnding ?? null);
+      setIsAuthenticated(true);
+    } catch (err) {
+      console.error('Login (verify) failed:', err);
+      setIsAuthenticated(false);
+    }
+  };
   return (
-    <AuthContext.Provider 
-      value={{ 
-        isAuthenticated, 
-        isLoading, 
-        role, 
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        isLoading,
+        role,
         firstName,
         lastName,
         universityShortName,
         year,
-        login, 
-        logout 
-      }}>
+        logout,
+        login
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -114,3 +243,4 @@ export const useAuth = () => {
   }
   return context;
 };
+

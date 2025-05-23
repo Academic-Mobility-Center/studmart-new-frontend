@@ -10,7 +10,7 @@ export const getAuthToken = (options?: OptionsType) => {
 export const setAuthToken = (token: string, options?: OptionsType) => {
   setCookie(TOKEN_KEY, token, {
     ...options,
-    maxAge: 60 * 60 * 24 * 7, // 1 неделя
+    maxAge: 60 * 60 * 24 * 7,
     path: '/',
   });
 };

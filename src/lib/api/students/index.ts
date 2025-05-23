@@ -167,3 +167,23 @@ export const sendStudentFile = async(id: string, image: string, contentType: str
     return null;
   }
 }
+// export const sendStudentFile = (id: string, image: string, contentType: string) => {
+//   try {
+//     fetch(`/api/files/Verifications`, {
+//       method: "POST",
+//       headers: { 
+//         "Content-Type": "application/json",
+//         "accept": "*/*"
+//       },
+//       body: JSON.stringify({
+//         id,
+//         image,
+//         contentType
+//       })
+//     }).catch(error => {
+//       console.log("Ошибка при отправке файла:", error);
+//     });
+//   } catch (error) {
+//     console.log("Ошибка в sendStudentFile:", error);
+//   }
+// };

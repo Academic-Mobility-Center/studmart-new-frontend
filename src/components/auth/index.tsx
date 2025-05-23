@@ -4,6 +4,7 @@ import LoginForm from "../forms/login/LoginForm";
 import NewHeader from "../new-header/NewHeader";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
+import { ClipLoader } from "react-spinners";
 
 export default function AuthorizationPage(){
     const { isAuthenticated, isLoading } = useAuth();
@@ -15,7 +16,7 @@ export default function AuthorizationPage(){
       }
     }, [isAuthenticated, router]);
     if (isLoading || isAuthenticated) {
-      return <div>Загрузка...</div>;
+      return <div className="loaderStyle"> <ClipLoader size={50} color="#36d7b7" /> </div>;
     }
     return(
         <div className="min-w-[1600px] bg-[#f8f8f8] flex flex-col items-center h-screen">

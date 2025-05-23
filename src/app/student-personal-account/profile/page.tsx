@@ -22,14 +22,13 @@ import IStudentFormData, {
     isWorkOptions, 
     languageProfiencyOptions, 
     validateField, 
-    defaultStudent 
 } from '../context';
 import { Option } from '@/types/Option';
 import { getStudentById } from '@/lib/api/students';
 import { transformToOption } from '@/utils/dataTransform';
 
 const ProfilePage: React.FC = () => {
-    const [fetchStudent, setFetchStudent] = useState<IStudentFormData>(defaultStudent)
+    const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
     const [fetchCourses] = useState(courseOptions)
     const [fetchUniversities] = useState(universityOptions)
     const [fetchCities] = useState(cityOptions)
@@ -37,7 +36,7 @@ const ProfilePage: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const student = await getStudentById("c8963614-8804-4713-ac3d-140c3ec534d5");
+                const student = await getStudentById("6454dd90-97d5-4cee-b0ad-351b279e9549");
                 if (student && student?.length > 1) {
                     setFetchStudent(student);
                 }

@@ -28,9 +28,10 @@ interface Props{
     imageUrl: string;
     partnerId: string;
     isAuth: boolean
+    role: string | null
 }
 
-const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
+const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPromo, setSelectedPromo] = useState<PersonalPromocode | undefined>(undefined);
     const [personalPromocodes, setPersonalPromocodes] = useState<PersonalPromocode[]>([])
@@ -80,7 +81,13 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
             }
         };
     
-        fetchDiscounts();
+        fetchDiscounts();                                {/* <p 
+            className="[font-family:Mulish,sans-serif] 
+            text-sm font-normal text-left text-[#032c28] 
+            mt-2.5 m-0 p-0"
+        >
+            {description}
+        </p> */}
     }, [discountsIds]);
 
     const openModal = (promo: PersonalPromocode) => {
@@ -153,6 +160,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth}: Props) => {
                                     description={promo.discount.description}
                                     onClick={() => openModal(promo)}
                                     isAuth={isAuth}
+                                    role={role}
                                 />
                             ))}
                         </div>

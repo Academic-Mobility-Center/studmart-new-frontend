@@ -1,16 +1,12 @@
 import { Button } from "@mui/base";
 import TermsOfUse from "../offer-page-elements/terms-of-use/TermsOfUse";
-import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useState } from "react";
 import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
 
 
 const OfferPageContent = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const {isAuthenticated} = useAuth()
-    const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     return (
         <div className="flex flex-col items-center min-w-[1280px]">
@@ -76,7 +72,7 @@ const OfferPageContent = () => {
                                 </Button>
                             </div>
                         </div>
-                        <div className="box-border flex justify-start items-start flex-col gap-[30px] w-[588px] grow-0 shrink-0 basis-auto">
+                        {/* <div className="box-border flex justify-start items-start flex-col gap-[30px] w-[588px] grow-0 shrink-0 basis-auto">
                             <DiscountBox 
                                 title={"-15% на покупку от 700 руб."} 
                                 description={"Не упустите возможность порадовать себя вкусным кофе и десертами по специальной цене!"}
@@ -95,7 +91,7 @@ const OfferPageContent = () => {
                                 onClick={openModal}
                                 isAuth={isAuthenticated}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>  
             </div>

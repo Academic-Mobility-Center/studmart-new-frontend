@@ -52,9 +52,9 @@ const ForgotPasswordConfirm: React.FC<ForgotPasswordConfirmProps> = ({
                     labelFontSize={14}      
                     width={350}            
                 />
-                    {errors?.passwordReset && (
-                        <p className="text-red-600 text-sm font-medium mt-1">{errors.passwordReset}</p>
-                    )}                
+                {errors?.passwordReset && (
+                    <p className="text-red-600 text-sm font-medium mt-1">{errors.passwordReset}</p>
+                )}                
                 <PasswordField 
                     label="Подтвердите новый пароль" 
                     placeholder="********"

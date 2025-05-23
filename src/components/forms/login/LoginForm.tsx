@@ -7,7 +7,7 @@ import LoginFormData from "@/types/LoginFormData";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/context/AuthContext';
-
+import {loginWithCookie} from "@/lib/api/auth"
 export default function LoginForm() {
     const router = useRouter();
     const { login } = useAuth();
@@ -52,35 +52,86 @@ export default function LoginForm() {
       event.preventDefault();
       
       if (!validate()) return;
-      
       try {
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password
-          }),
+        const result = await loginWithCookie({
+          email: formData.email,
+          password: formData.password,
+          twoFactorCode: "",
+          twoFactorRecoveryCode: ""
         });
-  
-        const data = await response.json();
-  
-        if (response.ok && data.token) {
-          login(data.token, formData.rememberMe);
+      
+        if (!result.error) {
+          // просто обновляем состояние авторизации, токен уже в cookie
+          await login();  // login() из useAuth — вызовет verifySession и обновит контекст
           router.push('/home');
         } else {
           setErrors({
             email: ' ',
-            password: data.error || 'Ошибка авторизации'
+            password: result.error,
           });
         }
       } catch (error) {
-        console.log(error)
+        console.error(error);
         setErrors({
           email: ' ',
-          password: 'Ошибка соединения'
+          password: 'Ошибка соединения',
         });
       }
+      
+      // try {
+      //   const result = await loginUser({
+      //     email: formData.email,
+      //     password: formData.password,
+      //     twoFactorCode: "",
+      //     twoFactorRecoveryCode: ""
+      //   });
+      
+      //   if (result.token) {
+      //     login(result.token, formData.rememberMe);
+      //     router.push('/home');
+      //   } else {
+      //     setErrors({
+      //       email: ' ',
+      //       password: result.error || 'Ошибка авторизации',
+      //     });
+      //   }
+      // } catch (error) {
+      //   console.error(error);
+      //   setErrors({
+      //     email: ' ',
+      //     password: 'Ошибка соединения',
+      //   });
+      // }
+
+
+      // try {
+      //   const response = await fetch('/api/auth/login', {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       email: formData.email,
+      //       password: formData.password
+      //     }),
+      //   });
+  
+      //   const data = await response.json();
+  
+      //   if (response.ok && data.token) {
+      //     login(data.token, formData.rememberMe);
+      //     router.push('/home');
+      //   } else {
+      //     setErrors({
+      //       email: ' ',
+      //       password: data.error || 'Ошибка авторизации'
+      //     });
+      //   }
+      // } catch (error) {
+      //   console.log(error)
+      //   setErrors({
+      //     email: ' ',
+      //     password: 'Ошибка соединения'
+      //   });
+      // }
     };
 
 

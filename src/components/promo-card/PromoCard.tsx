@@ -42,7 +42,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   const router = useRouter();
   const [isFavourite, setIsFavourite] = useState(false);
   const userId = "81dd5999-455b-4eb2-af1d-15feb026655d";
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, role } = useAuth();
 
   const handleClick = () => {
     router.prefetch(`/partner-offer/${id}`);
@@ -91,7 +91,13 @@ export const PromoCard: React.FC<PromoCardProps> = ({
     style={{ width: `${width}px`, height: `${height}px` }}
       onClick={handleClick}
     >
-      <StylishWrapper imageUrl={imageUrl} isFavourite={isFavourite} onStarClick={handleStarClick} isAuthenticated={isAuthenticated}/>
+      <StylishWrapper 
+        imageUrl={imageUrl} 
+        isFavourite={isFavourite} 
+        onStarClick={handleStarClick} 
+        isAuthenticated={isAuthenticated}
+        role={role}
+      />
       <PromoCardsDescriprion 
         heading={heading} 
         description={description} 
@@ -106,14 +112,17 @@ type StylishWrapperProps = {
   isFavourite: boolean;
   onStarClick: (e: React.MouseEvent) => void;
   isAuthenticated: boolean
+  role: string | null
 };
 
 const StylishWrapper: React.FC<StylishWrapperProps> = ({ 
   imageUrl, 
   isFavourite, 
   onStarClick, 
-  isAuthenticated 
+  isAuthenticated,
+  role
 }) => {
+  const isStudent = role === "student"
   return (
 <div
   className="w-full rounded-t-[20px] px-[10px] pt-[10px] flex justify-end items-start"
@@ -134,7 +143,7 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({
       flex: '0 0 auto',
     }}
     onClick={onStarClick}
-  > {isAuthenticated && (
+  > {isAuthenticated && isStudent && (
     isFavourite ? 
     <Image src="icons/home/yellowStar.svg" width={32} height={32} alt=''/> 
     : <Image src="icons/home/whiteStar.svg" width={32} height={32} alt=''/>

@@ -6,14 +6,18 @@ interface Props{
     description: string;
     onClick?: () => void;
     isAuth: boolean
+    role: string | null;
 }
 
 const DiscountBox = ({
     title, 
     description,
     onClick,
-    isAuth
+    isAuth, 
+    role
 }: Props) => {
+    const isStudent = role === "student";
+    const isButtonDisabled = !isAuth || !isStudent;
     return (
         <div 
             className="box-border flex 
@@ -60,13 +64,6 @@ const DiscountBox = ({
                                 >
                                         <MarkdownRenderer content={description} />
                                 </article>
-                                {/* <p 
-                                    className="[font-family:Mulish,sans-serif] 
-                                    text-sm font-normal text-left text-[#032c28] 
-                                    mt-2.5 m-0 p-0"
-                                >
-                                    {description}
-                                </p> */}
                             </div>
                         </div>
 
@@ -81,9 +78,9 @@ const DiscountBox = ({
                                     uppercase text-[#032c28] min-w-[438px] 
                                     h-12 w-[438px] cursor-pointer block 
                                     box-border rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]
-                                    ${!isAuth ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                onClick={onClick}
-                                disabled={!isAuth}
+                                    ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    onClick={isStudent ? onClick : undefined}
+                                    // disabled={isButtonDisabled}
                             >
                                 Получить скидку
                             </Button>
@@ -94,21 +91,26 @@ const DiscountBox = ({
                                     grow-0 shrink-0 basis-auto ml-4 px-6 
                                     py-3 rounded-[15px] border-solid 
                                     border-[rgba(0,0,0,0.20)]
-                                    ${!isAuth ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                disabled={!isAuth}
+                                    ${isButtonDisabled ? 'opacity-50 ' : ''}`}
+                                    disabled={!isButtonDisabled}
                             >
                                 <Image 
                                     src="/icons/offer/eye.svg" 
                                     className="w-6 h-6 flex grow-0 
                                     shrink-0 basis-auto box-border cursor-pointer" 
-                                    onClick={onClick}
+                                    onClick={isStudent ? onClick : undefined}
                                     alt=""
                                     width={24}
                                     height={24}
-                                    
                                 />
                             </button>
+
                         </div>
+                        {!isStudent && (
+                                <p className="text-sm text-[#032c28] mt-1">
+                                    Получение промокода / скидки доступно только зарегистрированным студентам
+                                </p>
+                            )}
                     </div>
                 </div>
             </div>

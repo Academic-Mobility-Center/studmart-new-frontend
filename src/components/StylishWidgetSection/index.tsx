@@ -74,65 +74,6 @@ useEffect(() => {
   fetchFavourites();
 }, [selectedCategoryId, userId]);
 
-// useEffect(() => {
-//   // запускать запрос только один раз, при первом selectedCategoryId === 0
-//   if (selectedCategoryId !== 0 || hasFetchedFavourites) return;
-
-//   let isCancelled = false;
-//   const fetchFavourites = async () => {
-//     if (favouritesCacheRef.current) {
-//       setFavouritePartners(favouritesCacheRef.current);
-//       setHasFetchedFavourites(true);
-//       return;
-//     }
-  
-//     try {
-//       const data = await getFavouritesPartners(userId);
-//       if (isCancelled) return;
-  
-//       const transformed = transformPromos(data || []).map((card) => ({
-//         ...card,
-//         categoryId: 0,
-//       }));
-  
-//       favouritesCacheRef.current = transformed;
-//       setFavouritePartners(transformed);
-//       setHasFetchedFavourites(true);
-//     } catch (error) {
-//       if (!isCancelled) {
-//         console.error("Error fetching favourites:", error);
-//         setFavouritePartners([]);
-//       }
-//     }
-//   };
-//   // const fetchFavourites = async () => {
-//   //   try {
-//   //     const data = await getFavouritesPartners(userId);
-//   //     if (isCancelled) return;
-
-//   //     const transformed = transformPromos(data || []).map((card) => ({
-//   //       ...card,
-//   //       categoryId: 0,
-//   //     }));
-//   //     console.count("Fetching favourites");
-//   //     setFavouritePartners(transformed);
-//   //     setHasFetchedFavourites(true); // блокирует повторные вызовы
-//   //   } catch (error) {
-//   //     if (!isCancelled) {
-//   //       console.error("Error fetching favourites:", error);
-//   //       setFavouritePartners([]);
-//   //     }
-//   //   }
-//   // };
-
-//   fetchFavourites();
-
-//   return () => {
-//     isCancelled = true; // предотвращает установку стейта при размонтировании
-//   };
-// }, [selectedCategoryId, hasFetchedFavourites]);
-
-
   const renderPromoCardsRow = (cards: PromoCardType[]) => (
     <div className="promo-card-container">
       {cards.map((card) => (
