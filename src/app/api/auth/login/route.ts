@@ -21,25 +21,72 @@
 //     token,
 //   });
 // }
+// import { NextResponse } from 'next/server';
+// import jwt from 'jsonwebtoken';
+
+// const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
+
+// export async function POST(request: Request) {
+//   const { email, password, role } = await request.json();
+
+//   const token = jwt.sign(
+//     { email, password, role },
+//     SECRET_KEY,
+//     { expiresIn: '7d' }
+//   );
+
+//   const response = NextResponse.json({ success: true });
+//   // Устанавливаем HTTP-only cookie с токеном
+//   response.cookies.set('Studmart', token, {
+//     httpOnly: true,
+//     maxAge: 60 * 60 * 24 * 7, // 7 дней
+//     path: '/',
+//     sameSite: 'lax',
+//     secure: process.env.NODE_ENV === 'production',
+//   });
+
+//   return response;
+// }
+
+// /api/auth/login/route.ts
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
 
 export async function POST(request: Request) {
-  const { email, password, role } = await request.json();
+  const credentials = await request.json();
 
+  // Запрос на настоящий API
+  const externalResponse = await fetch('https://auth.studmart-dev.inxan.ru/login?useCookies=true', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!externalResponse.ok) {
+    const error = await externalResponse.json();
+    return NextResponse.json({ error: error.message || 'Ошибка авторизации' }, { status: 401 });
+  }
+
+  const data = await externalResponse.json(); // ожидаем { id, role }
+
+  // Создание собственного JWT (опционально)
   const token = jwt.sign(
-    { email, password, role },
+    { id: data.id, role: data.role },
     SECRET_KEY,
     { expiresIn: '7d' }
   );
 
-  const response = NextResponse.json({ success: true });
-  // Устанавливаем HTTP-only cookie с токеном
+  const response = NextResponse.json({
+    id: data.id,
+    role: data.role,
+    token,
+  });
+
   response.cookies.set('Studmart', token, {
     httpOnly: true,
-    maxAge: 60 * 60 * 24 * 7, // 7 дней
+    maxAge: 60 * 60 * 24 * 7,
     path: '/',
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',

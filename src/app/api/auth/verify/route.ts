@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
   try {
     const payload = jwt.verify(token, SECRET_KEY);
-    return NextResponse.json({ valid: true, payload });
+    return NextResponse.json(payload);
   } catch (e) {
     console.warn(e)
     return NextResponse.json({ error: 'Неверный или просроченный токен' }, { status: 401 });

@@ -18,6 +18,7 @@ const FaqPage = () => {
             [heading]: !prev[heading]
         }));
     };
+    
     return (
         <div className="flex flex-col gap-[40px]">
             <div
@@ -54,7 +55,6 @@ const FaqPage = () => {
                                 {isExpanded && (
                                     <article className="mt-5 text-[14px]"><MarkdownRenderer content={text} /></article>
                                     )}
-                                {/* {isExpanded && (<p className="mt-5 text-[14px]">{text}</p>)} */}
                             </div>
                         );
                     })}

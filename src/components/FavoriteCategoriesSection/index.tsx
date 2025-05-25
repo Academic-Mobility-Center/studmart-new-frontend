@@ -44,7 +44,7 @@ export default function FavoriteCategoriesSection({
           };
           const others = withIcons.filter((c: Category) => c.name !== "Избранное");
 
-          const finalMenu = isAuthenticated && favorite && role && role === "student"
+          const finalMenu = isAuthenticated && favorite && role && role === "Student"
             ? [favorite, ...others]
             : others;
 

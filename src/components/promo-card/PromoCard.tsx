@@ -122,7 +122,7 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({
   isAuthenticated,
   role
 }) => {
-  const isStudent = role === "student"
+  const isStudent = role === "Student"
   return (
 <div
   className="w-full rounded-t-[20px] px-[10px] pt-[10px] flex justify-end items-start"

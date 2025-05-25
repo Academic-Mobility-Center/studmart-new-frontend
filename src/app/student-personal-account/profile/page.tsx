@@ -37,8 +37,7 @@ import { transformToOption } from '@/utils/dataTransform';
 import {useAuth} from "@/context/AuthContext"
 
 const ProfilePage: React.FC = () => {
-    const {role} = useAuth();
-    console.log("role", role);
+    const {id ,isLoading} = useAuth();
     const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
     const [fetchCourses, setFetchCourses] = useState<{
         id: number;
@@ -66,7 +65,7 @@ const ProfilePage: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const student = await getStudentById("6454dd90-97d5-4cee-b0ad-351b279e9549");
+                const student = await getStudentById(id ?? "");
                 if (student) {
                     setFetchStudent(student);
                 }
@@ -77,6 +76,7 @@ const ProfilePage: React.FC = () => {
                 } else {
                     console.error("Ошибка при загрузке студентов:", e);
                 }
+                return;
             }
             try{
                 const universities = await getStudentUniversities();
@@ -103,9 +103,11 @@ const ProfilePage: React.FC = () => {
                 console.warn(error)
             }
         };
-    
-        fetchData();
-    }, []);
+        if (id){
+            fetchData();
+        }
+
+    }, [id]);
     useEffect(() => {
         if (!fetchStudent) return;
         const genderOption = fetchStudent?.sex ? { id: 2, name: "Женский" } : { id: 1, name: "Мужской" };
@@ -296,6 +298,9 @@ const ProfilePage: React.FC = () => {
         console.log("Отправка формы:", formData);     
     };
 
+    if (isLoading){
+        return<>Loading</>
+    }
     return (
         <>
         <form onSubmit={handleSubmitForm} className={profileCardClasses}>

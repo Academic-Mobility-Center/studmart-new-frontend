@@ -1,14 +1,15 @@
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
-import { useAuth } from "@/context/AuthContext";
-
+import React, { useState, useEffect } from 'react';
+import {getStudentById} from "@/lib/api/students"
+import IStudentFormData from "@/app/student-personal-account/context"
+import {useAuth} from "@/context/AuthContext"
 const StudId: React.FC = () => {
-    const {firstName, lastName, universityShortName, year} = useAuth();
     const [image, setImage] = useState("/icons/student-account/d4eeae509bbfb902288411fb819999c2.jpeg");
     const [isLoading, setIsLoading] = useState(false);
-
+    const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
+    const {id} = useAuth();
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -21,23 +22,39 @@ const StudId: React.FC = () => {
             reader.readAsDataURL(file);
         }
     };    
+    useEffect(()=>{
+        const fetchData = async () => {
+            try {
+                const student = await getStudentById(id ?? "");
+                if (student) {
+                    setFetchStudent(student);
+                }
+            } catch (e:unknown ) {
+                const error = e as { response?: { status: number } };
+                if (error?.response?.status === 400) {
+                    console.warn("Ошибка 400 при загрузке студентов:", e);
+                } else {
+                    console.error("Ошибка при загрузке студентов:", e);
+                }
+            }
+        }
+        if (id){
+            fetchData();
+        }
+    },[id])
     const date = new Date();
-    if (!firstName || !lastName){
-        return
-    }
+    const year = date.getFullYear() + (fetchStudent?.course?.yearsBeforeEnding && fetchStudent?.course?.yearsBeforeEnding > 0 ? fetchStudent?.course?.yearsBeforeEnding : 0)
     const userData = {
-        firstName: firstName,
-        lastName: lastName,
+        firstName: fetchStudent?.firstName,
+        lastName: fetchStudent?.lastName,
         university: {
-            shortName: universityShortName
+            shortName: fetchStudent?.university?.shortName
         },
         course: {
-            name: "1 курс магистратуры",
-            yearsBeforeEnding: date.getFullYear() + (year && year > 0 ? year : 0)
+            name: fetchStudent?.course?.name,
+            yearsBeforeEnding: year
         }
     };
-
-
 
     return (
         <>

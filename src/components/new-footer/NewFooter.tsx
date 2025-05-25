@@ -28,9 +28,10 @@ const NewFooter = ({ isAuthenticated }: NewFooterProps) => {
             </div>
         
             <div className="flex flex-row justify-between items-end mt-10">
-                <p className="font-mulish text-sm text-[#032c28] pt-4 pl-4">
+                <a className="font-mulish text-sm text-[#032c28] pt-4 pl-4" href={"/files/Политика конфиденциальности.pdf"}
+                        download>
                     Политика конфиденциальности
-                </p>
+                </a>
                 <p className="font-mulish text-sm text-right text-[#032c28]">
                     Политика управления<br />
                     персональными данными и cookies

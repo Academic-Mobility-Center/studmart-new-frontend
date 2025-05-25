@@ -136,14 +136,16 @@ type UserPayload = {
   firstName: string;
   universityShortName?: string;
   yearsBeforeEnding?: number;
+  id: string;
 };
 
 type AuthContextType = {
   isAuthenticated: boolean;
   isLoading: boolean;
   role: string | null;
-  firstName: string | null;
-  lastName: string | null;
+  id: string | null
+  // firstName: string | null;
+  // lastName: string | null;
   universityShortName?: string | null;
   year?: number | null;
   logout: () => void;
@@ -156,8 +158,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState<string | null>(null);
-  const [firstName, setFirstName] = useState<string | null>(null);
-  const [lastName, setLastName] = useState<string | null>(null);
+  const [id, setId] = useState<string | null>(null);
+  // const [firstName, setFirstName] = useState<string | null>(null);
+  // const [lastName, setLastName] = useState<string | null>(null);
   const [universityShortName, setUniversityShortName] = useState<string | null>(null);
   const [year, setYear] = useState<number | null>(null);
 
@@ -175,8 +178,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const user: UserPayload = await res.json();
 
         setRole(user.role);
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
+        setId(user.id)
+        // setFirstName(user.firstName);
+        // setLastName(user.lastName);
         setUniversityShortName(user.universityShortName || null);
         setYear(user.yearsBeforeEnding ?? null);
         setIsAuthenticated(true);
@@ -203,12 +207,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
   
       if (!res.ok) throw new Error('Not authenticated');
-  
+      
       const user: UserPayload = await res.json();
   
       setRole(user.role);
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
+      setId(user.id)
+      // setFirstName(user.firstName);
+      // setLastName(user.lastName);
       setUniversityShortName(user.universityShortName || null);
       setYear(user.yearsBeforeEnding ?? null);
       setIsAuthenticated(true);
@@ -223,8 +228,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated,
         isLoading,
         role,
-        firstName,
-        lastName,
+        id,
+        // firstName,
+        // lastName,
         universityShortName,
         year,
         logout,

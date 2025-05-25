@@ -16,7 +16,7 @@ const DiscountBox = ({
     isAuth, 
     role
 }: Props) => {
-    const isStudent = role === "student";
+    const isStudent = role === "Student";
     const isButtonDisabled = !isAuth || !isStudent;
     return (
         <div 
