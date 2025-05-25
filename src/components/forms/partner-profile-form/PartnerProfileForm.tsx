@@ -15,7 +15,8 @@ import {
     profileTitleClasses, 
     regionOptions, 
     saveButtonClasses, 
-    validateField 
+    validateField,
+    PartnerProfileData
 } from "@/app/partner-personal-account/context";
 import { Option } from "@/types/Option";
 import {  
@@ -25,25 +26,47 @@ import {
     getPartnerInfo, 
     getPartnerRegions 
 } from "@/lib/api/partners";
-
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
 const PartnerProfileForm: React.FC =  () => {
+    const { role, id } = useAuth();
+    const router = useRouter();
+  
+    useEffect(() => {
+      if (role && role !== "Employee") {
+          router.replace("/student-personal-account");
+      }
+  }, [role, router]);
+    
     const [fetchRegionOptions, setFetchRegionOptions] = useState(regionOptions)
     const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
     const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
-    const [fetchPartner, setFetchPartner] = useState(defaultUser)
+    const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null)
+    const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
+        personalEmail: "",
+        password: "",
+        companyName: "",
+        site: "",
+        phoneNumber: "",
+        companyEmail: "",
+        industry: transformToOption(defaultUser?.partner.category),
+        country: transformToOption(defaultUser?.partner.country),
+        regions: transformToOptions(defaultUser?.partner.regions),
+        inn: "",
+        currentAccount: "",
+        corAccount: "",
+        bic: "",
+        allRegions: false,
+        specificRegions: false
+    });
     useEffect(() => {
         const fetchData = async () => {
             try{
-                // const partnerData = await getPartner("1a9b52cc-719c-4e46-b6a5-ba0918c0e1a2")
-                // console.log(partnerData)
-                const partner = await getPartnerInfo("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+                const partner = await getPartnerInfo(id ?? "");
                 setFetchPartner(partner)
-                // setFetchPartnerData(partnerData)
 
             } catch(error){
                 console.log(error)
-                setFetchPartner(defaultUser)
-                // setFetchPartnerData(defaultPartner)
             }
             try {
                 const countries = await getPartnerCountries();
@@ -69,42 +92,31 @@ const PartnerProfileForm: React.FC =  () => {
                 setFetchingIndustryOptions(industryOptions);
             }
         };
-    
-        fetchData();
-    }, []);
-    
-    const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
-        personalEmail: fetchPartner?.email,
-        password: "securePass123",
-        companyName: fetchPartner?.partner?.name,
-        site: fetchPartner?.partner.site,
-        phoneNumber: fetchPartner?.partner.phone,
-        companyEmail: fetchPartner?.partner.email,
-        industry: transformToOption(defaultUser?.partner.category),
-        country: transformToOption(defaultUser?.partner.country),
-        regions: transformToOptions(defaultUser?.partner.regions),
-        inn: fetchPartner?.partner.inn.toString(),
-        currentAccount: fetchPartner?.partner.paymentInformation?.accountNumber,
-        corAccount: fetchPartner?.partner.paymentInformation?.correspondentAccountNumber,
-        bic: fetchPartner?.partner.paymentInformation?.bik,
-        allRegions: fetchPartner?.partner.hasAllRegions,
-        specificRegions: false
-        // personalEmail: fetchPartnerData?.employees[0].email,
-        // password: "securePass123",
-        // companyName: fetchPartnerData.name,
-        // site: fetchPartnerData.site,
-        // phoneNumber: fetchPartnerData.phone,
-        // companyEmail: fetchPartnerData.email,
-        // industry: transformToOption(fetchPartnerData.category),
-        // country: transformToOption(fetchPartnerData.country),
-        // regions: transformToOptions(fetchPartnerData.regions),
-        // inn: fetchPartnerData.inn.toString(),
-        // currentAccount: fetchPartnerData.paymentInformation?.accountNumber,
-        // corAccount: fetchPartnerData.paymentInformation?.correspondentAccountNumber,
-        // bic: fetchPartnerData.paymentInformation?.bik,
-        // allRegions: fetchPartnerData.hasAllRegions,
-        // specificRegions: !fetchPartnerData.hasAllRegions
-    });
+        if (id){
+            fetchData();
+        }
+    }, [id]);
+    useEffect(() => {
+        if (!fetchPartner) return
+        setFormData({
+            personalEmail: fetchPartner.email,
+            password: "",
+            companyName: fetchPartner.partner.name,
+            site: fetchPartner.partner.site,
+            phoneNumber: fetchPartner.partner.phone,
+            companyEmail: fetchPartner.partner.email,
+            industry: fetchPartner.partner?.category ? transformToOption(fetchPartner.partner?.category) : undefined,
+            country: fetchPartner.partner?.country ? transformToOption(fetchPartner.partner?.country) : undefined,
+            regions : fetchPartner.partner?.regions ? transformToOptions(fetchPartner.partner?.regions) : undefined,
+            inn: fetchPartner.partner.inn.toString(),
+            currentAccount: fetchPartner.partner.paymentInformation.accountNumber,
+            corAccount: fetchPartner.partner.paymentInformation.correspondentAccountNumber,
+            bic: fetchPartner.partner.paymentInformation.bik,
+            allRegions: fetchPartner.partner.hasAllRegions,
+            specificRegions: !fetchPartner.partner.hasAllRegions
+        })
+    },[fetchPartner])
+
 
     const [errors, setErrors] = useState<{ 
         personalEmail?: string; 

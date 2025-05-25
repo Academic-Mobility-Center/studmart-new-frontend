@@ -5,7 +5,18 @@ import { Button } from "@mui/base";
 const pClass = "font-[Mulish] text-[#032C28] mb-[10px]"
 export const saveButton = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-5 rounded-[15px] border-[none]";
 import ImageUploader from "@/utils/imageUpload";
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
+import {useEffect} from "react"
 const PartnerOffersForm: React.FC = () => {
+    const { role } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Employee") {
+            router.replace("/student-personal-account");
+        }
+    }, [role, router]);
     return(
     <>
            <div  className={profileCardClasses} style={{gap: '20px'}}>

@@ -137,6 +137,7 @@ const ProfilePage: React.FC = () => {
 
         });
     }, [fetchStudent]);    
+    
     // const [cities,setCities] = useState<City[]>(newCityOptions)
     // useEffect(() => {
     //     const fetchData = async () => {

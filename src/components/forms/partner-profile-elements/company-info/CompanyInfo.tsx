@@ -64,7 +64,7 @@ const CompanyInfo: React.FC<Props> = ({
                                 value={formData.site}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                maxRows={1}                                   
+                                maxRows={5}                                   
                             />
                             {errors.site && <p className="text-red-600 text-sm font-medium">{errors.site}</p>}                            
                         </div>

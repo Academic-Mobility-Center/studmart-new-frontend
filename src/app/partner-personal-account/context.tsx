@@ -356,3 +356,30 @@ export type User = {
   email: string;
   partner: Partner; 
 };
+
+export type PartnerProfileData = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  partner: {
+    category: {id: number; name: string}
+    country: {id: number; name: string}
+    description: string;
+    email: string;
+    hasAllRegions: boolean;
+    id: string;
+    inn: number;
+    name: string;
+    paymentInformation: {
+      bik: string;
+      accountNumber: string;
+      correspondentAccountNumber: string;
+    }
+    phone: string;
+    priority: number;
+    regions: {id: number; name: string}[]
+    site: string;
+    subtitle: string;
+  }
+}

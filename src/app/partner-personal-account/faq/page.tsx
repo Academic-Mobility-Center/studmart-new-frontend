@@ -6,7 +6,18 @@ import { SelectField } from "@/components/fields/select/SelectField";
 import { transformToOptions } from "@/utils/dataTransform";
 import InputField from "@/components/fields/input/InputField";
 import { faqCategoryOptions, FaqQuestions } from "../context";
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
+import {useEffect} from "react"
 const FaqPage = () => {
+    const { role } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Employee") {
+            router.replace("/student-personal-account");
+        }
+    }, [role, router]);
     const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(FaqQuestions.map(item => [item.title, false]))
     );
