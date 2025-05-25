@@ -5,10 +5,12 @@ import { BlackArrowDown } from "./icons/BlackArrowDown";
 import { SelectField } from "@/components/fields/select/SelectField";
 import { transformToOptions } from "@/utils/dataTransform";
 import InputField from "@/components/fields/input/InputField";
-import { faqCategoryOptions, FaqQuestions } from "../context";
+import { FaqQuestions, faqCategoryOptionsPartner } from "../context";
 import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
 import {useEffect} from "react"
+import MarkdownRenderer from "@/components/MarkdownRenderer";
+
 const FaqPage = () => {
     const { role } = useAuth();
     const router = useRouter();
@@ -60,8 +62,9 @@ const FaqPage = () => {
                                     </div>
                                 </div>
 
-                                {isExpanded && (<p className="mt-5 text-[14px]">{text}</p>)}
-                            </div>
+                                {isExpanded && (
+                                    <article className="mt-5 text-[14px]"><MarkdownRenderer content={text} /></article>
+                                    )}                            </div>
                         );
                     })}
                 </div>
@@ -89,7 +92,7 @@ const FaqPage = () => {
                     width={548}
                     label="Выберете категорию вопроса"
                     placeholder="Категория вопроса"
-                    options={transformToOptions(faqCategoryOptions)}
+                    options={transformToOptions(faqCategoryOptionsPartner)}
                     labelFontSize={14}
                     name="category"
                 />

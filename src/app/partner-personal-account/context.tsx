@@ -1,5 +1,11 @@
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount";
-
+export const faqCategoryOptionsPartner = [
+  {id: 1, name: "Изменение данных организации"},
+  {id: 2, name: "Изменение публичной страницы"},
+  {id: 3, name: "Проблема со статистикой"},
+  {id: 4, name: "Запрос документов"},
+  {id: 5, name: "Другой вопрос"},
+]
 export const industryOptions = [
     { id: 1, name: "ИТ-услуги" },
     { id: 2, name: "Финансы" },
@@ -164,24 +170,16 @@ export const faqCategoryOptions = [
 
 export const FaqQuestions = [
   {
-      title: "Вопрос 1",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus, dui a ultricies commodo, erat ligula placerat lorem, at dictum purus sapien vel risus. Fusce faucibus, arcu id lacinia finibus, tortor risus facilisis eros, a viverra sapien tortor vitae justo. Duis rhoncus enim vel sapien viverra luctus. Donec vel rutrum turpis. Praesent ac risus enim. Nam vestibulum tempus finibus. Phasellus augue nulla, vulputate sit amet malesuada a, fringilla eu felis. Phasellus ullamcorper quam sit amet eros tristique tempor. Pellentesque nulla risus, pulvinar nec elit a, varius bibendum massa. Vivamus eu enim eu turpis euismod efficitur vel eu neque. Duis eget efficitur eros. Donec nec magna massa. Donec a vulputate augue, ac egestas nisi. Nulla mattis egestas turpis id condimentum."       
+      title: "Как я могу изменить данные организации?",
+      text: "Для изменения данных организации, необходимо обратиться к вашему персональному менеджеру или на support@studmart.ru"       
   },
   {
-      title: "Вопрос 2",
-      text: "Phasellus nibh nibh, mattis sed convallis eget, lacinia porta mauris. Proin congue sed nisi sit amet finibus. Vivamus cursus dapibus rutrum. Nulla justo ligula, rutrum vel lacus non, semper condimentum enim. Nunc nec finibus arcu. Mauris quis imperdiet leo, a posuere elit. Pellentesque nec maximus elit, ut eleifend est. Nullam tincidunt augue eget nunc accumsan, sit amet volutpat ex fringilla. Fusce et mi sit amet sapien porta euismod. Curabitur diam mi, tempus et eleifend id, ullamcorper ut nunc. Nulla eu lectus ut augue consequat ultricies. Nullam eget sodales nulla."       
+      title: "Как я могу внести изменения на персональную страницу?",
+      text: "Вы можете направить новый логотип и описание через ваш личный кабинет. Если вам необходимо полностью изменить описание, пожалуйста, обратитесь на support@studmart.ru"       
   },
   {
-      title: "Вопрос 3",
-      text: "Proin pretium massa vel sapien scelerisque consequat. Proin iaculis egestas erat, non condimentum ex sagittis et. Duis posuere vitae nisi sit amet tristique. Suspendisse ut vehicula diam, at convallis turpis. Phasellus massa diam, pharetra feugiat risus non, ultricies blandit nunc. Suspendisse potenti. Donec maximus erat ex, nec ultricies nisl lobortis vitae."       
-  },
-  {
-      title: "Вопрос 4",
-      text: "Etiam porta dolor mauris, sit amet finibus dui varius sit amet. Nunc vel dapibus dui, ultrices condimentum libero. Suspendisse potenti. Donec felis diam, accumsan nec feugiat quis, cursus non metus. Aliquam nec ex pharetra, pellentesque felis sit amet, interdum massa. Vivamus fringilla, diam vel interdum efficitur, dolor ipsum molestie ex, vitae auctor sem nunc a velit. Proin lacinia nibh vel purus mattis, dictum maximus nisi scelerisque."       
-  },
-  {
-      title: "Вопрос 5",
-      text: "Ut nec urna quis lacus convallis porttitor quis quis dui. Donec aliquet, neque vel venenatis consequat, massa arcu bibendum magna, et hendrerit enim velit sit amet nibh. Cras ut lorem enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum, tellus pretium imperdiet pharetra, ipsum dolor rutrum risus, sit amet ullamcorper ligula nulla ut enim. Maecenas luctus orci a venenatis condimentum. Nulla accumsan nec lacus vel placerat. Sed finibus porttitor diam at fringilla. Praesent eget risus dolor. Suspendisse malesuada commodo diam ut eleifend. Vivamus at egestas justo, ac sollicitudin justo. Vivamus eu nisi diam. Integer vel ligula at leo convallis condimentum."       
+      title: "Как можно получить закрывающие документы?",
+      text: "Если обмен документами производился через ЭДО, все закрывающие документы будут направлены в ЭДО. Если они не пришли, пожалуйста, обратитесь на support@studmart.ru \n\n Если обмен документами производился на бумаге, пожалуйста, отправьте запрос на недостающие документы на head@studmart.ru"       
   },
 
 ]

@@ -137,12 +137,14 @@ export const categoriesAndServices = [
 ];
 
 export const faqCategoryOptions = [
-    {id: 1, name: "Первая категория"},
-    {id: 2, name: "Вторая категория"},
-    {id: 3, name: "Третья категория"},
-    {id: 4, name: "Четвертая категория"},
-    {id: 5, name: "Пятая категория"}
+    {id: 1, name: "Проблема с применением промокода"},
+    {id: 2, name: "Не могу изменить данные в профиле"},
+    {id: 3, name: "Проблема / ошибка на сайте"},
+    {id: 4, name: "Мои персональные данные"},
+    {id: 5, name: "Удаление аккаунта"},
+    {id: 6, name: "Другой вопрос"}
 ]
+
 
 export const FaqQuestions = [
     {
