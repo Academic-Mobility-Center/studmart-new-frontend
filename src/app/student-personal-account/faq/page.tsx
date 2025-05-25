@@ -6,6 +6,8 @@ import { BlackArrowDown } from "./icons/BlackArrowDown";
 import { SelectField } from "@/components/fields/select/SelectField";
 import { transformToOptions } from "@/utils/dataTransform";
 import InputField from "@/components/fields/input/InputField";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
+
 const FaqPage = () => {
     const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(FaqQuestions.map(item => [item.title, false]))
@@ -47,9 +49,12 @@ const FaqPage = () => {
                                             {isExpanded ? <BlackArrowUp /> : <BlackArrowDown />}
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
 
-                                {isExpanded && (<p className="mt-5 text-[14px]">{text}</p>)}
+                                {isExpanded && (
+                                    <article className="mt-5 text-[14px]"><MarkdownRenderer content={text} /></article>
+                                    )}
+                                {/* {isExpanded && (<p className="mt-5 text-[14px]">{text}</p>)} */}
                             </div>
                         );
                     })}

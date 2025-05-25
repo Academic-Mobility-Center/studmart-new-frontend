@@ -167,6 +167,21 @@ export const sendStudentFile = async(id: string, image: string, contentType: str
     return null;
   }
 }
+
+export const getCitiesByRegionId = async(regionId: string) => {
+  try {
+    const res = await fetch(`/api/students/Cities?RegionId=${regionId}`);
+
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении городов: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getStudentCities:", error);
+    return null;
+  }
+}
 // export const sendStudentFile = (id: string, image: string, contentType: string) => {
 //   try {
 //     fetch(`/api/files/Verifications`, {

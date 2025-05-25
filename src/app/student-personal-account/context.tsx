@@ -146,26 +146,17 @@ export const faqCategoryOptions = [
 
 export const FaqQuestions = [
     {
-        title: "Вопрос 1",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tempus, dui a ultricies commodo, erat ligula placerat lorem, at dictum purus sapien vel risus. Fusce faucibus, arcu id lacinia finibus, tortor risus facilisis eros, a viverra sapien tortor vitae justo. Duis rhoncus enim vel sapien viverra luctus. Donec vel rutrum turpis. Praesent ac risus enim. Nam vestibulum tempus finibus. Phasellus augue nulla, vulputate sit amet malesuada a, fringilla eu felis. Phasellus ullamcorper quam sit amet eros tristique tempor. Pellentesque nulla risus, pulvinar nec elit a, varius bibendum massa. Vivamus eu enim eu turpis euismod efficitur vel eu neque. Duis eget efficitur eros. Donec nec magna massa. Donec a vulputate augue, ac egestas nisi. Nulla mattis egestas turpis id condimentum."       
+        title: "Скидка партнера не работает или партнер отказывается предоставить скидку. Что делать?",
+        text: "Если такая ситуация произошла, просим вас сообщить о случае на support@studmart.ru"       
     },
     {
-        title: "Вопрос 2",
-        text: "Phasellus nibh nibh, mattis sed convallis eget, lacinia porta mauris. Proin congue sed nisi sit amet finibus. Vivamus cursus dapibus rutrum. Nulla justo ligula, rutrum vel lacus non, semper condimentum enim. Nunc nec finibus arcu. Mauris quis imperdiet leo, a posuere elit. Pellentesque nec maximus elit, ut eleifend est. Nullam tincidunt augue eget nunc accumsan, sit amet volutpat ex fringilla. Fusce et mi sit amet sapien porta euismod. Curabitur diam mi, tempus et eleifend id, ullamcorper ut nunc. Nulla eu lectus ut augue consequat ultricies. Nullam eget sodales nulla."       
+        title: "Как вы гарантируете безопасность моих данных? Какие данные передаются партнерам?",
+        text: "Одним из приоритетов платформы Студмарт является конфиденциальность и безопасность личных данных каждого пользователя. Мы постоянно улучшаем систему безопасности наших серверов, фрагментируем данные, а также не предоставляем исчерпывающей информации о пользователе третьим лицам. Так, например, мы НЕ передаем третьим лицам следующие данные: \n -  Имя \n - Фамилия \n - E-mail \n - Телефон \n - Точный возраст (сообщаем лишь диапазон возрастной группы). \n\n При этом из обязательных для заполнения данных партнеры и третьи лица получают информацию об университете, курсе, специальности и возрастной группе пользователя приз сборе статистики. Кроме того, все необязательные данные, которые вы заполняете самостоятельно после регистрации также доступны партнерам для сбора статистики, но при этом не идентифицируют вас детально. \n\n Вы всегда можете управлять доступом к вашим данным самостоятельно в разделе «Мои данные» или, даже, удалить ваш аккаунт, при этом после запрета передачи данных или удаления пользователя, ваши данные могут храниться на наших серверах еще 1 календарный год для отображения корректных статистических данных. "       
     },
     {
-        title: "Вопрос 3",
-        text: "Proin pretium massa vel sapien scelerisque consequat. Proin iaculis egestas erat, non condimentum ex sagittis et. Duis posuere vitae nisi sit amet tristique. Suspendisse ut vehicula diam, at convallis turpis. Phasellus massa diam, pharetra feugiat risus non, ultricies blandit nunc. Suspendisse potenti. Donec maximus erat ex, nec ultricies nisl lobortis vitae."       
+        title: "Как работает реферальная система?",
+        text: "Реферальная система позволяет зарабатывать со Студмартом привлекая других студентов в систему. \n Для того, чтобы получить бонусные рубли достаточно поделиться протоколом"       
     },
-    {
-        title: "Вопрос 4",
-        text: "Etiam porta dolor mauris, sit amet finibus dui varius sit amet. Nunc vel dapibus dui, ultrices condimentum libero. Suspendisse potenti. Donec felis diam, accumsan nec feugiat quis, cursus non metus. Aliquam nec ex pharetra, pellentesque felis sit amet, interdum massa. Vivamus fringilla, diam vel interdum efficitur, dolor ipsum molestie ex, vitae auctor sem nunc a velit. Proin lacinia nibh vel purus mattis, dictum maximus nisi scelerisque."       
-    },
-    {
-        title: "Вопрос 5",
-        text: "Ut nec urna quis lacus convallis porttitor quis quis dui. Donec aliquet, neque vel venenatis consequat, massa arcu bibendum magna, et hendrerit enim velit sit amet nibh. Cras ut lorem enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum, tellus pretium imperdiet pharetra, ipsum dolor rutrum risus, sit amet ullamcorper ligula nulla ut enim. Maecenas luctus orci a venenatis condimentum. Nulla accumsan nec lacus vel placerat. Sed finibus porttitor diam at fringilla. Praesent eget risus dolor. Suspendisse malesuada commodo diam ut eleifend. Vivamus at egestas justo, ac sollicitudin justo. Vivamus eu nisi diam. Integer vel ligula at leo convallis condimentum."       
-    },
-
 ]
 
 export default interface IStudentFormData {
@@ -183,50 +174,19 @@ export default interface IStudentFormData {
         city: {
             id: number,
             name: string
-          region: {
-            id: number,
-            name: string
-            country: {
+            region: {
                 id: number,
                 name: string
+                country: {
+                    id: number,
+                    name: string
+                }
             }
-          }
-        }
-      },
-      course: {
-        id: number,
-        name: string
-      }
-}
-
-
-export const defaultStudent: IStudentFormData = {
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "firstName": "string",
-    "lastName": "string",
-    "sex": true,
-    "birthDate": "2025-04-26",
-    "email": "string",
-    "specialisation": "string",
-    "university": {
-      "id": 0,
-      "name": "string",
-      "shortName": "string",
-      "city": {
-        "id": 0,
-        "name": "string",
-        "region": {
-          "id": 0,
-          "name": "string",
-          "country": {
-            "id": 0,
-            "name": "string"
-          }
-        }
-      }
+        },
     },
-    "course": {
-      "id": 0,
-      "name": "string"
+    course: {
+        id: number,
+        name: string,
+        yearsBeforeEnding: number   
     }
 }

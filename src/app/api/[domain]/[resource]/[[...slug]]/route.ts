@@ -10,7 +10,7 @@ export async function GET(
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
     "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications" // добавлено
+    "EmailDomains", "Verifications", "Cities"
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
@@ -49,7 +49,7 @@ export async function POST(
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
     "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications" // добавлено
+    "EmailDomains", "Verifications", "Cities"
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
@@ -98,7 +98,7 @@ export async function DELETE(
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
     "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications" // добавлено
+    "EmailDomains", "Verifications", "Cities"
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {

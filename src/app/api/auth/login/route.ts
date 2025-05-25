@@ -27,10 +27,10 @@ import jwt from 'jsonwebtoken';
 const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
 
 export async function POST(request: Request) {
-  const { email, password } = await request.json();
+  const { email, password, role } = await request.json();
 
   const token = jwt.sign(
-    { email, password },
+    { email, password, role },
     SECRET_KEY,
     { expiresIn: '7d' }
   );

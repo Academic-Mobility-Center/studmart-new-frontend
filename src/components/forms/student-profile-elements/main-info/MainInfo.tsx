@@ -7,7 +7,6 @@ import Region from "@/types/Region";
 import { SelectOption } from "@/types/SelectOption";
 import { StudentFormData } from "@/types/StudentProfileData";
 import { transformToOptions } from "@/utils/dataTransform";
-
 interface Props{
     formData: StudentFormData | null;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
@@ -46,9 +45,25 @@ const MainInfo: React.FC<Props> = ({
     newCityOptions,
     newRegionOptions
 }) => {
-    const filteredCityOptions = formData?.region
-    ? newCityOptions.filter(city => city.region.id === Number(formData.region?.value))
-    : [];
+    // const [cities,setCities] = useState<City[]>(newCityOptions)
+    // useEffect(()=> {
+    //     const fetchData = async () => {
+    //         try{
+    //             const fetchRegions = await getCitiesByRegionId(formData?.region?.value ?? "1")
+    //             setCities(fetchRegions)
+    //         }
+    //         catch (error){
+    //             console.warn(error);
+    //             setCities(newCityOptions)
+    //         }
+    //     }
+    //     if (formData?.region){
+    //         fetchData();
+    //     }
+    // },[formData?.region])
+    // const filteredCityOptions = formData?.region
+    // ? newCityOptions.filter(city => city.region.id === Number(formData.region?.value))
+    // : [];
     return(
         <div className="">
             <h2 className={sectionTitleClasses}>Личная информация</h2>
@@ -128,7 +143,7 @@ const MainInfo: React.FC<Props> = ({
                 <div className={inputContainerClasses}>
                     <SelectField 
                         name="city"
-                        options={transformToOptions(filteredCityOptions)}
+                        options={transformToOptions(newCityOptions)}
                         label="Город проживания" 
                         placeholder="Город проживания" 
                         width={262}

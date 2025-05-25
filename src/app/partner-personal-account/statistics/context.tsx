@@ -4,7 +4,7 @@ import StatisticFormData, { EventStatItem } from "@/types/StatisticFormData";
 import Region from "@/types/Region";
 import University from "@/types/University";
 import City from "@/types/Cities";
-import Country from "@/types/Country";
+// import Country from "@/types/Country";
 type SimulatedFetchKey = "demography" | "geography" | "devices" | "eventStats";
 
 type SimulatedFetchReturnType<K extends SimulatedFetchKey> =
@@ -14,26 +14,24 @@ type SimulatedFetchReturnType<K extends SimulatedFetchKey> =
   K extends "eventStats" ? typeof defaultEventStats :
   never;
 
-const country: Country = {
-  id: 1,
-  name: "Россия"
-};
+// const country: Country = {
+//   id: 1,
+//   name: "Россия"
+// };
 
 export const regionOptions: Region[] = [
     { 
         id: 1, 
         name: "Новосибирская область",
-        country
     },
     { 
         id: 2, 
         name: "Москва",
-        country
     },
     { 
         id: 3, 
         name: "Санкт-Петербург",
-        country
+        
     },
 ];
 

@@ -196,10 +196,10 @@ const RegForm3: React.FC<Props> =({
                         Назад
                     </button>
                     <button 
-                        className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px]"
+                        className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px] cursor-pointer"
                         onClick={handleSubmit}
                     >
-                        Далее
+                        Зарегистрироваться
                     </button>
                 </div>
                 <p className="text-sm font-bold text-[#032c28] text-center">

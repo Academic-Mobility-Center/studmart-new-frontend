@@ -9,7 +9,7 @@ interface ReferalData{
 
 const ReferalProgramPage = () => {
     const [formData] = useState<ReferalData>({
-        account: "6 687 руб.",
+        account: "0 руб.",
         link: "http://www.some-link.com",
         promocode: "PROMO25"
     })
@@ -97,11 +97,6 @@ const ReferalProgramPage = () => {
                     >
                         Ты за приглашенного получишь 50 рублей, он — 25 рублей.
                     </p>
-                    <p 
-                        className="text-left font-[Mulish] text-[#032C28]"
-                    >
-                        Потратить баллы можно будет с 1 августа.
-                    </p>            
                 </div>
                 <div className="flex flex-row gap-6 mb-5">
                     <div className="flex flex-col">

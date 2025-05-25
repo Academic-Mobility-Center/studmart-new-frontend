@@ -1,8 +1,3 @@
-// import { NextResponse } from 'next/server';
-// export async function GET() {
- 
-//   return NextResponse.json({ valid: true });
-// }
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
@@ -14,7 +9,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Токен отсутствует' }, { status: 401 });
   }
 
-  const match = cookie.match(/auth_token=([^;]+)/);
+  const match = cookie.match(/Studmart=([^;]+)/);
   if (!match) {
     return NextResponse.json({ error: 'Токен отсутствует' }, { status: 401 });
   }

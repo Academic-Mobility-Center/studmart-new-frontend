@@ -5,13 +5,14 @@ import UniversityInfo from '@/components/forms/student-profile-elements/universi
 import { StudentFormData } from '@/types/StudentProfileData';
 import { Button } from '@mui/base';
 import React, { useEffect, useState } from 'react';
+// import City from "@/types/Cities";
+
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
 const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
 import { 
     regionOptions as newRegionOptions, 
     cityOptions as newCityOptions,
-    universityOptions as newUniversityOptions,
     universityOptions,
     cityOptions
 } from '@/app/partner-personal-account/statistics/context';
@@ -24,20 +25,49 @@ import IStudentFormData, {
     validateField, 
 } from '../context';
 import { Option } from '@/types/Option';
-import { getStudentById } from '@/lib/api/students';
+import { 
+    getStudentById, 
+    getStudentCourses, 
+    getStudentCities, 
+    getStudentUniversities,
+    // getCitiesByRegionId
+} from '@/lib/api/students';
+import {getPartnerRegions} from '@/lib/api/partners';
 import { transformToOption } from '@/utils/dataTransform';
+import {useAuth} from "@/context/AuthContext"
 
 const ProfilePage: React.FC = () => {
+    const {role} = useAuth();
+    console.log("role", role);
     const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
-    const [fetchCourses] = useState(courseOptions)
-    const [fetchUniversities] = useState(universityOptions)
-    const [fetchCities] = useState(cityOptions)
-    const [formData, setFormData] = useState<StudentFormData>({});
+    const [fetchCourses, setFetchCourses] = useState<{
+        id: number;
+        name: string;
+    }[]>(courseOptions)
+    const [fetchUniversities, setFetchUniversities] = useState(universityOptions)
+    const [fetchCities, setFetchCities] = useState(cityOptions)
+    const [regions, setRegions] = useState<{id: number, name: string}[]>(newRegionOptions)
+    const [formData, setFormData] = useState<StudentFormData>({
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        date: undefined,
+        gender: undefined,
+        region: undefined,
+        city: undefined,
+        familyStatus: undefined,
+        isWork: undefined,
+        languageProfiency: undefined,
+        university: undefined,
+        profession: '',
+        course: undefined,
+      });
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const student = await getStudentById("6454dd90-97d5-4cee-b0ad-351b279e9549");
-                if (student && student?.length > 1) {
+                if (student) {
                     setFetchStudent(student);
                 }
             } catch (e:unknown ) {
@@ -48,13 +78,37 @@ const ProfilePage: React.FC = () => {
                     console.error("Ошибка при загрузке студентов:", e);
                 }
             }
+            try{
+                const universities = await getStudentUniversities();
+                setFetchUniversities(universities)
+            } catch (error){
+                console.warn(error)
+            }
+            try{
+                const courses = await getStudentCourses();
+                setFetchCourses(courses)
+            } catch (error){
+                console.warn(error)
+            }
+            try{
+                const cities = await getStudentCities();
+                setFetchCities(cities)
+            } catch (error){
+                console.warn(error)
+            }
+            try{
+                const regions = await getPartnerRegions();
+                setRegions(regions)
+            } catch (error){
+                console.warn(error)
+            }
         };
     
         fetchData();
     }, []);
     useEffect(() => {
         if (!fetchStudent) return;
-        const genderOption = fetchStudent?.sex ? { id: 1, name: "Мужской" } : { id: 2, name: "Женский" };
+        const genderOption = fetchStudent?.sex ? { id: 2, name: "Женский" } : { id: 1, name: "Мужской" };
         setFormData({
             email: fetchStudent?.email,
             password: "",
@@ -62,17 +116,38 @@ const ProfilePage: React.FC = () => {
             lastName: fetchStudent?.lastName,
             date: new Date(fetchStudent.birthDate),
             gender: transformToOption(genderOption),
-            region: transformToOption(fetchStudent?.university?.city?.region),
-            city: transformToOption(fetchStudent?.university?.city),
+            // region: transformToOption(fetchStudent?.university?.city?.region)  ?? [],
+            // city: transformToOption(fetchStudent?.university?.city)  ?? undefined,
             familyStatus: undefined,
-            isWork: undefined,
-            languageProfiency: undefined,
-            university: transformToOption(fetchStudent?.university),
+            // isWork: undefined,
+            // languageProfiency: undefined,
+            university: transformToOption(fetchStudent?.university)  ?? undefined,
             profession: fetchStudent?.specialisation,
-            course: transformToOption(fetchStudent.course)
+            course: transformToOption(fetchStudent.course) ?? undefined
+
         });
     }, [fetchStudent]);    
-
+    // const [cities,setCities] = useState<City[]>(newCityOptions)
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const regionId = formData?.region?.value;
+    //             if (regionId) {
+    //                 console.log("Запрос городов по региону", regionId); // 👈 добавьте для отладки
+    //                 const cities = await getCitiesByRegionId(regionId);
+    //                 setCities(cities);
+    //             }
+    //         } catch (error) {
+    //             console.warn(error);
+    //             setCities(newCityOptions);
+    //         }
+    //     };
+    
+    //     if (formData?.region?.value) {
+    //         fetchData();
+    //     }
+    // }, [formData?.region?.value]); 
+    
     const [errors, setErrors] = useState<{ 
         email: string; 
         password: string; 
@@ -141,8 +216,8 @@ const ProfilePage: React.FC = () => {
             familyStatus: familyStatusOptions,
             isWork: isWorkOptions,
             languageProfiency: languageProfiencyOptions,
-            university: newUniversityOptions,
-            course: courseOptions,
+            university: fetchUniversities,
+            course: fetchCourses,
         };
     
         if (name in selectMapping) {
@@ -243,7 +318,7 @@ const ProfilePage: React.FC = () => {
                         isWorkOptions={isWorkOptions}
                         languageProfiencyOptions={languageProfiencyOptions}
                         newCityOptions={fetchCities}
-                        newRegionOptions={newRegionOptions}
+                        newRegionOptions={regions}
                     />
                     <UniversityInfo
                         formData={formData}

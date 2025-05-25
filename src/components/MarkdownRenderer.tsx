@@ -12,8 +12,8 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
   const prepareContent = (text: string) =>
     text
       .replace(/\r\n/g, '\n')
-      .replace(/\n/g, '  \n') // делает перенос строки видимым
-      .replace(/(\d+)\sруб\./g, '$1\u00A0руб.'); // неразрывный пробел
+      .replace(/\n/g, '  \n')
+      .replace(/(\d+)\sруб\./g, '$1\u00A0руб.');
 
   const fixedContent = prepareContent(content);
 
