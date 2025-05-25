@@ -76,4 +76,32 @@ export async function loginUser(formData: {
       return { error: 'Ошибка соединения' };
     }
   }
+  export async function forgotPassword(email: string) {
+    try {
+      const response = await fetch('/api/auth/forgotPassword', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email }), // Обернуто в объект
+      });
+  
+      if (response.status === 204) {
+        return { status: 204 }; // Успех
+      }
+  
+      // Пытаемся достать сообщение об ошибке, если оно есть
+      let errorMessage = 'Ошибка запроса';
+      try {
+        const data = await response.json();
+        errorMessage = data?.error || errorMessage;
+      } catch {
+        // Игнорируем, если тело пустое или не JSON
+      }
+  
+      return { status: 400, error: errorMessage };
+    } catch (error) {
+      console.error(error);
+      return { status: 400, error: 'Ошибка соединения' };
+    }
+  }
   

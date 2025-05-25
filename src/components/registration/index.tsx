@@ -130,7 +130,6 @@ export default function RegistraionForm(){
     };     
 
     const handleSubmitForm2 = (event: React.FormEvent) => {
-        console.log(formData)
         event.preventDefault();
         setIsSecondPage(false);
         setIsThirdPage(true);
@@ -140,6 +139,7 @@ export default function RegistraionForm(){
         setIsSecondPage(false);
         setIsFirstPage(true);
     }
+
     function fileToBase64(file: File): Promise<string> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -155,208 +155,124 @@ export default function RegistraionForm(){
         });
     }
     
-const handleSubmitForm3 = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    try {
-        const {
-            name,
-            fullname,
-            gender,
-            date,
-            email,
-            profession,
-            password,
-            promocode,
-            university,
-            course,
-            needFile,
-            file, // предполагаем, что здесь File | undefined
-        } = formData;
-
-        if (!name || !fullname || !gender || !date || !email || !profession || !password || !university || !course) {
-            alert("Пожалуйста, заполните все обязательные поля.");
-            return;
-        }
+    const handleSubmitForm3 = async (event: React.FormEvent) => {
+        event.preventDefault();
 
         try {
-            const existingStudent = await getStudentByEmail(email.trim());
-            if (existingStudent){
-                console.log(existingStudent?.length)
-                alert("Студент с таким email уже существует.");
+            const {
+                name,
+                fullname,
+                gender,
+                date,
+                email,
+                profession,
+                password,
+                promocode,
+                university,
+                course,
+                needFile,
+                file, // предполагаем, что здесь File | undefined
+            } = formData;
+
+            if (!name || !fullname || !gender || !date || !email || !profession || !password || !university || !course) {
+                alert("Пожалуйста, заполните все обязательные поля.");
                 return;
             }
-        } 
-        catch (error: unknown) {
-            if (
-              typeof error === "object" &&
-              error !== null &&
-              "response" in error &&
-              typeof (error as ErrorWithResponse).response === "object" &&
-              (error as ErrorWithResponse).response !== null &&
-              "status" in (error as ErrorWithResponse).response
-            ) {
-              const status = (error as ErrorWithResponse).response.status;
-              if (status !== 404 ) {
-                console.error("Ошибка при проверке email:", error);
-                alert("Ошибка при проверке email. Попробуйте позже.");
-                // return;
-              }
-            } else {
-              console.error("Неизвестная ошибка при проверке email:", error);
-              alert("Ошибка при проверке email. Попробуйте позже.");
-            //   return;
-            }
-        }
-        
 
-        const firstName = name.trim();
-        const lastName = fullname.trim();
-        const sex = gender.label === "Мужской";
-        const birthDate = date.toISOString().split("T")[0];
-        const universityId = parseInt(university.value, 10);
-        const courseId = parseInt(course.value, 10);
-
-        const result = await studentRegistration(
-            firstName,
-            lastName,
-            sex,
-            birthDate,
-            email.trim(),
-            profession.trim(),
-            password,
-            promocode.trim(),
-            universityId,
-            courseId
-        );
-
-        console.log("Результат регистрации:", result);
-
-        if (result) {
-            const studentResponse = await getStudentByEmail(email.trim());
-
-            if (studentResponse && studentResponse.id) {
-                const studentId = studentResponse.id;
-                console.log("ID зарегистрированного студента:", studentId);
-
-                // ⬇️ Обработка файла
-                if (needFile && file instanceof File) {
-                    const base64String = await fileToBase64(file);
-                    const contentType = file.type;
-                    const uploadResult = await sendStudentFile(studentId, base64String, contentType);
-
-                    if (uploadResult) {
-                        console.warn("Файл успешно загружен:", uploadResult);
-                    } else {
-                        console.warn("Ошибка при загрузке файла");
-                    }
+            try {
+                const existingStudent = await getStudentByEmail(email.trim());
+                if (existingStudent){
+                    console.log(existingStudent?.length)
+                    alert("Студент с таким email уже существует.");
+                    return;
                 }
-
-                alert("Регистрация прошла успешно!");
-                router.push('/login');
-            } else {
-                console.warn("Не удалось получить ID студента по email.");
-                alert("Ошибка при получении данных студента.");
+            } 
+            catch (error: unknown) {
+                if (
+                typeof error === "object" &&
+                error !== null &&
+                "response" in error &&
+                typeof (error as ErrorWithResponse).response === "object" &&
+                (error as ErrorWithResponse).response !== null &&
+                "status" in (error as ErrorWithResponse).response
+                ) {
+                const status = (error as ErrorWithResponse).response.status;
+                if (status !== 404 ) {
+                    console.error("Ошибка при проверке email:", error);
+                    alert("Ошибка при проверке email. Попробуйте позже.");
+                    // return;
+                }
+                } else {
+                console.error("Неизвестная ошибка при проверке email:", error);
+                alert("Ошибка при проверке email. Попробуйте позже.");
+                //   return;
+                }
             }
-        } else {
-            alert("Ошибка при регистрации. Попробуйте позже.");
-        }
+            
 
-    } catch (error) {
-        console.error("Ошибка при отправке формы:", error);
-        alert("Что-то пошло не так.");
-    }
-};
-    // const handleSubmitForm3 = async (event: React.FormEvent) => {
-    //     event.preventDefault();
-    
-    //     try {
-    //         const {
-    //             name,
-    //             fullname,
-    //             gender,
-    //             date,
-    //             email,
-    //             profession,
-    //             password,
-    //             promocode,
-    //             university,
-    //             course,
-    //             file,
-    //             needFile
-    //         } = formData;
-    
-    //         if (!name || !fullname || !gender || !date || !email || !profession || !password || !university || !course) {
-    //             alert("Пожалуйста, заполните все обязательные поля.");
-    //             return;
-    //         }
-    
-    //         // Проверка существования студента по email
-    //         try {
-    //             const existingStudent = await getStudentByEmail(email.trim());
-    //             alert("Студент с таким email уже существует.");
-    //             return;
-    //             // Если запрос не упал — студент найден
-    //         } catch (error: any) {
-    //             // Если статус не 200, продолжаем регистрацию
-    //             if (error?.response?.status !== 404) {
-    //                 console.error("Ошибка при проверке email:", error);
-    //                 alert("Ошибка при проверке email. Попробуйте позже.");
-    //                 return;
-    //             }
-    //             // Статус 404 — студент не найден, можно регистрировать
-    //         }
-    
-    //         console.log(formData);
-    
-    //         const firstName = name.trim();
-    //         const lastName = fullname.trim();
-    //         const sex = gender.label === "Мужской";
-    //         const birthDate = date.toISOString().split("T")[0];
-    //         const universityId = parseInt(university.value, 10);
-    //         const courseId = parseInt(course.value, 10);
-    
-    //         const result = await studentRegistration(
-    //             firstName,
-    //             lastName,
-    //             sex,
-    //             birthDate,
-    //             email.trim(),
-    //             profession.trim(),
-    //             password,
-    //             promocode.trim(),
-    //             universityId,
-    //             courseId
-    //         );
-    
-    //         console.log("Результат регистрации:", result);
-    
-    //         if (result) {
-    //             const studentResponse = await getStudentByEmail(email.trim());
-    
-    //             if (studentResponse && studentResponse.id) {
-    //                 const studentId = studentResponse.id;
-    //                 console.log("ID зарегистрированного студента:", studentId);
-    //             } else {
-    //                 console.warn("Не удалось получить ID студента по email.");
-    //             }
-    
-    //             alert("Регистрация прошла успешно!");
-    //             router.push('/login');
-    //         } else {
-    //             alert("Ошибка при регистрации. Попробуйте позже.");
-    //         }
-    
-    //     } catch (error) {
-    //         console.error("Ошибка при отправке формы:", error);
-    //         alert("Что-то пошло не так.");
-    //     }
-    // };
+            const firstName = name.trim();
+            const lastName = fullname.trim();
+            const sex = gender.label === "Мужской";
+            const birthDate = date.toISOString().split("T")[0];
+            const universityId = parseInt(university.value, 10);
+            const courseId = parseInt(course.value, 10);
+
+            const result = await studentRegistration(
+                firstName,
+                lastName,
+                sex,
+                birthDate,
+                email.trim(),
+                profession.trim(),
+                password,
+                promocode.trim(),
+                universityId,
+                courseId
+            );
+
+            console.log("Результат регистрации:", result);
+
+            if (result) {
+                const studentResponse = await getStudentByEmail(email.trim());
+
+                if (studentResponse && studentResponse.id) {
+                    const studentId = studentResponse.id;
+                    console.log("ID зарегистрированного студента:", studentId);
+
+                    // ⬇️ Обработка файла
+                    if (needFile && file instanceof File) {
+                        const base64String = await fileToBase64(file);
+                        const contentType = file.type;
+                        const uploadResult = await sendStudentFile(studentId, base64String, contentType);
+
+                        if (uploadResult) {
+                            console.warn("Файл успешно загружен:", uploadResult);
+                        } else {
+                            console.warn("Ошибка при загрузке файла");
+                        }
+                    }
+
+                    alert("Регистрация прошла успешно!");
+                    router.push('/login');
+                } else {
+                    console.warn("Не удалось получить ID студента по email.");
+                    alert("Ошибка при получении данных студента.");
+                }
+            } else {
+                alert("Ошибка при регистрации. Попробуйте позже.");
+            }
+
+        } catch (error) {
+            console.error("Ошибка при отправке формы:", error);
+            alert("Что-то пошло не так.");
+        }
+    };
 
     const handleBackForm3 = () => {
         setIsThirdPage(false);
         setIsSecondPage(true);
     }
+
     if (isLoading) {
         return <>Loading...</>
     }

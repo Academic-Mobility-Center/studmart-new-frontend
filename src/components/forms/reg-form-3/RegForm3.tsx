@@ -64,7 +64,6 @@ const RegForm3: React.FC<Props> =({
         // const maxUniversityLength = 100;
     
         const profession = formData.profession?.trim() ?? "";
-        // const university = formData.university?.value.trim() ?? "";
     
         if (!profession) {
             newErrors.profession = "Введите свою профессию";
@@ -74,13 +73,14 @@ const RegForm3: React.FC<Props> =({
             newErrors.profession = `Профессия должна содержать от ${minProfessionLength} до ${maxProfessionLength} символов`;
         }
     
-        if (!formData.course) {
+        if (!formData.course?.value) {
             newErrors.course = "Выберите ваш курс обучения";
         }
     
-        // if (!university) {
-        //     newErrors.university = "Выберите свой университет";
-        // } else if (!universityNameRegex.test(university)) {
+        if (!formData.university?.value.trim()) {
+            newErrors.university = "Выберите свой университет";
+        } 
+        // else if (!universityNameRegex.test(university)) {
         //     newErrors.university = "Некорректное название университета";
         // } else if (university.length < minUniversityLength || university.length > maxUniversityLength) {
         //     newErrors.university = `Название университета должно содержать от ${minUniversityLength} до ${maxUniversityLength} символов`;
@@ -96,6 +96,7 @@ const RegForm3: React.FC<Props> =({
     
     const handleSubmit = (event: React.FormEvent) =>{
         if(validate()){
+            console.log("Вызываем onClick")
             onClick(event);
         }
     }
@@ -130,10 +131,12 @@ const RegForm3: React.FC<Props> =({
     
     
     return (
-        <div className="border bg-[#f8f8f8] 
-        flex flex-col gap-5 w-[410px] 
-        self-center p-[30px] rounded-[30px] 
-        border-solid border-[rgba(0,0,0,0.20)] mt-[25px]">
+        <div
+            className="border bg-[#f8f8f8] 
+            flex flex-col gap-5 w-[410px] 
+            self-center p-[30px] rounded-[30px] 
+            border-solid border-[rgba(0,0,0,0.20)] mt-[25px]"
+        >
             <div className="flex justify-between">
                 <h2 className="text-2xl font-extrabold text-[#032c28]">Регистрация</h2>
                 <h2 className="text-2xl font-extrabold text-[#032c28]">3/3</h2>
@@ -196,8 +199,10 @@ const RegForm3: React.FC<Props> =({
                         Назад
                     </button>
                     <button 
-                        className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px] cursor-pointer"
+                        type="button"
                         onClick={handleSubmit}
+                        className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px] cursor-pointer"
+                        // onClick={handleSubmit}
                     >
                         Зарегистрироваться
                     </button>

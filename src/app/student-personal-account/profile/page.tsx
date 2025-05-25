@@ -35,9 +35,17 @@ import {
 import {getPartnerRegions} from '@/lib/api/partners';
 import { transformToOption } from '@/utils/dataTransform';
 import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
 
 const ProfilePage: React.FC = () => {
-    const {id ,isLoading} = useAuth();
+    const { role, id ,isLoading } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Student") {
+            router.replace("/partner-personal-account");
+        }
+    }, [role, router]);
     const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
     const [fetchCourses, setFetchCourses] = useState<{
         id: number;

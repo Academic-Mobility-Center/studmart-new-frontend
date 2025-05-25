@@ -22,7 +22,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
   const { city } = useCity();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const isAuth = (isAuthenticated && role && role === "partner") 
+  const isAuth = (isAuthenticated && role && role === "Employee") 
   ? "/partner-personal-account" 
   : isAuthenticated 
   ? "/student-personal-account" 
@@ -63,7 +63,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
           </Link>
           <Link href={isAuthenticated && role === "Student" 
             ? "/student-personal-account/referal-program" : 
-            isAuthenticated && role === "partner" ? "" : "/login"}>
+            isAuthenticated && role === "Employee" ? "" : "/login"}>
           <Image 
             src="/icons/Header/wallet.svg" 
             alt="" 

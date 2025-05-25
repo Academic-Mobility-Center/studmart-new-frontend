@@ -77,61 +77,6 @@ export default function LoginForm() {
           password: 'Ошибка соединения',
         });
       }
-      
-      // try {
-      //   const result = await loginUser({
-      //     email: formData.email,
-      //     password: formData.password,
-      //     twoFactorCode: "",
-      //     twoFactorRecoveryCode: ""
-      //   });
-      
-      //   if (result.token) {
-      //     login(result.token, formData.rememberMe);
-      //     router.push('/home');
-      //   } else {
-      //     setErrors({
-      //       email: ' ',
-      //       password: result.error || 'Ошибка авторизации',
-      //     });
-      //   }
-      // } catch (error) {
-      //   console.error(error);
-      //   setErrors({
-      //     email: ' ',
-      //     password: 'Ошибка соединения',
-      //   });
-      // }
-
-
-      // try {
-      //   const response = await fetch('/api/auth/login', {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({
-      //       email: formData.email,
-      //       password: formData.password
-      //     }),
-      //   });
-  
-      //   const data = await response.json();
-  
-      //   if (response.ok && data.token) {
-      //     login(data.token, formData.rememberMe);
-      //     router.push('/home');
-      //   } else {
-      //     setErrors({
-      //       email: ' ',
-      //       password: data.error || 'Ошибка авторизации'
-      //     });
-      //   }
-      // } catch (error) {
-      //   console.log(error)
-      //   setErrors({
-      //     email: ' ',
-      //     password: 'Ошибка соединения'
-      //   });
-      // }
     };
 
 
@@ -204,7 +149,6 @@ export default function LoginForm() {
             onClose={() => setIsPasswordResetVisible(false)} 
             onClick={() => { 
               setIsPasswordResetVisible(false); 
-              // setIsPasswordConfirmVisible(true); 
             }} 
           />
         }

@@ -1,9 +1,20 @@
 "use client"
+import {useEffect} from "react";
 import { StyledSwitch } from "@/components/fields/switch/StyledSwitch";
 import { notificationsItems } from "../context";
 import { useState } from "react";
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
 
 const NotificationsPage = () => {
+    const { role } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Student") {
+            router.replace("/partner-personal-account");
+        }
+    }, [role, router]);
         const [activeStates, setActiveStates] = useState<{ [key: string]: boolean }>(
             Object.fromEntries(notificationsItems.map(item => [item, false]))
         );

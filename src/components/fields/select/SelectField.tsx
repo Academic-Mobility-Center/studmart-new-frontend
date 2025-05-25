@@ -46,18 +46,18 @@ export function SelectField({
     setSelectedOption(value || null);
   }, [value]);
 
-  const handleChange = (_: React.SyntheticEvent, newValue: Option | null) => {
+  const handleChange = (
+    _: React.SyntheticEvent,
+    newValue: Option | null
+  ) => {
     setSelectedOption(newValue);
-  
     if (onChange) {
-      const fakeSelect = document.createElement("select");
-      fakeSelect.name = name;
-      fakeSelect.value = newValue?.value || "";
-  
       const event = {
-        target: fakeSelect,
+        target: {
+          name,
+          value: newValue?.value || "",
+        },
       } as React.ChangeEvent<HTMLSelectElement>;
-  
       onChange(event);
     }
   };

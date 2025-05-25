@@ -2,7 +2,9 @@
 import InputField from "@/components/fields/input/InputField";
 
 import StudentBankCredentialsFormData from "@/types/StudentBankCredentialsFormData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
 const validateField = (
     name: string,
     value: string | boolean | string[],
@@ -42,6 +44,14 @@ const validateField = (
 };
 
 const CredentialsPage = () => {
+    const { role } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Student") {
+            router.replace("/partner-personal-account");
+        }
+    }, [role, router]);
     const [formData, setFormData] = useState<StudentBankCredentialsFormData>({
         fullname: "",
         name: "",

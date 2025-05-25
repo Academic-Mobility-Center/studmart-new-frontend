@@ -1,6 +1,7 @@
 "use client"
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
 interface ReferalData{
     account: string;
     link: string;
@@ -8,6 +9,14 @@ interface ReferalData{
 }
 
 const ReferalProgramPage = () => {
+    const { role } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Student") {
+            router.replace("/partner-personal-account");
+        }
+    }, [role, router]);
     const [formData] = useState<ReferalData>({
         account: "0 руб.",
         link: "http://www.some-link.com",

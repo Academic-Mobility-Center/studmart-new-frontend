@@ -56,7 +56,7 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
             newErrors.date = "Введите дату рождения";
         }
     
-        if (!formData.gender) {
+        if (!formData.gender?.value) {
             newErrors.gender = "Выберите пол";
         }
     
@@ -64,13 +64,15 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (event: React.FormEvent) =>{
-        if(validate()){
-            onClick(event);
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault(); // Добавьте это!
+        if (validate()) {
+            console.log("Форма отправлена, вызываем onClick");
+            onClick(event); // Переход на следующую страницу
         }
     }
     return (
-        <div 
+        <div
             className="border bg-[#f8f8f8] 
             flex flex-col gap-5 w-[410px] 
             self-center p-[30px] rounded-[30px] 
@@ -137,8 +139,9 @@ const RegForm2: React.FC<RegFormProps> =({handleChange,onBack, formData, onClick
                         Назад
                     </button>
                     <button 
-                        className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px]" 
+                        type="button"
                         onClick={handleSubmit}
+                        className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl min-w-[219px] w-[219px]" 
                     >
                         Далее
                     </button>

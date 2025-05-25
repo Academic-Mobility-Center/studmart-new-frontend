@@ -6,11 +6,11 @@ export async function GET(
 ) {
   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners", "files"];
+  const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
     "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications", "Cities"
+    "EmailDomains", "Verifications", "Cities", "forgotPassword"
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
@@ -39,66 +39,66 @@ export async function GET(
     return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
   }
 }
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ domain: string; resource: string; slug?: string[] }> }
-) {
-  const { domain, resource, slug } = await params;
+// export async function POST(
+//   request: Request,
+//   { params }: { params: Promise<{ domain: string; resource: string; slug?: string[] }> }
+// ) {
+//   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners", "files"];
-  const allowedResources = [
-    "Categories", "Discounts", "Regions", "Partners", 
-    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications", "Cities"
-  ];
+//   const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
+//   const allowedResources = [
+//     "Categories", "Discounts", "Regions", "Partners", 
+//     "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
+//     "EmailDomains", "Verifications", "Cities", "forgotPassword"
+//   ];
 
-  if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
-    return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });
-  }
+//   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
+//     return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });
+//   }
 
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch (error) {
-    console.error("Ошибка парсинга JSON:", error);
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
-  }
+//   let body: unknown;
+//   try {
+//     body = await request.json();
+//   } catch (error) {
+//     console.error("Ошибка парсинга JSON:", error);
+//     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+//   }
 
-  const pathSuffix = slug?.length ? `/${slug.join("/")}` : "";
-  const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}${pathSuffix}`;
+//   const pathSuffix = slug?.length ? `/${slug.join("/")}` : "";
+//   const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}${pathSuffix}`;
 
-  try {
-    const response = await fetch(externalUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+//   try {
+//     const response = await fetch(externalUrl, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Accept: "application/json",
+//       },
+//       body: JSON.stringify(body),
+//     });
 
-    if (!response.ok) {
-      return NextResponse.json({ error: "Ошибка при отправке POST-запроса" }, { status: response.status });
-    }
+//     if (!response.ok) {
+//       return NextResponse.json({ error: "Ошибка при отправке POST-запроса" }, { status: response.status });
+//     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error(`Ошибка POST-запроса к ${externalUrl}:`, error);
-    return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
-  }
-}
+//     const data = await response.json();
+//     return NextResponse.json(data);
+//   } catch (error) {
+//     console.error(`Ошибка POST-запроса к ${externalUrl}:`, error);
+//     return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
+//   }
+// }
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ domain: string; resource: string; slug?: string[] }> }
 ) {
   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners", "files"];
+  const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
   const allowedResources = [
     "Categories", "Discounts", "Regions", "Partners", 
     "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications", "Cities"
+    "EmailDomains", "Verifications", "Cities", "forgotPassword"
   ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
@@ -137,4 +137,74 @@ export async function DELETE(
     return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
   }
 }
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ domain: string; resource: string; slug?: string[] }> }
+) {
+  const { domain, resource, slug } = await params;
+
+  const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
+  const allowedResources = [
+    "Categories", "Discounts", "Regions", "Partners",
+    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
+    "EmailDomains", "Verifications", "Cities", "forgotPassword"
+  ];
+
+  if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
+    return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });
+  }
+
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch (error) {
+    console.error("Ошибка парсинга JSON:", error);
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const pathSuffix = slug?.length ? `/${slug.join("/")}` : "";
+  const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}${pathSuffix}`;
+
+  try {
+    const response = await fetch(externalUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Ошибка при отправке POST-запроса" },
+        { status: response.status }
+      );
+    }
+
+    // Проверка на пустой ответ
+    const text = await response.text();
+    if (!text) {
+      // Пустой ответ — например, 204
+      return new Response(null, { status: response.status });
+    }
+
+    // Непустой ответ — парсим как JSON
+    try {
+      const data = JSON.parse(text);
+      return NextResponse.json(data);
+    } catch (parseError) {
+      console.warn("Ошибка парсинга JSON:", parseError);
+      return NextResponse.json(
+        { error: "Ответ не является корректным JSON" },
+        { status: 500 }
+      );
+    }
+
+  } catch (error) {
+    console.error(`Ошибка POST-запроса к ${externalUrl}:`, error);
+    return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
+  }
+}
+
 

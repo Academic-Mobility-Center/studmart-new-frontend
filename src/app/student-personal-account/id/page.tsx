@@ -5,11 +5,20 @@ import React, { useState, useEffect } from 'react';
 import {getStudentById} from "@/lib/api/students"
 import IStudentFormData from "@/app/student-personal-account/context"
 import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
+
 const StudId: React.FC = () => {
+    const { role, id } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Student") {
+            router.replace("/partner-personal-account");
+        }
+    }, [role, router]);
     const [image, setImage] = useState("/icons/student-account/d4eeae509bbfb902288411fb819999c2.jpeg");
     const [isLoading, setIsLoading] = useState(false);
     const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
-    const {id} = useAuth();
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {

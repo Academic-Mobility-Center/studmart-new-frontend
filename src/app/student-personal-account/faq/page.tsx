@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { faqCategoryOptions, FaqQuestions } from "../context";
 import { BlackArrowUp } from "./icons/BlackArrowUp";
 import { BlackArrowDown } from "./icons/BlackArrowDown";
@@ -7,8 +7,17 @@ import { SelectField } from "@/components/fields/select/SelectField";
 import { transformToOptions } from "@/utils/dataTransform";
 import InputField from "@/components/fields/input/InputField";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
 const FaqPage = () => {
+    const { role } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Student") {
+            router.replace("/partner-personal-account");
+        }
+    }, [role, router]);
     const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(FaqQuestions.map(item => [item.title, false]))
     );
@@ -18,7 +27,7 @@ const FaqPage = () => {
             [heading]: !prev[heading]
         }));
     };
-    
+
     return (
         <div className="flex flex-col gap-[40px]">
             <div

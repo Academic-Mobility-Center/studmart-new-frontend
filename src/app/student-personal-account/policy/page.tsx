@@ -1,13 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { personalDataItems } from "../context";
 import { StyledSwitch } from "@/components/fields/switch/StyledSwitch";
 import { ArrowDown } from "./icons/ArrowDown";
 import { categoriesAndServices } from "../context";
 import { ArrowUp } from "./icons/ArrowUp";
 const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] mt-5 h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto rounded-[15px] border-[none]";
+import {useAuth} from "@/context/AuthContext"
+import {useRouter} from "next/navigation"
 
 const PolicyPage = () => {
+    const { role } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (role && role !== "Student") {
+            router.replace("/partner-personal-account");
+        }
+    }, [role, router]);
     const [selectedMenuItem, setSelectedMenuItem] = useState<"categories" | "data" | null>("categories");
     const [activeStates, setActiveStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(personalDataItems.map(item => [item, false]))
