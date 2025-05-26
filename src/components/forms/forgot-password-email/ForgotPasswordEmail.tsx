@@ -175,7 +175,7 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
                     <h2 className="text-2xl font-extrabold text-[#032c28] mb-4">Сброс пароля</h2>
                     <div className="flex flex-col gap-1">
                         <InputField
-                            label="Почта от личного кабинета вуза"
+                            label="Почта от личного кабинета"
                             placeholder="Введите почту"
                             name="passwordResetEmail"
                             value={formData.passwordResetEmail}

@@ -105,3 +105,28 @@ export async function loginUser(formData: {
     }
   }
   
+  export async function resetPassword(email: string, resetCode: string, newPassword: string){
+    try {
+      const response = await fetch('/api/auth/resetPassword', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, resetCode, newPassword }), // Обернуто в объект
+      });
+      if (response.status === 204) {
+        return { status: 204 };
+    }
+
+    const data = await response.json().catch(() => ({}));
+    return {
+      status: response.status,
+      error: data?.message || "Неизвестная ошибка",
+    };
+  } catch (error) {
+    console.warn(error)
+    return {
+      status: 500,
+      error: "Сетевая ошибка или ошибка сервера",
+    };
+  }
+  }

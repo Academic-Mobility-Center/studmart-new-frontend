@@ -12,7 +12,7 @@ export default function AuthorizationPage(){
 
     useEffect(() => {
       if (isAuthenticated) {
-        router.push('/');
+        router.push('/home');
       }
     }, [isAuthenticated, router]);
     if (isLoading || isAuthenticated) {

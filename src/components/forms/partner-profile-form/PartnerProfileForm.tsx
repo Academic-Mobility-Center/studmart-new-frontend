@@ -1,6 +1,7 @@
 "use client";
 import { PartnerPersonalAccountFormData } from "@/types/PartnerPesonalAccount"
 import { Button } from "@mui/base"
+import ForgotPasswordEmail from "../forgot-password-email/ForgotPasswordEmail";
 import { useState, useEffect } from "react"
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
@@ -37,7 +38,7 @@ const PartnerProfileForm: React.FC =  () => {
           router.replace("/student-personal-account");
       }
   }, [role, router]);
-    
+    const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
     const [fetchRegionOptions, setFetchRegionOptions] = useState(regionOptions)
     const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
     const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
@@ -117,7 +118,9 @@ const PartnerProfileForm: React.FC =  () => {
         })
     },[fetchPartner])
 
-
+    const handleForgotPasswordClick = () => {
+        setIsPasswordResetVisible(true);
+      };
     const [errors, setErrors] = useState<{ 
         personalEmail?: string; 
         password?: string; 
@@ -252,7 +255,14 @@ const PartnerProfileForm: React.FC =  () => {
     
         console.log("Отправка формы:", formData);
     };   
-
+    const formDataChangePassword = {
+        email: "",
+        password: "",
+        rememberMe: false, 
+        passwordResetEmail: "",
+        passwordReset: "", 
+        passwordResetConfirm: ""
+    }
     return(<>
         <form onSubmit={handleSubmitForm} className={profileCardClasses}>
             <div className="grow-0 shrink-0 basis-auto">
@@ -260,6 +270,7 @@ const PartnerProfileForm: React.FC =  () => {
                 <div className="mt-5">
                     <LoginInfo 
                         formData={formData} 
+                        handleForgotPasswordClick={handleForgotPasswordClick}
                         handleChange={handleChange} 
                         errors={errors} 
                         handleBlur={handleBlur}
@@ -284,6 +295,16 @@ const PartnerProfileForm: React.FC =  () => {
             <Button type="submit" className={saveButtonClasses}>
                 Сохранить
             </Button>
+            {isPasswordResetVisible && 
+            <ForgotPasswordEmail 
+                formData={formDataChangePassword}
+                handleChange={handleChange}
+                onClose={() => setIsPasswordResetVisible(false)} 
+                onClick={() => { 
+                setIsPasswordResetVisible(false); 
+                }} 
+            />
+            }
         </form>    
     </>)
 }

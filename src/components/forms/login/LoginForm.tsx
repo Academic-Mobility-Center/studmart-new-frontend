@@ -61,7 +61,6 @@ export default function LoginForm() {
         });
       
         if (!result.error) {
-          // просто обновляем состояние авторизации, токен уже в cookie
           await login();  // login() из useAuth — вызовет verifySession и обновит контекст
           router.push('/home');
         } else {

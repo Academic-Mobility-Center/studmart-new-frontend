@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server";
-
+const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
+const allowedResources = [
+  "Categories", "Discounts", "Regions", "Partners",
+  "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
+  "EmailDomains", "Verifications", "Cities", "forgotPassword", "resetPassword"
+];
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ domain: string; resource: string; slug?: string[] }> }
 ) {
   const { domain, resource, slug } = await params;
-
-  const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
-  const allowedResources = [
-    "Categories", "Discounts", "Regions", "Partners", 
-    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications", "Cities", "forgotPassword"
-  ];
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
     return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });
@@ -94,13 +92,6 @@ export async function DELETE(
 ) {
   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
-  const allowedResources = [
-    "Categories", "Discounts", "Regions", "Partners", 
-    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications", "Cities", "forgotPassword"
-  ];
-
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
     return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });
   }
@@ -143,12 +134,7 @@ export async function POST(
 ) {
   const { domain, resource, slug } = await params;
 
-  const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
-  const allowedResources = [
-    "Categories", "Discounts", "Regions", "Partners",
-    "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-    "EmailDomains", "Verifications", "Cities", "forgotPassword"
-  ];
+
 
   if (!allowedDomains.includes(domain) || !allowedResources.includes(resource)) {
     return NextResponse.json({ error: "Invalid domain or resource" }, { status: 400 });

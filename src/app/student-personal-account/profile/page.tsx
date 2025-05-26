@@ -6,6 +6,7 @@ import { StudentFormData } from '@/types/StudentProfileData';
 import { Button } from '@mui/base';
 import React, { useEffect, useState } from 'react';
 // import City from "@/types/Cities";
+import ForgotPasswordEmail from "@/components/forms/forgot-password-email/ForgotPasswordEmail";
 
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
@@ -51,6 +52,7 @@ const ProfilePage: React.FC = () => {
         id: number;
         name: string;
     }[]>(courseOptions)
+    const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
     const [fetchUniversities, setFetchUniversities] = useState(universityOptions)
     const [fetchCities, setFetchCities] = useState(cityOptions)
     const [regions, setRegions] = useState<{id: number, name: string}[]>(newRegionOptions)
@@ -306,7 +308,17 @@ const ProfilePage: React.FC = () => {
     
         console.log("Отправка формы:", formData);     
     };
-
+    const formDataChangePassword = {
+        email: "",
+        password: "",
+        rememberMe: false, 
+        passwordResetEmail: "",
+        passwordReset: "", 
+        passwordResetConfirm: ""
+    }
+    const handleForgotPasswordClick = () => {
+        setIsPasswordResetVisible(true);
+      };
     if (isLoading){
         return<>Loading</>
     }
@@ -321,6 +333,7 @@ const ProfilePage: React.FC = () => {
                         handleChange={handleChange}
                         handleBlur={handleBlur}
                         errors={errors}
+                        handleForgotPasswordClick={handleForgotPasswordClick}
                     />
                     <MainInfo
                         formData={formData}
@@ -347,6 +360,16 @@ const ProfilePage: React.FC = () => {
             <Button type="submit" className={saveButtonClasses}>
                 Сохранить
             </Button>
+            {isPasswordResetVisible && 
+            <ForgotPasswordEmail 
+                formData={formDataChangePassword}
+                handleChange={handleChange}
+                onClose={() => setIsPasswordResetVisible(false)} 
+                onClick={() => { 
+                setIsPasswordResetVisible(false); 
+                }} 
+            />
+            }            
         </form>   
         </>
     );
