@@ -15,4 +15,5 @@ export default interface RegistrationFormData{
     file: File | null;
     sex: boolean;
     needFile: boolean;
+    consent?: boolean;
 }

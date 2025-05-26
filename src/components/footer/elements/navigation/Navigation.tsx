@@ -13,17 +13,17 @@ interface NavigationProps {
         </p>
         <div className="box-border flex justify-start items-start flex-col gap-2.5 self-stretch grow-0 shrink-0 basis-auto">
             <LinkedMenuItem 
-              link={isAuthenticated ? "/home" : ""} 
+              link={"/home"} 
               name="Главная страница" 
               disabled={!isAuthenticated}
             />
             <LinkedMenuItem 
-              link={isAuthenticated ? "/about" : ""} 
+              link={"/about"} 
               name="О сервисе"
               disabled={!isAuthenticated}
             />
             <LinkedMenuItem 
-              link={isAuthenticated ? "/partners" : ""} 
+              link={"/partners"} 
               name="Партнерам"
               disabled={!isAuthenticated}
             />

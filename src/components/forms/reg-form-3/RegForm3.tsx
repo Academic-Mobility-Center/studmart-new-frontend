@@ -41,6 +41,7 @@ const RegForm3: React.FC<Props> =({
         file?: string, 
         course?: string,
         university?: string, 
+        consent?: string;
     }>({
         profession: "",
         file: "",
@@ -53,6 +54,7 @@ const RegForm3: React.FC<Props> =({
             file?: string,
             course?: string,
             university?: string
+            consent?: string;
         } = {};
     
         const professionRegex = /^[А-ЯЁ][а-яё]+(?:[\s\-][А-ЯЁа-яё]+)*(?:\s\([А-ЯЁа-яё\s\-]+\))?$/;
@@ -80,6 +82,9 @@ const RegForm3: React.FC<Props> =({
         if (!formData.university?.value.trim()) {
             newErrors.university = "Выберите свой университет";
         } 
+        if (!formData.consent) {
+            newErrors.consent = "Вы должны дать согласие на обработку персональных данных";
+        }        
         // else if (!universityNameRegex.test(university)) {
         //     newErrors.university = "Некорректное название университета";
         // } else if (university.length < minUniversityLength || university.length > maxUniversityLength) {
@@ -181,6 +186,32 @@ const RegForm3: React.FC<Props> =({
                     placeholder="Курс"               
                 />
                 {errors.course && <p className="text-red-600 text-sm font-medium mt-1">{errors.course}</p>}
+            </div>
+            <div className="flex flex-col gap-1">
+                <div className="flex items-start gap-2 pt-2">
+        <input
+            type="checkbox"
+            id="consent"
+            checked={formData.consent ?? false}
+            onChange={(e) => setBooleanField("consent", e.target.checked)}
+            className="mt-1 cursor-pointer"
+        />
+        <label htmlFor="consent" className="text-sm text-[#032c28]">
+            Даю согласие на обработку персональных данных.{" "}
+            <Link
+                href="/files/Политика конфиденциальности.pdf" // путь к файлу-согласию
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#6dbc29] underline"
+            >
+                Ознакомиться с документом
+            </Link>
+        </label>
+                </div>
+                {errors.consent && (
+                    <p className="text-red-600 text-sm font-medium mt-1">{errors.consent}</p>
+                )}
+                
             </div>
             <div className="flex flex-col gap-1">
                 <FileField 

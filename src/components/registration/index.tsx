@@ -41,7 +41,8 @@ export default function RegistraionForm(){
         course: null,
         file: null,
         sex: false,
-        needFile: false
+        needFile: false,
+        consent: false,
     })
     const router = useRouter();
     const [isFirstPage, setIsFirstPage] = useState(true);

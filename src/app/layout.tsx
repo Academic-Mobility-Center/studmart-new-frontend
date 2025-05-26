@@ -5,6 +5,7 @@ import { AuthProvider } from '@/context/AuthContext';
 import { Nunito_Sans } from 'next/font/google'
 import { Mulish } from 'next/font/google'
 import { CityProvider } from "@/context/CityContext";
+import CookieConsent from "@/components/CookieConsent"
 const mulish = Mulish({
   subsets: ['latin'],
   weight: ['400', '600', '700'], // выбери нужные веса, которые используешь
@@ -44,6 +45,7 @@ export default function RootLayout({
         <CityProvider>
           <AuthProvider>
             {children}
+            <CookieConsent/>
           </AuthProvider>
         </CityProvider>
 
