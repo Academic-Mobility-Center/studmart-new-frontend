@@ -43,6 +43,14 @@ const PartnerProfileForm: React.FC =  () => {
     const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
     const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
     const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null)
+    const formDataChangePassword = {
+        email: "",
+        password: "",
+        rememberMe: false, 
+        passwordResetEmail: "",
+        passwordReset: "", 
+        passwordResetConfirm: ""
+    }
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
         personalEmail: "",
         password: "",
@@ -166,76 +174,148 @@ const PartnerProfileForm: React.FC =  () => {
             }),
         }));
     };
-
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-    ) => {
+      ) => {
         const { name, type, value, checked } = event.target as HTMLInputElement;
-    
+      
         let newValue: string | boolean | File | Date | Option | undefined = value;
-    
+      
         if (type === "checkbox") {
-            newValue = checked;
+          newValue = checked;
         }
-    
+      
         const selectMap = {
-            industry: industryOptions,
-            country: countryOptions,
+          industry: industryOptions,
+          country: countryOptions,
         };
-    
+      
         if (selectMap[name as keyof typeof selectMap]) {
-            const selected = selectMap[name as keyof typeof selectMap].find(opt => opt.id.toString() === value);
-            newValue = selected ? { value: selected.id.toString(), label: selected.name } : "";
+          const selected = selectMap[name as keyof typeof selectMap].find(
+            (opt) => opt.id.toString() === value
+          );
+          newValue = selected ? { value: selected.id.toString(), label: selected.name } : "";
         }
-    
+      
         // Логика "все регионы" / "выбранные регионы"
-        if (name === 'allRegions' && checked) {
-            setFormData(prev => ({
-                ...prev,
-                allRegions: true,
-                specificRegions: false,
-                regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name })),
-            }));
-            return;
-        }
-    
-        if (name === 'specificRegions' && checked) {
-            setFormData(prev => ({
-                ...prev,
-                allRegions: false,
-                specificRegions: true,
-                regions: [],
-            }));
-            return;
-        }
-    
-        setFormData(prev => ({
+        if (name === "allRegions" && checked) {
+          setFormData((prev) => ({
             ...prev,
-            [name]: newValue,
-        }));
-    
+            allRegions: true,
+            specificRegions: false,
+            regions: regionOptions.map((r) => ({ value: r.id.toString(), label: r.name })),
+          }));
+          return;
+        }
+      
+        if (name === "specificRegions" && checked) {
+          setFormData((prev) => ({
+            ...prev,
+            allRegions: false,
+            specificRegions: true,
+            regions: [],
+          }));
+          return;
+        }
+      
+        // Формируем новое состояние formData вручную
+        const updatedFormData = {
+          ...formData,
+          [name]: newValue,
+        };
+      
+        setFormData(updatedFormData);
+      
+        // Теперь для валидации используем updatedFormData
         setErrors((prevErrors) => {
-            let validationValue: string | boolean | string[];
-            
-            if (newValue === undefined) {
-                validationValue = '';
-            } else if (newValue instanceof Date) {
-                validationValue = newValue.toISOString();
-            } else if (typeof newValue === 'object' && 'value' in newValue) {
-                validationValue = (newValue as Option).value;
-            } else {
-                validationValue = newValue;
-            }
-        
-            return {
-                ...prevErrors,
-                [name]: validateField(name, validationValue,{
-                    ...formData,
-                    [name]: newValue,
-                }),
-            };
+          let validationValue: string | boolean | string[];
+      
+          if (newValue === undefined) {
+            validationValue = "";
+          } else if (newValue instanceof Date) {
+            validationValue = newValue.toISOString();
+          } else if (typeof newValue === "object" && "value" in newValue) {
+            validationValue = (newValue as Option).value;
+          } else {
+            validationValue = newValue;
+          }
+      
+          return {
+            ...prevErrors,
+            [name]: validateField(name, validationValue, updatedFormData),
+          };
         });
-    };
+      };
+      
+    // const handleChange = (
+    //     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    // ) => {
+    //     const { name, type, value, checked } = event.target as HTMLInputElement;
+    
+    //     let newValue: string | boolean | File | Date | Option | undefined = value;
+    
+    //     if (type === "checkbox") {
+    //         newValue = checked;
+    //     }
+    
+    //     const selectMap = {
+    //         industry: industryOptions,
+    //         country: countryOptions,
+    //     };
+    
+    //     if (selectMap[name as keyof typeof selectMap]) {
+    //         const selected = selectMap[name as keyof typeof selectMap].find(opt => opt.id.toString() === value);
+    //         newValue = selected ? { value: selected.id.toString(), label: selected.name } : "";
+    //     }
+    
+    //     // Логика "все регионы" / "выбранные регионы"
+    //     if (name === 'allRegions' && checked) {
+    //         setFormData(prev => ({
+    //             ...prev,
+    //             allRegions: true,
+    //             specificRegions: false,
+    //             regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name })),
+    //         }));
+    //         return;
+    //     }
+    
+    //     if (name === 'specificRegions' && checked) {
+    //         setFormData(prev => ({
+    //             ...prev,
+    //             allRegions: false,
+    //             specificRegions: true,
+    //             regions: [],
+    //         }));
+    //         return;
+    //     }
+    
+    //     setFormData(prev => ({
+    //         ...prev,
+    //         [name]: newValue,
+    //     }));
+    
+    //     setErrors((prevErrors) => {
+    //         let validationValue: string | boolean | string[];
+            
+    //         if (newValue === undefined) {
+    //             validationValue = '';
+    //         } else if (newValue instanceof Date) {
+    //             validationValue = newValue.toISOString();
+    //         } else if (typeof newValue === 'object' && 'value' in newValue) {
+    //             validationValue = (newValue as Option).value;
+    //         } else {
+    //             validationValue = newValue;
+    //         }
+        
+    //         return {
+    //             ...prevErrors,
+    //             [name]: validateField(name, validationValue,{
+    //                 ...formData,
+    //                 [name]: newValue,
+    //             }),
+    //         };
+    //     });
+    // };
       
     const handleSubmitForm = (event: React.FormEvent) => {
         event.preventDefault();
@@ -255,14 +335,13 @@ const PartnerProfileForm: React.FC =  () => {
     
         console.log("Отправка формы:", formData);
     };   
-    const formDataChangePassword = {
-        email: "",
-        password: "",
-        rememberMe: false, 
-        passwordResetEmail: "",
-        passwordReset: "", 
-        passwordResetConfirm: ""
-    }
+    const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value, type, checked } = event.target as HTMLInputElement;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: type === "checkbox" ? checked : value,
+        }));
+      };  
     return(<>
         <form onSubmit={handleSubmitForm} className={profileCardClasses}>
             <div className="grow-0 shrink-0 basis-auto">
@@ -298,7 +377,7 @@ const PartnerProfileForm: React.FC =  () => {
             {isPasswordResetVisible && 
             <ForgotPasswordEmail 
                 formData={formDataChangePassword}
-                handleChange={handleChange}
+                handleChange={handleChangeForm}
                 onClose={() => setIsPasswordResetVisible(false)} 
                 onClick={() => { 
                 setIsPasswordResetVisible(false); 

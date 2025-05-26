@@ -10,16 +10,36 @@ import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
 import {useEffect} from "react"
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-
+import {PartnerProfileData} from "@/app/partner-personal-account/context";
+import {getPartnerInfo} from "@/lib/api/partners"
+// import  {Option } from '@/types/Option';
 const FaqPage = () => {
-    const { role } = useAuth();
+    const { role, id } = useAuth();
     const router = useRouter();
-
+    const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null)
+    const [formData, setFormData] = useState({
+        category: undefined,
+        question: "",
+    });
     useEffect(() => {
         if (role && role !== "Employee") {
             router.replace("/student-personal-account");
         }
     }, [role, router]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try{
+                const partner = await getPartnerInfo(id ?? "");
+                setFetchPartner(partner)
+                console.log(fetchPartner)
+            } catch(error){
+                console.log(error)
+            }
+        } 
+        if (id){
+            fetchData();
+        }
+    },[id, fetchPartner])
     const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(FaqQuestions.map(item => [item.title, false]))
     );
@@ -29,6 +49,37 @@ const FaqPage = () => {
             [heading]: !prev[heading]
         }));
     };
+
+    // const handleChange = (
+    //     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    //   ) => {
+    //     const { name, type, value, checked } = event.target as HTMLInputElement;
+      
+    //     let newValue: string | boolean | File | Date | {id: number, name: string} | undefined = value;
+      
+    //     if (type === "checkbox") {
+    //       newValue = checked;
+    //     }
+      
+    //     const selectMap = {
+    //       category: faqCategoryOptionsPartner,
+    //     };
+      
+    //     if (selectMap[name as keyof typeof selectMap]) {
+    //       const selected = selectMap[name as keyof typeof selectMap].find(
+    //         (opt) => opt.id.toString() === value
+    //       );
+    //       newValue = selected ? { value: selected.id.toString(), label: selected.name } : "";
+    //     }
+      
+    //     // Формируем новое состояние formData вручную
+    //     const updatedFormData = {
+    //       ...formData,
+    //       [name]: newValue,
+    //     };
+      
+    //     setFormData(updatedFormData);
+    //   };
     return (
         <div className="flex flex-col gap-[40px]">
             <div
@@ -95,7 +146,10 @@ const FaqPage = () => {
                     options={transformToOptions(faqCategoryOptionsPartner)}
                     labelFontSize={14}
                     name="category"
+                    // value={formData.category}
+                    // onChange={handleChange}
                 />
+
                 <InputField 
                     width={548}
                     name="question"
@@ -104,7 +158,10 @@ const FaqPage = () => {
                     label="Вопрос"
                     minRows={1}
                     maxRows={10}
+                    value={formData.question}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, question: e.target.value }))}
                 />
+
                 <button type="submit" className="bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] mt-5 h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto rounded-[15px] border-[none]">
                     Отправить
                 </button>

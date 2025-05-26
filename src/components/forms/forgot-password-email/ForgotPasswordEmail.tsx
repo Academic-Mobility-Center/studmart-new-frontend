@@ -98,7 +98,7 @@ interface ForgotPasswordEmailProps {
     onClose: () => void;
     onClick: () => void;
     formData: LoginFormData;
-    handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
 }
 
 const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
@@ -169,6 +169,7 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
                     <p className="text-[#032c28] text-sm font-medium">
                         Письмо для сброса пароля будет отправлено на указанную почту в ближайшее время.
                     </p>
+
                 </div>
             ) : (
                 <div ref={modalRef} className="bg-white p-6 rounded-2xl shadow-lg w-[400px]">

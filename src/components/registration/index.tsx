@@ -107,7 +107,7 @@ export default function RegistraionForm(){
         if (name === "university") {
             const selectedUnivercity = universities?.find(option => option.id.toString() === value);
             newValue = selectedUnivercity
-                ? { value: selectedUnivercity.id.toString(), label: selectedUnivercity?.shortName }
+                ? { value: selectedUnivercity.id.toString(), label: selectedUnivercity?.name }
                 : null;
         }
     

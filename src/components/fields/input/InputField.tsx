@@ -6,13 +6,16 @@ interface InputFieldProps {
   placeholder: string;
   name?: string;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  // onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   autoComplete?: string;
   width?: number;
   labelFontSize?: number;
-  onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+  // onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   minRows?: number;
   maxRows?: number;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+
 }
 
 export default function InputField({
