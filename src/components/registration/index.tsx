@@ -231,14 +231,12 @@ export default function RegistraionForm(){
                 courseId
             );
 
-            console.log("Результат регистрации:", result);
 
             if (result) {
                 const studentResponse = await getStudentByEmail(email.trim());
 
                 if (studentResponse && studentResponse.id) {
                     const studentId = studentResponse.id;
-                    console.log("ID зарегистрированного студента:", studentId);
 
                     // ⬇️ Обработка файла
                     if (needFile && file instanceof File) {

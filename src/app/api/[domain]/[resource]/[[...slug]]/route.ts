@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-const allowedDomains = ["promocodes", "students", "partners", "files", "auth"];
+const allowedDomains = ["promocodes", "students", "partners", "files", "auth", "email"];
 const allowedResources = [
   "Categories", "Discounts", "Regions", "Partners",
   "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-  "EmailDomains", "Verifications", "Cities", "forgotPassword", "resetPassword"
+  "EmailDomains", "Verifications", "Cities", "forgotPassword", "resetPassword", "SupportRequest"
 ];
 export async function GET(
   request: Request,

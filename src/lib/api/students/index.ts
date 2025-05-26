@@ -131,14 +131,10 @@ export const studentRegistration = async (
       }),
     });
 
-    if (!res.ok) {
-      throw new Error(`Ошибка при получении университетов: ${res.status}`);
-    }
-    const data = await res.json();
-    return data;
+    return res.status;
   } catch (error) {
-    console.error(error)
-    return null;
+    console.error("Ошибка при регистрации студента:", error);
+    return 500; // или другой код по умолчанию, например, 0
   }
 }
 export const sendStudentFile = async(id: string, image: string, contentType: string) => {
