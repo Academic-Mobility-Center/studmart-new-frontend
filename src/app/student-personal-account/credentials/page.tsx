@@ -4,7 +4,12 @@ import InputField from "@/components/fields/input/InputField";
 import StudentBankCredentialsFormData from "@/types/StudentBankCredentialsFormData";
 import { useState, useEffect } from "react";
 import {useAuth} from "@/context/AuthContext"
+import { getStudentById, updateStudent
+} from '@/lib/api/students';
 import {useRouter} from "next/navigation"
+import IStudentFormData from "@/app/student-personal-account/context"
+import StudentPutData from "@/types/StudentPutData"
+
 const validateField = (
     name: string,
     value: string | boolean | string[],
@@ -12,8 +17,7 @@ const validateField = (
     switch (name) {
         case "fullname":
         case "name":
-        case "middleName":
-            return /^[А-Яа-яA-Za-z\s-]{2,}$/.test(value as string)
+            return /^[a-zA-Zа-яА-ЯёЁ\s-']+$/.test(value as string)
                 ? undefined
                 : "Введите корректное значение (минимум 2 буквы)";
 
@@ -21,13 +25,6 @@ const validateField = (
             return /^\d{10}$/.test(value as string)
                 ? undefined
                 : "ИНН должен содержать 10 цифр";
-
-        case "kpp":
-            if (!value) return undefined; // необязательное поле
-            return /^\d{9}$/.test(value as string)
-                ? undefined
-                : "КПП должен содержать 9 цифр";
-
         case "numberAccount":
             return /^\d{20}$/.test(value as string)
                 ? undefined
@@ -44,23 +41,51 @@ const validateField = (
 };
 
 const CredentialsPage = () => {
-    const { role } = useAuth();
+    const { role, id } = useAuth();
     const router = useRouter();
+    const [isSaved, setIsSaved] = useState(false);
 
     useEffect(() => {
         if (role && role !== "Student") {
             router.replace("/partner-personal-account");
         }
     }, [role, router]);
+    const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
     const [formData, setFormData] = useState<StudentBankCredentialsFormData>({
         fullname: "",
         name: "",
-        middleName: "",
         innOrKio: "",
-        kpp: "",
         numberAccount: "",
         bic: "",
     })
+
+    useEffect(()=>{
+        const fetchData = async () => {
+            try{
+                const student = await getStudentById(id ?? "")
+                setFetchStudent(student)
+            }
+            catch (error){
+                console.warn(error)
+            }
+        }
+        if (id){
+            fetchData();
+        }
+    },[id])
+
+    useEffect(()=>{
+        if (!fetchStudent) return
+        if (fetchStudent){
+            setFormData({
+                fullname: fetchStudent.lastName,
+                name: fetchStudent.firstName,
+                innOrKio: fetchStudent?.paymentInformation?.inn.toString() ?? "",
+                numberAccount: fetchStudent?.paymentInformation?.accountNumber ?? "",
+                bic: fetchStudent?.paymentInformation?.bik ?? ""
+            })
+        }
+    },[fetchStudent])
     const [errors, setErrors] = useState<{ 
         fullname?: string; 
         name?: string; 
@@ -102,7 +127,7 @@ const CredentialsPage = () => {
             [name]: validateField(name, newValue),
         }));
     };  
-    const handleSubmitForm = (event: React.FormEvent) => {
+    const handleSubmitForm = async (event: React.FormEvent) => {
         event.preventDefault();
         let hasErrors = false;
         const newErrors: typeof errors = {};
@@ -117,8 +142,36 @@ const CredentialsPage = () => {
         setErrors(newErrors);
     
         if (hasErrors) return;
-    
-        console.log("Отправка формы:", formData);     
+        
+        const dataToSend: StudentPutData = {
+            id: id ?? "",
+            firstName: formData?.name ?? "",
+            lastName: formData?.fullname ?? "",
+            birthDate: fetchStudent?.birthDate ?? "",
+            sex: fetchStudent?.sex ?? false,
+            email: fetchStudent?.email ?? "",
+            specialisation: fetchStudent?.specialisation ?? "",
+            password: "AAAAAAAAAAAA",
+            status: fetchStudent?.status ?? 1,
+            universityId: fetchStudent?.university.id ?? 1,
+            regionId: fetchStudent?.region?.id ?? 1,
+            balance: fetchStudent?.balance ?? 0,
+            hasWork: fetchStudent?.hasWork ?? false,
+            cityId: fetchStudent?.city?.id ?? 1,
+            promocode: fetchStudent?.promocode ?? "asdasd",
+            languageIds: (fetchStudent?.languages?.map((item) => Number(item.id))) ?? [],
+            courseId: fetchStudent?.course?.id ?? 1,
+            paymentInformation: {
+                bik: formData.bic,
+                inn: Number(formData.innOrKio),
+                accountNumber: formData.numberAccount,
+            }
+        }
+        const response = await updateStudent(id ?? "", dataToSend);
+        if (response) {
+            setIsSaved(true);
+            setTimeout(() => setIsSaved(false), 3000);
+        }    
     };  
     return (
         <form onSubmit={handleSubmitForm} className="flex flex-col gap-[40px] ">
@@ -135,11 +188,11 @@ const CredentialsPage = () => {
                     Банковские реквизиты
                 </h3>
                 <div className="flex flex-row gap-6">
-                    <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[167px] grow-0 shrink-0 basis-auto">
+                    <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[262px] grow-0 shrink-0 basis-auto">
                         <InputField
                             label="Фамилия"
                             placeholder="Фамилия"
-                            width={167}
+                            width={262}
                             maxRows={1}
                             onChange={hanldeChange}
                             name="fullname"
@@ -148,11 +201,11 @@ const CredentialsPage = () => {
                         />
                         {errors.fullname && <p className="text-red-600 text-sm font-medium">{errors.fullname}</p>}
                     </div>
-                    <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[167px] grow-0 shrink-0 basis-auto">
+                    <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[262px] grow-0 shrink-0 basis-auto">
                         <InputField
                             label="Имя"
                             placeholder="Имя"
-                            width={166}
+                            width={262}
                             maxRows={1}
                             onChange={hanldeChange}
                             name="name"
@@ -160,19 +213,6 @@ const CredentialsPage = () => {
                             onBlur={handleBlur}
                         />
                         {errors.name && <p className="text-red-600 text-sm font-medium">{errors.name}</p>}
-                    </div>
-                    <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[167px] grow-0 shrink-0 basis-auto">
-                        <InputField
-                            label="Отчество"
-                            placeholder="Отчество"
-                            width={167}
-                            maxRows={1}
-                            onChange={hanldeChange}
-                            value={formData?.middleName}
-                            name="middleName"
-                            onBlur={handleBlur}
-                        />
-                        {errors.middleName && <p className="text-red-600 text-sm font-medium">{errors.middleName}</p>}
                     </div>
 
                 </div>
@@ -190,22 +230,6 @@ const CredentialsPage = () => {
                         />
                         {errors.innOrKio && <p className="text-red-600 text-sm font-medium">{errors.innOrKio}</p>}
                     </div>
-                    <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[262px] grow-0 shrink-0 basis-auto">
-                        <InputField
-                            label="КПП"
-                            placeholder="Необязательно для физ лица"
-                            width={262}
-                            maxRows={1}
-                            onChange={hanldeChange}
-                            name="kpp"
-                            value={formData?.kpp}
-                            onBlur={handleBlur}
-                        />
-                        {errors.kpp && <p className="text-red-600 text-sm font-medium">{errors.kpp}</p>}
-                    </div>
-
-
-
                 </div>
                 <div className="flex flex-row gap-6">
                     <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[262px] grow-0 shrink-0 basis-auto">
@@ -243,8 +267,8 @@ const CredentialsPage = () => {
                     uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border 
                     grow-0 shrink-0 basis-auto  rounded-[15px] border-[none]"
                 >
-                    Сохранить
-                </button>                
+                    {isSaved ? "Сохранено ✓" : "Сохранить"}
+                </button>           
             </div>
         </form>
 

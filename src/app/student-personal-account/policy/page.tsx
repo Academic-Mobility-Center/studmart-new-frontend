@@ -5,7 +5,7 @@ import { StyledSwitch } from "@/components/fields/switch/StyledSwitch";
 import { ArrowDown } from "./icons/ArrowDown";
 import { categoriesAndServices } from "../context";
 import { ArrowUp } from "./icons/ArrowUp";
-const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] mt-5 h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto rounded-[15px] border-[none]";
+const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] mt-5 h-12 block box-border grow-0 shrink-0 basis-auto rounded-[15px] border-[none]";
 import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
 
@@ -138,7 +138,7 @@ const PolicyPage = () => {
                     </div>
                 )}
                 {selectedMenuItem !== null && (                
-                    <button type="submit" className={saveButtonClasses}>
+                    <button type="submit" className={saveButtonClasses} disabled>
                     Сохранить
                     </button>
                 )}

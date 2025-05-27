@@ -5,13 +5,17 @@ export const genderOptions= [
 ]
 
 export const familyStatusOptions = [
-    {id: 1, name: "Состоит в браке"},
-    {id: 2, name: "Не состоит в браке" }
+    {id: 1, name: "Женат/Замужем"},
+    {id: 2, name: "Одинокий/Одинокий" },
+    {id: 3, name: "Разведен/Разведена" },
+    {id: 4, name: "Вдовец/Вдова" },
+    {id: 5, name: "Есть дети" },
+
 ]
 
 export const isWorkOptions = [
-    {id: 1, name: "Не работает"},
-    {id: 2, name: "Работает"}
+    {id: 2, name: "Не работает"},
+    {id: 1, name: "Работает"}
 ]
 
 export const languageProfiencyOptions = [
@@ -33,9 +37,6 @@ export const validateField = (
         case "email":
             return /^\s*[\w\-+_']+(\.[\w\-+_']+)*@[A-Za-z0-9]([\w.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z.]*[A-Za-z]$/.test(value as string)
                 ? undefined : "Некорректный email";
-
-        case "password":
-            return (value as string).length >= 6 ? undefined : "Пароль должен содержать минимум 6 символов";
 
         case "firstName":
         case "lastName":
@@ -169,6 +170,11 @@ export default interface IStudentFormData {
     birthDate: string;
     email: string;
     specialisation: string;
+    course: {
+        id: number,
+        name: string,
+        yearsBeforeEnding: number   
+    }
     university: {
         id: number,
         name: string,
@@ -184,11 +190,34 @@ export default interface IStudentFormData {
                     name: string
                 }
             }
-        },
-    },
-    course: {
+        }
+    }
+    balance: number,
+    promocode: string,
+    status: number,
+    hasWork: boolean,
+    region: {
         id: number,
-        name: string,
-        yearsBeforeEnding: number   
+        name: string
+      country: {
+        id: number,
+        name: string
+      }
+    },
+    city: {
+        id: number,
+        name: string
+    },
+    languages: [
+      {
+        id: number,
+        name: string
+      }
+    ],
+    paymentInformation: {
+      bik: string,
+      accountNumber: string,
+      correspondentAccountNumber: string
+      inn: number;
     }
 }

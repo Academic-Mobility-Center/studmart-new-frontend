@@ -2,29 +2,77 @@
 import { useState, useEffect } from "react";
 import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
+import IStudentFormData from "@/app/student-personal-account/context"
 interface ReferalData{
-    account: string;
+    account: number;
     link: string;
     promocode: string;
 }
-
+import { getStudentById } from '@/lib/api/students';
 const ReferalProgramPage = () => {
-    const { role } = useAuth();
+    const { role, id } = useAuth();
     const router = useRouter();
+    const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
 
     useEffect(() => {
         if (role && role !== "Student") {
             router.replace("/partner-personal-account");
         }
     }, [role, router]);
-    const [formData] = useState<ReferalData>({
-        account: "0 руб.",
-        link: "http://www.some-link.com",
-        promocode: "PROMO25"
+
+    const [formData, setFormData] = useState<ReferalData>({
+        account: 0,
+        link: "",
+        promocode: ""
     })
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const student = await getStudentById(id ?? "");
+                if (student) {
+                    setFetchStudent(student);
+                }
+            } catch (e:unknown ) {
+                const error = e as { response?: { status: number } };
+                if (error?.response?.status === 400) {
+                    console.warn("Ошибка 400 при загрузке студентов:", e);
+                } else {
+                    console.error("Ошибка при загрузке студентов:", e);
+                }
+                return;
+            }
+        };
+        if (id){
+            fetchData();
+        }
+    }, [id]);
+    useEffect(()=>{
+        if (!fetchStudent) return
+        if (fetchStudent) {
+            setFormData({
+                account: fetchStudent?.balance,
+                link: "some-link",
+                promocode: ""
+            })
+        }
+    },[fetchStudent])
     const [copiedText, setCopiedText] = useState<"link" | "promocode" | null>(null);
     const [issueRequestVisible, setIssueRequestVisible] = useState(false);
+    const [paymentInfoError, setPaymentInfoError] = useState(false);
+    const [moneyError, setMoneyError]= useState(false);
+    const handleRewardClick = () => {
+        if (!fetchStudent?.paymentInformation) {
+            setPaymentInfoError(true);
+            return;
+        }
+        if (fetchStudent.balance < 1001){
+            setMoneyError(true)
+            return
+        }
+        setPaymentInfoError(false);
+        setIssueRequestVisible(true);
+    };
     const copyTextToClipboard = async (text: string, type: "link" | "promocode") => {
     try {
         await navigator.clipboard.writeText(text);
@@ -54,14 +102,14 @@ const ReferalProgramPage = () => {
                     className="font-['Nunito_Sans'] text-[48px] 
                     font-extrabold text-[#032c28] m-0 p-0 w-[125%]"
                 >
-                   {formData?.account}
+                   {formData?.account} руб.
                 </h1>
                 <button 
                     className="bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] 
                     uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border 
                     grow-0 shrink-0 basis-auto mt-5 rounded-[15px] border-[none]"
-                    onClick={() => setIssueRequestVisible(true)}
-                >
+                    onClick={handleRewardClick}
+                    >
                     Получить вознаграждение 
                 </button>
                 {issueRequestVisible && (                <p 
@@ -69,7 +117,16 @@ const ReferalProgramPage = () => {
                 >
                     Заявка на выплату отправлена. Мы отправим платеж в течение 2 рабочих дней
                 </p>)}
-
+                {paymentInfoError  && (
+                    <p className="text-[#F5052E] font-[Mulish] mt-2">
+                        Пожалуйста, заполните банковские реквизиты в профиле, чтобы получить вознаграждение.
+                    </p>
+                )}
+                {moneyError  && (
+                    <p className="text-[#F5052E] font-[Mulish] mt-2">
+                        Для получения вознаграждения, минимальный баланс счета должен составлять 1000 рублей.
+                    </p>
+                )}
             </div>
 
             <div 

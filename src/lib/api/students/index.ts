@@ -1,3 +1,4 @@
+import StudentPutData from "@/types/StudentPutData"
 export const getStudent = async () => {
     try {
       const res = await fetch("/api/students/Students");
@@ -175,6 +176,42 @@ export const getCitiesByRegionId = async(regionId: string) => {
     return data;
   } catch (error) {
     console.error("Ошибка в getStudentCities:", error);
+    return null;
+  }
+}
+
+export const updateStudent = async (id: string, student: StudentPutData) => {
+  try {
+    const response = await fetch(`/api/students/Students/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "*/*"
+      },
+      body: JSON.stringify(student)
+    });
+
+    if (!response.ok) {
+      console.error(`Ошибка при обновлении данных студента: ${response.status}`);
+    }
+
+    return { status: response.status };
+  } catch (error) {
+    console.error("Ошибка запроса:", error);
+    return { status: 500 }; // или null, если хочешь отличать сетевые ошибки
+  }
+};
+export const getLanguages = async () => {
+  try {
+    const res = await fetch(`/api/students/Languages`);
+
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении языков: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getLanguages:", error);
     return null;
   }
 }

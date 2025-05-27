@@ -5,7 +5,6 @@ import UniversityInfo from '@/components/forms/student-profile-elements/universi
 import { StudentFormData } from '@/types/StudentProfileData';
 import { Button } from '@mui/base';
 import React, { useEffect, useState } from 'react';
-// import City from "@/types/Cities";
 import ForgotPasswordEmail from "@/components/forms/forgot-password-email/ForgotPasswordEmail";
 
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
@@ -31,13 +30,15 @@ import {
     getStudentCourses, 
     getStudentCities, 
     getStudentUniversities,
+    getLanguages,
+    updateStudent
     // getCitiesByRegionId
 } from '@/lib/api/students';
 import {getPartnerRegions} from '@/lib/api/partners';
-import { transformToOption } from '@/utils/dataTransform';
+import { transformToOption, transformToOptions } from '@/utils/dataTransform';
 import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
-
+import StudentPutData from "@/types/StudentPutData"
 const ProfilePage: React.FC = () => {
     const { role, id ,isLoading } = useAuth();
     const router = useRouter();
@@ -56,6 +57,7 @@ const ProfilePage: React.FC = () => {
     const [fetchUniversities, setFetchUniversities] = useState(universityOptions)
     const [fetchCities, setFetchCities] = useState(cityOptions)
     const [regions, setRegions] = useState<{id: number, name: string}[]>(newRegionOptions)
+    const [languages, setLanguages] = useState(languageProfiencyOptions)
     const [formData, setFormData] = useState<StudentFormData>({
         email: '',
         password: '',
@@ -72,6 +74,7 @@ const ProfilePage: React.FC = () => {
         profession: '',
         course: undefined,
       });
+    const [isSaved, setIsSaved] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -92,6 +95,12 @@ const ProfilePage: React.FC = () => {
                 const universities = await getStudentUniversities();
                 setFetchUniversities(universities)
             } catch (error){
+                console.warn(error)
+            }
+            try{
+                const fetchLanguages = await getLanguages();
+                setLanguages(fetchLanguages)
+            }catch (error){
                 console.warn(error)
             }
             try{
@@ -116,11 +125,12 @@ const ProfilePage: React.FC = () => {
         if (id){
             fetchData();
         }
-
     }, [id]);
     useEffect(() => {
         if (!fetchStudent) return;
-        const genderOption = fetchStudent?.sex ? { id: 2, name: "Женский" } : { id: 1, name: "Мужской" };
+        const genderOption = !fetchStudent?.sex ? { id: 2, name: "Женский" } : { id: 1, name: "Мужской" };
+        const workOptions = fetchStudent?.hasWork ? {id: 1, name: "Работает"} : {id:2, name: "Не работает"}
+        const familyStatusOption = fetchStudent?.status ? {id: 1, name: "Состоит в браке"} : {id: 2, name: "Не состоит в браке" }
         setFormData({
             email: fetchStudent?.email,
             password: "",
@@ -128,38 +138,16 @@ const ProfilePage: React.FC = () => {
             lastName: fetchStudent?.lastName,
             date: new Date(fetchStudent.birthDate),
             gender: transformToOption(genderOption),
-            // region: transformToOption(fetchStudent?.university?.city?.region)  ?? [],
-            // city: transformToOption(fetchStudent?.university?.city)  ?? undefined,
-            familyStatus: undefined,
-            // isWork: undefined,
-            // languageProfiency: undefined,
+            region: fetchStudent?.region ? transformToOption(fetchStudent?.region) : undefined,
+            city: fetchStudent?.city ? transformToOption(fetchStudent?.city)  : undefined,
+            familyStatus: transformToOption(familyStatusOption),
+            isWork: transformToOption(workOptions),
+            languageProfiency: fetchStudent?.languages ? transformToOptions(fetchStudent?.languages) : undefined,
             university: transformToOption(fetchStudent?.university)  ?? undefined,
             profession: fetchStudent?.specialisation,
             course: transformToOption(fetchStudent.course) ?? undefined
-
         });
     }, [fetchStudent]);    
-    
-    // const [cities,setCities] = useState<City[]>(newCityOptions)
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const regionId = formData?.region?.value;
-    //             if (regionId) {
-    //                 console.log("Запрос городов по региону", regionId); // 👈 добавьте для отладки
-    //                 const cities = await getCitiesByRegionId(regionId);
-    //                 setCities(cities);
-    //             }
-    //         } catch (error) {
-    //             console.warn(error);
-    //             setCities(newCityOptions);
-    //         }
-    //     };
-    
-    //     if (formData?.region?.value) {
-    //         fetchData();
-    //     }
-    // }, [formData?.region?.value]); 
     
     const [errors, setErrors] = useState<{ 
         email: string; 
@@ -231,6 +219,7 @@ const ProfilePage: React.FC = () => {
             languageProfiency: languageProfiencyOptions,
             university: fetchUniversities,
             course: fetchCourses,
+            regions: regions
         };
     
         if (name in selectMapping) {
@@ -242,7 +231,7 @@ const ProfilePage: React.FC = () => {
                 .filter(option => value.includes(option.id.toString()))
                 .map(option => ({ value: option.id.toString(), label: option.name }));
               
-              newValue = selectedOptions; // тут массив Options
+              newValue = selectedOptions;
           
             } else {
               // Обычный выбор
@@ -284,8 +273,7 @@ const ProfilePage: React.FC = () => {
         });
     };
 
-    const handleSubmitForm = (event: React.FormEvent) => {
-        console.log("Отправка формы:", formData); 
+    const handleSubmitForm = async (event: React.FormEvent) => {
         event.preventDefault();
     
         let hasErrors = false;
@@ -305,8 +293,37 @@ const ProfilePage: React.FC = () => {
         }));
     
         if (hasErrors) return;
-    
-        console.log("Отправка формы:", formData);     
+
+        const dataToSend: StudentPutData = {
+            id: id ?? "",
+            firstName: formData?.firstName ?? "",
+            lastName: formData?.lastName ?? "",
+            birthDate: formData?.date?.toISOString().split("T")[0] ?? "",
+            sex: formData.gender?.label === "Мужской" ? true : false,
+            email: formData?.email ?? "",
+            specialisation: formData?.profession ?? "",
+            password: formData?.password ?? "AAAAAAAAAAAA",
+            status: Number(formData.familyStatus?.value) ?? 1,
+            universityId: Number(formData.university?.value),
+            regionId: Number(formData.region?.value),
+            balance: fetchStudent?.balance ?? 0,
+            hasWork: formData.isWork?.label === "Работает" ? true : false,
+            cityId: Number(formData?.city?.value),
+            promocode: fetchStudent?.promocode ?? "asdasd",
+            languageIds: (formData?.languageProfiency?.map((item) => Number(item.value))) ?? [],
+            courseId: Number(formData.course?.value),
+            paymentInformation: {
+                bik: fetchStudent?.paymentInformation?.bik ?? "045004641",
+                inn: fetchStudent?.paymentInformation?.inn ?? 5406833147,
+                accountNumber: fetchStudent?.paymentInformation?.accountNumber ?? "40817810944054679398",
+            }
+        }
+        const response = await updateStudent(id ?? "", dataToSend);
+        if (response){
+            setIsSaved(true);
+            setTimeout(() => setIsSaved(false), 3000);
+        }
+  
     };
     const formDataChangePassword = {
         email: "",
@@ -343,7 +360,7 @@ const ProfilePage: React.FC = () => {
                         genderOptions={genderOptions}
                         familyStatusOptions={familyStatusOptions}
                         isWorkOptions={isWorkOptions}
-                        languageProfiencyOptions={languageProfiencyOptions}
+                        languageProfiencyOptions={languages}
                         newCityOptions={fetchCities}
                         newRegionOptions={regions}
                     />
@@ -358,7 +375,7 @@ const ProfilePage: React.FC = () => {
                 </div>
             </div>   
             <Button type="submit" className={saveButtonClasses}>
-                Сохранить
+                {isSaved ? "Сохранено ✓" : "Сохранить"}
             </Button>
             {isPasswordResetVisible && 
             <ForgotPasswordEmail 
