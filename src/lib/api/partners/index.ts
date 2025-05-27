@@ -68,3 +68,17 @@ export const getPartnerInfo = async (id: string) => {
     return null;
   }  
 }
+export const getPartnerRegionById = async (id: string) => {
+  try {
+    const res = await fetch(`/api/partners/Regions?id=${id}`);
+
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении региона по id: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getPartnerRegionById:", error);
+    return null;
+  }
+};

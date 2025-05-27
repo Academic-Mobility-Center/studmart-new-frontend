@@ -32,3 +32,11 @@ export default interface StatisticFormData {
         siteVisits: EventStatItem;
     };
 }
+// export default interface Events{
+//     visitors: EventStatItem;
+//     repeatVisits: EventStatItem;
+//     uniqueVisitors: EventStatItem;
+//     promocodes: EventStatItem;
+//     repeatPromocodes: EventStatItem;
+//     siteVisits: EventStatItem;
+// }

@@ -15,17 +15,17 @@ interface NavigationProps {
             <LinkedMenuItem 
               link={"/home"} 
               name="Главная страница" 
-              disabled={!isAuthenticated}
+              // disabled={!isAuthenticated}
             />
             <LinkedMenuItem 
               link={"/about"} 
               name="О сервисе"
-              disabled={!isAuthenticated}
+              // disabled={!isAuthenticated}
             />
             <LinkedMenuItem 
               link={"/partners"} 
               name="Партнерам"
-              disabled={!isAuthenticated}
+              // disabled={!isAuthenticated}
             />
 
             {isAuthenticated ? (

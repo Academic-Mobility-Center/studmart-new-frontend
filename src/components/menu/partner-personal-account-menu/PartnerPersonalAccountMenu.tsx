@@ -17,7 +17,7 @@ const menuItems = [
   { icon: "profile", label: "Профиль партнера", href: "/partner-personal-account/profile" },
   { icon: "shopping", label: "Предложения", href: "/partner-personal-account/offers" },
   { icon: "charts", label: "Статистика", href: "/partner-personal-account/statistics/users" },
-  { icon: "docs", label: "Документы", href: "/partner-personal-account/documents" },
+  // { icon: "docs", label: "Документы", href: "/partner-personal-account/documents" },
   { icon: "faq", label: "FAQ", href: "/partner-personal-account/faq" },
 ];
 

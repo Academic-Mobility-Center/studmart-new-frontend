@@ -4,7 +4,6 @@ import NewHeader from "@/components/new-header/NewHeader";
 import Faq from "@/components/partners-page-items/faq/Faq";
 import WhatGivesStudmart from "@/components/partners-page-items/what-gives-studmart/WhatGivesStudmart";
 import InCooperation from "@/components/partners-page-items/in-cooperation/InCooperation";
-import { Button } from "@mui/base";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 
@@ -56,14 +55,7 @@ const PartnersPage = () => {
                                 >
                                     Бесплатный тестовый доступ до 31 декабря 2025 года.
                                 </p>
-                                <Button 
-                                    className="border bg-[#f8f8f8] [font-family:Mulish,sans-serif] text-sm 
-                                    font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[588px] h-12 
-                                    cursor-pointer block box-border grow-0 shrink-0 basis-auto 
-                                    ml-[45px] mr-[47px] mt-10 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]"
-                                >
-                                    Оставить заявку
-                                </Button>
+
                             </div>
                         </div>
                     </div>
