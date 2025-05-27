@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-const allowedDomains = ["promocodes", "students", "partners", "files", "auth", "email"];
+const allowedDomains = ["promocodes", "students", "partners", "files", "auth", "email", "statistics"];
 const allowedResources = [
   "Categories", "Discounts", "Regions", "Partners",
   "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
-  "EmailDomains", "Verifications", "Cities", "forgotPassword", "resetPassword", "SupportRequest", "Languages"
+  "EmailDomains", "Verifications", "Cities", "forgotPassword",
+   "resetPassword", "SupportRequest", "Languages", "Events", "Users", "DescriptionRequests"
 ];
 export async function GET(
   request: Request,

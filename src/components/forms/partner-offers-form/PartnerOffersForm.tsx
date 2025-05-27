@@ -7,16 +7,35 @@ export const saveButton = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking
 import ImageUploader from "@/utils/imageUpload";
 import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
+import {getPartnerInfo} from "@/lib/api/partners"
+import {PartnerProfileData} from "@/app/partner-personal-account/context"
 const PartnerOffersForm: React.FC = () => {
-    const { role } = useAuth();
+    const { role, id, isLoading } = useAuth();
     const router = useRouter();
+    const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null)
 
     useEffect(() => {
         if (role && role !== "Employee") {
             router.replace("/student-personal-account");
         }
     }, [role, router]);
+    useEffect(()=>{
+        const fetchData = async() => {
+            try{
+                const fetchPartner = await getPartnerInfo(id ?? "")
+                setFetchPartner(fetchPartner);
+            } catch(error){
+                console.warn(error)
+            }
+        }
+        if (id){
+            fetchData();
+        }
+    },[id])
+    if (!fetchPartner || isLoading){
+        return <>Загрузка...</>
+    }
     return(
     <>
            <div  className={profileCardClasses} style={{gap: '20px'}}>
@@ -33,6 +52,7 @@ const PartnerOffersForm: React.FC = () => {
             <InputField
                 label="Описание компании"
                 placeholder="Описание компании"
+                value={fetchPartner.partner.description}
                 width={547}
                 minRows={6}
                 maxRows={12}

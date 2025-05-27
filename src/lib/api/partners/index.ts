@@ -82,3 +82,17 @@ export const getPartnerRegionById = async (id: string) => {
     return null;
   }
 };
+export const sendPartnerDescription = async (description: string, employeeId: string) =>{
+  try{
+  const res = await fetch(`/api/partners/DescriptionRequests`,{
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ description, employeeId}),
+  });
+
+    return res.status;
+  } catch (error) {
+    console.error("Ошибка при регистрации студента:", error);
+    return 500; // или другой код по умолчанию, например, 0
+  }
+} 
