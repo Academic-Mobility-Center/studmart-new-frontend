@@ -58,7 +58,7 @@ export async function POST(request: Request) {
   const credentials = await request.json();
 
   // Запрос на настоящий API
-  const externalResponse = await fetch('https://auth.studmart-dev.inxan.ru/login?useCookies=true', {
+  const externalResponse = await fetch(`https://auth.${process.env.NEXT_PUBLIC_API_URL}/login?useCookies=true`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),

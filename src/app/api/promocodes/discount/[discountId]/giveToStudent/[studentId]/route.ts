@@ -21,7 +21,7 @@ export async function POST(
   }
 
   // Здесь можешь собрать внешний URL:
-  const externalUrl = `https://promocodes.studmart-dev.inxan.ru/discount/${discountId}/giveToStudent/${studentId}`;
+  const externalUrl = `https://promocodes.${process.env.NEXT_PUBLIC_API_URL}/discount/${discountId}/giveToStudent/${studentId}`;
 
   try {
     const response = await fetch(externalUrl, {

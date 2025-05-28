@@ -80,7 +80,7 @@ useEffect(() => {
         <PromoCard
           id={card.id}
           key={card.id}
-          imageUrl={`https://files.studmart-dev.inxan.ru/Partners/${card.id}`}
+          imageUrl={`https://files.${process.env.NEXT_PUBLIC_API_URL}/Partners/${card.id}`}
           heading={card.heading}
           description={card.subtitle}
           discount={card.discount}
@@ -102,7 +102,7 @@ useEffect(() => {
           description={card.subtitle}
           discount={card.discount}
           categoryId={card.categoryId}
-          imageUrl={`https://files.studmart-dev.inxan.ru/Partners/${card.id}`}
+          imageUrl={`https://files.${process.env.NEXT_PUBLIC_API_URL}/Partners/${card.id}`}
         />
       ))}
     </div>

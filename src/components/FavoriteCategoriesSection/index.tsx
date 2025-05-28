@@ -158,7 +158,7 @@ export default function FavoriteCategoriesSection({
         if (categories) {
           const withIcons = categories.map((category: Category) => ({
             ...category,
-            IconUrl: category.IconUrl || `https://files.studmart-dev.inxan.ru/Categories/${category.id}`,
+            IconUrl: category.IconUrl || `https://files.${process.env.NEXT_PUBLIC_API_URL}/Categories/${category.id}`,
           }));
 
           const favorite = {
@@ -231,7 +231,7 @@ export default function FavoriteCategoriesSection({
         alt=""
         unoptimized
         onError={(e) => {
-          (e.target as HTMLImageElement).src = "https://files.studmart-dev.inxan.ru/Categories/9";
+          (e.target as HTMLImageElement).src = `https://files.${process.env.NEXT_PUBLIC_API_URL}/Categories/9`;
         }}
       />
     ) : (

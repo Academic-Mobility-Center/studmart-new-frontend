@@ -52,7 +52,7 @@ const PartnerOffer = () => {
       <NewHeader isAuthenticated={isAuthenticated} />
       <div className="flex flex-col items-center min-w-[1280px]">
         <PartnerOfferContent
-          imageUrl={`https://files.studmart-dev.inxan.ru/Partners/${id}`}
+          imageUrl={`https://files.${process.env.NEXT_PUBLIC_API_URL}/Partners/${id}`}
           partnerId={id}
           isAuth={isAuthenticated}
           role={role}

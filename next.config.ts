@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+const HOST = process.env.NEXT_PUBLIC_API_URL;
 
 const nextConfig: NextConfig = {
     output: "standalone",
@@ -11,12 +12,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "files.studmart-dev.inxan.ru",
+        hostname: `files.${HOST}`,
         pathname: "/**"
       },
       {
         protocol: "https",
-        hostname: "files.studmart-dev.inxan.ru",
+        hostname: `files.${HOST}`,
         pathname: "/Categories/**"
       },
       {

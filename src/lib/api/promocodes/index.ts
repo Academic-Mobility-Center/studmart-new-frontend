@@ -161,11 +161,12 @@ export const addToFavouritePartner = async (partnerId: string, studentId: string
       throw new Error(`Ошибка: ${res.status}`);
     }
 
-    const data = await res.json();
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : null;
     return data;
   } catch (error) {
     console.error("Ошибка в addToFavouritePartner:", error);
-    return null;
+    return { ignoredError: false };
   }
 };
 
@@ -185,11 +186,11 @@ export const deleteFavouritePartner = async (partnerId: string, studentId: strin
     if (!res.ok) {
       throw new Error(`Ошибка: ${res.status}`);
     }
-
-    const data = await res.json();
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : null;
     return data;
   } catch (error) {
     console.error("Ошибка в deleteFavouritePartner:", error);
-    return null;
+    return { ignoredError: false };
   }
 };

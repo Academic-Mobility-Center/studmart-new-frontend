@@ -20,7 +20,7 @@ export async function GET(
   const url = new URL(request.url);
   const query = url.search ? `?${url.searchParams.toString()}` : "";
 
-  const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}${pathSuffix}${query}`;
+  const externalUrl = `https://${domain}.${process.env.NEXT_PUBLIC_API_URL}/${resource}${pathSuffix}${query}`;
 
   try {
     const response = await fetch(externalUrl, {
@@ -152,7 +152,7 @@ export async function DELETE(
   }
 
   const pathSuffix = slug?.length ? `/${slug.join("/")}` : "";
-  const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}${pathSuffix}`;
+  const externalUrl = `https://${domain}.${process.env.NEXT_PUBLIC_API_URL}/${resource}${pathSuffix}`;
 
   try {
     const response = await fetch(externalUrl, {
@@ -196,7 +196,7 @@ export async function POST(
   }
 
   const pathSuffix = slug?.length ? `/${slug.join("/")}` : "";
-  const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}${pathSuffix}`;
+  const externalUrl = `https://${domain}.${process.env.NEXT_PUBLIC_API_URL}/${resource}${pathSuffix}`;
 
   try {
     const response = await fetch(externalUrl, {
@@ -258,7 +258,7 @@ export async function PUT(
   }
 
   const pathSuffix = slug?.length ? `/${slug.join("/")}` : "";
-  const externalUrl = `https://${domain}.studmart-dev.inxan.ru/${resource}${pathSuffix}`;
+  const externalUrl = `https://${domain}.${process.env.NEXT_PUBLIC_API_URL}/${resource}${pathSuffix}`;
 
   try {
     const response = await fetch(externalUrl, {

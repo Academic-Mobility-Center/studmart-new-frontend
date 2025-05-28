@@ -64,24 +64,49 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   const handleStarClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     
-    const newValue = !isFavourite; // сохраняем целевое состояние
-    setIsFavourite(newValue); // обновляем сразу для UI
-  
+    const newValue = !isFavourite;
+    setIsFavourite(newValue);
+    
     try {
+      let result: ApiResponse | null = null;
+  
       if (newValue) {
-        const result: ApiResponse = await addToFavouritePartner(id, userId);
-        if (result.ignoredError) {
-        }
+        result = await addToFavouritePartner(id, userId);
       } else {
-        const result: ApiResponse = await deleteFavouritePartner(id, userId);
-        if (result.ignoredError) {
-        }
+        result = await deleteFavouritePartner(id, userId);
+      }
+  
+      if (result && result.ignoredError) {
+        console.warn(123);
       }
     } catch (error) {
       console.error("Ошибка при обновлении избранного:", error);
-      setIsFavourite(!newValue); 
+      setIsFavourite(!newValue);
     }
   };
+  // const handleStarClick = async (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+    
+  //   const newValue = !isFavourite; // сохраняем целевое состояние
+  //   setIsFavourite(newValue); // обновляем сразу для UI
+  
+  //   try {
+  //     if (newValue) {
+  //       const result: ApiResponse = await addToFavouritePartner(id, userId);
+  //       if (result.ignoredError) {
+  //         console.warn(123)
+  //       }
+  //     } else {
+  //       const result: ApiResponse = await deleteFavouritePartner(id, userId);
+  //       if (result.ignoredError) {
+  //         console.warn(123)
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Ошибка при обновлении избранного:", error);
+  //     setIsFavourite(!newValue); 
+  //   }
+  // };
   
   return (
     <div
