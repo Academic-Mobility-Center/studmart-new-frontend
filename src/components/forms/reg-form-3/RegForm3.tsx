@@ -59,19 +59,28 @@ const RegForm3: React.FC<Props> =({
     
         // const universityNameRegex = /^[А-ЯЁ][а-яё]+(?:[\s\-'][А-ЯЁа-яё]+|[\s\-']\([А-ЯЁа-яё\s\-']+\))*\s*(?:[Гг]осударственный\s+)?(?:университет|академия|институт|филиал)(?:\s+имени\s+[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)*)?(?:\s+«[А-ЯЁа-яё\s\-']+»)?$/;
     
+        // const minProfessionLength = 3;
+        // const maxProfessionLength = 100
+    
+        // const profession = formData.profession?.trim() ?? "";
+    
+        // if (!profession) {
+        //     newErrors.profession = "Введите свою профессию";
+        // } else if (profession.length < minProfessionLength || profession.length > maxProfessionLength) {
+        //     newErrors.profession = `Профессия должна содержать от ${minProfessionLength} до ${maxProfessionLength} символов`;
+        // }
         const minProfessionLength = 3;
         const maxProfessionLength = 100;
-        // const minUniversityLength = 10;
-        // const maxUniversityLength = 100;
-    
         const profession = formData.profession?.trim() ?? "";
-    
+        const professionRegex = /^[А-ЯЁ][а-яё]+(?:[\s\-][А-ЯЁа-яё]+)*(?:\s\([А-ЯЁа-яё\s\-]+\))?$/;
+        
         if (!profession) {
             newErrors.profession = "Введите свою профессию";
         } else if (profession.length < minProfessionLength || profession.length > maxProfessionLength) {
             newErrors.profession = `Профессия должна содержать от ${minProfessionLength} до ${maxProfessionLength} символов`;
+        } else if (!professionRegex.test(profession)) {
+            newErrors.profession = "Неверный формат профессии. Пример корректного значения: \"Инженер\", \"Ведущий инженер\", \"Менеджер (по продажам)\". Начинается с заглавной буквы, допускаются пробелы, дефисы и уточнения в скобках.";
         }
-    
         if (!formData.course?.value) {
             newErrors.course = "Выберите ваш курс обучения";
         }

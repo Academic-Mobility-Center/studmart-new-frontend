@@ -43,15 +43,17 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId);
+                const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId, id ?? "");
                 setPartnerData(partnerInfo);
 
             } catch (error) {
                 console.log(error);
             }
         };
-        fetchData();
-    }, [partnerId, regionId, setPartnerData]);
+        if (id){
+            fetchData();
+        }
+    }, [partnerId, regionId, setPartnerData, id]);
     useEffect(() => {
         if (partnerData?.discounts) {
             const ids = partnerData.discounts.map((d: Discount) => String(d.id));

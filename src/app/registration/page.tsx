@@ -18,8 +18,8 @@ export default function Registraion(){
       return <div>Загрузка...</div>;
     }    
     return(
-        <div className="min-w-[1600px] bg-[#f8f8f8] flex flex-col items-center h-screen">
-            <NewHeader isAuthenticated={isAuthenticated}/>
+<div className="min-w-[1600px] bg-[#f8f8f8] flex flex-col items-center min-h-screen overflow-y-auto">
+<NewHeader isAuthenticated={isAuthenticated}/>
             <div className="flex flex-col items-center min-w-[1280px] pb-[105px]">
                 <RegistraionForm/>
             </div>

@@ -91,9 +91,9 @@ export const getPromocodePartnersByRegionId = async (id: string) => {
     return null;
   }
 }
-export const getPromocodePartnerByIdAndRegionId = async(partnerId: string, regionId: string) => {
+export const getPromocodePartnerByIdAndRegionId = async(partnerId: string, regionId: string, StudentId: string) => {
   try {
-    const res = await fetch(`/api/promocodes/Partners?Id=${partnerId}&RegionId=${regionId}`);
+    const res = await fetch(`/api/promocodes/Partners?Id=${partnerId}&RegionId=${regionId}&StudentId=${StudentId}`);
     if (!res.ok) {
       throw new Error(`Ошибка при получении партнеров по региону: ${res.status}`);
     }

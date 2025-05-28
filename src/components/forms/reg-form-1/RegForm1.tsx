@@ -32,18 +32,16 @@ const   RegForm1: React.FC<RegFormProps> = ({
         ) {
             newErrors.email = `Email должен содержать от ${minEmailLength} до ${maxEmailLength} символов`;
         }
-        const hasUpperCase = /[A-Z]/.test(formData?.password);
-        const hasSpecialChar = /[^A-Za-z0-9]/.test(formData?.password);
-        if (!formData.password) {
+        const password = formData?.password || "";
+        const isValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(password);
+        
+        if (!password) {
             newErrors.password = "Введите пароль";
-        } else if (formData.password.length < 6) {
-            newErrors.password = "Пароль должен содержать минимум 6 символов";
-        } else if (formData.password.length < 8) {
-            newErrors.password = "Пароль должен содержать минимум 8 символов";
-        } else if (!hasUpperCase) {
-            newErrors.password = "Пароль должен содержать хотя бы одну заглавную букву";
-        } else if (!hasSpecialChar) {
-            newErrors.password = "Пароль должен содержать хотя бы один специальный символ";
+        } else if(password.length < 8){
+            newErrors.password = "Длина пароля должна составлять не менее 8 символов";
+        }
+        else if (!isValidPassword) {
+            newErrors.password = "Пароль должен состоять из заглавных и строчных букв, цифр и одного специального символа";
         }
         if (!formData.confirmPassword) {
             newErrors.confirmPassword = "Подтвердите пароль";

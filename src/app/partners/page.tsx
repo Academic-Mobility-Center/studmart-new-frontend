@@ -53,7 +53,7 @@ const PartnersPage = () => {
                                     tracking-[1.44px] text-center leading-[48px] text-[#032c28] 
                                     self-center grow-0 shrink-0 basis-auto m-0 p-0"
                                 >
-                                    Бесплатный тестовый доступ до 31 декабря 2025 года.
+                                    Бесплатный тестовый доступ до 31 декабря 2025 года
                                 </p>
 
                             </div>

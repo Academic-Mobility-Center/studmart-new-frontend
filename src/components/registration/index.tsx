@@ -234,7 +234,6 @@ export default function RegistraionForm(){
 
             if (result) {
                 const studentResponse = await getStudentByEmail(email.trim());
-
                 if (studentResponse && studentResponse.id) {
                     const studentId = studentResponse.id;
 

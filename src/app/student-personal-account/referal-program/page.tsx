@@ -52,8 +52,8 @@ const ReferalProgramPage = () => {
         if (fetchStudent) {
             setFormData({
                 account: fetchStudent?.balance,
-                link: "some-link",
-                promocode: ""
+                link: `https://studmart-referral?ref=${fetchStudent.id}`,
+                promocode: fetchStudent.promocode ?? "some-promo"
             })
         }
     },[fetchStudent])
