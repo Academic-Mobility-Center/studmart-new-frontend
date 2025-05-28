@@ -130,7 +130,7 @@ const ProfilePage: React.FC = () => {
         if (!fetchStudent) return;
         const genderOption = !fetchStudent?.sex ? { id: 2, name: "Женский" } : { id: 1, name: "Мужской" };
         const workOptions = fetchStudent?.hasWork ? {id: 1, name: "Работает"} : {id:2, name: "Не работает"}
-        const familyStatusOption = fetchStudent?.status ? {id: 1, name: "Состоит в браке"} : {id: 2, name: "Не состоит в браке" }
+        const familyStatusOption = familyStatusOptions.find((item) => item.id === fetchStudent.status)
         setFormData({
             email: fetchStudent?.email,
             password: "",
@@ -140,7 +140,7 @@ const ProfilePage: React.FC = () => {
             gender: transformToOption(genderOption),
             region: fetchStudent?.region ? transformToOption(fetchStudent?.region) : undefined,
             city: fetchStudent?.city ? transformToOption(fetchStudent?.city)  : undefined,
-            familyStatus: transformToOption(familyStatusOption),
+            familyStatus: familyStatusOption ? transformToOption(familyStatusOption) : undefined,
             isWork: transformToOption(workOptions),
             languageProfiency: fetchStudent?.languages ? transformToOptions(fetchStudent?.languages) : undefined,
             university: transformToOption(fetchStudent?.university)  ?? undefined,
@@ -302,14 +302,12 @@ const ProfilePage: React.FC = () => {
             sex: formData.gender?.label === "Мужской" ? true : false,
             email: formData?.email ?? "",
             specialisation: formData?.profession ?? "",
-            password: formData?.password ?? "AAAAAAAAAAAA",
             status: Number(formData.familyStatus?.value) ?? 1,
             universityId: Number(formData.university?.value),
             regionId: Number(formData.region?.value),
             balance: fetchStudent?.balance ?? 0,
             hasWork: formData.isWork?.label === "Работает" ? true : false,
             cityId: Number(formData?.city?.value),
-            promocode: fetchStudent?.promocode ?? "asdasd",
             languageIds: (formData?.languageProfiency?.map((item) => Number(item.value))) ?? [],
             courseId: Number(formData.course?.value),
             paymentInformation: {
@@ -319,11 +317,15 @@ const ProfilePage: React.FC = () => {
             }
         }
         const response = await updateStudent(id ?? "", dataToSend);
-        if (response){
-            setIsSaved(true);
-            setTimeout(() => setIsSaved(false), 3000);
+        if (response.error || response.status < 200 || response.status >= 300) {
+            // Неудачный ответ — ничего не сохраняем
+            console.error("Произошла ошибка:", response.error);
+            return;
         }
-  
+        
+        // Если всё прошло успешно
+        setIsSaved(true);
+        setTimeout(() => setIsSaved(false), 3000);
     };
     const formDataChangePassword = {
         email: "",

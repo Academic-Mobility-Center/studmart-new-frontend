@@ -57,11 +57,10 @@ const RegForm3: React.FC<Props> =({
             consent?: string;
         } = {};
     
-        const professionRegex = /^[А-ЯЁ][а-яё]+(?:[\s\-][А-ЯЁа-яё]+)*(?:\s\([А-ЯЁа-яё\s\-]+\))?$/;
         // const universityNameRegex = /^[А-ЯЁ][а-яё]+(?:[\s\-'][А-ЯЁа-яё]+|[\s\-']\([А-ЯЁа-яё\s\-']+\))*\s*(?:[Гг]осударственный\s+)?(?:университет|академия|институт|филиал)(?:\s+имени\s+[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)*)?(?:\s+«[А-ЯЁа-яё\s\-']+»)?$/;
     
         const minProfessionLength = 3;
-        const maxProfessionLength = 50;
+        const maxProfessionLength = 100;
         // const minUniversityLength = 10;
         // const maxUniversityLength = 100;
     
@@ -69,8 +68,6 @@ const RegForm3: React.FC<Props> =({
     
         if (!profession) {
             newErrors.profession = "Введите свою профессию";
-        } else if (!professionRegex.test(profession)) {
-            newErrors.profession = "Название профессии должно быть на русском, с пробелами и дефисами";
         } else if (profession.length < minProfessionLength || profession.length > maxProfessionLength) {
             newErrors.profession = `Профессия должна содержать от ${minProfessionLength} до ${maxProfessionLength} символов`;
         }

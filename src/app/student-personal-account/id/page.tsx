@@ -57,7 +57,8 @@ const StudId: React.FC = () => {
         firstName: fetchStudent?.firstName,
         lastName: fetchStudent?.lastName,
         university: {
-            shortName: fetchStudent?.university?.shortName
+            shortName: fetchStudent?.university?.shortName,
+            name: fetchStudent?.university.name
         },
         course: {
             name: fetchStudent?.course?.name,
@@ -109,7 +110,7 @@ const StudId: React.FC = () => {
                         </div>
                         <div className="flex-column">
                             <p className="text-[#888888]">Университет</p>
-                            <p className="text-[#032C28] text-xl font-bold">{userData.university.shortName}</p>
+                            <p className="text-[#032C28] text-xl font-bold">{userData.university.name}</p>
                         </div>
                         <div className="flex-column">
                             <p className="text-[#888888]">Год окончания</p>

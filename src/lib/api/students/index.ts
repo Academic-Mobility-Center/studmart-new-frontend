@@ -180,7 +180,10 @@ export const getCitiesByRegionId = async(regionId: string) => {
   }
 }
 
-export const updateStudent = async (id: string, student: StudentPutData) => {
+export const updateStudent = async (
+  id: string,
+  student: StudentPutData
+): Promise<{ status: number; error?: string }> => {
   try {
     const response = await fetch(`/api/students/Students/${id}`, {
       method: "PUT",
@@ -192,15 +195,19 @@ export const updateStudent = async (id: string, student: StudentPutData) => {
     });
 
     if (!response.ok) {
-      console.error(`Ошибка при обновлении данных студента: ${response.status}`);
+      const errorMessage = `Ошибка при обновлении данных студента: ${response.status}`;
+      console.warn(errorMessage);
+      return { status: response.status, error: errorMessage };
     }
 
     return { status: response.status };
   } catch (error) {
-    console.error("Ошибка запроса:", error);
-    return { status: 500 }; // или null, если хочешь отличать сетевые ошибки
+    const errorMessage = `Ошибка запроса: ${error}`;
+    console.error(errorMessage);
+    return { status: 500, error: errorMessage };
   }
 };
+
 export const getLanguages = async () => {
   try {
     const res = await fetch(`/api/students/Languages`);

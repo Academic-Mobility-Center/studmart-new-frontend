@@ -8,6 +8,7 @@ import { PartnerWithIdType } from "@/app/partner-personal-account/context";
 import { useCity } from "@/context/CityContext";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import PersonalPromocode from "../../../types/PersonalPromocode"
+import {useAuth} from "@/context/AuthContext"
 interface Discount{
     id: string;
     name: string;
@@ -38,7 +39,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
     const [partnerData, setPartnerData] = useState<PartnerWithIdType | null>(null);
     const {regionId} = useCity();
     const [discountsIds, setDiscountsIds] = useState<string[]>([])
-
+    const {id} = useAuth();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -63,12 +64,11 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
             if (!discountsIds.length) return;
     
             try {
-                const studentId = "81dd5999-455b-4eb2-af1d-15feb026655d"; // можешь вынести в переменную/стейт
                 const results: PersonalPromocode[] = [];
     
                 for (const discountId of discountsIds) {
                     try {
-                        const promocode = await getPromocodeDiscountByDiscountIdAndStudentId(discountId, studentId);
+                        const promocode = await getPromocodeDiscountByDiscountIdAndStudentId(discountId, id ?? "");
                         results.push(promocode);
                     } catch (error) {
                         console.error(`Ошибка при получении промокода для discountId: ${discountId}`, error);
@@ -80,15 +80,17 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
                 console.error("Ошибка при получении промокодов:", error);
             }
         };
-    
-        fetchDiscounts();                                {/* <p 
+        if (id) {
+            fetchDiscounts();
+        }
+                                        {/* <p 
             className="[font-family:Mulish,sans-serif] 
             text-sm font-normal text-left text-[#032c28] 
             mt-2.5 m-0 p-0"
         >
             {description}
         </p> */}
-    }, [discountsIds]);
+    }, [discountsIds, id]);
 
     const openModal = (promo: PersonalPromocode) => {
         setSelectedPromo(promo);

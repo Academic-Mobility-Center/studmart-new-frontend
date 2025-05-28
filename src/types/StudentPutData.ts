@@ -6,13 +6,11 @@ export default interface StudentPutData {
     birthDate: string;
     email: string;
     specialisation: string;
-    password: string;
     status: number;
     universityId: number;
     regionId: number;
     balance: number,
     cityId: number;
-    promocode: string,
     languageIds: number[],
     hasWork: boolean,
     courseId: number,

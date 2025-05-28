@@ -22,9 +22,9 @@ const validateField = (
                 : "Введите корректное значение (минимум 2 буквы)";
 
         case "innOrKio":
-            return /^\d{10}$/.test(value as string)
+            return /^\d{12}$/.test(value as string)
                 ? undefined
-                : "ИНН должен содержать 10 цифр";
+                : "ИНН должен содержать 12 цифр";
         case "numberAccount":
             return /^\d{20}$/.test(value as string)
                 ? undefined
@@ -44,7 +44,7 @@ const CredentialsPage = () => {
     const { role, id } = useAuth();
     const router = useRouter();
     const [isSaved, setIsSaved] = useState(false);
-
+    const [isError, setIsError] = useState(false);
     useEffect(() => {
         if (role && role !== "Student") {
             router.replace("/partner-personal-account");
@@ -151,14 +151,12 @@ const CredentialsPage = () => {
             sex: fetchStudent?.sex ?? false,
             email: fetchStudent?.email ?? "",
             specialisation: fetchStudent?.specialisation ?? "",
-            password: "AAAAAAAAAAAA",
             status: fetchStudent?.status ?? 1,
             universityId: fetchStudent?.university.id ?? 1,
             regionId: fetchStudent?.region?.id ?? 1,
             balance: fetchStudent?.balance ?? 0,
             hasWork: fetchStudent?.hasWork ?? false,
             cityId: fetchStudent?.city?.id ?? 1,
-            promocode: fetchStudent?.promocode ?? "asdasd",
             languageIds: (fetchStudent?.languages?.map((item) => Number(item.id))) ?? [],
             courseId: fetchStudent?.course?.id ?? 1,
             paymentInformation: {
@@ -168,10 +166,17 @@ const CredentialsPage = () => {
             }
         }
         const response = await updateStudent(id ?? "", dataToSend);
-        if (response) {
-            setIsSaved(true);
-            setTimeout(() => setIsSaved(false), 3000);
-        }    
+        if (response.error || response.status < 200 || response.status >= 300) {
+            // Неудачный ответ — ничего не сохраняем
+            console.warn("Произошла ошибка:", response.error);
+            setIsError(true);
+            return;
+        }
+        
+        // Если всё прошло успешно
+        setIsSaved(true);
+        setIsError(false)
+        setTimeout(() => setIsSaved(false), 3000);
     };  
     return (
         <form onSubmit={handleSubmitForm} className="flex flex-col gap-[40px] ">
@@ -269,6 +274,11 @@ const CredentialsPage = () => {
                 >
                     {isSaved ? "Сохранено ✓" : "Сохранить"}
                 </button>           
+                {isError && (
+                    <p className="text-red-600 text-sm font-medium mt-2">
+                        Не удалось сохранить. Пожалуйста, проверьте корректность банковских реквизитов.
+                    </p>
+                )}
             </div>
         </form>
 
