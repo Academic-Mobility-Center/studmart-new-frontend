@@ -116,8 +116,11 @@ const   RegForm1: React.FC<RegFormProps> = ({
                 label="Есть промокод?" 
                 placeholder="Hhufs8a7auh40egij"
                 width={350}
+                name="promocode"
+                value={formData?.promocode}
                 labelFontSize={14}
-                maxRows={1}                
+                maxRows={1}          
+                onChange={handleChange}      
             />
     
             <div className="flex flex-col gap-4">

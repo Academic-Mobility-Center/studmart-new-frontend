@@ -82,7 +82,6 @@ export default function RegistraionForm(){
     })) ?? []
     const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = event.target;
-        
         let newValue: string | File | Date | Option | null = value;
         if (type === "date") {
             newValue = new Date(value);
@@ -174,7 +173,7 @@ export default function RegistraionForm(){
                 needFile,
                 file, // предполагаем, что здесь File | undefined
             } = formData;
-
+            
             if (!name || !fullname || !gender || !date || !email || !profession || !password || !university || !course) {
                 alert("Пожалуйста, заполните все обязательные поля.");
                 return;
