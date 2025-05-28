@@ -87,17 +87,20 @@ export const getStudentUniversities = async () => {
     return null;
   }
 }
-export const StudentEmailDomain = async(email: string, universityId: string) => {
+export const StudentEmailDomain = async (email: string, universityId: number) => {
   try {
-    const res = await fetch(`/api/students/EmailDomains?Email=${email}&UniversityId=${universityId}`);
+    const response = await fetch(`/api/students/EmailDomains?Email=${email}&UniversityId=${universityId}`);
 
-    if (!res.ok) {
-      throw new Error(`Ошибка при получении университетов: ${res.status}`);
+    let data;
+    try {
+      data = await response.json();
+    } catch (e) {
+      console.log("Ошибка парсинга JSON:", e);
+      data = { status: response.status, error: "Invalid JSON" };
     }
-    const data = await res.json();
     return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return null;
   }
 }

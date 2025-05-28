@@ -1,19 +1,40 @@
-export const getEvents = async (From?: string, To?: string, RegionId?: string, UniversityId?: string) => {
-    try {
-      const res = await fetch(`/api/statistics/Events?From=${From}&To=${To}&RegionId=${RegionId}&UniversityId=${UniversityId}`);
-  
-      if (!res.ok) {
-        console.warn(`getEvents: статистика не найдена (${res.status})`);
-        return null;
-      }
-  
-      const data = await res.json();
-      return data;
-    } catch (error) {
-      console.error("Ошибка в getEvents:", error);
+type GetEventsParams = {
+  From?: string;
+  To?: string;
+  RegionId?: string;
+  UniversityId?: string;
+  PartnerId?: string;
+};
+export const getEvents = async ({
+  From,
+  To,
+  RegionId,
+  UniversityId,
+  PartnerId,
+}: GetEventsParams) => {
+  try {
+    const query = new URLSearchParams();
+
+    if (From) query.append("From", From);
+    if (To) query.append("To", To);
+    if (RegionId) query.append("RegionId", RegionId);
+    if (UniversityId) query.append("UniversityId", UniversityId);
+    if (PartnerId) query.append("PartnerId", PartnerId);
+
+    const res = await fetch(`/api/statistics/Events?${query.toString()}`);
+
+    if (!res.ok) {
+      console.warn(`getEvents: статистика не найдена (${res.status})`);
       return null;
     }
-  };
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getEvents:", error);
+    return null;
+  }
+};
 
   export const getUsersCities = async () => {
     try {

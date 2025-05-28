@@ -128,13 +128,13 @@ const RegForm3: React.FC<Props> =({
             setPrevCheck({ email, university });
     
             try {
-                const response = await StudentEmailDomain(email, university);
-                const needFile = response.status === 400;
+                const status = await StudentEmailDomain(email, Number(university));
+                const needFile = status.status !== 204;
                 setBooleanField("needFile", needFile);
-            } catch (error) {
+              } catch (error) {
                 console.log("Ошибка при проверке домена:", error);
                 setBooleanField("needFile", true);
-            }
+              }
         }, 300);
     
         return () => clearTimeout(timeout);

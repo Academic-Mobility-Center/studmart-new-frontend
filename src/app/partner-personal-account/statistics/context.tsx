@@ -381,7 +381,7 @@ import {
 } from "@/lib/api/partners";
 import { getEvents, getUsersDevices, getUsersCities, getUsersDemography } from "@/lib/api/statistics";
 import { getStudentUniversities } from "@/lib/api/students";
-
+import {useAuth} from "@/context/AuthContext"
 type StatisticContextType = {
   formData: StatisticFormData | null;
   setFormData: React.Dispatch<React.SetStateAction<StatisticFormData | null>>;
@@ -401,7 +401,7 @@ export const useStatistic = () => {
 
 export const StatisticProvider = ({ children }: { children: React.ReactNode }) => {
   const { regionId } = useCity();
-
+  const {id} = useAuth();
   const today = new Date();
   const oneMonthAgo = new Date();
   oneMonthAgo.setMonth(today.getMonth() - 1);
@@ -430,13 +430,14 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
         setUniversities(fetchedUniversities);
 
         const dateRange: [Date, Date] = [oneMonthAgo, today];
-
-        const events = await getEvents(
-          oneMonthAgo.toISOString().split("T")[0],
-          today.toISOString().split("T")[0],
-          regionId, 
-          "1"
-        );
+        console.log("id", id)
+        const events = await getEvents({
+          From: oneMonthAgo.toISOString().split("T")[0], 
+          To: today.toISOString().split("T")[0],
+          RegionId: regionId ?? "1", 
+          UniversityId: "1", 
+          PartnerId: id && id.trim() !== "" ? id : undefined
+        });
 
         setFormData({
           region: undefined,
@@ -451,9 +452,11 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
         console.warn("Ошибка при загрузке данных:", error);
       }
     };
+    if (id && id.trim() !== "") {
+      fetchInitialData();
+    }
 
-    fetchInitialData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const fetchUpdatedStats = async () => {
@@ -466,12 +469,13 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
   
       try {
         const [events, demography, geography, devices] = await Promise.all([
-          getEvents(
-            start.toISOString().split("T")[0],
-            end.toISOString().split("T")[0],
-            regionValue,
-            universityValue
-          ),
+          getEvents({
+            From: start.toISOString().split("T")[0],
+            To: end.toISOString().split("T")[0],
+            RegionId: regionValue,
+            UniversityId: universityValue,
+            PartnerId: id && id.trim() !== "" ? id : undefined
+          }),
           getUsersDemography(),
           getUsersCities(),
           getUsersDevices(),
@@ -485,14 +489,16 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
         console.warn("Ошибка при обновлении статистики:", error);
       }
     };
-  
-    fetchUpdatedStats();
+    if (id && id.trim() !== ""){
+      fetchUpdatedStats();
+    }
   }, [
     formData?.dateRange,
     formData?.region?.value,
     formData?.university?.value,
     regionId, // добавлено
-    updateFormData,  ]);
+    updateFormData,
+    id]);
   
 
   return (
