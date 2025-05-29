@@ -35,7 +35,7 @@ const PartnerOffer = () => {
         const found = promoCardsArray?.find((promo: PartnerOffer) => promo.id === id);
         setCurrentOffer(found);
       } catch (error) {
-        console.error("Ошибка при получении данных: ", error);
+        console.warn("Ошибка при получении данных: ", error);
         // setCurrentOffer(defaultOffer);
       }
     };

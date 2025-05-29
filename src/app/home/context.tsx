@@ -205,7 +205,7 @@ interface ValidateProps1{
   }>) => void
 }
 
-const validateForm1: React.FC<ValidateProps1> = ({formData, setErrors}) => {
+export const validateForm1: React.FC<ValidateProps1> = ({formData, setErrors}) => {
   const newErrors: { email?: string, password?: string, confirmPassword?: string } = {};
 
   const emailRegex = /^\s*[\w\-\+_']+(\.[\w\-\+_']+)*\@[A-Za-z0-9]([\w\.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z\.]*[A-Za-z]$/;
@@ -239,9 +239,9 @@ const validateForm1: React.FC<ValidateProps1> = ({formData, setErrors}) => {
   return Object.keys(newErrors).length === 0;
 };
 
-export default validateForm1;
 
-export function fileToBase64(file: File): Promise<string> {
+
+export default function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {

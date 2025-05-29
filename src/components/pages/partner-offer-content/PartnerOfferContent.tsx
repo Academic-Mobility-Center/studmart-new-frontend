@@ -1,9 +1,9 @@
 "use client"
 import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useEffect, useState } from "react";
-import { DiscountModal } from "../offer-page-elements/discount-modal/DiscountModal";
+import  DiscountModal  from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
-import { getPromocodePartnerByIdAndRegionId, getPromocodeDiscountByDiscountIdAndStudentId } from "@/lib/api/promocodes";
+import { getPromocodePartnerByIdAndRegionId, getPromocodeDiscountByDiscountIdAndStudentId, getPromocodeById } from "@/lib/api/promocodes";
 import { PartnerWithIdType } from "@/app/partner-personal-account/context";
 import { useCity } from "@/context/CityContext";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
@@ -31,15 +31,34 @@ interface Props{
     isAuth: boolean
     role: string | null
 }
+interface EmployeePromocode {
+    id: string;
+    name: string;
+    description: string;
+    size: number;
+    promocodeValue: string;
+    partner: {
+      id: string;
+      companyName: string;
+      subtitle: string;
+      maxDiscount: number;
+      isFixed: boolean;
+    };
+    hasAllRegions: boolean;
+    regions: [];
+  }
+  
+  type UnifiedPromocode = PersonalPromocode | EmployeePromocode;
 
 const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPromo, setSelectedPromo] = useState<PersonalPromocode | undefined>(undefined);
-    const [personalPromocodes, setPersonalPromocodes] = useState<PersonalPromocode[]>([])
+    const [personalPromocodes, setPersonalPromocodes] = useState<UnifiedPromocode[]>([]);
+    const [selectedPromo, setSelectedPromo] = useState<UnifiedPromocode | undefined>(undefined);    
     const [partnerData, setPartnerData] = useState<PartnerWithIdType | null>(null);
     const {regionId} = useCity();
     const [discountsIds, setDiscountsIds] = useState<string[]>([])
-    const {id} = useAuth();
+    const {id, role: authRole} = useAuth();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -57,6 +76,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
     useEffect(() => {
         if (partnerData?.discounts) {
             const ids = partnerData.discounts.map((d: Discount) => String(d.id));
+            console.log(ids)
             setDiscountsIds(ids);
         }
     }, [partnerData]);
@@ -70,7 +90,14 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
     
                 for (const discountId of discountsIds) {
                     try {
-                        const promocode = await getPromocodeDiscountByDiscountIdAndStudentId(discountId, id ?? "");
+                        let promocode: PersonalPromocode;
+                        if (role === "Employee" || authRole === "Employee") {
+                            // Если роль Employee — вызываем getPromocodeById с одним параметром discountId
+                            promocode = await getPromocodeById(discountId);
+                        } else {
+                            // Иначе старый метод с discountId и studentId (id)
+                            promocode = await getPromocodeDiscountByDiscountIdAndStudentId(discountId, id ?? "");
+                        }
                         results.push(promocode);
                     } catch (error) {
                         console.error(`Ошибка при получении промокода для discountId: ${discountId}`, error);
@@ -85,21 +112,13 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
         if (id) {
             fetchDiscounts();
         }
-                                        {/* <p 
-            className="[font-family:Mulish,sans-serif] 
-            text-sm font-normal text-left text-[#032c28] 
-            mt-2.5 m-0 p-0"
-        >
-            {description}
-        </p> */}
     }, [discountsIds, id]);
 
-    const openModal = (promo: PersonalPromocode) => {
+    const openModal = (promo: UnifiedPromocode) => {
         setSelectedPromo(promo);
         setIsModalOpen(true);
     };
     const closeModal = () => setIsModalOpen(false);
-    
     return (
         <div className="flex flex-col items-center min-w-[1280px]">
             <div className="w-[100.00%] box-border mt-[25px] px-[40px]">
@@ -157,17 +176,27 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
                             </div>
                         </div>
                         <div className="box-border flex justify-start items-start flex-col gap-[30px] w-[588px] grow-0 shrink-0 basis-auto">
-                            {personalPromocodes.map((promo, index) => (
-                                <DiscountBox 
-                                    key={index}
-                                    title={promo.discount?.name}
-                                    description={promo.discount.description}
-                                    onClick={() => openModal(promo)}
-                                    isAuth={isAuth}
-                                    role={role}
-                                />
-                            ))}
+                        {personalPromocodes.length > 0 ? (
+  personalPromocodes.map((promo, index) => {
+    const isEmployee = !('discount' in promo);
+  
+    const name = isEmployee ? promo.name : promo.discount.name;
+    const description = isEmployee ? promo.description : promo.discount.description;
+  
+    return (
+      <DiscountBox
+        key={index}
+        title={name}
+        description={description}
+        onClick={() => openModal(promo)}
+        isAuth={isAuth}
+        role={role}
+      />
+    );
+  })
+) : null}
                         </div>
+
                     </div>
                 </div>  
             </div>

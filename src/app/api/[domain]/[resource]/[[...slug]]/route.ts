@@ -4,7 +4,7 @@ const allowedResources = [
   "Categories", "Discounts", "Regions", "Partners",
   "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
   "EmailDomains", "Verifications", "Cities", "forgotPassword",
-   "resetPassword", "SupportRequest", "Languages", "Events", "Users", "DescriptionRequests"
+   "resetPassword", "SupportRequest", "Languages", "Events", "Users", "DescriptionRequests", "Requests"
 ];
 export async function GET(
   request: Request,
@@ -210,7 +210,7 @@ export async function POST(
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: "Ошибка при отправке POST-запроса" },
+        { error: `Ошибка при отправке POST-запроса к ${externalUrl}` },
         { status: response.status }
       );
     }

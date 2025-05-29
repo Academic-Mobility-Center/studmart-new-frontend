@@ -194,3 +194,18 @@ export const deleteFavouritePartner = async (partnerId: string, studentId: strin
     return { ignoredError: false };
   }
 };
+
+export const getPromocodeById = async (id: string) => {
+  try {
+    const res = await fetch(`/api/promocodes/Discounts?Id=${id}`);
+
+    if (!res.ok) {
+      throw new Error(`Ошибка при получении категорий: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ошибка в getPromocodeCategories:", error);
+    return null;
+  }
+}

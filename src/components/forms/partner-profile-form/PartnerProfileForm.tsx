@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import PaymentInfo from "../partner-profile-elements/payment-info/PaymentInfo"
 import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
+import LoginFormData from "@/types/LoginFormData";
 import { transformToOption, transformToOptions } from "@/utils/dataTransform"
 import { 
     countryOptions, 
@@ -43,14 +44,7 @@ const PartnerProfileForm: React.FC =  () => {
     const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
     const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
     const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null)
-    const formDataChangePassword = {
-        email: "",
-        password: "",
-        rememberMe: false, 
-        passwordResetEmail: "",
-        passwordReset: "", 
-        passwordResetConfirm: ""
-    }
+
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
         personalEmail: "",
         password: "",
@@ -335,13 +329,22 @@ const PartnerProfileForm: React.FC =  () => {
     
         console.log("Отправка формы:", formData);
     };   
-    const handleChangeForm = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value, type, checked } = event.target as HTMLInputElement;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: type === "checkbox" ? checked : value,
-        }));
-      };  
+    const [formDataChangePassword, setFormDataChangePassword] = useState<LoginFormData>({
+      email: "",
+      password: "",
+      rememberMe: false, 
+      passwordResetEmail: "",
+      passwordReset: "", 
+      passwordResetConfirm: ""
+  });
+  
+  const handleChangePassword = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const { name, value } = event.target;
+      setFormDataChangePassword((prevData) => ({
+          ...prevData,
+          [name]: value,
+      }));
+  };
     return(<>
         <form onSubmit={handleSubmitForm} className={profileCardClasses}>
             <div className="grow-0 shrink-0 basis-auto">
@@ -377,7 +380,7 @@ const PartnerProfileForm: React.FC =  () => {
             {isPasswordResetVisible && 
             <ForgotPasswordEmail 
                 formData={formDataChangePassword}
-                handleChange={handleChangeForm}
+                handleChange={handleChangePassword}
                 onClose={() => setIsPasswordResetVisible(false)} 
                 onClick={() => { 
                 setIsPasswordResetVisible(false); 

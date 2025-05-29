@@ -90,7 +90,26 @@ export const sendPartnerDescription = async (description: string, employeeId: st
     body: JSON.stringify({ description, employeeId}),
   });
 
-    return res.status;
+  if (!res.ok) {
+    throw new Error(`Ошибка при получении региона по id: ${res.status}`);
+  }
+  const data = await res.json();
+  return data;
+  } catch (error) {
+    console.error("Ошибка при регистрации студента:", error);
+    return 500; // или другой код по умолчанию, например, 0
+  }
+} 
+export const sendDescriptionFile = async (id: string, image: string, contentType: string) =>{
+  try{
+  const res = await fetch(`/api/files/Requests`,{
+    method: "POST",
+    headers: { "Content-Type": "application/json", "accept": "*/*" },
+    body: JSON.stringify({ id, image, contentType}),
+  });
+
+  return res.status
+
   } catch (error) {
     console.error("Ошибка при регистрации студента:", error);
     return 500; // или другой код по умолчанию, например, 0
