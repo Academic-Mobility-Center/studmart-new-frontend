@@ -18,7 +18,8 @@ import { useRouter } from 'next/navigation';
 interface ErrorResponse {
     status: number;
 }
-  
+import { useSearchParams } from 'next/navigation';
+
 interface ErrorWithResponse {
     response: ErrorResponse;
 }
@@ -27,6 +28,7 @@ const genderOptions = [
     { id: 2, name: "Женский" },
 ];
 export default function RegistraionForm(){
+    const searchParams = useSearchParams();
     const [formData, setFormData] = useState<RegistrationFormData>({
         email: "",
         password: "",
@@ -270,6 +272,15 @@ export default function RegistraionForm(){
         setIsSecondPage(true);
     }
 
+    useEffect(() => {
+    const promo = searchParams.get('promocode');
+    if (promo) {
+        setFormData(prev => ({
+        ...prev,
+        promocode: promo,
+        }));
+    }
+    }, [searchParams]);
     if (isLoading) {
         return <>Loading...</>
     }
