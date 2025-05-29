@@ -245,7 +245,7 @@ const PartnerOffersForm: React.FC = () => {
   
       if (formData.file) {
         const base64String = await fileToBase64(formData.file);
-        const contentType = formData.file.type.split("/")[0];
+        const contentType = formData.file.type;
   
         const finalResponse = await sendDescriptionFile(response?.id, base64String, contentType);
   
@@ -253,7 +253,7 @@ const PartnerOffersForm: React.FC = () => {
           setIsSubmitted(true);
         }
       } else {
-        setIsSubmitted(true);
+        setIsSubmitted(false);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
