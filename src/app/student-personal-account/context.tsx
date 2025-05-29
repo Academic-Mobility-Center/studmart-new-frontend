@@ -5,8 +5,8 @@ export const genderOptions= [
 ]
 
 export const familyStatusOptions = [
-    {id: 1, name: "Женат/Замужем"},
-    {id: 2, name: "Одинокий/Одинокий" },
+    {id: 1, name: "Женат / Замужем"},
+    {id: 2, name: "Холост / Не замужем" },
     {id: 3, name: "Разведен/Разведена" },
     {id: 4, name: "Вдовец/Вдова" },
     {id: 5, name: "Есть дети" },

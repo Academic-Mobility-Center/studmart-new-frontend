@@ -39,6 +39,7 @@ const LoginInfo: React.FC<Props> = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         maxRows={1}
+                        disabled={true}
                     />
                     {errors.email && <p className="text-red-600 text-sm font-medium">{errors.email}</p>}                            
                 </div>
@@ -52,6 +53,7 @@ const LoginInfo: React.FC<Props> = ({
                         value={formData?.password}
                         onChange={handleChange}  
                         onBlur={handleBlur}
+                        disabled={true}
                     />
                     {errors.password && <p className="text-red-600 text-sm font-medium">{errors.password}</p>}                            
                 </div>

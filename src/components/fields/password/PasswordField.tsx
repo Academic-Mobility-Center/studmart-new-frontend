@@ -10,7 +10,8 @@ export default function PasswordField({
   onChange,
   width,
   labelFontSize,
-  onBlur
+  onBlur,
+  disabled = false
 }: {
   label: string, 
   placeholder: string,
@@ -20,6 +21,7 @@ export default function PasswordField({
   labelFontSize: number;
   onChange?:  (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 
 }){
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -38,18 +40,20 @@ export default function PasswordField({
             value={value}
             name={name}
             onBlur={onBlur}
+            disabled={disabled}
           />
           <button
             type="button"
             className="absolute right-6 top-1/2 transform -translate-y-1/2 focus:outline-none"
             onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-          >
-            <NextImage
+          > 
+            {!disabled &&  <NextImage
               src={isPasswordVisible ? "/icons/auth/open-eye.svg" : "/icons/auth/closed-eye.svg"}
               alt="Toggle Password Visibility"
               width={24}
               height={24}
-            />
+            />}
+           
           </button>
         </div>
       </div>

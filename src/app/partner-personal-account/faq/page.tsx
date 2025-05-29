@@ -136,7 +136,7 @@ const FaqPage = () => {
                         minRows={1}
                         maxRows={10}
                         value={question}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuestion(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setQuestion(e.target.value)}
                     />
 
                     <button

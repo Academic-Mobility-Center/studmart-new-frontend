@@ -6,17 +6,17 @@ export default interface StudentPutData {
     birthDate: string;
     email: string;
     specialisation: string;
-    status: number;
+    status: number | null;
     universityId: number;
-    regionId: number;
+    regionId: number | null;
     balance: number,
-    cityId: number;
-    languageIds: number[],
+    cityId: number | null;
+    languageIds: number[] | [],
     hasWork: boolean,
     courseId: number,
     paymentInformation: {
         inn: number;
         bik: string,
         accountNumber: string,
-    }
+    } | null
 }

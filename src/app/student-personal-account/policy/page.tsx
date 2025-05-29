@@ -5,7 +5,7 @@ import { StyledSwitch } from "@/components/fields/switch/StyledSwitch";
 import { ArrowDown } from "./icons/ArrowDown";
 import { categoriesAndServices } from "../context";
 import { ArrowUp } from "./icons/ArrowUp";
-const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] mt-5 h-12 block box-border grow-0 shrink-0 basis-auto rounded-[15px] border-[none]";
+const saveButtonClasses = "bg-[#EFEFEF] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] mt-5 h-12 block box-border grow-0 shrink-0 basis-auto rounded-[15px] border-[none]";
 import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
 
@@ -18,9 +18,12 @@ const PolicyPage = () => {
             router.replace("/partner-personal-account");
         }
     }, [role, router]);
+    const [categoryStates, setCategoryStates] = useState<{ [key: string]: boolean }>(
+        Object.fromEntries(categoriesAndServices.map(item => [item.heading, true]))
+    );
     const [selectedMenuItem, setSelectedMenuItem] = useState<"categories" | "data" | null>("categories");
     const [activeStates, setActiveStates] = useState<{ [key: string]: boolean }>(
-        Object.fromEntries(personalDataItems.map(item => [item, false]))
+        Object.fromEntries(personalDataItems.map(item => [item, true]))
     );
     const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(categoriesAndServices.map(item => [item.heading, false]))
@@ -112,10 +115,14 @@ const PolicyPage = () => {
                                     <div className="flex flex-row justify-between font-extrabold">
                                         <p>{heading}</p>
                                         <div className="flex flex-row justify-between gap-5 items-center">
-                                            <StyledSwitch
-                                                onClick={(e) => e.stopPropagation()}
-                                                onChange={() => {}}
-                                            />
+                                        <StyledSwitch
+                                            checked={categoryStates[heading]}
+                                            onClick={(e) => e.stopPropagation()}
+                                            onChange={() => setCategoryStates(prev => ({
+                                                ...prev,
+                                                [heading]: !prev[heading],
+                                            }))}
+                                        />
                                             <div onClick={() => toggleExpand(heading)} className="cursor-pointer">
                                                 {isExpanded ? <ArrowUp /> : <ArrowDown />}
                                             </div>

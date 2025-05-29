@@ -32,7 +32,7 @@ const   RegForm1: React.FC<RegFormProps> = ({
         ) {
             newErrors.email = `Email должен содержать от ${minEmailLength} до ${maxEmailLength} символов`;
         }
-        const password = formData?.password || "";
+        const password = formData?.password;
         const isValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(password);
         
         if (!password) {

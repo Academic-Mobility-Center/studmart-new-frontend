@@ -13,8 +13,9 @@ interface InputFieldProps {
   // onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   minRows?: number;
   maxRows?: number;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;  
+  disabled?: boolean
 
 }
 
@@ -30,6 +31,7 @@ export default function InputField({
   onBlur,
   minRows = 1,
   maxRows,
+  disabled = false
 }: InputFieldProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -39,6 +41,7 @@ export default function InputField({
         {label}
       </Typography>
       <TextField
+        disabled={disabled}
         multiline
         inputRef={inputRef}
         placeholder={placeholder}

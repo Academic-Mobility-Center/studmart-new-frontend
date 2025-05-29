@@ -144,8 +144,6 @@ type AuthContextType = {
   isLoading: boolean;
   role: string | null;
   id: string | null
-  // firstName: string | null;
-  // lastName: string | null;
   universityShortName?: string | null;
   year?: number | null;
   logout: () => void;
@@ -159,8 +157,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState<string | null>(null);
   const [id, setId] = useState<string | null>(null);
-  // const [firstName, setFirstName] = useState<string | null>(null);
-  // const [lastName, setLastName] = useState<string | null>(null);
   const [universityShortName, setUniversityShortName] = useState<string | null>(null);
   const [year, setYear] = useState<number | null>(null);
 
@@ -173,14 +169,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           credentials: 'include',
         });
 
+        if (res.status === 401) {
+          setIsAuthenticated(false);
+          setRole(null);
+          return;
+        }
+  
         if (!res.ok) throw new Error('Not authenticated');
 
         const user: UserPayload = await res.json();
 
         setRole(user.role);
         setId(user.id)
-        // setFirstName(user.firstName);
-        // setLastName(user.lastName);
+
         setUniversityShortName(user.universityShortName || null);
         setYear(user.yearsBeforeEnding ?? null);
         setIsAuthenticated(true);
@@ -197,9 +198,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const logout = async () => {
-    setIsAuthenticated(false);
-    router.push('/login');
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (e) {
+      console.error('Logout failed', e);
+    } finally {
+      setIsAuthenticated(false);
+      setRole(null);
+      setId(null);
+      setUniversityShortName(null);
+      setYear(null);
+      router.push('/login');
+    }
   };
+
   const login = async () => {
     try {
       const res = await fetch('/api/auth/verify', {
@@ -212,8 +227,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   
       setRole(user.role);
       setId(user.id)
-      // setFirstName(user.firstName);
-      // setLastName(user.lastName);
       setUniversityShortName(user.universityShortName || null);
       setYear(user.yearsBeforeEnding ?? null);
       setIsAuthenticated(true);
@@ -229,8 +242,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         role,
         id,
-        // firstName,
-        // lastName,
         universityShortName,
         year,
         logout,

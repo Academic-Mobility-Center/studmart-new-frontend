@@ -153,7 +153,7 @@ export function MultipleSelectV2({
                     alignItems: "center", // чтобы текст был по центру
                   },
               },
-              height: "48px",
+               minHeight: "48px",
               borderRadius: "16px"
             }}
           >

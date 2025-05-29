@@ -29,15 +29,15 @@ const ForgotPasswordConfirm: React.FC<ForgotPasswordConfirmProps> = ({
         const password = formData.passwordReset;
         const confirmPassword = formData.passwordResetConfirm;
     
-        const hasUpperCase = /[A-Z]/.test(password);
-        const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
-    
-        if (password.length < 8) {
-            newErrors.passwordReset = "Пароль должен содержать минимум 8 символов";
-        } else if (!hasUpperCase) {
-            newErrors.passwordReset = "Пароль должен содержать хотя бы одну заглавную букву";
-        } else if (!hasSpecialChar) {
-            newErrors.passwordReset = "Пароль должен содержать хотя бы один специальный символ";
+        const isValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(password);
+        
+        if (!password) {
+            newErrors.passwordReset = "Введите пароль";
+        } else if(password.length < 8){
+            newErrors.passwordReset = "Длина пароля должна составлять не менее 8 символов";
+        }
+        else if (!isValidPassword) {
+            newErrors.passwordReset = "Пароль должен состоять из заглавных и строчных букв, цифр и одного специального символа";
         }
     
         if (confirmPassword.length < 8) {

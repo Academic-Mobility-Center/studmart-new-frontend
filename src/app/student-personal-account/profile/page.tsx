@@ -4,24 +4,19 @@ import MainInfo from '@/components/forms/student-profile-elements/main-info/Main
 import UniversityInfo from '@/components/forms/student-profile-elements/university-info/UniversityInfo';
 import { StudentFormData } from '@/types/StudentProfileData';
 import { Button } from '@mui/base';
+import City from "@/types/Cities";
 import React, { useEffect, useState } from 'react';
 import ForgotPasswordEmail from "@/components/forms/forgot-password-email/ForgotPasswordEmail";
-
 const profileCardClasses = "border bg-[#f8f8f8] box-border flex justify-start items-stretch flex-col grow-0 shrink-0 basis-auto pl-[20px] pr-5 py-5 rounded-[15px] border-solid border-[rgba(0,0,0,0.20)]";
 const profileTitleClasses = "font-['Nunito_Sans'] text-[24px] font-extrabold text-[#032c28] m-0 p-0 ";
 const saveButtonClasses = "bg-[#8fe248] font-[Mulish] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] min-w-[548px] h-12 cursor-pointer block box-border grow-0 shrink-0 basis-auto mt-10 rounded-[15px] border-[none]";
-import { 
-    regionOptions as newRegionOptions, 
-    cityOptions as newCityOptions,
-    universityOptions,
-    cityOptions
-} from '@/app/partner-personal-account/statistics/context';
+
+import University from "@/types/University"
 import IStudentFormData, { 
     courseOptions, 
     familyStatusOptions, 
     genderOptions, 
     isWorkOptions, 
-    languageProfiencyOptions, 
     validateField, 
 } from '../context';
 import { Option } from '@/types/Option';
@@ -32,8 +27,8 @@ import {
     getStudentUniversities,
     getLanguages,
     updateStudent
-    // getCitiesByRegionId
 } from '@/lib/api/students';
+import LoginFormData from "@/types/LoginFormData";
 import {getPartnerRegions} from '@/lib/api/partners';
 import { transformToOption, transformToOptions } from '@/utils/dataTransform';
 import {useAuth} from "@/context/AuthContext"
@@ -54,10 +49,10 @@ const ProfilePage: React.FC = () => {
         name: string;
     }[]>(courseOptions)
     const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
-    const [fetchUniversities, setFetchUniversities] = useState(universityOptions)
-    const [fetchCities, setFetchCities] = useState(cityOptions)
-    const [regions, setRegions] = useState<{id: number, name: string}[]>(newRegionOptions)
-    const [languages, setLanguages] = useState(languageProfiencyOptions)
+    const [fetchUniversities, setFetchUniversities] = useState<University[]>([])
+    const [fetchCities, setFetchCities] = useState<City[]>([]);
+    const [regions, setRegions] = useState<{id: number, name: string}[]>([]);
+    const [languages, setLanguages] = useState<{id: number, name: string}[]>([])
     const [formData, setFormData] = useState<StudentFormData>({
         email: '',
         password: '',
@@ -199,7 +194,6 @@ const ProfilePage: React.FC = () => {
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
     ) => {
         const { name, value, type, files, checked } = event.target as HTMLInputElement;
-    
         let newValue: string | boolean | File | Date | Option | Option[] | undefined = value;
     
         if (type === "checkbox" || type === "radio") {
@@ -212,14 +206,13 @@ const ProfilePage: React.FC = () => {
     
         const selectMapping = {
             gender: genderOptions,
-            region: newRegionOptions,
-            city: newCityOptions,
+            region: regions,
+            city: fetchCities,
             familyStatus: familyStatusOptions,
             isWork: isWorkOptions,
-            languageProfiency: languageProfiencyOptions,
+            languageProfiency: languages,
             university: fetchUniversities,
-            course: fetchCourses,
-            regions: regions
+            course: fetchCourses
         };
     
         if (name in selectMapping) {
@@ -293,7 +286,15 @@ const ProfilePage: React.FC = () => {
         }));
     
         if (hasErrors) return;
-
+        const paymentInformation = fetchStudent?.paymentInformation?.inn 
+        && fetchStudent?.paymentInformation?.bik 
+        && fetchStudent?.paymentInformation?.accountNumber
+        ? {
+            inn: fetchStudent?.paymentInformation?.inn,
+            bik: fetchStudent?.paymentInformation?.bik,
+            accountNumber: fetchStudent?.paymentInformation?.accountNumber,
+          }
+        : null;
         const dataToSend: StudentPutData = {
             id: id ?? "",
             firstName: formData?.firstName ?? "",
@@ -302,19 +303,15 @@ const ProfilePage: React.FC = () => {
             sex: formData.gender?.label === "Мужской" ? true : false,
             email: formData?.email ?? "",
             specialisation: formData?.profession ?? "",
-            status: Number(formData.familyStatus?.value) ?? 1,
+            status: Number(formData.familyStatus?.value) ?? null,
             universityId: Number(formData.university?.value),
-            regionId: Number(formData.region?.value),
+            regionId: Number(formData.region?.value) ?? null,
             balance: fetchStudent?.balance ?? 0,
             hasWork: formData.isWork?.label === "Работает" ? true : false,
-            cityId: Number(formData?.city?.value),
+            cityId: Number(formData?.city?.value) ?? null,
             languageIds: (formData?.languageProfiency?.map((item) => Number(item.value))) ?? [],
             courseId: Number(formData.course?.value),
-            paymentInformation: {
-                bik: fetchStudent?.paymentInformation?.bik ?? "045004641",
-                inn: fetchStudent?.paymentInformation?.inn ?? 5406833147,
-                accountNumber: fetchStudent?.paymentInformation?.accountNumber ?? "40817810944054679398",
-            }
+            paymentInformation: paymentInformation
         }
         const response = await updateStudent(id ?? "", dataToSend);
         if (response.error || response.status < 200 || response.status >= 300) {
@@ -327,14 +324,22 @@ const ProfilePage: React.FC = () => {
         setIsSaved(true);
         setTimeout(() => setIsSaved(false), 3000);
     };
-    const formDataChangePassword = {
+    const [formDataChangePassword, setFormDataChangePassword] = useState<LoginFormData>({
         email: "",
         password: "",
         rememberMe: false, 
         passwordResetEmail: "",
         passwordReset: "", 
         passwordResetConfirm: ""
-    }
+    });
+    
+    const handleChangePassword = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = event.target;
+        setFormDataChangePassword((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
     const handleForgotPasswordClick = () => {
         setIsPasswordResetVisible(true);
       };
@@ -382,7 +387,7 @@ const ProfilePage: React.FC = () => {
             {isPasswordResetVisible && 
             <ForgotPasswordEmail 
                 formData={formDataChangePassword}
-                handleChange={handleChange}
+                handleChange={handleChangePassword}
                 onClose={() => setIsPasswordResetVisible(false)} 
                 onClick={() => { 
                 setIsPasswordResetVisible(false); 
