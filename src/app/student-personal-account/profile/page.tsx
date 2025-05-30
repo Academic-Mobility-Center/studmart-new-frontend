@@ -288,11 +288,12 @@ const ProfilePage: React.FC = () => {
         if (hasErrors) return;
         const paymentInformation = fetchStudent?.paymentInformation?.inn 
         && fetchStudent?.paymentInformation?.bik 
-        && fetchStudent?.paymentInformation?.accountNumber
+        && fetchStudent?.paymentInformation?.accountNumber && fetchStudent?.paymentInformation?.patronymic
         ? {
             inn: fetchStudent?.paymentInformation?.inn,
             bik: fetchStudent?.paymentInformation?.bik,
             accountNumber: fetchStudent?.paymentInformation?.accountNumber,
+            patronymic: fetchStudent?.paymentInformation?.patronymic
           }
         : null;
         const dataToSend: StudentPutData = {

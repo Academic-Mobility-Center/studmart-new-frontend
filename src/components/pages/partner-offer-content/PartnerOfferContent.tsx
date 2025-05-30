@@ -9,6 +9,8 @@ import { useCity } from "@/context/CityContext";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import PersonalPromocode from "../../../types/PersonalPromocode"
 import {useAuth} from "@/context/AuthContext"
+import {forwardLinks}  from "@/lib/api/statistics"; // пример пути
+
 interface Discount{
     id: string;
     name: string;
@@ -158,10 +160,19 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
                                 </div>
                             </div>
                             <div className="w-[100.00%] box-border mt-5">
-                                <a
-                                    href={partnerData?.site}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <button
+                                    onClick={async () => {
+                                        if ((role === "Student" || authRole === "Student") && partnerData?.site) {
+                                            try {
+                                                await forwardLinks(partnerId, id ?? "");
+                                            } catch (error) {
+                                                console.warn("Ошибка при вызове forwardLinks:", error);
+                                            }
+                                        }
+                                        if (partnerData?.site) {
+                                            window.open(partnerData.site, "_blank", "noopener,noreferrer");
+                                        }
+                                    }}
                                     className="bg-[#8fe248] hover:bg-[#7ece38] transition-colors duration-300
                                     [font-family:Mulish,sans-serif] 
                                     text-sm font-bold tracking-[0.42px] 
@@ -172,8 +183,9 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
                                     hover:shadow-md"
                                 >
                                     Перейти на сайт
-                                </a>                                
+                                </button>
                             </div>
+
                         </div>
                         <div className="box-border flex justify-start items-start flex-col gap-[30px] w-[588px] grow-0 shrink-0 basis-auto">
                         {personalPromocodes.length > 0 ? (

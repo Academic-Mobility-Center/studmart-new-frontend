@@ -18,5 +18,6 @@ export default interface StudentPutData {
         inn: number;
         bik: string,
         accountNumber: string,
+        patronymic: string,
     } | null
 }

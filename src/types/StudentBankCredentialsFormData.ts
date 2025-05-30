@@ -4,4 +4,5 @@ export default interface StudentBankCredentialsFormData {
     innOrKio: string;
     numberAccount: string;
     bic: string;
+    patronymic: string;
 }

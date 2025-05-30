@@ -8,6 +8,7 @@ type Params = {
   IsSex?: string;
   IsDevices?: string;
 };
+
 export const getEvents = async ({
   From,
   To,
@@ -103,6 +104,32 @@ export const getEvents = async ({
       return data;
     } catch (error) {
       console.error("Ошибка в getUsersDevices:", error);
+      return null;
+    }
+  }
+
+  export const forwardLinks = async (partnerId: string, studentId: string) => {
+    try{
+      const response = await fetch(`/api/statistics/forward`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "accept": "*/*"
+         },
+        body: JSON.stringify({
+          partnerId,
+          studentId,
+        })
+      })
+      if (!response.ok) {
+        console.log(`Ошибка при отправлении файла: ${response.status}`);
+      }
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : { status: response.status };
+      
+      return data;
+    } catch (error) {
+      console.log(error)
       return null;
     }
   }

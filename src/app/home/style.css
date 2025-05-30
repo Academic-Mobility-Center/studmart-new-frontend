@@ -33,6 +33,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Центрируем лоадер по экрану */
+    height: 100vh;
     background: #f8f8f8
   }

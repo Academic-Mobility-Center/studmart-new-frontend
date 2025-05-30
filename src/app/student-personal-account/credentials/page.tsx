@@ -17,9 +17,10 @@ const validateField = (
     switch (name) {
         case "fullname":
         case "name":
+        case "patronymic":
             return /^[a-zA-Zа-яА-ЯёЁ\s-']+$/.test(value as string)
                 ? undefined
-                : "Введите корректное значение (минимум 2 буквы)";
+                : "Введите корректное значение";
 
         case "innOrKio":
             return /^\d{12}$/.test(value as string)
@@ -57,6 +58,7 @@ const CredentialsPage = () => {
         innOrKio: "",
         numberAccount: "",
         bic: "",
+        patronymic: ""
     })
 
     useEffect(()=>{
@@ -82,7 +84,8 @@ const CredentialsPage = () => {
                 name: fetchStudent.firstName,
                 innOrKio: fetchStudent?.paymentInformation?.inn.toString() ?? "",
                 numberAccount: fetchStudent?.paymentInformation?.accountNumber ?? "",
-                bic: fetchStudent?.paymentInformation?.bik ?? ""
+                bic: fetchStudent?.paymentInformation?.bik ?? "",
+                patronymic: fetchStudent?.paymentInformation?.patronymic ?? ""
             })
         }
     },[fetchStudent])
@@ -94,7 +97,7 @@ const CredentialsPage = () => {
         kpp?: string,
         numberAccount?: string,
         bic?: string,
-      
+        patronymic?: string,
     }>({
         fullname: '',
         name: '',
@@ -103,6 +106,7 @@ const CredentialsPage = () => {
         kpp: "",
         numberAccount: "",
         bic: "",
+        patronymic: "",
     });    
 
     const hanldeChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -163,6 +167,7 @@ const CredentialsPage = () => {
                 bik: formData.bic,
                 inn: Number(formData.innOrKio),
                 accountNumber: formData.numberAccount,
+                patronymic: formData.patronymic
             }
         }
         const response = await updateStudent(id ?? "", dataToSend);
@@ -234,6 +239,19 @@ const CredentialsPage = () => {
                             onBlur={handleBlur}
                         />
                         {errors.innOrKio && <p className="text-red-600 text-sm font-medium">{errors.innOrKio}</p>}
+                    </div>
+                    <div className="box-border flex justify-start items-start flex-col gap-[7px] w-[262px] grow-0 shrink-0 basis-auto">
+                        <InputField
+                            label="Отчество"
+                            placeholder="Отчество"
+                            width={262}
+                            maxRows={1}
+                            onChange={hanldeChange}
+                            name="patronymic"
+                            value={formData?.patronymic}
+                            onBlur={handleBlur}
+                        />
+                        {errors.patronymic && <p className="text-red-600 text-sm font-medium">{errors.patronymic}</p>}
                     </div>
                 </div>
                 <div className="flex flex-row gap-6">

@@ -217,7 +217,7 @@ export default interface IStudentFormData {
     paymentInformation: {
       bik: string,
       accountNumber: string,
-      correspondentAccountNumber: string
       inn: number;
+      patronymic: string;
     }
 }
