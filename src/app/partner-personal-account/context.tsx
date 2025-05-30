@@ -34,9 +34,6 @@ export const validateField = (
             return /^\s*[\w\-+_']+(\.[\w\-+_']+)*@[A-Za-z0-9]([\w.-]*[A-Za-z0-9])?\.[A-Za-z][A-Za-z.]*[A-Za-z]$/.test(value as string)
                 ? undefined : "Некорректный email";
 
-        case "password":
-            return (value as string).length >= 6 ? undefined : "Пароль должен содержать минимум 6 символов";
-
         case "companyName":
             return /^[a-zA-Zа-яА-Я0-9\s'-]+$/.test(value as string) ? undefined : "Некорректное название компании";
 

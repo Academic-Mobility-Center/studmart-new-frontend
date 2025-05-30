@@ -126,11 +126,12 @@ import InputField from "@/components/fields/input/InputField";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-
+import IStudentFormData from "@/app/student-personal-account/context"
+import { getStudentById} from '@/lib/api/students';
 const FaqPage = () => {
-    const { role } = useAuth();
+    const { role, id } = useAuth();
     const router = useRouter();
-
+    const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null)
     const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(FaqQuestions.map(item => [item.title, false]))
     );
@@ -149,7 +150,20 @@ const FaqPage = () => {
             router.replace("/partner-personal-account");
         }
     }, [role, router]);
-
+    useEffect(()=>{
+        const fetchData = async () => {
+            try{
+                const student = await getStudentById(id ?? "")
+                setFetchStudent(student)
+            }
+            catch (error){
+                console.warn(error)
+            }
+        }
+        if (id){
+            fetchData();
+        }
+    },[id])
     const toggleExpand = (heading: string) => {
         setExpandedStates(prev => ({
             ...prev,
@@ -169,8 +183,9 @@ const FaqPage = () => {
     
         try {
             const result = await sendEmail(
-                category.label, // используем .label, т.к. category — это Option
-                question
+                category.label,
+                question,
+                `${fetchStudent?.firstName} ${fetchStudent?.lastName}`
             );
     
             if (!result || result.error) {

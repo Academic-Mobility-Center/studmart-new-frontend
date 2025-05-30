@@ -112,7 +112,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
         if (id) {
             fetchDiscounts();
         }
-    }, [discountsIds, id]);
+    }, [discountsIds, id, role, authRole]);
 
     const openModal = (promo: UnifiedPromocode) => {
         setSelectedPromo(promo);

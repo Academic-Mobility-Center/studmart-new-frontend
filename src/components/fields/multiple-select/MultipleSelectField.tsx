@@ -157,55 +157,119 @@ export function MultipleSelectField({
     </div>
   )
 }
-
 function ComboboxInputBase({
-  value,  
+  value,
   isDisabled,
   placeholder,
   setQuery,
-  displayValue, 
   onBlur
 }: {
-  value: Option[]  
+  value: Option[]
   isDisabled: boolean
   placeholder: string
   setQuery: (val: string) => void
-  displayValue: (val: Option[]) => string,  
+  displayValue: (val: Option[]) => string
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
 }) {
   return (
-    <div className="relative">
+    <div
+      className={`
+        flex flex-wrap items-center gap-2 min-h-[48px]
+        w-full border border-gray-300 rounded-2xl px-4 py-2
+        ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed text-[#A0A0A0]' : 'bg-white text-[#032C28]'}
+      `}
+    >
+      {!isDisabled && value.map((item, index) => (
+        <div
+          key={`${item.value}-${index}`}
+          className="flex items-center bg-[#e6f4f1] text-[#032c28] px-3 py-1 rounded-full text-sm"
+        >
+          {item.label}
+        </div>
+      ))}
+      
       <Combobox.Input
         className={`
-          w-full pl-[20px] pr-10 border border-gray-300 p-2 
-          rounded-2xl focus:outline-none h-[48px] 
-          placeholder:text-[#888888]
-          ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed text-[#EFEFEF]' : 'bg-white text-[#032C28]'}
+          flex-1 min-w-[120px] border-none focus:outline-none placeholder:text-[#888888]
+          ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed text-[#A0A0A0]' : 'bg-white text-[#032C28]'}
         `}
-        displayValue={() => displayValue(value)} 
+        displayValue={() => ''}
         onChange={(event) => setQuery(event.target.value)}
         placeholder={placeholder}
         disabled={isDisabled}
         onBlur={onBlur}
       />
-      <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
-        <svg
-          className="w-5 h-5 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </Combobox.Button>
+
+      {!isDisabled && (
+        <Combobox.Button className="ml-auto">
+          <svg
+            className="w-5 h-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </Combobox.Button>
+      )}
     </div>
   )
 }
+
+
+// function ComboboxInputBase({
+//   value,  
+//   isDisabled,
+//   placeholder,
+//   setQuery,
+//   displayValue, 
+//   onBlur
+// }: {
+//   value: Option[]  
+//   isDisabled: boolean
+//   placeholder: string
+//   setQuery: (val: string) => void
+//   displayValue: (val: Option[]) => string,  
+//   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void
+// }) {
+//   return (
+//     <div className="relative">
+//       <Combobox.Input
+//         className={`
+//           w-full pl-[20px] pr-10 border border-gray-300 p-2 
+//           rounded-2xl focus:outline-none h-[48px] 
+//           placeholder:text-[#888888]
+//           ${isDisabled ? 'bg-[#EFEFEF] cursor-not-allowed text-[#EFEFEF]' : 'bg-white text-[#032C28]'}
+//         `}
+//         displayValue={() => displayValue(value)} 
+//         onChange={(event) => setQuery(event.target.value)}
+//         placeholder={placeholder}
+//         disabled={isDisabled}
+//         onBlur={onBlur}
+//       />
+//       <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
+//         <svg
+//           className="w-5 h-5 text-gray-400"
+//           fill="none"
+//           stroke="currentColor"
+//           viewBox="0 0 24 24"
+//         >
+//           <path
+//             strokeLinecap="round"
+//             strokeLinejoin="round"
+//             strokeWidth="2"
+//             d="M19 9l-7 7-7-7"
+//           />
+//         </svg>
+//       </Combobox.Button>
+//     </div>
+//   )
+// }
 
 function ComboboxOptionsList({
   options,

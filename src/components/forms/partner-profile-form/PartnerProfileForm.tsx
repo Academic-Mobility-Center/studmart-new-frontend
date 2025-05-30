@@ -15,7 +15,6 @@ import {
     industryOptions, 
     profileCardClasses, 
     profileTitleClasses, 
-    regionOptions, 
     saveButtonClasses, 
     validateField,
     PartnerProfileData
@@ -40,10 +39,10 @@ const PartnerProfileForm: React.FC =  () => {
       }
   }, [role, router]);
     const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
-    const [fetchRegionOptions, setFetchRegionOptions] = useState(regionOptions)
-    const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState(industryOptions);
-    const [fetchedCountryOptions, setFetchingCountryOptions] = useState(countryOptions)
+    const [fetchedIndustyOptions, setFetchingIndustryOptions] = useState<{id: number, name: string}[]>([]);
+    const [fetchedCountryOptions, setFetchingCountryOptions] = useState<{id: number, name: string}[]>([])
     const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null)
+    const [regions, setRegions] = useState<{id: number, name: string}[]>([]);
 
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
         personalEmail: "",
@@ -79,12 +78,11 @@ const PartnerProfileForm: React.FC =  () => {
                 setFetchingCountryOptions(countryOptions);
             }
     
-            try {
-                const regions = await getPartnerRegions();
-                setFetchRegionOptions(regions);
-            } catch (e) {
-                console.error("Ошибка загрузки регионов", e);
-                setFetchRegionOptions(regionOptions);
+            try{
+              const regions = await getPartnerRegions();
+              setRegions(regions)
+            } catch (error){
+                console.warn(error)
             }
     
             try {
@@ -180,8 +178,8 @@ const PartnerProfileForm: React.FC =  () => {
         }
       
         const selectMap = {
-          industry: industryOptions,
-          country: countryOptions,
+          industry: fetchedIndustyOptions,
+          country: fetchedCountryOptions,
         };
       
         if (selectMap[name as keyof typeof selectMap]) {
@@ -197,7 +195,7 @@ const PartnerProfileForm: React.FC =  () => {
             ...prev,
             allRegions: true,
             specificRegions: false,
-            regions: regionOptions.map((r) => ({ value: r.id.toString(), label: r.name })),
+            regions: regions.map((r) => ({ value: r.id.toString(), label: r.name })),
           }));
           return;
         }
@@ -240,77 +238,7 @@ const PartnerProfileForm: React.FC =  () => {
           };
         });
       };
-      
-    // const handleChange = (
-    //     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-    // ) => {
-    //     const { name, type, value, checked } = event.target as HTMLInputElement;
-    
-    //     let newValue: string | boolean | File | Date | Option | undefined = value;
-    
-    //     if (type === "checkbox") {
-    //         newValue = checked;
-    //     }
-    
-    //     const selectMap = {
-    //         industry: industryOptions,
-    //         country: countryOptions,
-    //     };
-    
-    //     if (selectMap[name as keyof typeof selectMap]) {
-    //         const selected = selectMap[name as keyof typeof selectMap].find(opt => opt.id.toString() === value);
-    //         newValue = selected ? { value: selected.id.toString(), label: selected.name } : "";
-    //     }
-    
-    //     // Логика "все регионы" / "выбранные регионы"
-    //     if (name === 'allRegions' && checked) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             allRegions: true,
-    //             specificRegions: false,
-    //             regions: regionOptions.map(r => ({ value: r.id.toString(), label: r.name })),
-    //         }));
-    //         return;
-    //     }
-    
-    //     if (name === 'specificRegions' && checked) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             allRegions: false,
-    //             specificRegions: true,
-    //             regions: [],
-    //         }));
-    //         return;
-    //     }
-    
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         [name]: newValue,
-    //     }));
-    
-    //     setErrors((prevErrors) => {
-    //         let validationValue: string | boolean | string[];
-            
-    //         if (newValue === undefined) {
-    //             validationValue = '';
-    //         } else if (newValue instanceof Date) {
-    //             validationValue = newValue.toISOString();
-    //         } else if (typeof newValue === 'object' && 'value' in newValue) {
-    //             validationValue = (newValue as Option).value;
-    //         } else {
-    //             validationValue = newValue;
-    //         }
-        
-    //         return {
-    //             ...prevErrors,
-    //             [name]: validateField(name, validationValue,{
-    //                 ...formData,
-    //                 [name]: newValue,
-    //             }),
-    //         };
-    //     });
-    // };
-      
+
     const handleSubmitForm = (event: React.FormEvent) => {
         event.preventDefault();
         let hasErrors = false;
@@ -364,7 +292,7 @@ const PartnerProfileForm: React.FC =  () => {
                         handleBlur={handleBlur}
                         industryOptions={fetchedIndustyOptions}
                         countryOptions={fetchedCountryOptions}
-                        regionOptions={fetchRegionOptions}
+                        regionOptions={regions}
                     />
                     <PaymentInfo 
                         formData={formData} 

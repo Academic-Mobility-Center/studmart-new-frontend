@@ -11,8 +11,11 @@ import {useRouter} from "next/navigation"
 import {useEffect} from "react"
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import {sendEmail} from "@/lib/api/email"
+import { PartnerProfileData } from "@/app/partner-personal-account/context";
+import { getPartnerInfo} from "@/lib/api/partners";
+
 const FaqPage = () => {
-    const { role } = useAuth();
+    const { role, id } = useAuth();
     const router = useRouter();
     interface Option {
         label: string;
@@ -23,11 +26,24 @@ const FaqPage = () => {
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null);
     useEffect(() => {
         if (role && role !== "Employee") {
             router.replace("/student-personal-account");
         }
     }, [role, router]);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const partner = await getPartnerInfo(id ?? "");
+            setFetchPartner(partner);
+          } catch (error) {
+            console.warn(error);
+          }
+        };
+    
+        if (id) fetchData();
+      }, [id]);
     const [expandedStates, setExpandedStates] = useState<{ [key: string]: boolean }>(
         Object.fromEntries(FaqQuestions.map(item => [item.title, false]))
     );
@@ -49,8 +65,9 @@ const FaqPage = () => {
     
         try {
             const result = await sendEmail(
-                category.label, // используем .label, т.к. category — это Option
-                question
+                category.label,
+                question,
+                `${fetchPartner?.partner.name}`
             );
     
             if (!result || result.error) {
@@ -58,7 +75,7 @@ const FaqPage = () => {
             }
     
             setSuccessMessage("Вопрос успешно отправлен!");
-            setCategory(undefined);
+            setCategory(undefined);            
             setQuestion("");
         } catch (err) {
             console.warn(err)

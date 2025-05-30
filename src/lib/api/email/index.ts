@@ -1,4 +1,4 @@
-export const sendEmail = async(name: string, body: string) => {
+export const sendEmail = async(name: string, body: string, from: string) => {
     try{
       const response = await fetch(`/api/email/SupportRequest`, {
         method: "POST",
@@ -9,6 +9,7 @@ export const sendEmail = async(name: string, body: string) => {
         body: JSON.stringify({
           name,
           body,
+          from
         })
       })
       if (!response.ok) {

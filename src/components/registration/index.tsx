@@ -29,6 +29,7 @@ const genderOptions = [
 ];
 export default function RegistraionForm(){
     const searchParams = useSearchParams();
+    const [isSentSuccessfully, setIsSentSuccessfully] = useState(false);
     const [formData, setFormData] = useState<RegistrationFormData>({
         email: "",
         password: "",
@@ -250,20 +251,22 @@ export default function RegistraionForm(){
                             console.warn("Ошибка при загрузке файла");
                         }
                     }
-
-                    alert("Регистрация прошла успешно!");
-                    router.push('/login');
+                    setIsSentSuccessfully(true);
+                    // alert("Регистрация прошла успешно!");
+                    setTimeout(()=> {router.push('/login');}, 3000)
                 } else {
                     console.warn("Не удалось получить ID студента по email.");
                     alert("Ошибка при получении данных студента.");
                 }
             } else {
                 alert("Ошибка при регистрации. Попробуйте позже.");
+                setIsSentSuccessfully(false)
             }
 
         } catch (error) {
             console.error("Ошибка при отправке формы:", error);
             alert("Что-то пошло не так.");
+            setIsSentSuccessfully(false)
         }
     };
 
@@ -287,25 +290,36 @@ export default function RegistraionForm(){
        
     return(
         <>
-            {isFirstPage && <RegForm1 
-                handleChange={handleChangeForm} 
-                onClick={handleSubmitForm1} 
-                formData={formData}
-                />} 
-            {isSecondPage && <RegForm2 
-                handleChange={handleChangeForm} 
-                formData={formData} 
-                onClick={handleSubmitForm2} 
-                onBack={handleBackForm2}/>}   
-            {isThirdPage && <RegForm3 
-                handleChange={handleChangeForm} 
-                formData={formData} 
-                onClick={handleSubmitForm3} 
-                onBack={handleBackForm3}
-                univercitiesOptions={univercitiesOptions}
-                coursesOptions={coursesOptions}
-                setBooleanField={setBooleanField}
-            />}
+            {!isSentSuccessfully && (<>
+                {isFirstPage && <RegForm1 
+                    handleChange={handleChangeForm} 
+                    onClick={handleSubmitForm1} 
+                    formData={formData}
+                    />} 
+                {isSecondPage && <RegForm2 
+                    handleChange={handleChangeForm} 
+                    formData={formData} 
+                    onClick={handleSubmitForm2} 
+                    onBack={handleBackForm2}/>}   
+                {isThirdPage && <RegForm3 
+                    handleChange={handleChangeForm} 
+                    formData={formData} 
+                    onClick={handleSubmitForm3} 
+                    onBack={handleBackForm3}
+                    univercitiesOptions={univercitiesOptions}
+                    coursesOptions={coursesOptions}
+                    setBooleanField={setBooleanField}
+                />}
+            </>
+            )}
+            {isSentSuccessfully && (
+                <div className="bg-white p-6 rounded-2xl shadow-lg w-[400px] text-center mt-[25px]">
+                    <h2 className="text-2xl font-extrabold text-[#032c28] mb-4">Благодарим за регистрацию!</h2>
+                    <p className="text-[#032c28] text-sm font-medium">
+                        Просим вас проверить ваш почтовый ящик и подтвердить адрес электронной почты. 
+                    </p>
+                </div>
+            )}
         </>
     )
 }
