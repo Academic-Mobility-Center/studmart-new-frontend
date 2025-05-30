@@ -54,14 +54,15 @@ export const StatCard: React.FC<StatCardProps> = ({
             <p className="text-4xl font-extrabold tracking-[1.08px] leading-9 text-[#032c28] text-center">
                 {value}
             </p>
-            <Link href={""}
-            // href={`/partner-personal-account/event-details/${eventKey}`}
+            <Link 
+            // href={""}
+            href={`/partner-personal-account/event-details/${eventKey}`}
             >
                 <button
                     className="bg-[#8fe248] text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] 
                     cursor-pointer min-w-[222px] h-12 mt-5 rounded-[15px] border-none"
                     onClick={onDetailsClick}
-                    disabled
+                    // disabled
                 >
                     Подробнее
                 </button>

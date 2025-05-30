@@ -57,18 +57,6 @@ const RegForm3: React.FC<Props> =({
             consent?: string;
         } = {};
     
-        // const universityNameRegex = /^[А-ЯЁ][а-яё]+(?:[\s\-'][А-ЯЁа-яё]+|[\s\-']\([А-ЯЁа-яё\s\-']+\))*\s*(?:[Гг]осударственный\s+)?(?:университет|академия|институт|филиал)(?:\s+имени\s+[А-ЯЁ][а-яё]+(?:\s+[А-ЯЁ][а-яё]+)*)?(?:\s+«[А-ЯЁа-яё\s\-']+»)?$/;
-    
-        // const minProfessionLength = 3;
-        // const maxProfessionLength = 100
-    
-        // const profession = formData.profession?.trim() ?? "";
-    
-        // if (!profession) {
-        //     newErrors.profession = "Введите свою профессию";
-        // } else if (profession.length < minProfessionLength || profession.length > maxProfessionLength) {
-        //     newErrors.profession = `Профессия должна содержать от ${minProfessionLength} до ${maxProfessionLength} символов`;
-        // }
         const minProfessionLength = 3;
         const maxProfessionLength = 100;
         const profession = formData.profession?.trim() ?? "";
@@ -91,11 +79,6 @@ const RegForm3: React.FC<Props> =({
         if (!formData.consent) {
             newErrors.consent = "Вы должны дать согласие на обработку персональных данных";
         }        
-        // else if (!universityNameRegex.test(university)) {
-        //     newErrors.university = "Некорректное название университета";
-        // } else if (university.length < minUniversityLength || university.length > maxUniversityLength) {
-        //     newErrors.university = `Название университета должно содержать от ${minUniversityLength} до ${maxUniversityLength} символов`;
-        // }
     
         if (!formData.file && formData.needFile) {
             newErrors.file = "Прикрепите файл";
@@ -129,8 +112,10 @@ const RegForm3: React.FC<Props> =({
     
             try {
                 const status = await StudentEmailDomain(email, Number(university));
-                const needFile = status.status !== 204;
-                setBooleanField("needFile", needFile);
+                if (status && status === 204){
+                    setBooleanField("needFile",false)
+                }
+                setBooleanField("needFile",true)
               } catch (error) {
                 console.log("Ошибка при проверке домена:", error);
                 setBooleanField("needFile", true);

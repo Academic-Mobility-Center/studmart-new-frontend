@@ -96,13 +96,11 @@ export const StudentEmailDomain = async (email: string, universityId: number) =>
   try {
     const response = await fetch(`/api/students/EmailDomains?Email=${email}&UniversityId=${universityId}`);
 
-    let data;
-    try {
-      data = await response.json();
-    } catch (e) {
-      console.log("Ошибка парсинга JSON:", e);
-      data = { status: response.status, error: "Invalid JSON" };
+    if (!response.ok) {
+      console.log(`Ошибка при отправлении файла: ${response.status}`);
     }
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : { status: response.status };
     return data;
   } catch (error) {
     console.log(error);

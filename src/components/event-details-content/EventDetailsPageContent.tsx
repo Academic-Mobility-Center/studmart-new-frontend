@@ -127,6 +127,7 @@ import { groupChartDataBy } from "@/utils/groupChartDataBy";
 import { eventConfigs } from "@/data/statistics/eventConfigs";
 import { applyFilters } from "@/utils/applyFilters";
 import Link from "next/link";
+import { filterChartDataByDate } from "@/utils/filterChartDataByDate";
 
 export default function EventDetailsPageContent() {
   const { formData, setFormData, regions, universities } = useStatistic();
@@ -162,7 +163,17 @@ export default function EventDetailsPageContent() {
     ? universities.filter(u => u.city.region.id.toString() === formData.region!.value)
     : universities;
 
-  const filteredData = groupChartDataBy(applyFilters(config.chartData, formData), grouping);
+    const dateRange = formData.dateRange;
+    const filteredByDate = filterChartDataByDate(
+      config.chartData,
+      dateRange?.[0] ?? null,
+      dateRange?.[1] ?? null
+    );
+    
+    const filteredData = groupChartDataBy(
+      applyFilters(filteredByDate, formData),
+      grouping
+    );
 
   return (
     <div className="p-5 bg-[#F8F8F8] rounded-2xl border border-gray-300 w-[588px]">

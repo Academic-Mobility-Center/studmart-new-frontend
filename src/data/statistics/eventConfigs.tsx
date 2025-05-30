@@ -13,14 +13,16 @@ export const eventConfigs: Record<string, EventConfig> = {
   visitors: {
       title: "Посетители",
       chartData: [
-        { date: "05.10.24", new: 230, repeat: 457, unique: 850, views: 510 },
-        { date: "06.10.24", new: 640, repeat: 336, unique: 720, views: 680 },
-        { date: "07.10.24", new: 435, repeat: 603, unique: 480, views: 752 },
-        { date: "08.10.24", new: 187, repeat: 541, unique: 210, views: 670 },
-        { date: "09.10.24", new: 389, repeat: 598, unique: 190, views: 660 },
-        { date: "10.10.24", new: 599, repeat: 755, unique: 160, views: 690 },
-        { date: "11.10.24", new: 412, repeat: 790, unique: 145, views: 710 },
-        { date: "12.10.24", new: 721, repeat: 802, unique: 530, views: 490 },
+        { date: "01.05.25", new: 12, repeat: 5, unique: 15, views: 100 },
+        { date: "02.05.25", new: 18, repeat: 4, unique: 20, views: 140 },
+        { date: "03.05.25", new: 22, repeat: 7, unique: 25, views: 170 },
+        { date: "04.05.25", new: 19, repeat: 6, unique: 22, views: 160 },
+        { date: "05.05.25", new: 10, repeat: 3, unique: 13, views: 90 },
+        { date: "06.05.25", new: 17, repeat: 8, unique: 21, views: 150 },
+        { date: "07.05.25", new: 24, repeat: 9, unique: 28, views: 180 },
+        { date: "08.05.25", new: 21, repeat: 10, unique: 26, views: 175 },
+        { date: "09.05.25", new: 13, repeat: 5, unique: 16, views: 110 },
+        { date: "10.05.25", new: 9, repeat: 2, unique: 11, views: 70 },
       ],
       renderChart: (data) => (
         <div className="border border-zinc-300 rounded-xl p-4">
@@ -72,12 +74,16 @@ export const eventConfigs: Record<string, EventConfig> = {
   promocodes: {
     title: "Промокоды",
     chartData: [
-      { date: "07.10.24", new: 120, repeat: 320, unique: 200, views: 200 },
-      { date: "08.10.24", new: 245, repeat: 320, unique: 200, views: 200 },
-      { date: "09.10.24", new: 310, repeat: 390, unique: 200, views: 200 },
-      { date: "10.10.24", new: 190, repeat: 450, unique: 200, views: 200},
-      { date: "11.10.24", new: 289, repeat: 480, unique: 200, views: 200 },
-      { date: "12.10.24", new: 150, repeat: 200, unique: 200, views: 200},
+      { date: "01.05.25", new: 12, repeat: 5, unique: 15, views: 100 },
+      { date: "02.05.25", new: 18, repeat: 4, unique: 20, views: 140 },
+      { date: "03.05.25", new: 22, repeat: 7, unique: 25, views: 170 },
+      { date: "04.05.25", new: 19, repeat: 6, unique: 22, views: 160 },
+      { date: "05.05.25", new: 10, repeat: 3, unique: 13, views: 90 },
+      { date: "06.05.25", new: 17, repeat: 8, unique: 21, views: 150 },
+      { date: "07.05.25", new: 24, repeat: 9, unique: 28, views: 180 },
+      { date: "08.05.25", new: 21, repeat: 10, unique: 26, views: 175 },
+      { date: "09.05.25", new: 13, repeat: 5, unique: 16, views: 110 },
+      { date: "10.05.25", new: 9, repeat: 2, unique: 11, views: 70 },
     ],
     renderChart: (data) => {
       const maxValue = Math.max(...data.map(item => Math.max(item.new, item.repeat)));
