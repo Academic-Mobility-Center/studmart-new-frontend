@@ -1,9 +1,12 @@
-type GetEventsParams = {
+type Params = {
   From?: string;
   To?: string;
   RegionId?: string;
   UniversityId?: string;
   PartnerId?: string;
+  IsCities?: string;
+  IsSex?: string;
+  IsDevices?: string;
 };
 export const getEvents = async ({
   From,
@@ -11,7 +14,7 @@ export const getEvents = async ({
   RegionId,
   UniversityId,
   PartnerId,
-}: GetEventsParams) => {
+}: Params) => {
   try {
     const query = new URLSearchParams();
 
@@ -36,9 +39,15 @@ export const getEvents = async ({
   }
 };
 
-  export const getUsersCities = async () => {
+  export const getUsersCities = async ({IsCities, From, To, PartnerId}: Params) => {
     try {
-      const res = await fetch(`/api/statistics/Users?IsCities=true`);
+      const query = new URLSearchParams();
+      if (IsCities) query.append("IsCities", IsCities);
+      if (From) query.append("From", From);
+      if (To) query.append("To", To);
+      if (PartnerId) query.append("PartnerId", PartnerId);
+  
+      const res = await fetch(`/api/statistics/Users?${query.toString()}`);
   
       if (!res.ok) {
         console.warn(`getUsersCities: статистика не найдена (${res.status})`);
@@ -52,9 +61,15 @@ export const getEvents = async ({
       return null;
     }
   }
-  export const getUsersDemography = async () => {
+  export const getUsersDemography = async ({IsSex, From, To, PartnerId}: Params) => {
     try {
-      const res = await fetch(`/api/statistics/Users?IsSex=true`);
+      
+      const query = new URLSearchParams();
+      if (IsSex) query.append("IsSex", IsSex);
+      if (From) query.append("From", From);
+      if (To) query.append("To", To);
+      if (PartnerId) query.append("PartnerId", PartnerId);
+      const res = await fetch(`/api/statistics/Users?${query.toString()}`);
   
       if (!res.ok) {
         console.warn(`getUsersDemography: статистика не найдена (${res.status})`);
@@ -68,9 +83,16 @@ export const getEvents = async ({
       return null;
     }
   }
-  export const getUsersDevices= async () => {
+  export const getUsersDevices= async ({IsDevices, From, To, PartnerId}: Params) => {
     try {
-      const res = await fetch(`/api/statistics/Users?IsDevices=true`);
+
+      const query = new URLSearchParams();
+      if (IsDevices) query.append("IsDevices", IsDevices);
+      if (From) query.append("From", From);
+      if (To) query.append("To", To);
+      if (PartnerId) query.append("PartnerId", PartnerId);
+
+      const res = await fetch(`/api/statistics/Users?${query.toString()}`);
   
       if (!res.ok) {
         console.warn(`getUsersDevices: статистика не найдена (${res.status})`);

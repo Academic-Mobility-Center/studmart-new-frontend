@@ -8,11 +8,8 @@ import CompanyInfo from "../partner-profile-elements/company-info/CompanyInfo"
 import LoginInfo from "../partner-profile-elements/login-info/LoginInfo"
 import LoginFormData from "@/types/LoginFormData";
 import { transformToOption, transformToOptions } from "@/utils/dataTransform"
+import {EmployeePutData, PartnerPutData} from "@/types/PartnerUpdateData"
 import { 
-    countryOptions, 
-    // defaultPartner, 
-    defaultUser, 
-    industryOptions, 
     profileCardClasses, 
     profileTitleClasses, 
     saveButtonClasses, 
@@ -21,11 +18,12 @@ import {
 } from "@/app/partner-personal-account/context";
 import { Option } from "@/types/Option";
 import {  
-    // getPartner, 
-    getPartnerCategories, 
-    getPartnerCountries, 
-    getPartnerInfo, 
-    getPartnerRegions 
+  updatePartner,
+  updateEmployee,
+  getPartnerCategories, 
+  getPartnerCountries, 
+  getPartnerInfo, 
+  getPartnerRegions 
 } from "@/lib/api/partners";
 import {useAuth} from "@/context/AuthContext"
 import {useRouter} from "next/navigation"
@@ -43,6 +41,7 @@ const PartnerProfileForm: React.FC =  () => {
     const [fetchedCountryOptions, setFetchingCountryOptions] = useState<{id: number, name: string}[]>([])
     const [fetchPartner, setFetchPartner] = useState<PartnerProfileData | null>(null)
     const [regions, setRegions] = useState<{id: number, name: string}[]>([]);
+    const [isSaved, setIsSaved] = useState(false);
 
     const [formData, setFormData] = useState<PartnerPersonalAccountFormData>({
         personalEmail: "",
@@ -51,9 +50,9 @@ const PartnerProfileForm: React.FC =  () => {
         site: "",
         phoneNumber: "",
         companyEmail: "",
-        industry: transformToOption(defaultUser?.partner.category),
-        country: transformToOption(defaultUser?.partner.country),
-        regions: transformToOptions(defaultUser?.partner.regions),
+        industry: undefined,
+        country: undefined,
+        regions: undefined,
         inn: "",
         currentAccount: "",
         corAccount: "",
@@ -75,7 +74,7 @@ const PartnerProfileForm: React.FC =  () => {
                 setFetchingCountryOptions(countries);
             } catch (e) {
                 console.error("Ошибка загрузки стран", e);
-                setFetchingCountryOptions(countryOptions);
+                setFetchingCountryOptions([]);
             }
     
             try{
@@ -90,7 +89,7 @@ const PartnerProfileForm: React.FC =  () => {
                 setFetchingIndustryOptions(categories);
             } catch (e) {
                 console.error("Ошибка загрузки категорий", e);
-                setFetchingIndustryOptions(industryOptions);
+                setFetchingIndustryOptions([]);
             }
         };
         if (id){
@@ -239,7 +238,7 @@ const PartnerProfileForm: React.FC =  () => {
         });
       };
 
-    const handleSubmitForm = (event: React.FormEvent) => {
+    const handleSubmitForm = async (event: React.FormEvent) => {
         event.preventDefault();
         let hasErrors = false;
         const newErrors: Record<string, string | string[]> = {}; // Изменили тип на Record
@@ -250,12 +249,59 @@ const PartnerProfileForm: React.FC =  () => {
                 hasErrors = true;
             }
         });
-    
+        if (!formData?.bic || !formData?.currentAccount 
+          || !formData?.corAccount || !formData?.industry
+          || !formData?.site || !formData?.country 
+          || !formData?.inn || !formData.companyName
+          || !formData?.companyEmail || !formData?.phoneNumber) 
+        {
+          alert("Для сохранения данных, убедитесь, что все поля формы заполнены")
+          return
+        }
         setErrors(newErrors);
     
         if (hasErrors) return;
-    
-        console.log("Отправка формы:", formData);
+        const EmployeeDataToSend: EmployeePutData = {
+          id: id ?? "",
+          email: fetchPartner?.email ?? "",
+          firstName: fetchPartner?.firstName ?? "",
+          lastName: fetchPartner?.lastName ?? "",
+          partnerId: fetchPartner?.partner.id ?? ""
+        }
+
+        const PartnerDataToSend: PartnerPutData = {
+          id: fetchPartner?.partner.id ?? "",
+          name: formData.companyName ?? "",
+          subtitle: fetchPartner?.partner.subtitle ?? "",
+          description: fetchPartner?.partner.description ?? "",
+          priority: fetchPartner?.partner.priority ?? 0,
+          email: formData?.companyEmail ?? "",
+          phone: formData?.phoneNumber ?? "",
+          inn: Number(formData?.inn) ?? null,
+          countryId: Number(formData?.country?.value) ?? null,
+          site: formData?.site ?? null,
+          categoryId: Number(formData?.industry?.value) ?? null,
+          hasAllRegions: formData?.regions && formData?.regions?.length > 0 ? false : true,
+          regionIds: formData?.regions?.map((item) => Number(item?.value)) ?? [],
+          paymentInformation: {
+            bik: formData?.bic,
+            accountNumber: formData?.currentAccount,
+            correspondentAccountNumber: formData?.corAccount
+          }
+        }
+
+        const responseEmployee = await updateEmployee(id ?? "",EmployeeDataToSend)
+        if(responseEmployee.error || responseEmployee.status < 200 || responseEmployee.status >= 300){
+          console.warn("Произошла ошибка:", responseEmployee.error);
+          return;
+        }
+        const responsePartner = await updatePartner(fetchPartner?.partner?.id ?? "", PartnerDataToSend)
+        if(responsePartner.error || responsePartner.status < 200 || responsePartner.status >= 300){
+          console.warn("Произошла ошибка:", responsePartner.error);
+          return
+        }
+        setIsSaved(true);
+        setTimeout(() => setIsSaved(false), 3000);
     };   
     const [formDataChangePassword, setFormDataChangePassword] = useState<LoginFormData>({
       email: "",
@@ -303,7 +349,7 @@ const PartnerProfileForm: React.FC =  () => {
                 </div>
             </div>   
             <Button type="submit" className={saveButtonClasses}>
-                Сохранить
+                {isSaved ? "Сохранено ✓" : "Сохранить"}
             </Button>
             {isPasswordResetVisible && 
             <ForgotPasswordEmail 

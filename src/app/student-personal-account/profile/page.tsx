@@ -316,7 +316,7 @@ const ProfilePage: React.FC = () => {
         const response = await updateStudent(id ?? "", dataToSend);
         if (response.error || response.status < 200 || response.status >= 300) {
             // Неудачный ответ — ничего не сохраняем
-            console.error("Произошла ошибка:", response.error);
+            console.warn("Произошла ошибка:", response.error);
             return;
         }
         

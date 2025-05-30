@@ -1,3 +1,6 @@
+import {EmployeePutData, PartnerPutData} from "@/types/PartnerUpdateData"
+
+
 export const getPartner = async (id: string) => {
     try {
       const res = await fetch(`/api/partners/Partners?id=${id}`);
@@ -112,6 +115,61 @@ export const sendDescriptionFile = async (id: string, image: string, contentType
 
   } catch (error) {
     console.error("Ошибка при регистрации студента:", error);
-    return 500; // или другой код по умолчанию, например, 0
+    return 500; 
   }
 } 
+
+export const updateEmployee = async (
+  id: string,
+  employee: EmployeePutData
+): Promise<{ status: number; error?: string }> => {
+  try {
+    const response = await fetch(`/api/partners/Employees?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "*/*"
+      },
+      body: JSON.stringify(employee)
+    });
+
+    if (!response.ok) {
+      const errorMessage = `Ошибка при обновлении данных студента: ${response.status}`;
+      console.warn(errorMessage);
+      return { status: response.status, error: errorMessage };
+    }
+
+    return { status: response.status };
+  } catch (error) {
+    const errorMessage = `Ошибка запроса: ${error}`;
+    console.error(errorMessage);
+    return { status: 500, error: errorMessage };
+  }
+};
+export const updatePartner = async (
+  id: string,
+  partner: PartnerPutData
+): Promise<{ status: number; error?: string }> => {
+  try {
+    const response = await fetch(`/api/partners/Partners?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "*/*"
+      },
+      body: JSON.stringify(partner)
+    });
+
+    if (!response.ok) {
+      const errorMessage = `Ошибка при обновлении данных студента: ${response.status}`;
+      console.warn(errorMessage);
+      return { status: response.status, error: errorMessage };
+    }
+
+    return { status: response.status };
+  } catch (error) {
+    const errorMessage = `Ошибка запроса: ${error}`;
+    console.error(errorMessage);
+    return { status: 500, error: errorMessage };
+  }
+};

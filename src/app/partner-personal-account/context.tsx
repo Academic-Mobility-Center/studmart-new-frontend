@@ -50,8 +50,9 @@ export const validateField = (
                 ? undefined : "Некорректный email компании";
 
         case "country":
-            if (!value) return "Выберите страну";
-            return undefined;
+            return value ? undefined :  "Выберите страну"
+            // if (!value) return "Выберите страну";
+            // return undefined;
 
         case "industry":
             if (!value) return ["Выберите отрасль"];

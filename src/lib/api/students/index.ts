@@ -1,4 +1,5 @@
 import StudentPutData from "@/types/StudentPutData"
+
 export const getStudent = async () => {
     try {
       const res = await fetch("/api/students/Students");
@@ -28,6 +29,7 @@ export const getStudentById = async (id: string) => {
         return null;
       }
 }
+
 export const getStudentByEmail = async (email: string) => {
   try {
     const res = await fetch(`/api/students/Students?Email=${encodeURIComponent(email)}`);
@@ -59,6 +61,7 @@ export const getStudentCourses = async () => {
     return null;
   }
 }
+
 export const getStudentCities = async () => {
   try {
     const res = await fetch("/api/students/Cities");
@@ -73,6 +76,7 @@ export const getStudentCities = async () => {
     return null;
   }
 }
+
 export const getStudentUniversities = async () => {
   try {
     const res = await fetch("/api/students/Universities");
@@ -87,6 +91,7 @@ export const getStudentUniversities = async () => {
     return null;
   }
 }
+
 export const StudentEmailDomain = async (email: string, universityId: number) => {
   try {
     const response = await fetch(`/api/students/EmailDomains?Email=${email}&UniversityId=${universityId}`);
