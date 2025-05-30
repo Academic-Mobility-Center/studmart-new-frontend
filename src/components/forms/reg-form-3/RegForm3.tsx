@@ -112,14 +112,15 @@ const RegForm3: React.FC<Props> =({
     
             try {
                 const status = await StudentEmailDomain(email, Number(university));
-                if (status && status === 204){
-                    setBooleanField("needFile",false)
+                if (status.status === 204) {
+                    setBooleanField("needFile", false);
+                } else {
+                    setBooleanField("needFile", true);
                 }
-                setBooleanField("needFile",true)
-              } catch (error) {
+            } catch (error) {
                 console.log("Ошибка при проверке домена:", error);
-                setBooleanField("needFile", true);
-              }
+                setBooleanField("needFile", true); 
+            }
         }, 300);
     
         return () => clearTimeout(timeout);
