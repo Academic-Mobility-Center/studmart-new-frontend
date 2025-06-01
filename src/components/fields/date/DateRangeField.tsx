@@ -1,4 +1,4 @@
-"use client";
+`use client`;
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import { registerLocale } from "react-datepicker";
@@ -58,7 +58,7 @@ export function DateRangeField({
           locale="ru"
           dateFormat="dd.MM.yyyy"
           placeholderText="01.01.2024 - 01.01.2025"
-          className="pl-6 border border-gray-300 p-2 rounded-2xl focus:outline-none text-[#032c28] h-[48px] pr-12 w-full"
+          className="pl-6 border border-gray-300 rounded-2xl focus:outline-none text-[#032c28] h-[48px] mr-20 w-full"
           calendarClassName="z-50"
           popperPlacement="bottom-start"
           open={open}
@@ -66,9 +66,9 @@ export function DateRangeField({
         />
         {startDate && endDate ? (
           <button
-            onClick={handleClear}
+            onClick={handleClear} 
             type="button"
-            className="absolute top-1/2 -translate-y-1/2 right-[20px] text-gray-400 hover:text-black"
+            className="absolute top-1/2 -translate-y-1/2 right-[12px] text-gray-400 hover:text-black"
             aria-label="Очистить"
           >
             ✕
@@ -77,7 +77,7 @@ export function DateRangeField({
           <button
             type="button"
             onClick={handleIconClick}
-            className="absolute top-1/2 -translate-y-1/2 right-[20px]"
+            className="absolute top-1/2 -translate-y-1/2 right-[12px]"
             aria-label="Открыть календарь"
           >
             <Image src="/icons/partner-account/calendar.svg" alt="" width={24} height={24}/>
