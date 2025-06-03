@@ -133,3 +133,50 @@ export const getEvents = async ({
       return null;
     }
   }
+
+  export const getDetailedPromocodes = async({From, To, RegionId, UniversityId, PartnerId}: Params) => {
+    try {
+      
+      const query = new URLSearchParams();
+      if (From) query.append("From", From);
+      if (To) query.append("To", To);
+      if (RegionId) query.append("RegionId", RegionId);
+      if (UniversityId) query.append("UniversityId", UniversityId);
+      if (PartnerId) query.append("PartnerId", PartnerId);
+      const res = await fetch(`/api/statistics/Detailed/promocodes?${query.toString()}`);
+  
+      if (!res.ok) {
+        console.warn(`getDetailedPromocodes: статистика не найдена (${res.status})`);
+        return null;
+      }
+  
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Ошибка в getDetailedPromocodes:", error);
+      return null;
+    }
+  }
+  export const getDetailedVisitors = async({From, To, RegionId, UniversityId, PartnerId}: Params) => {
+    try {
+      
+      const query = new URLSearchParams();
+      if (From) query.append("From", From);
+      if (To) query.append("To", To); 
+      if (RegionId) query.append("RegionId", RegionId);
+      if (UniversityId) query.append("UniversityId", UniversityId);
+      if (PartnerId) query.append("PartnerId", PartnerId);
+      const res = await fetch(`/api/statistics/Detailed/visitors?${query.toString()}`);
+  
+      if (!res.ok) {
+        console.warn(`getDetailedVisitors: статистика не найдена (${res.status})`);
+        return null;
+      }
+  
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Ошибка в getDetailedPromocodes:", error);
+      return null;
+    }
+  }

@@ -1,7 +1,7 @@
 import { Button } from "@mui/base";
 import TermsOfUse from "../offer-page-elements/terms-of-use/TermsOfUse";
 import { useState } from "react";
-import  DiscountModal  from "../offer-page-elements/discount-modal/DiscountModal";
+import  {DiscountModal}  from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
 
 

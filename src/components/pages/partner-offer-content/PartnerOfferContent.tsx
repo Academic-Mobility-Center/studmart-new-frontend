@@ -1,7 +1,7 @@
 "use client"
 import DiscountBox from "../offer-page-elements/discount-box/DiscountBox";
 import { useEffect, useState } from "react";
-import  DiscountModal  from "../offer-page-elements/discount-modal/DiscountModal";
+import  {DiscountModal}  from "../offer-page-elements/discount-modal/DiscountModal";
 import Image from "next/image";
 import { getPromocodePartnerByIdAndRegionId, getPromocodeDiscountByDiscountIdAndStudentId, getPromocodeById } from "@/lib/api/promocodes";
 import { PartnerWithIdType } from "@/app/partner-personal-account/context";
@@ -56,7 +56,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [personalPromocodes, setPersonalPromocodes] = useState<UnifiedPromocode[]>([]);
-    const [selectedPromo, setSelectedPromo] = useState<UnifiedPromocode | undefined>(undefined);    
+    const [selectedPromo, setSelectedPromo] = useState<PersonalPromocode | undefined>(undefined);
     const [partnerData, setPartnerData] = useState<PartnerWithIdType | null>(null);
     const {regionId} = useCity();
     const [discountsIds, setDiscountsIds] = useState<string[]>([])
@@ -117,8 +117,10 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
     }, [discountsIds, id, role, authRole]);
 
     const openModal = (promo: UnifiedPromocode) => {
-        setSelectedPromo(promo);
-        setIsModalOpen(true);
+        if ((role === "Student" || authRole === "Student") && 'discount' in promo) {
+            setSelectedPromo(promo); // Тип гарантированно PersonalPromocode
+            setIsModalOpen(true);
+        }
     };
     const closeModal = () => setIsModalOpen(false);
     return (

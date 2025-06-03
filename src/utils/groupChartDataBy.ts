@@ -13,7 +13,7 @@ export function groupChartDataBy(data: ChartDataItem[], groupBy: "day" | "week" 
   const grouped = new Map<string, ChartDataItem>();
 
   data.forEach(item => {
-    const parsedDate = parse(item.date, "dd.MM.yy", new Date());
+    const parsedDate = parse(item.date, "yyyy-MM-dd", new Date());
     let key = "";
 
     if (groupBy === "day") {

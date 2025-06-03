@@ -5,7 +5,7 @@ const allowedResources = [
   "Countries", "Employees", "Students", "Favourites", "Courses", "Universities",
   "EmailDomains", "Verifications", "Cities", "forgotPassword",
    "resetPassword", "SupportRequest", "Languages", "Events", "Users", "DescriptionRequests", "Requests",
-   "forward"
+   "forward", "Export", "Detailed"
 ];
 export async function GET(
   request: Request,

@@ -14,9 +14,9 @@ const UsersPage = () => {
           router.replace("/student-personal-account");
       }
   }, [role, router]);
-  const { formData, setFormData } = useStatistic();
+  const { formData, setFormData, partnerId } = useStatistic();
 
-  return <StatisticUsers formData={formData} setFormData={setFormData} />;
+  return <StatisticUsers formData={formData} setFormData={setFormData} partnerId={partnerId}/>;
 };
 
 export default UsersPage;

@@ -13,7 +13,7 @@ const EventsPage = () => {
         router.replace("/student-personal-account");
     }
 }, [role, router]);
-const { formData, setFormData, regions, universities } = useStatistic();
+const { formData, setFormData, regions, universities, partnerId } = useStatistic();
 
   return (
     <StatisticEvents
@@ -21,6 +21,7 @@ const { formData, setFormData, regions, universities } = useStatistic();
       regionOptions={regions}
       formData={formData}
       setFormData={setFormData}
+      partnerId={partnerId}
     />
   );
 };
