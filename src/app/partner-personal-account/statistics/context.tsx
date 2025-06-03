@@ -66,7 +66,6 @@ import StatisticFormData from "@/types/StatisticFormData";
 import Region from "@/types/Region";
 import University from "@/types/University";
 import City from "@/types/Cities";
-import { useCity } from "@/context/CityContext";
 import {
   getPartnerRegions,
 } from "@/lib/api/partners";
@@ -92,7 +91,6 @@ export const useStatistic = () => {
 };
 
 export const StatisticProvider = ({ children }: { children: React.ReactNode }) => {
-  const { regionId } = useCity();
   const { id } = useAuth();
   const today = new Date();
   const oneMonthAgo = new Date();
@@ -144,7 +142,7 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
         const events = await getEvents({
           From: oneMonthAgo.toISOString().split("T")[0],
           To: today.toISOString().split("T")[0],
-          RegionId: regionId ?? undefined,
+          RegionId: undefined,
           UniversityId: undefined,
           PartnerId: partner.partner.id,
         });
@@ -164,14 +162,14 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
     };
 
     fetchInitialData();
-  }, [id, partner?.partner?.id, regionId]);
+  }, [id, partner?.partner?.id]);
 
   useEffect(() => {
     const fetchUpdatedStats = async () => {
       if (!formData || !partner?.partner?.id) return;
 
       const [start, end] = formData.dateRange;
-      const regionValue = formData.region?.value?.toString() ?? regionId?.toString();
+      const regionValue = formData.region?.value?.toString() ?? undefined;
       const universityValue = formData.university?.value?.toString();
 
       try {
@@ -217,7 +215,6 @@ export const StatisticProvider = ({ children }: { children: React.ReactNode }) =
     formData?.dateRange,
     formData?.region?.value,
     formData?.university?.value,
-    regionId,
     updateFormData,
     partner?.partner?.id,
   ]);

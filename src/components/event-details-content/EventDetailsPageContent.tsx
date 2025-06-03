@@ -331,12 +331,11 @@ export default function EventDetailsPageContent() {
         const university = universities.find(u => u.id.toString() === value);
         selectedOption = university ? { value: university.id.toString(), label: university.name } : undefined;
       }
-
       setFormData(prev => prev ? { ...prev, [name]: selectedOption } : prev);
     };
 
   const filteredUniversities = formData.region
-    ? universities.filter(u => u.city.region.id.toString() === formData.region!.value)
+    ? universities.filter(u => u.city.region.id.toString() === formData?.region?.value)
     : universities;
 
   const filteredData = groupChartDataBy(
