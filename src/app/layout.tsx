@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from '@/context/AuthContext';
@@ -22,19 +21,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Студмарт",
-  description: "Скидки для студентов",
-  openGraph: {
-    title: "Студмарт",
-    description: "Скидки для студентов",
-    type: "website",
-    locale: "ru_RU",
-  },
-  other: {
-    "apple-mobile-web-app-title": "Студмарт",
-  },
-};
 
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
@@ -49,11 +35,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <head>
-        <meta name="theme-color" content="#ffffff"/>
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-      </head>
+    <head>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Студмарт</title>
+      <meta name="description" content="Скидки для студентов" />
+
+      <meta property="og:title" content="Студмарт" />
+      <meta property="og:description" content="Скидки для студентов" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={`https://${process.env.NEXT_PUBLIC_API_URL}`} /> {/* обязательно: полный путь */}
+      <meta property="og:image" content={`https://${process.env.NEXT_PUBLIC_API_URL}/my-favicon/web-app-manifest-192x192.png`} /> {/* Telegram без картинки может не распарсить OG */}
+
+      <meta name="twitter:title" content="Студмарт" />
+      <meta name="twitter:description" content="Скидки для студентов" />
+
+      <meta name="apple-mobile-web-app-title" content="Студмарт" />
+    </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunitoSans.variable} ${mulish.variable} antialiased `}
       >
