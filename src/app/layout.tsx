@@ -35,23 +35,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-    <head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Студмарт</title>
-      <meta name="description" content="Скидки для студентов" />
-
-      <meta property="og:title" content="Студмарт" />
-      <meta property="og:description" content="Скидки для студентов" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={`https://${process.env.NEXT_PUBLIC_API_URL}`} /> {/* обязательно: полный путь */}
-      <meta property="og:image" content={`https://${process.env.NEXT_PUBLIC_API_URL}/my-favicon/web-app-manifest-192x192.png`} /> {/* Telegram без картинки может не распарсить OG */}
-
-      <meta name="twitter:title" content="Студмарт" />
-      <meta name="twitter:description" content="Скидки для студентов" />
-
-      <meta name="apple-mobile-web-app-title" content="Студмарт" />
-    </head>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Студмарт</title>
+        <meta name="description" content="Скидки для студентов" />
+        <meta property="og:title" content="Студмарт" />
+        <meta property="og:description" content="Скидки для студентов" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://${process.env.NEXT_PUBLIC_API_URL}`} />
+        <meta property="og:image" content={`https://${process.env.NEXT_PUBLIC_API_URL}/my-favicon/web-app-manifest-192x192.png`} />
+        <meta name="twitter:title" content="Студмарт" />
+        <meta name="twitter:description" content="Скидки для студентов" />
+        <meta name="apple-mobile-web-app-title" content="Студмарт" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunitoSans.variable} ${mulish.variable} antialiased `}
       >
