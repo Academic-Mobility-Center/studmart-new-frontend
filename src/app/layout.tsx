@@ -31,9 +31,6 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ru_RU",
   },
-  appleWebApp: {
-    title: "Студмарт",
-  },
   other: {
     "apple-mobile-web-app-title": "Студмарт",
   },
@@ -51,7 +48,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
+      <head>
+        <meta name="theme-color" content="#ffffff"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunitoSans.variable} ${mulish.variable} antialiased `}
       >
