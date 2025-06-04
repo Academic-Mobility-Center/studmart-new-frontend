@@ -25,7 +25,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Студмарт",
   description: "Скидки для студентов",
+  openGraph: {
+    title: "Студмарт",
+    description: "Скидки для студентов",
+    type: "website",
+    locale: "ru_RU",
+  },
+  appleWebApp: {
+    title: "Студмарт",
+  },
+  other: {
+    "apple-mobile-web-app-title": "Студмарт",
+  },
 };
+
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
   weight: ['400', '600', '700', '800'], // выбери нужные веса
@@ -39,9 +52,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="apple-mobile-web-app-title" content="Студмарт" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunitoSans.variable} ${mulish.variable} antialiased `}
       >
