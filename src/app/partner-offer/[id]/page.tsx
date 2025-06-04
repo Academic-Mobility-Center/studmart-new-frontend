@@ -11,6 +11,7 @@ import RegionWithoutCountry from "@/types/RegionWithoutCountry";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
+import { useRouter } from "next/navigation";
 
 interface PartnerOffer {
   id: string;
@@ -28,6 +29,13 @@ const PartnerOffer = () => {
   const id = params?.id as string;
   const { isAuthenticated, isLoading, role } = useAuth();
   const [currentOffer, setCurrentOffer] = useState<PartnerOffer | null>(null);
+  const router = useRouter();
+
+useEffect(() => {
+  if (!isLoading && isAuthenticated === false) {
+    router.push("/login");
+  }
+}, [isLoading, isAuthenticated, router]);
   useEffect(() => {
     const fetchOffer = async () => {
       try {
@@ -43,7 +51,7 @@ const PartnerOffer = () => {
     if (id) fetchOffer();
   }, [id]);
 
-  if (isLoading || !currentOffer) {
+  if (isLoading || !currentOffer || isAuthenticated === false) {
     return <div className={loaderStyle}> <ClipLoader size={50} color="#36d7b7" /> </div>;
   }
 
