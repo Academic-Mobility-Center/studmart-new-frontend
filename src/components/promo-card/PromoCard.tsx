@@ -41,8 +41,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   }
   const router = useRouter();
   const [isFavourite, setIsFavourite] = useState(false);
-  const userId = "81dd5999-455b-4eb2-af1d-15feb026655d";
-  const { isAuthenticated, role } = useAuth();
+  const { isAuthenticated, role, id: studentId } = useAuth();
 
   const handleClick = () => {
     router.prefetch(`/partner-offer/${id}`);
@@ -51,16 +50,17 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   useEffect(() => {
     const fetchFavourites = async () => {
       try {
-        const favourites = await getFavouritesPartners(userId);
+        const favourites = await getFavouritesPartners(studentId ?? "");
         const found = favourites.some((partner: FavouriteItem) => partner.id === id);
         setIsFavourite(found);
       } catch (error) {
         console.error("Ошибка при получении избранных партнёров:", error);
       }
     };
-
-    fetchFavourites();
-  }, [id]);
+    if (studentId){
+      fetchFavourites();
+    }
+  }, [id, studentId]);
   const handleStarClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     
@@ -71,9 +71,9 @@ export const PromoCard: React.FC<PromoCardProps> = ({
       let result: ApiResponse | null = null;
   
       if (newValue) {
-        result = await addToFavouritePartner(id, userId);
+        result = await addToFavouritePartner(id, studentId ?? "");
       } else {
-        result = await deleteFavouritePartner(id, userId);
+        result = await deleteFavouritePartner(id, studentId ?? "");
       }
   
       if (result && result.ignoredError) {
@@ -84,30 +84,6 @@ export const PromoCard: React.FC<PromoCardProps> = ({
       setIsFavourite(!newValue);
     }
   };
-  // const handleStarClick = async (e: React.MouseEvent) => {
-  //   e.stopPropagation();
-    
-  //   const newValue = !isFavourite; // сохраняем целевое состояние
-  //   setIsFavourite(newValue); // обновляем сразу для UI
-  
-  //   try {
-  //     if (newValue) {
-  //       const result: ApiResponse = await addToFavouritePartner(id, userId);
-  //       if (result.ignoredError) {
-  //         console.warn(123)
-  //       }
-  //     } else {
-  //       const result: ApiResponse = await deleteFavouritePartner(id, userId);
-  //       if (result.ignoredError) {
-  //         console.warn(123)
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Ошибка при обновлении избранного:", error);
-  //     setIsFavourite(!newValue); 
-  //   }
-  // };
-  
   return (
     <div
     className="flex-none rounded-[20px] border border-black/20 

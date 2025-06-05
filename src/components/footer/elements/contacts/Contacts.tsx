@@ -51,7 +51,7 @@ const Contacts = () => {
                     self-stretch grow-0 shrink-0 
                     basis-auto m-0 p-0"
                 >
-                    +7 (345) 265-84-24 
+                    +7 (3452) 65-84-24
                 </p>
 
             </div>
