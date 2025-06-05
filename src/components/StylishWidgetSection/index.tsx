@@ -11,7 +11,7 @@ import {
 import PromoCardType from "@/types/PromoCard";
 import { transformPromos } from "@/app/home/context";
 import { useCity } from "@/context/CityContext";
-
+import {useAuth} from "@/context/AuthContext"
 interface StylishWidgetSectionProps {
   selectedCategoryId: number | null;
 }
@@ -21,7 +21,7 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   const fixedCardsPerRow = 3;
   const regularCardsPerRow = 4;
   const initialVisibleCards = 16;
-
+  const {id} = useAuth();
   const { regionId } = useCity();
   const favouritesFetchedRef = useRef(false);
 
@@ -47,18 +47,14 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   
     fetchPromoCards();
   }, [regionId]);
-  
-  // Загружаем избранное только когда это нужно
 
-// вынесем id пользователя из хардкода (если возможно)
-const userId = "81dd5999-455b-4eb2-af1d-15feb026655d"; // можно потом вынести в пропсы или context
 
 useEffect(() => {
   if (selectedCategoryId !== 0 || favouritesFetchedRef.current) return;
 
   const fetchFavourites = async () => {
     try {
-      const data = await getFavouritesPartners(userId);
+      const data = await getFavouritesPartners(id ?? "");
       const transformed = transformPromos(data || []).map((card) => ({
         ...card,
         categoryId: 0,
@@ -70,9 +66,11 @@ useEffect(() => {
       setFavouritePartners([]);
     }
   };
-
+  if (id){
+    fetchFavourites()
+  }
   fetchFavourites();
-}, [selectedCategoryId, userId]);
+}, [selectedCategoryId, id]);
 
   const renderPromoCardsRow = (cards: PromoCardType[]) => (
     <div className="promo-card-container">

@@ -6,6 +6,15 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getPromocodeRegions } from "@/lib/api/promocodes";
 import { useCity } from "@/context/CityContext";
+import SearchInputField from "@/components/fields/search_input/SearchInputField"
+import { useRouter } from "next/navigation";
+import PromoCardType from "@/types/PromoCard";
+import { usePathname } from "next/navigation";
+import {
+  getPromocodePartners,
+  getPromocodePartnersByRegionId,
+} from "@/lib/api/promocodes";
+import { transformPromos } from "@/app/home/context";
 interface NewHeaderProps {
   isAuthenticated: boolean;
 }
@@ -14,10 +23,43 @@ const citiesInModal = [
   {id: 1, name: "Новосибирская область"},
   {id: 2, name: "Московская область"}
 ]
-
+interface Option {
+  label: string;
+  value: string;
+}
 export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
   const { role } = useAuth();
-
+  const router = useRouter();
+  const {regionId} = useCity();
+  const [partners, setPartners] = useState<PromoCardType[]>([]);
+  useEffect(() => {
+    const fetchPromoCards = async () => {
+      try {
+        let promoCardsArray;
+        if (regionId) {
+          promoCardsArray = await getPromocodePartnersByRegionId(regionId);
+        } else {
+          promoCardsArray = await getPromocodePartners();
+        }
+  
+        const transformed = transformPromos(promoCardsArray || []);
+        setPartners(transformed);
+      } catch (error) {
+        console.error("Error fetching promocodes:", error);
+        setPartners([]);
+      }
+    };
+  
+    fetchPromoCards();
+  }, [regionId]);
+  const handleChange = (
+    event: React.SyntheticEvent,
+    newValue: Option | null
+  ) => {
+    if (newValue) {
+      router.push(`/partner-offer/${newValue.value}`);
+    }
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { city } = useCity();
   const openModal = () => setIsModalOpen(true);
@@ -51,7 +93,7 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
             {city || "Выберите город"}
           </p>
         </div>
-        <SearchBar isAuthenticated={isAuthenticated} />
+        <SearchBar isAuthenticated={isAuthenticated} handleChange={handleChange} partners={partners}/>
         <div className="flex items-center gap-2 pl-4">
           <Link href={isAuth}>
             <Image 
@@ -99,13 +141,35 @@ function NavItem({ text, url, isAuthenticated }: NavItemProps) {
 
 interface SearchBarProps {
   isAuthenticated: boolean;
+  handleChange: (event: React.SyntheticEvent, newValue: Option | null) => void
+  partners: PromoCardType[];
 }
 
-function SearchBar({ isAuthenticated }: SearchBarProps) {
+function SearchBar({ isAuthenticated, handleChange, partners }: SearchBarProps) {
+  const pathname = usePathname();
+
+  // Страницы, где должен быть показан текст-заглушка вместо поиска
+  const isAuthPage = ["/login", "/login/reset-password", "/registration"].includes(pathname);
+
+  const options: Option[] = partners.map(p => ({
+    label: p.heading,
+    value: p.id,
+  }));
+
   return (
     <div className={`w-[201px] flex flex-col gap-1 ${!isAuthenticated ? "opacity-50" : ""}`}>
-      <p className="text-sm text-[#032c28]">Поиск</p>
-      <div className="border-t border-[#032c28]"></div>
+      {isAuthPage ? (
+        <>
+          <p className="text-sm text-[#032c28]">Поиск</p>
+          <div className="border-t border-[#032c28]"></div>
+        </>
+      ) : (
+        <SearchInputField
+          placeholder="Поиск"
+          options={options}
+          handleChange={handleChange}
+        />
+      )}
     </div>
   );
 }
