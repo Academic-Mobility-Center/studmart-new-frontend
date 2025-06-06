@@ -1,7 +1,5 @@
-import AuthorizationPage from "@/components/auth";
+import AuthorizationPage from '@/components/auth';
 
-export default function Auth(){
-    return (
-        <AuthorizationPage/>
-    )
+export default function Auth() {
+	return <AuthorizationPage />;
 }

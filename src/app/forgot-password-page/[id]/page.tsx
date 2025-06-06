@@ -1,8 +1,6 @@
-
-export default function ForgotPasswordPage(){
-    return(
-        <div></div>
-        // <ForgotPasswordEmail/>
-        
-    )
+export default function ForgotPasswordPage() {
+	return (
+		<div></div>
+		// <ForgotPasswordEmail/>
+	);
 }

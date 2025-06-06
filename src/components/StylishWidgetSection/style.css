@@ -1,86 +1,95 @@
 .vertical-center-column {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+	display: flex;
+	flex: 0 0 auto;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
 }
+
 .promo-button {
-  box-sizing: border-box;
-  display: block;
-  flex: 0 0 auto;
-  width: 350px;
-  min-width: 350px;
-  height: 48px;
-  margin-top: 40px;
-  font: 700 14px Mulish, sans-serif;
-  color: #032c28;
-  text-transform: uppercase;
-  letter-spacing: 0.42px;
-  cursor: pointer;
-  background: #8fe248;
-  border: none;
-  border-radius: 15px;
+	box-sizing: border-box;
+	display: block;
+	flex: 0 0 auto;
+	width: 350px;
+	min-width: 350px;
+	height: 48px;
+	margin-top: 40px;
+	font:
+		700 14px Mulish,
+		sans-serif;
+	color: #032c28;
+	text-transform: uppercase;
+	letter-spacing: 0.42px;
+	cursor: pointer;
+	background: #8fe248;
+	border: none;
+	border-radius: 15px;
 }
+
 .hierarchical-text-container {
-  flex: 0 0 auto;
+	flex: 0 0 auto;
 }
+
 .hierarchical-content-container {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 1200px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	align-items: flex-start;
+	justify-content: flex-start;
+	width: 1200px;
 }
+
 .promo-card-container {
-  box-sizing: border-box;
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: row;
-  gap: 24px;
-  align-items: flex-start;
-  align-self: stretch;
-  justify-content: flex-start;
+	box-sizing: border-box;
+	display: flex;
+	flex: 0 0 auto;
+	flex-direction: row;
+	gap: 24px;
+	align-items: flex-start;
+	align-self: stretch;
+	justify-content: flex-start;
 }
+
 .promo-card-container2 {
-  box-sizing: border-box;
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: row;
-  gap: 24px;
-  align-items: center;
-  align-self: center;
-  justify-content: space-between;
-  min-width: 1200px;
-  /* margin-left: -79px; */
+	box-sizing: border-box;
+	display: flex;
+	flex: 0 0 auto;
+	flex-direction: row;
+	gap: 24px;
+	align-items: center;
+	align-self: center;
+	justify-content: space-between;
+	min-width: 1200px;
+
+	/* margin-left: -79px; */
 }
+
 .fixed-cards-container {
-  display: flex;
-  flex-direction: row;
-  /* gap: 16px;
+	display: flex;
+	flex-direction: row;
+
+	/* gap: 16px;
   margin-bottom: 16px;
   flex-direction: row;
   align-items: flex-start;
   align-self: stretch;
   justify-content: flex-start;
   flex: 0 0 auto; */
-
 }
 
 .fixed-cards-container > * {
-  width: calc(33.333% - 11px); /* 3 карточки с учетом gap */
+	width: calc(33.333% - 11px); /* 3 карточки с учетом gap */
 }
 
 /* Для обычных карточек - 4 в ряд */
 .regular-cards-row {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
+	display: flex;
+	gap: 16px;
+	margin-bottom: 16px;
+	flex-wrap: wrap;
 }
 
 .regular-cards-row > * {
-  width: calc(25% - 12px); /* 4 карточки с учетом gap */
+	width: calc(25% - 12px); /* 4 карточки с учетом gap */
 }
