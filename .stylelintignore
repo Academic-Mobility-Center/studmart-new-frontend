@@ -1,0 +1,23 @@
+*.tsx
+*.jsx
+*.ts
+*.js
+*.сjs
+*.md
+*.svg
+/node_modules
+.husky
+.next
+.vscode
+eslint.config.mjs
+postcss.config.mjs
+.prettierrc.cjs
+stylelint.config.cjs
+
+		// "selector-class-pattern": [
+		// 	"^[a-z0-9]+(?:__[a-z0-9]+)?(?:--[a-z0-9]+)?$",
+		// 	{
+		// 		"message": "Use BEM naming convention: block__element--modifier",
+		// 		"resolveNestedSelectors": true
+		// 	}
+		// ],
