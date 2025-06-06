@@ -61,6 +61,7 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
         setFavouritePartners(transformed);
         favouritesFetchedRef.current = true;
       } catch (error) {
+        console.warn(error)
         setFavouritePartners([]);
       }
     };
