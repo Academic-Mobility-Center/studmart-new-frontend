@@ -78,7 +78,6 @@ const PartnerOfferContent = ({ imageUrl, partnerId, isAuth, role}: Props) => {
     useEffect(() => {
         if (partnerData?.discounts) {
             const ids = partnerData.discounts.map((d: Discount) => String(d.id));
-            console.log(ids)
             setDiscountsIds(ids);
         }
     }, [partnerData]);

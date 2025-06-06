@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import PromoCardsDescriprion from '../promo-card-description';
 import { useRouter } from 'next/navigation';
 import Image from "next/image"
 import { useAuth } from "@/context/AuthContext";
 
 import {  
-  getFavouritesPartners, 
   addToFavouritePartner, 
   deleteFavouritePartner
 } from "@/lib/api/promocodes";
@@ -18,6 +17,7 @@ type PromoCardProps = {
   categoryId?: number;
   width?: number;
   height?: number;
+  isInitiallyFavourite?: boolean;
 };
 type ApiResponse = {
   ignoredError?: boolean;
@@ -29,38 +29,18 @@ export const PromoCard: React.FC<PromoCardProps> = ({
   discount,
   id,
   width= 282,
-  height = 203
+  height = 203,
+  isInitiallyFavourite
 }) => {
-  interface FavouriteItem{
-    id: string;
-    companyName: string;
-    subTitle: string;
-    maxDiscount: string;
-    isFixed: boolean;
-    category: null;
-  }
   const router = useRouter();
-  const [isFavourite, setIsFavourite] = useState(false);
   const { isAuthenticated, role, id: studentId } = useAuth();
+  const [isFavourite, setIsFavourite] = useState<boolean>(isInitiallyFavourite ?? false);
 
   const handleClick = () => {
     router.prefetch(`/partner-offer/${id}`);
     router.push(`/partner-offer/${id}`);
   };
-  useEffect(() => {
-    const fetchFavourites = async () => {
-      try {
-        const favourites = await getFavouritesPartners(studentId ?? "");
-        const found = favourites.some((partner: FavouriteItem) => partner.id === id);
-        setIsFavourite(found);
-      } catch (error) {
-        console.error("Ошибка при получении избранных партнёров:", error);
-      }
-    };
-    if (studentId){
-      fetchFavourites();
-    }
-  }, [id, studentId]);
+
   const handleStarClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     

@@ -46,7 +46,6 @@ export default function CompactSearchInput({
           ) : null
         }
         size="small"
-        // open={true} // всегда открыто
         popupIcon={null} // скрываем треугольник
         renderInput={(params) => (
           <TextField

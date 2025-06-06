@@ -24,7 +24,6 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   const {id} = useAuth();
   const { regionId } = useCity();
   const favouritesFetchedRef = useRef(false);
-
   const [partners, setPartners] = useState<PromoCardType[]>([]);
   const [favouritePartners, setFavouritePartners] = useState<PromoCardType[]>([]);
   useEffect(() => {
@@ -49,29 +48,27 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
   }, [regionId]);
 
 
-useEffect(() => {
-  if (selectedCategoryId !== 0 || favouritesFetchedRef.current) return;
-
-  const fetchFavourites = async () => {
-    try {
-      const data = await getFavouritesPartners(id ?? "");
-      const transformed = transformPromos(data || []).map((card) => ({
-        ...card,
-        categoryId: 0,
-      }));
-      setFavouritePartners(transformed);
-      favouritesFetchedRef.current = true;
-    } catch (error) {
-      console.error(error);
-      setFavouritePartners([]);
-    }
-  };
-  if (id){
-    fetchFavourites()
-  }
-  fetchFavourites();
-}, [selectedCategoryId, id]);
-
+  useEffect(() => {
+    if (favouritesFetchedRef.current || !id) return;
+  
+    const fetchFavourites = async () => {
+      try {
+        const data = await getFavouritesPartners(id);
+        const transformed = transformPromos(data || []).map((card) => ({
+          ...card,
+          categoryId: 0,
+        }));
+        setFavouritePartners(transformed);
+        favouritesFetchedRef.current = true;
+      } catch (error) {
+        setFavouritePartners([]);
+      }
+    };
+  
+    fetchFavourites();
+  }, [id]);
+  
+  const favouriteIds = favouritePartners.map((p) => p.id);
   const renderPromoCardsRow = (cards: PromoCardType[]) => (
     <div className="promo-card-container">
       {cards.map((card) => (
@@ -83,6 +80,7 @@ useEffect(() => {
           description={card.subtitle}
           discount={card.discount}
           categoryId={card.categoryId}
+          isInitiallyFavourite={favouriteIds.includes(card.id)}
         />
       ))}
     </div>
@@ -101,6 +99,7 @@ useEffect(() => {
           discount={card.discount}
           categoryId={card.categoryId}
           imageUrl={`https://files.${process.env.NEXT_PUBLIC_API_URL}/Partners/${card.id}`}
+          isInitiallyFavourite={favouriteIds.includes(card.id)}
         />
       ))}
     </div>
