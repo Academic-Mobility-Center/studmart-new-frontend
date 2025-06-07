@@ -13,6 +13,11 @@
 
 .content {
 	flex: 1;
+	padding: 0 40px;
+
+	@media (width <= 1280px) {
+		padding: 0 10px;
+	}
 }
 
 .loader-container {

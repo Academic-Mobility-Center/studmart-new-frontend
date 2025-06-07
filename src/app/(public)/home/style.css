@@ -1,6 +1,5 @@
 .student-discount-portal {
 	box-sizing: border-box;
-	width: 1200px;
 }
 
 .exclusive-discounts-section {
@@ -9,7 +8,4 @@
 	flex-direction: column;
 	align-items: stretch;
 	justify-content: flex-start;
-	width: 1280px;
-	padding-left: 40px;
-	padding-right: 40px;
 }
