@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { Dialog } from '@headlessui/react';
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -17,6 +18,8 @@ import {
 	getPromocodeRegions,
 } from '@/lib/api/promocodes';
 import PromoCardType from '@/types/PromoCard';
+
+import styles from './NewHeader.module.css';
 
 interface NewHeaderProps {
 	isAuthenticated: boolean;
@@ -71,48 +74,61 @@ export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
 				? '/student-personal-account'
 				: '/login';
 	return (
-		<header className="w-7xl bg-[#8fe248] flex items-center justify-start h-20 pl-[40px] rounded-b-[30px]">
-			<div className="w-[320px]">
-				<Link href="/home">
-					<Image src="/icons/Header/logo.svg" alt="" width={141} height={30} />
+		<>
+			<header className={styles.header}>
+				<Link href="/home" className={styles.logo}>
+					<Image src="/icons/Header/logo.svg" alt="" fill />
 				</Link>
-			</div>
 
-			<nav className="w-[430px] flex items-center gap-10">
-				<NavItem text="Предложения" url={'/home'} isAuthenticated={true} />
-				<NavItem text="О сервисе" url={'/about'} isAuthenticated={true} />
-				<NavItem text="Партнерам" url={'/partners'} isAuthenticated={true} />
-			</nav>
+				<nav className={styles.nav}>
+					<NavItem text="Предложения" url={'/home'} isAuthenticated={true} />
+					<NavItem text="О сервисе" url={'/about'} isAuthenticated={true} />
+					<NavItem text="Партнерам" url={'/partners'} isAuthenticated={true} />
+				</nav>
 
-			<div className="w-[481px] flex items-center gap-[24px]">
-				<div className={`flex items-center gap-2 cursor-pointer`} onClick={openModal}>
-					<Image src="/icons/Header/location.svg" alt="" width={24} height={24} />
-					<p className="text-sm text-[#032c28] max-w-[110px]">{city || 'Выберите город'}</p>
+				<div className={styles['end-block']}>
+					<div className={styles.search}>
+						<div className={styles['search-city']} onClick={openModal}>
+							<div className={styles.icon}>
+								<Image src="/icons/Header/location.svg" alt="" fill />
+							</div>
+							<p className={styles['search-city_text']}>{city || 'Выберите город'}</p>
+						</div>
+						<SearchBar
+							isAuthenticated={isAuthenticated}
+							handleChange={handleChange}
+							partners={partners}
+						/>
+					</div>
+
+					<div className={styles.account}>
+						<button className={clsx(styles.icon, styles['phone-icon'])}>
+							<Image src="/icons/Header/search.svg" alt="" fill />
+						</button>
+						<Link href={isAuth} className={styles.icon}>
+							<Image src="/icons/Header/account.svg" alt="" fill />
+						</Link>
+						<Link
+							href={
+								isAuthenticated && role === 'Student'
+									? '/student-personal-account/referal-program'
+									: isAuthenticated && role === 'Employee'
+										? ''
+										: '/login'
+							}
+							className={styles.icon}
+						>
+							<Image src="/icons/Header/wallet.svg" alt="" fill />
+						</Link>
+						<button className={clsx(styles.icon, styles['tablet-icon'])}>
+							<Image src="/icons/Header/menu.svg" alt="" fill />
+						</button>
+					</div>
 				</div>
-				<SearchBar
-					isAuthenticated={isAuthenticated}
-					handleChange={handleChange}
-					partners={partners}
-				/>
-				<div className="flex items-center gap-2 pl-4">
-					<Link href={isAuth}>
-						<Image src="/icons/Header/account.svg" alt="" width={24} height={24} />
-					</Link>
-					<Link
-						href={
-							isAuthenticated && role === 'Student'
-								? '/student-personal-account/referal-program'
-								: isAuthenticated && role === 'Employee'
-									? ''
-									: '/login'
-						}
-					>
-						<Image src="/icons/Header/wallet.svg" alt="" width={24} height={24} />
-					</Link>
-				</div>
-			</div>
+			</header>
+
 			<CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} />
-		</header>
+		</>
 	);
 }
 

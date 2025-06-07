@@ -4,10 +4,15 @@
 	--theme: light;
 	--background: #f8f8f8;
 	--text-color: #032c28;
+	--bg-green: #8fe248;
 
 	/* шрифты */
 	--font-size: 14px;
 	--font-family: arial, helvetica, sans-serif;
+
+	/* размеры экранов */
+	--phone: 768px;
+	--tablet: 1024px;
 }
 
 [data-theme='dark'] {

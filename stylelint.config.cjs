@@ -4,13 +4,43 @@ module.exports = {
 		'at-rule-no-unknown': [
 			true,
 			{
-				ignoreAtRules: ['tailwind', 'apply', 'layer', 'responsive', 'screen', 'variants'],
+				ignoreAtRules: [
+					'tailwind',
+					'apply',
+					'layer',
+					'responsive',
+					'screen',
+					'variants',
+					'reference',
+				],
+			},
+		],
+		'scss/at-rule-no-unknown': [
+			true,
+			{
+				ignoreAtRules: [
+					'tailwind',
+					'apply',
+					'layer',
+					'responsive',
+					'screen',
+					'variants',
+					'reference',
+				],
 			},
 		],
 		'at-rule-no-deprecated': [
 			true,
 			{
-				ignoreAtRules: ['apply', 'tailwind', 'layer', 'screen', 'responsive', 'variants'],
+				ignoreAtRules: [
+					'apply',
+					'tailwind',
+					'layer',
+					'screen',
+					'responsive',
+					'variants',
+					'reference',
+				],
 			},
 		],
 		// SCSS & Style
