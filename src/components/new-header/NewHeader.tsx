@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import SearchInputField from '@/components/fields/search_input/SearchInputField';
-import { transformPromos } from '@/app/home/context';
+import { transformPromos } from '@/app/(public)/home/context';
 import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
 import {

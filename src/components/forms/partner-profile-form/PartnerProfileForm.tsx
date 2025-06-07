@@ -12,7 +12,7 @@ import {
 	profileTitleClasses,
 	saveButtonClasses,
 	validateField,
-} from '@/app/partner-personal-account/context';
+} from '@/app/(partner)/partner-personal-account/context';
 import { useAuth } from '@/context/AuthContext';
 import {
 	getPartnerCategories,

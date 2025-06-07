@@ -5,6 +5,7 @@ import './globals.css';
 import { Mulish, Nunito_Sans } from 'next/font/google';
 
 import CookieConsent from '@/components/CookieConsent';
+import MainLayout from '@/components/HOC/MainLayout';
 import { AuthProvider } from '@/context/AuthContext';
 import { CityProvider } from '@/context/CityContext';
 
@@ -36,7 +37,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="ru">
+		<html lang="ru" data-theme={'light'}>
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -59,7 +60,7 @@ export default function RootLayout({
 			>
 				<CityProvider>
 					<AuthProvider>
-						{children}
+						<MainLayout>{children}</MainLayout>
 						<CookieConsent />
 					</AuthProvider>
 				</CityProvider>

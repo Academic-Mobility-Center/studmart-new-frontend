@@ -24,7 +24,7 @@ export default function CookieConsent() {
 	return (
 		<div className="fixed bottom-4 right-4 max-w-md bg-neutral-900 text-white p-4 rounded-xl shadow-lg text-sm z-50">
 			<p>
-				Мы используем{' '}
+				Мы используем
 				<Link
 					href="files/Политика конфиденциальности.pdf" // замените путь на нужный вам
 					target="_blank"

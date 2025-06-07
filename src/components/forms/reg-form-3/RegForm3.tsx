@@ -203,7 +203,7 @@ const RegForm3: React.FC<Props> = ({
 						className="mt-1 cursor-pointer"
 					/>
 					<label htmlFor="consent" className="text-sm text-[#032c28]">
-						Даю согласие на обработку персональных данных.{' '}
+						Даю согласие на обработку персональных данных.
 						<Link
 							href="/files/Политика конфиденциальности.pdf" // путь к файлу-согласию
 							target="_blank"

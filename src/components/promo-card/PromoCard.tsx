@@ -121,7 +121,6 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({
 				}}
 				onClick={onStarClick}
 			>
-				{' '}
 				{isAuthenticated &&
 					isStudent &&
 					(isFavourite ? (

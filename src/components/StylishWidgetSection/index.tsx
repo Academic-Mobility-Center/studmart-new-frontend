@@ -6,7 +6,7 @@ import './style.css';
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import { transformPromos } from '@/app/home/context';
+import { transformPromos } from '@/app/(public)/home/context';
 import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
 import {

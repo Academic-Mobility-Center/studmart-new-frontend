@@ -8,6 +8,8 @@ const TermsOfUse = ({ title }: Props) => {
 	return (
 		<div className="box-border flex justify-start items-start flex-row gap-2.5 self-stretch grow-0 shrink-0 basis-auto">
 			<Image
+				width={589}
+				height={260}
 				alt=""
 				src="/icons/offer/dot.svg"
 				className="w-1.5 h-[18px] text-[#032c28] flex grow-0 shrink-0 basis-auto box-border"

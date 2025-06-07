@@ -126,9 +126,7 @@ export default function LoginForm() {
 				)}
 			</div>
 			<p
-				className="text-sm text-[#888888] 
-          underline self-end mt-[-10px] 
-          cursor-pointer"
+				className="text-sm text-[#888888] underline self-end mt-[-10px] cursor-pointer"
 				onClick={handleForgotPasswordClick}
 			>
 				Забыли пароль?
@@ -151,7 +149,7 @@ export default function LoginForm() {
 					Войти
 				</button>
 				<p className="text-sm font-bold text-[#032c28] text-center">
-					Еще нет аккаунта?{' '}
+					Еще нет аккаунта?
 					<Link href="/registration" className="underline text-[#6dbc29]">
 						Зарегистрироваться
 					</Link>

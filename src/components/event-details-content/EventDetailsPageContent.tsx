@@ -280,7 +280,7 @@ import { loadEventData } from '@/components/loadEventData/loadEventData';
 import { applyFilters } from '@/utils/applyFilters';
 import { transformToOptions } from '@/utils/dataTransform';
 import { groupChartDataBy } from '@/utils/groupChartDataBy';
-import { useStatistic } from '@/app/partner-personal-account/statistics/context';
+import { useStatistic } from '@/app/(partner)/partner-personal-account/statistics/context';
 import { eventConfigs } from '@/data/statistics/eventConfigs';
 import ChartDataItem from '@/types/ChartDataItem';
 import { Option } from '@/types/Option';

@@ -127,7 +127,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
-import { ScrollContainer, StyledButton } from '@/app/home/context';
+import { ScrollContainer, StyledButton } from '@/app/(public)/home/context';
 import { useAuth } from '@/context/AuthContext';
 import { getPromocodeCategories } from '@/lib/api/promocodes';
 import MenuItem from '@/types/MenuItem';

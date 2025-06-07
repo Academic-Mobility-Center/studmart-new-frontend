@@ -17,6 +17,8 @@ const OfferPageContent = () => {
 						<div className="w-[589px] grow-0 shrink-0 basis-auto box-border pb-[11px]">
 							<div className="w-[100.00%] box-border">
 								<Image
+									width={589}
+									height={260}
 									alt=""
 									src="/icons/offer/image.svg"
 									className="border h-[260px] 

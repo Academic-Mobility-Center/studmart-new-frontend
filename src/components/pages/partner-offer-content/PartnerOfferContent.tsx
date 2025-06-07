@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import MarkdownRenderer from '@/components/MarkdownRenderer';
-import { PartnerWithIdType } from '@/app/partner-personal-account/context';
+import { PartnerWithIdType } from '@/app/(partner)/partner-personal-account/context';
 import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
 import {

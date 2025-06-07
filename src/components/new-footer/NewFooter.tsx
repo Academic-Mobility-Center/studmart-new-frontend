@@ -5,11 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import Contacts from '../footer/elements/contacts/Contacts';
 import Navigation from '../footer/elements/navigation/Navigation';
 
-interface NewFooterProps {
-	isAuthenticated: boolean;
-}
-
-const NewFooter = ({}: NewFooterProps) => {
+const NewFooter = () => {
 	const { logout, isAuthenticated } = useAuth();
 	return (
 		<footer className="bg-[#f0e9e2] flex flex-col w-full mt-32 px-10 py-10 rounded-t-[30px]">

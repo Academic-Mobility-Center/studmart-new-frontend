@@ -12,12 +12,12 @@ import { useRouter } from 'next/navigation';
 
 import InputField from '@/components/fields/input/InputField';
 import ImageUploader from '@/utils/imageUpload';
-import fileToBase64 from '@/app/home/context';
 import {
 	PartnerProfileData,
 	profileCardClasses,
 	profileTitleClasses,
-} from '@/app/partner-personal-account/context';
+} from '@/app/(partner)/partner-personal-account/context';
+import fileToBase64 from '@/app/(public)/home/context';
 import { useAuth } from '@/context/AuthContext';
 import { getPartnerInfo, sendDescriptionFile, sendPartnerDescription } from '@/lib/api/partners';
 
