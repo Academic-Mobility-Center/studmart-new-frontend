@@ -1,0 +1,39 @@
+.card {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	flex: none;
+	border: 1px solid rgb(0, 0, 0, 0.2);
+	border-radius: 20px;
+	overflow: hidden;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+	min-height: 203px;
+	background-color: white;
+}
+
+.card:hover {
+	transform: scale(1.02);
+}
+
+.image-wrapper {
+	width: 100%;
+	height: 125px;
+	padding: 10px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	flex: 2 1 auto;
+}
+
+.star {
+	width: 32px;
+	height: 32px;
+	flex: 0 0 auto;
+	cursor: pointer;
+}

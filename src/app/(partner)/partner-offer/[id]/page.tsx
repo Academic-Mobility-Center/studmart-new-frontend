@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ClipLoader } from 'react-spinners';
 
-import NewFooter from '@/components/new-footer/NewFooter';
-import NewHeader from '@/components/new-header/NewHeader';
 import PartnerOfferContent from '@/components/pages/partner-offer-content/PartnerOfferContent';
 import { loaderStyle } from '@/app/context';
 import { useAuth } from '@/context/AuthContext';

@@ -7,8 +7,9 @@ import { useAuth } from '@/context/AuthContext';
 import { addToFavouritePartner, deleteFavouritePartner } from '@/lib/api/promocodes';
 
 import PromoCardsDescriprion from '../promo-card-description';
+import styles from './PromoCard.module.css';
 
-type PromoCardProps = {
+export type PromoCardProps = {
 	id: string;
 	imageUrl: string;
 	heading: string;
@@ -19,16 +20,14 @@ type PromoCardProps = {
 	height?: number;
 	isInitiallyFavourite?: boolean;
 };
-type ApiResponse = {
-	ignoredError?: boolean;
-};
+
 export const PromoCard: React.FC<PromoCardProps> = ({
 	imageUrl,
 	heading,
 	description,
 	discount,
 	id,
-	width = 282,
+	// width = 282,
 	height = 203,
 	isInitiallyFavourite,
 }) => {
@@ -43,36 +42,24 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 
 	const handleStarClick = async (e: React.MouseEvent) => {
 		e.stopPropagation();
-
 		const newValue = !isFavourite;
 		setIsFavourite(newValue);
 
 		try {
-			let result: ApiResponse | null = null;
+			const result = newValue
+				? await addToFavouritePartner(id, studentId ?? '')
+				: await deleteFavouritePartner(id, studentId ?? '');
 
-			if (newValue) {
-				result = await addToFavouritePartner(id, studentId ?? '');
-			} else {
-				result = await deleteFavouritePartner(id, studentId ?? '');
-			}
-
-			if (result && result.ignoredError) {
-				console.warn(123);
-			}
+			if (result?.ignoredError) console.warn('Ignored error from API');
 		} catch (error) {
 			console.error('Ошибка при обновлении избранного:', error);
 			setIsFavourite(!newValue);
 		}
 	};
+
 	return (
-		<div
-			className="flex-none rounded-[20px] border border-black/20 
-    overflow-hidden box-border transition-transform duration-200 hover:scale-[1.02] cursor-pointer
-    flex flex-col"
-			style={{ width: `${width}px`, height: `${height}px` }}
-			onClick={handleClick}
-		>
-			<StylishWrapper
+		<div className={styles.card} style={{ minHeight: `${height}px` }} onClick={handleClick}>
+			<ImageWrapper
 				imageUrl={imageUrl}
 				isFavourite={isFavourite}
 				onStarClick={handleStarClick}
@@ -84,7 +71,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 	);
 };
 
-type StylishWrapperProps = {
+type ImageWrapperProps = {
 	imageUrl: string;
 	isFavourite: boolean;
 	onStarClick: (e: React.MouseEvent) => void;
@@ -92,7 +79,7 @@ type StylishWrapperProps = {
 	role: string | null;
 };
 
-const StylishWrapper: React.FC<StylishWrapperProps> = ({
+const ImageWrapper: React.FC<ImageWrapperProps> = ({
 	imageUrl,
 	isFavourite,
 	onStarClick,
@@ -100,35 +87,19 @@ const StylishWrapper: React.FC<StylishWrapperProps> = ({
 	role,
 }) => {
 	const isStudent = role === 'Student';
+
 	return (
-		<div
-			className="w-full rounded-t-[20px] px-[10px] pt-[10px] flex justify-end items-start"
-			style={{
-				backgroundImage: `url(${imageUrl})`,
-				backgroundSize: 'cover',
-				backgroundPosition: 'center',
-				backgroundRepeat: 'no-repeat',
-				minHeight: '125px',
-				flex: '2 1 auto',
-			}}
-		>
-			<div
-				className="cursor-pointer"
-				style={{
-					width: 32,
-					height: 32,
-					flex: '0 0 auto',
-				}}
-				onClick={onStarClick}
-			>
-				{isAuthenticated &&
-					isStudent &&
-					(isFavourite ? (
-						<Image src="icons/home/yellowStar.svg" width={32} height={32} alt="" />
-					) : (
-						<Image src="icons/home/whiteStar.svg" width={32} height={32} alt="" />
-					))}
-			</div>
+		<div className={styles['image-wrapper']} style={{ backgroundImage: `url(${imageUrl})` }}>
+			{isAuthenticated && isStudent && (
+				<div className={styles.star} onClick={onStarClick}>
+					<Image
+						src={isFavourite ? '/icons/home/yellowStar.svg' : '/icons/home/whiteStar.svg'}
+						width={32}
+						height={32}
+						alt="star"
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

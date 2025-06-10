@@ -1,0 +1,58 @@
+.container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0 29px 30px;
+	background: linear-gradient(292.56deg, #fee200 0%, #ffeb4b 100%);
+	border-radius: 30px;
+}
+
+.main-content {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+}
+
+.left-column {
+	width: 253px;
+	padding-top: 30px;
+}
+
+.section-title {
+	margin: 0;
+	font:
+		800 24px 'Nunito Sans',
+		sans-serif;
+	color: #032c28;
+}
+
+.service-card-list {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	gap: 20px;
+}
+
+.right-column {
+	width: 282px;
+	margin-left: 24px;
+}
+
+.details-button {
+	display: block;
+	width: 100%;
+	max-width: 528px;
+	height: 48px;
+	margin-top: 30px;
+	font:
+		700 14px Mulish,
+		sans-serif;
+	color: #032c28;
+	text-transform: uppercase;
+	letter-spacing: 0.42px;
+	background: #f8f8f8;
+	border: 1px solid rgb(0, 0, 0, 0.2);
+	border-radius: 15px;
+	cursor: pointer;
+}

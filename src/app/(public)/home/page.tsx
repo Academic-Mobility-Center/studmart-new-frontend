@@ -12,16 +12,16 @@ export default function Home() {
 	const { isAuthenticated } = useAuth();
 
 	return (
-		<div className="student-discount-portal">
-			<div className="exclusive-discounts-section">
+		<div className="home-screen">
+			<div className="image-cards">
 				<ImageGalleryWidget isAuthenticated={isAuthenticated} />
 				<StylishShoppingSection />
 			</div>
 			{!isAuthenticated && (
-				<>
+				<div className="info-panel">
 					<ServiceAudience isAuthenticated={isAuthenticated} />
 					<About isAuthenticated={isAuthenticated} />
-				</>
+				</div>
 			)}
 		</div>
 	);

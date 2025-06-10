@@ -30,8 +30,8 @@ export default function FavoriteCategoriesSection({
 	const [fetchedMenuItems, setFetchedMenuItems] = useState<MenuItem[]>([]);
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = useState(true);
-	const [canScrollLeft, setCanScrollLeft] = useState(false);
-	const [canScrollRight, setCanScrollRight] = useState(false);
+	// const [canScrollLeft, setCanScrollLeft] = useState(false);
+	// const [canScrollRight, setCanScrollRight] = useState(false);
 	const { isAuthenticated, role } = useAuth();
 
 	useEffect(() => {
@@ -76,10 +76,10 @@ export default function FavoriteCategoriesSection({
 		if (!scrollContainer) return;
 
 		const updateScrollButtons = () => {
-			setCanScrollLeft(scrollContainer.scrollLeft > 0);
-			setCanScrollRight(
-				scrollContainer.scrollLeft + scrollContainer.clientWidth < scrollContainer.scrollWidth,
-			);
+			// setCanScrollLeft(scrollContainer.scrollLeft > 0);
+			// setCanScrollRight(
+			// 	scrollContainer.scrollLeft + scrollContainer.clientWidth < scrollContainer.scrollWidth,
+			// );
 		};
 
 		const handleWheelScroll = (event: WheelEvent) => {
@@ -100,11 +100,11 @@ export default function FavoriteCategoriesSection({
 		};
 	}, [loading]);
 
-	const scrollBy = (amount: number) => {
-		if (scrollRef.current) {
-			scrollRef.current.scrollBy({ left: amount, behavior: 'smooth' });
-		}
-	};
+	// const scrollBy = (amount: number) => {
+	// 	if (scrollRef.current) {
+	// 		scrollRef.current.scrollBy({ left: amount, behavior: 'smooth' });
+	// 	}
+	// };
 
 	const IconComponent = ({ iconUrl }: { iconUrl?: string }) =>
 		iconUrl ? (

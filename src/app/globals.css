@@ -5,10 +5,13 @@
 	--background: #f8f8f8;
 	--text-color: #032c28;
 	--bg-green: #8fe248;
+	--bg-brown: #f0e9e2;
 
 	/* шрифты */
 	--font-size: 14px;
 	--font-family: arial, helvetica, sans-serif;
+	--font-headings: 'Nunito Sans', sans-serif;
+	--font-buttons: mulish, sans-serif;
 
 	/* размеры экранов */
 	--phone: 768px;

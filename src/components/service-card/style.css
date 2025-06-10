@@ -1,15 +1,13 @@
 .referral-section-container {
 	box-sizing: border-box;
 	display: flex;
-	flex: 0 0 auto;
 	flex-direction: column;
 	gap: 10px;
 	align-items: center;
 	justify-content: flex-start;
-	width: 252px;
-	padding: 20px 35px;
-	background: #f8f8f8;
+	background: var(--background);
 	border-radius: 20px;
+	padding: 20px 30px;
 }
 
 .referral-icon {
@@ -30,4 +28,11 @@
 		sans-serif;
 	color: #032c28;
 	text-align: center;
+}
+
+@media (width<=1024) {
+	.referral-section-container {
+		border-radius: 15px;
+		padding: 15px 30px;
+	}
 }

@@ -1,11 +1,15 @@
-.student-discount-portal {
+.home-screen {
 	box-sizing: border-box;
 }
 
-.exclusive-discounts-section {
+.image-cards {
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	justify-content: flex-start;
+}
+
+.info-panel {
+	display: block;
 }
