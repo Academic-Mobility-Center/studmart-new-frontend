@@ -28,19 +28,17 @@
 }
 
 .logout-button {
-	font-family: Mulish, sans-serif;
-	font-size: 0.875rem;
-	font-weight: 700;
-	text-align: left;
-	color: #032c28;
-	align-self: stretch;
-	flex-grow: 0;
-	flex-shrink: 0;
-	flex-basis: auto;
+	font-family: var(--font-buttons);
+	font-size: 14px;
+	font-weight: 400;
+	text-decoration: none;
 	margin: 0;
 	padding: 0;
-	cursor: pointer;
 	transition: text-decoration 0.3s;
+
+	@media (width <= 768px) {
+		font-size: 12px;
+	}
 }
 
 .logout-button:hover {

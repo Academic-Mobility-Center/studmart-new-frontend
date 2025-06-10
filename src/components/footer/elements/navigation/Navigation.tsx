@@ -16,9 +16,9 @@ const Navigation = ({ isAuthenticated, logout }: NavigationProps) => {
 				<LinkedMenuItem link={'/partners'}>Партнерам</LinkedMenuItem>
 
 				{isAuthenticated ? (
-					<button onClick={logout} className={styles['logout-button']}>
+					<span onClick={logout} className={styles['logout-button']}>
 						Выход
-					</button>
+					</span>
 				) : (
 					<LinkedMenuItem link="/login">Вход</LinkedMenuItem>
 				)}

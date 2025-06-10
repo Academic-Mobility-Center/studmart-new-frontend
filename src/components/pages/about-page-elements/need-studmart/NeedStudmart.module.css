@@ -1,0 +1,40 @@
+.need-studmart-box {
+	background-color: var(--bg-green);
+	display: flex;
+	flex-direction: column;
+	padding: 30px;
+	border-radius: 30px;
+}
+
+.need-studmart-title {
+	font-family: var(--font-buttons);
+	font-size: 1.5rem;
+	font-weight: 800;
+	letter-spacing: 3px;
+}
+
+.need-studmart-items {
+	display: flex;
+	justify-content: space-between;
+	gap: 1.5rem;
+	margin-top: 1.25rem;
+}
+
+@media (width <= 1024px) {
+	.need-studmart-box {
+		padding: 15px;
+		border-radius: 15px;
+	}
+
+	.need-studmart-items {
+		flex-wrap: wrap;
+		align-items: center;
+		width: 100%;
+		gap: 10px;
+	}
+
+	.need-studmart-title {
+		font-size: 20px;
+		line-height: 23px;
+	}
+}

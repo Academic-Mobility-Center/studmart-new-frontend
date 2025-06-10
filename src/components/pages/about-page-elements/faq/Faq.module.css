@@ -1,0 +1,19 @@
+.faq-container {
+	width: 100%;
+	margin-top: 97px;
+}
+
+.faq-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 30px;
+	margin-top: 40px;
+}
+
+@media (width <= 768px) {
+	.faq-grid {
+		grid-template-columns: 1fr;
+		gap: 10px;
+		margin-top: 20px;
+	}
+}
