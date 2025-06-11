@@ -1,15 +1,17 @@
-.about-the-system-container {
+.system-container {
 	display: flex;
 	width: 100%;
 	margin-bottom: 15px;
-	font-family: var(--font-buttons);
+	font-family: var(--font-headings);
 }
 
-.about-the-system-content {
+.system-content {
 	width: 100%;
 }
 
-.about-the-system-title {
+.main-card {
+	position: relative;
+	overflow: hidden;
 	background-color: var(--bg-yellow);
 	font-size: 48px;
 	font-weight: 800;
@@ -21,27 +23,55 @@
 	border-radius: 30px;
 }
 
-.about-the-system-card-wrapper {
+.main-card-title {
 	position: relative;
-	top: -60px;
-	left: 40px;
-	right: 40px;
+	z-index: 1;
 }
 
-.about-the-system-card {
+.scribbles-container-image {
+	display: none;
+	position: absolute;
+	bottom: -65px;
+	right: 0;
+	width: 448px;
+	height: 137px;
+	z-index: 0;
+}
+
+.scribbles-on {
+	display: block;
+}
+
+.partner-title-card {
+	background-color: var(--bg-purple);
+}
+
+.system-card {
 	background-color: var(--bg-purple);
 	width: 656px;
 	padding: 20px 30px;
 	border-radius: 30px;
 }
 
-.about-the-system-card-text {
+.partner-system-card {
+	background-color: var(--bg-yellow);
+	width: 504px;
+}
+
+.system-card-wrapper {
+	position: relative;
+	top: -60px;
+	left: 40px;
+	right: 40px;
+}
+
+.system-card-text {
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 26px;
 }
 
-.about-the-system-image {
+.system-image {
 	width: 371px;
 	height: 222px;
 	margin-top: 40px;
@@ -50,7 +80,7 @@
 }
 
 @media (width <= 1024px) {
-	.about-the-system-title {
+	.main-card {
 		font-size: 24px;
 		padding: 15px;
 		letter-spacing: 4px;
@@ -59,24 +89,24 @@
 		padding-bottom: 48px;
 	}
 
-	.about-the-system-card-text {
+	.system-card-text {
 		font-size: 12px;
 		line-height: 15px;
 	}
 
-	.about-the-system-card-wrapper {
+	.system-card-wrapper {
 		width: 229px;
 		top: -28px;
 		left: 15px;
 	}
 
-	.about-the-system-card {
+	.system-card {
 		width: 100%;
 		padding: 15px;
 		border-radius: 15px;
 	}
 
-	.about-the-system-image {
+	.system-image {
 		display: none;
 	}
 }

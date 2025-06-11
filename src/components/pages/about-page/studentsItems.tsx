@@ -1,6 +1,7 @@
+import { IWhyStudmartItem } from '@/components/WhyStudmart/WhyStudmart';
 import { IFaqItem } from '@/components/faq-item/FaqItem';
 
-export const faqItemsArray: IFaqItem[] = [
+export const studentsFaqItemsArray: IFaqItem[] = [
 	{
 		heading: 'Кто может пользоваться «Студмартом»?',
 		children: (
@@ -35,6 +36,39 @@ export const faqItemsArray: IFaqItem[] = [
 			<>
 				Свяжитесь с нашей поддержкой, и мы разберемся с ситуацией. <br />
 				Вы можете написать нам через форму обратной связи.
+			</>
+		),
+	},
+];
+
+export const whyStudmartItems: IWhyStudmartItem[] = [
+	{
+		url: '/icons/about/percent.svg',
+		title: 'Получаешь скидку 5–30%',
+		content: (
+			<>
+				Мы собрали большую базу отечественных
+				<br />и иностранных компаний с уникальными скидками. Выбирай.
+			</>
+		),
+	},
+	{
+		url: '/icons/about/save-money.svg',
+		title: 'Копишь цифровые рубли',
+		content: (
+			<>
+				Пригласи друга, и мы начислим <br />
+				Сможешь обменять их на цифровые или вывести на карту во второй половине 2025-го.
+			</>
+		),
+	},
+	{
+		url: '/icons/about/money-off.svg',
+		title: 'Не платишь за доступ',
+		content: (
+			<>
+				Регистрация и сервис абсолютно бесплатные. <br /> Условие одно — быть студентом. <br />
+				Можно даже иностранным.
 			</>
 		),
 	},

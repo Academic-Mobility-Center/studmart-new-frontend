@@ -1,0 +1,52 @@
+.box {
+	position: relative;
+	overflow: hidden;
+	background-color: var(--bg-green);
+	display: flex;
+	flex-direction: column;
+	padding: 30px;
+	border-radius: 30px;
+}
+
+.title {
+	font-family: var(--font-headings);
+	font-size: 1.5rem;
+	font-weight: 800;
+	letter-spacing: 3px;
+}
+
+.items {
+	z-index: 1;
+	display: flex;
+	justify-content: space-between;
+	gap: 1.5rem;
+	margin-top: 1.25rem;
+}
+
+.image {
+	z-index: 0;
+	position: absolute;
+	width: 448px;
+	height: 137px;
+	right: 0;
+	bottom: 0;
+}
+
+@media (width <= 1024px) {
+	.box {
+		padding: 15px;
+		border-radius: 15px;
+	}
+
+	.items {
+		flex-wrap: wrap;
+		align-items: center;
+		width: 100%;
+		gap: 10px;
+	}
+
+	.title {
+		font-size: 20px;
+		line-height: 23px;
+	}
+}

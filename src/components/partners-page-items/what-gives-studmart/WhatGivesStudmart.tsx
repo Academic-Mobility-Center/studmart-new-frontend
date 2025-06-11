@@ -31,43 +31,29 @@ const WhatGivesStudmart = () => {
 				>
 					<NeedStudmartItem
 						url="/icons/partners/clients.svg"
-						width={267}
-						p1={'Понятная база потенциальных клиентов'}
-						p2={'Мы уже собрали точную аудиторию — это студенты и '}
-						p3={'представители образовательных организаций.'}
-					/>
+						title={'Понятная база потенциальных клиентов'}
+					>
+						Мы уже собрали точную аудиторию — это студенты и <br />
+						представители образовательных организаций.
+					</NeedStudmartItem>
 					<NeedStudmartItem
 						url="/icons/partners/chart.svg"
-						width={267}
-						p1={'Анализ ЦА и настроенные рассылки'}
-						p2={'Можно следить за статистикой предложения: сколько человек'}
-						p3={'воспользовались, где учатся и чем они увлекаются'}
-					/>
-					<NeedStudmartItem
-						url="/icons/partners/graph.svg"
-						width={267}
-						p1={'Платформа для продвижения'}
-						p2={'Мы рекламируем и развиваем свой сервис — параллельно '}
-						p3={'рассказываем аудитории о бизнесе партнеров.'}
-					/>
-					<div className="bg-[#f8f8f8] box-border flex justify-start items-center flex-col gap-2.5 w-[267px] grow-0 shrink-0 basis-auto p-5 rounded-[20px]">
-						<Image
-							src="/icons/partners/money.svg"
-							alt=""
-							className="h-[70px] max-w-[initial] w-[70px] block grow-0 shrink-0 basis-auto box-border"
-							width={70}
-							height={70}
-						/>
-						<div className="box-border flex justify-start items-center flex-col gap-2.5 self-stretch grow-0 shrink-0 basis-auto">
-							<p className="[font-family:Mulish,sans-serif] text-base font-bold text-center text-[#032c28] w-[171px] h-10 grow-0 shrink-0 basis-auto box-border m-0 p-0">
-								Дешевая регистрация
-							</p>
-							<p className="[font-family:Mulish,sans-serif] text-sm font-normal text-center text-[#032c28] self-stretch grow-0 shrink-0 basis-auto m-0 p-0">
-								До 31 декабря 2025 года регистрация бесплатная.
-								<br />С 2026-го предложим тарифы: от 40 до 120 000 рублей в год.
-							</p>
-						</div>
-					</div>
+						title={'Анализ ЦА и настроенные рассылки'}
+					>
+						Можно следить за статистикой предложения: сколько человек
+						<br />
+						воспользовались, где учатся и чем они увлекаются
+					</NeedStudmartItem>
+					<NeedStudmartItem url="/icons/partners/graph.svg" title={'Платформа для продвижения'}>
+						Мы рекламируем и развиваем свой сервис — параллельно
+						<br />
+						рассказываем аудитории о бизнесе партнеров.
+					</NeedStudmartItem>
+					<NeedStudmartItem url="/icons/partners/money.svg" title={'Дешевая регистрация'}>
+						<br />
+						До 31 декабря 2025 года регистрация бесплатная.
+						<br />С 2026-го предложим тарифы: от 40 до 120 000 рублей в год.
+					</NeedStudmartItem>
 				</div>
 				<Image
 					src="/icons/partners/what-gives.svg"

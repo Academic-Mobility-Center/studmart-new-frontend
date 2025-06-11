@@ -1,12 +1,17 @@
+'use client';
+
 import { useState } from 'react';
 
-import FaqItem from '@/components/faq-item/FaqItem';
+import FaqItem, { IFaqItem } from '@/components/faq-item/FaqItem';
 import HeadingSection from '@/components/ui/HeadingSection';
 
 import styles from './Faq.module.css';
-import { faqItemsArray } from './Items';
 
-const Faq = () => {
+interface IFaqProps {
+	items: IFaqItem[];
+}
+
+const Faq = ({ items }: IFaqProps) => {
 	const [openIndex, setOpenIndex] = useState<number | null>(null);
 
 	const handleClick = (index: number) => {
@@ -17,7 +22,7 @@ const Faq = () => {
 		<div className={styles['faq-container']}>
 			<HeadingSection>FAQ</HeadingSection>
 			<div className={styles['faq-grid']}>
-				{faqItemsArray.map((item, index) => (
+				{items.map((item, index) => (
 					<FaqItem
 						key={index}
 						{...item}
