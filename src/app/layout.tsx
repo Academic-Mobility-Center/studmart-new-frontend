@@ -1,7 +1,3 @@
-import { Geist, Geist_Mono } from 'next/font/google';
-
-import './globals.css';
-
 import { Mulish, Nunito_Sans } from 'next/font/google';
 
 import CookieConsent from '@/components/CookieConsent';
@@ -9,28 +5,22 @@ import MainLayout from '@/components/HOC/MainLayout';
 import { AuthProvider } from '@/context/AuthContext';
 import { CityProvider } from '@/context/CityContext';
 
-const mulish = Mulish({
-	subsets: ['latin'],
-	weight: ['400', '600', '700'], // выбери нужные веса, которые используешь
-	variable: '--font-mulish',
-	display: 'swap',
-});
-const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-});
+import './globals.css';
 
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
+const mulish = Mulish({
+	subsets: ['latin', 'cyrillic'],
+	weight: ['400', '600', '700', '800', '900'],
+	variable: '--font-buttons',
+	display: 'swap',
 });
 
 const nunitoSans = Nunito_Sans({
-	subsets: ['latin'],
-	weight: ['400', '600', '700', '800'], // выбери нужные веса
-	variable: '--font-nunito-sans', // кастомная CSS-переменная (необязательно)
+	subsets: ['latin', 'cyrillic'],
+	weight: ['400', '600', '700', '800', '900'],
+	variable: '--font-headings',
 	display: 'swap',
 });
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -55,9 +45,7 @@ export default function RootLayout({
 				<meta name="twitter:description" content="Скидки для студентов" />
 				<meta name="apple-mobile-web-app-title" content="Студмарт" />
 			</head>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} ${nunitoSans.variable} ${mulish.variable} antialiased `}
-			>
+			<body className={`${nunitoSans.variable} ${mulish.variable} antialiased `}>
 				<CityProvider>
 					<AuthProvider>
 						<MainLayout>{children}</MainLayout>

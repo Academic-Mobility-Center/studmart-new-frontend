@@ -4,20 +4,21 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import RegistraionForm from '@/components/registration';
 import { useAuth } from '@/context/AuthContext';
 
-export default function Registraion() {
+export default function AuthorizationLayout({
+	children,
+}: Readonly<{
+	children: React.ReactNode;
+}>) {
 	const { isAuthenticated } = useAuth();
 	const router = useRouter();
 
 	useEffect(() => {
-		if (isAuthenticated) router.push('/');
+		if (isAuthenticated) {
+			router.push('/home');
+		}
 	}, [isAuthenticated, router]);
 
-	return (
-		<div className="w-fit m-auto">
-			<RegistraionForm />
-		</div>
-	);
+	return <>{children}</>;
 }

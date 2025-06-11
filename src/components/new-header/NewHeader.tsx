@@ -185,9 +185,9 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 	const [cities, setCities] = useState<{ id: number; name: string }[]>([]);
 	const [searchQuery, setSearchQuery] = useState('');
 	const { setCity } = useCity();
-	const filteredCities = cities.filter((city) =>
-		city.name.toLowerCase().includes(searchQuery.toLowerCase()),
-	);
+	const filteredCities = cities
+		? cities.filter((city) => city.name.toLowerCase().includes(searchQuery.toLowerCase()))
+		: [];
 
 	useEffect(() => {
 		const fetchCities = async () => {

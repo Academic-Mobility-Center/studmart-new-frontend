@@ -16,7 +16,7 @@ export function DateField({
 	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }) {
 	return (
-		<div className="flex flex-col gap-2" style={{ width: `${width}px` }}>
+		<div className="flex flex-col gap-2 w-full" style={{ maxWidth: `${width}px` }}>
 			<label style={{ fontSize: `${labelFontSize}px` }} className=" text-[#032c28]">
 				{label}
 			</label>

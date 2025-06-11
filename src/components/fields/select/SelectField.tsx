@@ -58,8 +58,8 @@ export function SelectField({
 	};
 
 	return (
-		<Box display="flex" flexDirection="column" gap={1} width={width}>
-			<Typography sx={{ fontSize: labelFontSize, color: '#032c28' }}>{label}</Typography>
+		<Box display="flex" flexDirection="column" gap={1} width={'100%'} maxWidth={width}>
+			<Typography sx={{ fontSize: labelFontSize }}>{label}</Typography>
 			<Autocomplete
 				options={options}
 				value={selectedOption}

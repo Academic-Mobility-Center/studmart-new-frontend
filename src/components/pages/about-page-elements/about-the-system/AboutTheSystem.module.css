@@ -15,7 +15,7 @@
 	background-color: var(--bg-yellow);
 	font-size: 48px;
 	font-weight: 800;
-	letter-spacing: 7px;
+	letter-spacing: var(--font-headings-spacing);
 	line-height: 48px;
 	width: 100%;
 	margin: 0;

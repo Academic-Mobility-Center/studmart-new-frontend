@@ -7,11 +7,13 @@ import { useRouter } from 'next/navigation';
 
 import InputField from '@/components/fields/input/InputField';
 import PasswordField from '@/components/fields/password/PasswordField';
+import InputTextField from '@/components/ui/InputTextField';
 import { useAuth } from '@/context/AuthContext';
 import { loginWithCookie } from '@/lib/api/auth';
 import LoginFormData from '@/types/LoginFormData';
 
 import ForgotPasswordEmail from '../forgot-password-email/ForgotPasswordEmail';
+import styles from './LoginForm.module.css';
 
 export default function LoginForm() {
 	const router = useRouter();
@@ -68,7 +70,7 @@ export default function LoginForm() {
 			});
 
 			if (!result.error) {
-				await login(); // login() из useAuth — вызовет verifySession и обновит контекст
+				await login();
 				router.push('/home');
 			} else {
 				setErrors({
@@ -86,19 +88,17 @@ export default function LoginForm() {
 	};
 
 	return (
-		<form
-			onSubmit={handleSubmit}
-			className="border bg-[#f8f8f8] 
-        flex flex-col gap-5 w-[410px] self-center p-[30px] 
-        rounded-[30px] border-solid border-[rgba(0,0,0,0.20)] mt-[25px]"
-		>
-			<h2
-				className="text-2xl font-extrabold 
-          text-[#032c28]"
-			>
-				Вход
-			</h2>
-			<div className="flex flex-col gap-1">
+		<form onSubmit={handleSubmit} className={styles['form']}>
+			<h2 className={styles['form-title']}>Вход</h2>
+			<InputTextField
+				label="Почта"
+				name="email"
+				placeholder="Example@gmail.com"
+				value={formData.email}
+				onChange={handleChange}
+				errorText={errors.email}
+			/>
+			<div className={styles['field-wrapper']}>
 				<InputField
 					label="Почта"
 					placeholder="Example@gmail.com"
@@ -107,62 +107,58 @@ export default function LoginForm() {
 					onChange={handleChange}
 					width={350}
 					labelFontSize={14}
-					maxRows={1}
+					marginBottom={0}
 				/>
-				{errors.email && <p className="text-red-600 text-sm font-medium mt-1">{errors.email}</p>}
+				{errors.email && <p className={styles['error-text']}>{errors.email}</p>}
 			</div>
-			<div className="flex flex-col gap-1">
+			<div className={styles['field-wrapper']}>
 				<PasswordField
 					label="Пароль"
 					placeholder="********"
 					name="password"
 					value={formData.password}
 					onChange={handleChange}
-					width={350}
 					labelFontSize={14}
 				/>
-				{errors.password && (
-					<p className="text-red-600 text-sm font-medium mt-1">{errors.password}</p>
-				)}
+				{errors.password && <p className={styles['error-text']}>{errors.password}</p>}
 			</div>
-			<p
-				className="text-sm text-[#888888] underline self-end mt-[-10px] cursor-pointer"
-				onClick={handleForgotPasswordClick}
-			>
+
+			<p className={styles['forgot-password']} onClick={handleForgotPasswordClick}>
 				Забыли пароль?
 			</p>
-			<div className="flex items-center gap-2">
+
+			<div className={styles['checkbox-wrapper']}>
 				<input
+					id="rememberMe"
 					type="checkbox"
 					name="rememberMe"
 					checked={formData.rememberMe}
 					onChange={handleChange}
-					className="w-4 h-4 border border-[rgba(0,0,0,0.20)] rounded-sm"
+					className={styles['checkbox']}
 				/>
-				<p className="text-sm text-[#032c28]">Запомнить меня</p>
+				<label htmlFor="rememberMe" className={styles['checkbox-label']}>
+					Запомнить меня
+				</label>
 			</div>
-			<div className="flex flex-col gap-4">
-				<button
-					type="submit"
-					className="bg-[#6dbc29] text-white p-2 rounded-2xl hover:bg-[#5b9e26]"
-				>
+
+			<div className={styles['actions']}>
+				<button type="submit" className={styles['submit-button']}>
 					Войти
 				</button>
-				<p className="text-sm font-bold text-[#032c28] text-center">
+				<p className={styles['register-text']}>
 					Еще нет аккаунта?
-					<Link href="/registration" className="underline text-[#6dbc29]">
+					<Link href="/registration" className={styles['register-link']}>
 						Зарегистрироваться
 					</Link>
 				</p>
 			</div>
+
 			{isPasswordResetVisible && (
 				<ForgotPasswordEmail
 					formData={formData}
 					handleChange={handleChange}
 					onClose={() => setIsPasswordResetVisible(false)}
-					onClick={() => {
-						setIsPasswordResetVisible(false);
-					}}
+					onClick={() => setIsPasswordResetVisible(false)}
 				/>
 			)}
 		</form>

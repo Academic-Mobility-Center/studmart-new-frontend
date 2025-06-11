@@ -30,7 +30,7 @@ function ResetPasswordPageContent() {
 
 	return (
 		<>
-			<div className="flex flex-col items-center min-w-[1280px] pb-[105px]">
+			<div className="w-fit m-auto">
 				<LoginForm />
 			</div>
 			<ForgotPasswordConfirm

@@ -1,0 +1,9 @@
+.input-text-field {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+
+.label {
+	/* margin-bottom: 7px; */
+}

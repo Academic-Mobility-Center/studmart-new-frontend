@@ -335,7 +335,7 @@ export default function RegistraionForm() {
 				</>
 			)}
 			{isSentSuccessfully && (
-				<div className="bg-white p-6 rounded-2xl shadow-lg w-[400px] text-center mt-[25px]">
+				<div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-[400px] text-center mt-[25px]">
 					<h2 className="text-2xl font-extrabold text-[#032c28] mb-4">
 						Благодарим за регистрацию!
 					</h2>

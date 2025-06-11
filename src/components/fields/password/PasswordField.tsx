@@ -1,8 +1,10 @@
-'use client';
+// Предположим, что CSS модули уже настроены и используются в проекте.
 
 import { useState } from 'react';
 
 import NextImage from 'next/image';
+
+import styles from './PasswordField.module.css'; // Путь к вашему CSS модулю
 
 export default function PasswordField({
 	label,
@@ -10,7 +12,6 @@ export default function PasswordField({
 	name,
 	value,
 	onChange,
-	width,
 	labelFontSize,
 	onBlur,
 	disabled = false,
@@ -19,23 +20,21 @@ export default function PasswordField({
 	placeholder: string;
 	name?: string;
 	value?: string;
-	width: number;
 	labelFontSize: number;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	disabled?: boolean;
 }) {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
 	return (
-		<div className="flex flex-col gap-2 relative" style={{ width: `${width}px` }}>
-			<label className="text-[#032c28]" style={{ fontSize: `${labelFontSize}px` }}>
+		<div className={styles.container}>
+			<label className={styles.label} style={{ fontSize: `${labelFontSize}px` }}>
 				{label}
 			</label>
-			<div className="relative">
+			<div className={styles.relative}>
 				<input
-					className="flex items-center leading-none border 
-            border-gray-300 p-2 pl-6 rounded-2xl pr-10 focus:outline-none 
-            text-[#032c28] placeholder:text-[#888888] h-[48px] w-full text-base bg-white"
+					className={`${styles.input} ${styles.border} ${styles.text} ${styles.placeholder} ${styles.inputHeight} ${styles.fullWidth}`}
 					type={isPasswordVisible ? 'text' : 'password'}
 					autoComplete="off"
 					placeholder={placeholder}
@@ -47,7 +46,7 @@ export default function PasswordField({
 				/>
 				<button
 					type="button"
-					className="absolute right-6 top-1/2 transform -translate-y-1/2 focus:outline-none"
+					className={styles.button}
 					onClick={() => setIsPasswordVisible(!isPasswordVisible)}
 				>
 					{!disabled && (

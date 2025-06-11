@@ -17,6 +17,7 @@ interface InputFieldProps {
 	onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
 	disabled?: boolean;
+	marginBottom?: string | number;
 }
 
 export default function InputField({
@@ -30,14 +31,22 @@ export default function InputField({
 	labelFontSize = 14,
 	onBlur,
 	minRows = 1,
-	maxRows,
+	maxRows = 1,
 	disabled = false,
+	marginBottom = '16px',
 }: InputFieldProps) {
 	const inputRef = useRef<HTMLTextAreaElement>(null);
 
 	return (
-		<Box display="flex" flexDirection="column" gap={1} width={width}>
-			<Typography sx={{ fontSize: labelFontSize, color: '#032c28' }}>{label}</Typography>
+		<Box
+			display="flex"
+			flexDirection="column"
+			gap={1}
+			maxWidth={width}
+			width={'100%'}
+			sx={{ marginBottom: marginBottom }}
+		>
+			<Typography sx={{ fontSize: labelFontSize }}>{label}</Typography>
 			<TextField
 				disabled={disabled}
 				multiline
@@ -54,7 +63,6 @@ export default function InputField({
 					sx: {
 						borderRadius: '16px',
 						backgroundColor: '#fff',
-						color: '#032c28',
 						'&::placeholder': {
 							color: '#888888',
 						},

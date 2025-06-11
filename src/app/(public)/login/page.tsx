@@ -1,5 +1,9 @@
-import AuthorizationPage from '@/components/auth';
+import LoginForm from '@/components/forms/login/LoginForm';
 
 export default function Auth() {
-	return <AuthorizationPage />;
+	return (
+		<div className="w-fit m-auto">
+			<LoginForm />
+		</div>
+	);
 }

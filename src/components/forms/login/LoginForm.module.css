@@ -1,0 +1,87 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	max-width: 410px;
+	margin-top: 25px;
+	padding: 30px;
+	border-radius: 30px;
+	border: 1px solid var(--border-color);
+}
+
+.form-title {
+	font-size: 24px;
+	font-weight: 800;
+	letter-spacing: 1;
+}
+
+.field-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.error-text {
+	color: #dc2626;
+	font-size: 0.875rem;
+	font-weight: 500;
+	margin-top: 4px;
+}
+
+.forgot-password {
+	font-size: 0.875rem;
+	color: #888;
+	text-decoration: underline;
+	align-self: flex-end;
+	cursor: pointer;
+}
+
+.checkbox-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.checkbox {
+	width: 16px;
+	height: 16px;
+	border: 1px solid var(--border-color);
+	border-radius: 2px;
+}
+
+.checkbox-label {
+	font-size: 0.875rem;
+}
+
+.actions {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.submit-button {
+	font-family: var(--font-buttons);
+	background-color: var(--bg-green);
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding: 15px;
+	border-radius: 15px;
+	transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+	background-color: #5b9e26;
+}
+
+.register-text {
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: #032c28;
+	text-align: center;
+}
+
+.register-link {
+	text-decoration: underline;
+	color: #6dbc29;
+}

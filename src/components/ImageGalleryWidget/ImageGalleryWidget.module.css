@@ -90,7 +90,7 @@
 	font: 800 48px/48px var(--font-headings);
 	color: #032c28;
 	text-align: left;
-	letter-spacing: 8px;
+	letter-spacing: var(--font-headings-spacing);
 	line-height: 100%;
 
 	@media (width<=1024px) {

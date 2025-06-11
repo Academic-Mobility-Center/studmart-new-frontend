@@ -70,7 +70,7 @@ const RegForm1: React.FC<RegFormProps> = ({ onClick, formData, handleChange }) =
 			<form
 				onSubmit={handleSubmit}
 				className="border bg-[#f8f8f8] 
-            flex flex-col gap-5 w-[410px] 
+            flex flex-col gap-5 w-full max-w-[410px] 
             self-center p-[30px] rounded-[30px] 
             border-solid border-[rgba(0,0,0,0.20)] mt-[25px]"
 			>
@@ -99,7 +99,6 @@ const RegForm1: React.FC<RegFormProps> = ({ onClick, formData, handleChange }) =
 						onChange={handleChange}
 						name="password"
 						value={formData.password}
-						width={350}
 						labelFontSize={14}
 					/>
 					{errors.password && (
@@ -113,7 +112,6 @@ const RegForm1: React.FC<RegFormProps> = ({ onClick, formData, handleChange }) =
 						onChange={handleChange}
 						name="confirmPassword"
 						value={formData.confirmPassword}
-						width={350}
 						labelFontSize={14}
 					/>
 					{errors.confirmPassword && (
