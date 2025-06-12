@@ -15,6 +15,7 @@ export default function PasswordField({
 	labelFontSize,
 	onBlur,
 	disabled = false,
+	width,
 }: {
 	label: string;
 	placeholder: string;
@@ -24,11 +25,12 @@ export default function PasswordField({
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	disabled?: boolean;
+	width?: number;
 }) {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
 	return (
-		<div className={styles.container}>
+		<div className={styles.container} style={{ width: '100%', maxWidth: width }}>
 			<label className={styles.label} style={{ fontSize: `${labelFontSize}px` }}>
 				{label}
 			</label>

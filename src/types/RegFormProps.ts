@@ -17,7 +17,7 @@ export default interface RegFormProps {
 	onChange?: (
 		setFormData: React.Dispatch<React.SetStateAction<FormDataType>>,
 	) => (event: FormEvent) => void;
-	univercitiesOptions?: {
+	universitiesOptions?: {
 		label: string;
 		value: string;
 	}[];

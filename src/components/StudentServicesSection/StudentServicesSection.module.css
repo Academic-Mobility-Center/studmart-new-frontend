@@ -33,7 +33,7 @@
 .promo-button-style {
 	width: 100%;
 	min-height: 48px;
-	font: 700 14px var(--font-buttons);
+	font: 700 14px;
 	text-align: center;
 	line-height: 48px;
 	text-transform: uppercase;

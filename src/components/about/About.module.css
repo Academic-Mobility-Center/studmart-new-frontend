@@ -18,7 +18,7 @@
 
 .description {
 	max-width: 572px;
-	font: 700 16px var(--font-buttons);
+	font: 700 16px;
 	text-align: left;
 }
 
@@ -41,14 +41,14 @@
 
 .card-text {
 	margin: 0;
-	font: 700 16px var(--font-buttons);
+	font: 700 16px;
 	text-align: left;
 }
 
 .primary-button {
 	width: 100%;
 	height: 48px;
-	font: 700 14px var(--font-buttons);
+	font: 700 14px;
 	text-transform: uppercase;
 	letter-spacing: 0.42px;
 	background: var(--bg-green);

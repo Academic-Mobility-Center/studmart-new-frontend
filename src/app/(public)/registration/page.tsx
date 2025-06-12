@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import RegistraionForm from '@/components/registration';
+import RegistrationForm from '@/components/registration';
 import { useAuth } from '@/context/AuthContext';
 
-export default function Registraion() {
+export default function Registration() {
 	const { isAuthenticated } = useAuth();
 	const router = useRouter();
 
@@ -15,9 +15,5 @@ export default function Registraion() {
 		if (isAuthenticated) router.push('/');
 	}, [isAuthenticated, router]);
 
-	return (
-		<div className="w-fit m-auto">
-			<RegistraionForm />
-		</div>
-	);
+	return <RegistrationForm />;
 }

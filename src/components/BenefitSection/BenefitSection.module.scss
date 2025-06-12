@@ -3,7 +3,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	border-radius: 30px;
+	border-radius: var(--border-radius);
 	padding: 30px;
 }
 
@@ -25,7 +25,7 @@
 .button-style {
 	width: 100%;
 	min-height: 48px;
-	font: 700 14px var(--font-buttons);
+	font: 700 14px;
 	text-align: center;
 	line-height: 48px;
 	text-transform: uppercase;
@@ -39,7 +39,6 @@
 
 @media (width <= 768px) {
 	.benefit-card {
-		border-radius: 15px;
 		padding: 15px;
 	}
 

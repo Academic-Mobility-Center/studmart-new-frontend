@@ -29,10 +29,7 @@
 .partner-heading {
 	padding: 0;
 	margin: 0;
-	font:
-		800 24px 'Nunito Sans',
-		sans-serif;
-	color: #032c28;
+	font: 800 24px var(--font-headings);
 }
 
 .marketing-panel {

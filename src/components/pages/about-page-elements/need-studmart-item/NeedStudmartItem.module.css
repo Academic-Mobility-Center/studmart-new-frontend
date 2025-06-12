@@ -1,5 +1,4 @@
 .item-container {
-	font-family: var(--font-buttons);
 	background-color: var(--background);
 	text-align: center;
 	display: flex;

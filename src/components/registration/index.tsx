@@ -31,7 +31,7 @@ const genderOptions = [
 	{ id: 1, name: 'Мужской' },
 	{ id: 2, name: 'Женский' },
 ];
-export default function RegistraionForm() {
+export default function RegistrationForm() {
 	const searchParams = useSearchParams();
 	const [isSentSuccessfully, setIsSentSuccessfully] = useState(false);
 	const [formData, setFormData] = useState<RegistrationFormData>({
@@ -56,14 +56,15 @@ export default function RegistraionForm() {
 	const [isSecondPage, setIsSecondPage] = useState(false);
 	const [isThirdPage, setIsThirdPage] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [universities, setUnivercities] = useState<University[] | null>(null);
+	const [universities, setUniversities] = useState<University[] | null>(null);
 	const [courses, setCourses] = useState<Course[] | null>(null);
+
 	useEffect(() => {
 		const fetchOptions = async () => {
 			try {
 				setIsLoading(true);
 				const fetchUniversities = await getStudentUniversities();
-				setUnivercities(fetchUniversities);
+				setUniversities(fetchUniversities);
 			} catch (error) {
 				console.error(error);
 			}
@@ -77,7 +78,8 @@ export default function RegistraionForm() {
 		fetchOptions();
 		setIsLoading(false);
 	}, []);
-	const univercitiesOptions =
+
+	const universitiesOptions =
 		universities?.map((university) => ({
 			label: university.name,
 			value: university.id.toString(),
@@ -114,9 +116,9 @@ export default function RegistraionForm() {
 		}
 
 		if (name === 'university') {
-			const selectedUnivercity = universities?.find((option) => option.id.toString() === value);
-			newValue = selectedUnivercity
-				? { value: selectedUnivercity.id.toString(), label: selectedUnivercity?.name }
+			const selectedUniversity = universities?.find((option) => option.id.toString() === value);
+			newValue = selectedUniversity
+				? { value: selectedUniversity.id.toString(), label: selectedUniversity?.name }
 				: null;
 		}
 
@@ -125,6 +127,7 @@ export default function RegistraionForm() {
 			[name]: newValue,
 		}));
 	};
+
 	const setBooleanField = (name: string, value: boolean) => {
 		setFormData((prevData) => ({
 			...prevData,
@@ -299,7 +302,7 @@ export default function RegistraionForm() {
 		}
 	}, [searchParams]);
 	if (isLoading) {
-		return <>Loading...</>;
+		return <>Загрузка...</>;
 	}
 
 	return (
@@ -327,7 +330,7 @@ export default function RegistraionForm() {
 							formData={formData}
 							onClick={handleSubmitForm3}
 							onBack={handleBackForm3}
-							univercitiesOptions={univercitiesOptions}
+							universitiesOptions={universitiesOptions}
 							coursesOptions={coursesOptions}
 							setBooleanField={setBooleanField}
 						/>
@@ -336,10 +339,8 @@ export default function RegistraionForm() {
 			)}
 			{isSentSuccessfully && (
 				<div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-[400px] text-center mt-[25px]">
-					<h2 className="text-2xl font-extrabold text-[#032c28] mb-4">
-						Благодарим за регистрацию!
-					</h2>
-					<p className="text-[#032c28] text-sm font-medium">
+					<h2 className="text-2xl font-extrabold mb-4">Благодарим за регистрацию!</h2>
+					<p className=" text-sm font-medium">
 						Просим вас проверить ваш почтовый ящик и подтвердить адрес электронной почты.
 					</p>
 				</div>

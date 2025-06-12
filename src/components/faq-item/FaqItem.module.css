@@ -1,10 +1,9 @@
 .faq-item {
-	font-family: var(--font-buttons);
 	width: 100%;
 	max-width: 588px;
 	height: fit-content;
 	border: 1px solid var(--border-color);
-	border-radius: 30px;
+	border-radius: var(--border-radius);
 	cursor: pointer;
 	overflow: hidden;
 	padding: 30px;
@@ -53,7 +52,6 @@
 	.faq-item {
 		max-width: unset;
 		padding: 15px;
-		border-radius: 15px;
 		line-height: 14px;
 	}
 

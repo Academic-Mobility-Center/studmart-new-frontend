@@ -20,7 +20,7 @@
 	width: 100%;
 	margin: 0;
 	padding: 40px 40px 100px;
-	border-radius: 30px;
+	border-radius: var(--border-radius);
 }
 
 .main-card-title {
@@ -50,7 +50,7 @@
 	background-color: var(--bg-purple);
 	width: 656px;
 	padding: 20px 30px;
-	border-radius: 30px;
+	border-radius: var(--border-radius);
 }
 
 .partner-system-card {
@@ -85,7 +85,6 @@
 		padding: 15px;
 		letter-spacing: 4px;
 		line-height: 23px;
-		border-radius: 15px;
 		padding-bottom: 48px;
 	}
 
@@ -103,7 +102,6 @@
 	.system-card {
 		width: 100%;
 		padding: 15px;
-		border-radius: 15px;
 	}
 
 	.system-image {

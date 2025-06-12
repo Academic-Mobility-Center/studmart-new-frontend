@@ -9,7 +9,6 @@
 }
 
 .navigation-title {
-	font-family: var(--font-buttons);
 	font-size: 1rem;
 	font-weight: 700;
 	align-self: stretch;
@@ -28,7 +27,6 @@
 }
 
 .logout-button {
-	font-family: var(--font-buttons);
 	font-size: 14px;
 	font-weight: 400;
 	text-decoration: none;

@@ -14,12 +14,15 @@
 
 	/* шрифты */
 	--font-size: 14px;
-	--font-family: arial, helvetica, sans-serif;
 	--font-headings-spacing: 7px;
 
 	/* размеры экранов */
 	--phone: 768px;
 	--tablet: 1024px;
+
+	/* размеры от разрешения */
+	--border-radius-desktop: 30px;
+	--border-radius-phone: 15px;
 }
 
 [data-theme='dark'] {
@@ -37,6 +40,12 @@ body {
 	padding: 0;
 	background: var(--background);
 	color: var(--text-color);
-	font-family: var(--font-family);
+	font-family: var(--font-buttons);
 	font-size: var(--font-size);
+
+	--border-radius: var(--border-radius-desktop);
+
+	@media (width<=768) {
+		--border-radius: var(--border-radius-phone);
+	}
 }

@@ -15,7 +15,7 @@
 	width: 100%;
 	height: var(--promo-button-height);
 	margin: auto;
-	font: 700 14px var(--font-buttons);
+	font: 700 14px;
 	color: var(--promo-color);
 	text-transform: uppercase;
 	letter-spacing: 0.42px;

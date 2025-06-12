@@ -82,11 +82,7 @@
 	flex: 1 1 588px; /* адаптивная ширина */
 	max-width: 588px;
 	position: relative;
-	border-radius: 30px;
-
-	@media (width<=1024) {
-		border-radius: 15px;
-	}
+	border-radius: var(--border-radius);
 }
 
 .partner-card {

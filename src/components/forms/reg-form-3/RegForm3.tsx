@@ -22,7 +22,7 @@ interface Props {
 	onChange?: (
 		setFormData: React.Dispatch<React.SetStateAction<FormDataType>>,
 	) => (event: FormEvent) => void;
-	univercitiesOptions?: {
+	universitiesOptions?: {
 		label: string;
 		value: string;
 	}[];
@@ -38,7 +38,7 @@ const RegForm3: React.FC<Props> = ({
 	onBack,
 	formData,
 	onClick,
-	univercitiesOptions,
+	universitiesOptions,
 	coursesOptions,
 	setBooleanField,
 }) => {
@@ -153,7 +153,7 @@ const RegForm3: React.FC<Props> = ({
 			<div className="flex flex-col gap-1">
 				<SelectField
 					label="Университет"
-					options={univercitiesOptions ?? []}
+					options={universitiesOptions ?? []}
 					name="university"
 					value={formData.university ?? undefined}
 					onChange={handleChange}
