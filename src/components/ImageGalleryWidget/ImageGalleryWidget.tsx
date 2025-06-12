@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import LinesSvg from '../../../public/icons/ContentLayoutWidget/LinesSvg';
 import SmileSvg from '../../../public/icons/ContentLayoutWidget/SmileSvg';
-import LongWhiteButton from '../ui/LongWhiteButton';
+import ButtonCustom from '../ui/ButtonCustom';
 import styles from './ImageGalleryWidget.module.css';
 
 interface ImageGalleryWidgetProps {
@@ -22,7 +22,7 @@ function ImageGalleryWidget({ isAuthenticated }: ImageGalleryWidgetProps) {
 				<div className={styles['button-container']}>
 					{!isAuthenticated && (
 						<Link href="/registration" passHref className="w-full">
-							<LongWhiteButton>Получить доступ</LongWhiteButton>
+							<ButtonCustom customType="white">Получить доступ</ButtonCustom>
 						</Link>
 					)}
 				</div>

@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import ButtonCustom from '@/components/ui/ButtonCustom';
 import InputCheckbox from '@/components/ui/inputs/InputCheckbox';
 import InputPasswordField from '@/components/ui/inputs/InputPasswordField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
@@ -114,9 +115,9 @@ export default function LoginForm() {
 				label={'Запомнить меня'}
 			/>
 			<div className={styles['actions']}>
-				<button type="submit" className={styles['submit-button']}>
+				<ButtonCustom type="submit" className={styles['submit-button']}>
 					Войти
-				</button>
+				</ButtonCustom>
 				<p className={styles['register-text']}>
 					Еще нет аккаунта?
 					<Link href="/registration" className={styles['register-link']}>

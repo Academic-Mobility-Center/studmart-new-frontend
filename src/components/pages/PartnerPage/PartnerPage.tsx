@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Faq from '@/components/FAQ/Faq';
 import WhyStudmart from '@/components/WhyStudmart';
 import AboutTheSystem from '@/components/pages/about-page-elements/about-the-system/AboutTheSystem';
-import LongWhiteButton from '@/components/ui/LongWhiteButton';
+import ButtonCustom from '@/components/ui/ButtonCustom';
 
 import styles from './PartnersPage.module.css';
 import { partnerWhyItem, partnersFaqItemsArray } from './partnersItems';
@@ -23,7 +23,7 @@ const PartnersPage = () => {
 						Бесплатный тестовый доступ до 31 декабря 2025 года
 					</p>
 					<div className={styles['banner-button']}>
-						<LongWhiteButton>Оставить заявку</LongWhiteButton>
+						<ButtonCustom customType="white">Оставить заявку</ButtonCustom>
 					</div>
 					<div className={styles['banner-image']}>
 						<Image alt="" src="/icons/partners/access-procent.svg" fill />
