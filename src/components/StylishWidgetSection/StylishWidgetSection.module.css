@@ -1,28 +1,16 @@
-:root {
-	--promo-fixed-width: 384px;
-	--promo-regular-min: 282px;
-	--promo-gap: 24px;
-	--promo-button-width: 350px;
-	--promo-button-height: 48px;
-	--promo-color: #032c28;
-	--promo-bg: #8fe248;
-	--promo-radius: 15px;
-}
-
 .promo-button {
 	box-sizing: border-box;
-	max-width: var(--promo-button-width);
+	max-width: 350px;
 	width: 100%;
-	height: var(--promo-button-height);
+	height: 48px;
 	margin: auto;
 	font: 700 14px;
-	color: var(--promo-color);
 	text-transform: uppercase;
 	letter-spacing: 0.42px;
 	cursor: pointer;
 	background: var(--bg-green);
 	border: none;
-	border-radius: var(--promo-radius);
+	border-radius: 15px;
 	transition: background 0.2s ease;
 }
 
@@ -42,16 +30,16 @@
 
 .promo-card-container {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(var(--promo-regular-min), 1fr));
-	gap: var(--promo-gap);
+	grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+	gap: 24px;
 	width: 100%;
 	box-sizing: border-box;
 }
 
 .promo-card-container-fixed {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(var(--promo-fixed-width), 1fr));
-	gap: var(--promo-gap);
+	grid-template-columns: repeat(auto-fill, minmax(384px, 1fr));
+	gap: 24px;
 	width: 100%;
 	box-sizing: border-box;
 }

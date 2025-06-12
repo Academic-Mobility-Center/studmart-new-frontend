@@ -30,7 +30,7 @@
 	text-align: center;
 }
 
-@media (width<=1024) {
+@media (width<=1024px) {
 	.referral-section-container {
 		border-radius: 15px;
 		padding: 15px 30px;

@@ -45,7 +45,7 @@ body {
 
 	--border-radius: var(--border-radius-desktop);
 
-	@media (width<=768) {
+	@media (width<=768px) {
 		--border-radius: var(--border-radius-phone);
 	}
 }
