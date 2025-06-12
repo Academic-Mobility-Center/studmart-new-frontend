@@ -10,7 +10,7 @@
 }
 
 .student-title-heading {
-	font-size: 24px;
+	font-size: 1.5rem;
 	font-weight: 700;
 	margin: 0;
 	margin-bottom: 20px;
@@ -33,7 +33,8 @@
 .promo-button-style {
 	width: 100%;
 	min-height: 48px;
-	font: 700 14px;
+	font-size: 0.875rem;
+	font-weight: 700;
 	text-align: center;
 	line-height: 48px;
 	text-transform: uppercase;

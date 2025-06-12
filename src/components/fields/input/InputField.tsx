@@ -66,7 +66,6 @@ export default function InputField({
 						'&::placeholder': {
 							color: '#888888',
 						},
-						font: 'Milish',
 					},
 				}}
 				sx={{

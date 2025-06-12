@@ -31,7 +31,7 @@
 
 .contacts-link {
 	box-sizing: border-box;
-	font-size: 14px;
+	font-size: 0.875rem;
 	font-weight: 400;
 	text-decoration: none;
 	color: #032c28;
@@ -43,7 +43,7 @@
 
 .contacts-phone {
 	box-sizing: border-box;
-	font-size: 14px;
+	font-size: 0.875rem;
 	font-weight: 400;
 	text-decoration: none;
 	color: #032c28;

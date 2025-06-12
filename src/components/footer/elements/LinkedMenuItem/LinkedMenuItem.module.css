@@ -1,5 +1,5 @@
 .menu-item {
-	font-size: 14px;
+	font-size: 0.875rem;
 	font-weight: 400;
 	text-decoration: none;
 	margin: 0;
@@ -7,7 +7,7 @@
 	transition: text-decoration 0.3s;
 
 	@media (width <= 768px) {
-		font-size: 12px;
+		font-size: 0.75rem;
 	}
 }
 

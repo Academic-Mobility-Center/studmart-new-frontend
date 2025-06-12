@@ -27,9 +27,7 @@
 	width: 162px;
 	padding: 0;
 	margin: 0;
-	font:
-		700 14px Mulish,
-		sans-serif;
-	color: #032c28;
+	font-size: 0.875rem;
+	font-weight: 700;
 	text-align: center;
 }

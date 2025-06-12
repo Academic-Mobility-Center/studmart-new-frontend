@@ -13,12 +13,13 @@
 	--border-color: rgb(0, 0, 0, 0.2);
 
 	/* шрифты */
-	--font-size: 14px;
+	--font-size: 0.875rem;
 	--font-headings-spacing: 7px;
 
 	/* размеры экранов */
 	--phone: 768px;
 	--tablet: 1024px;
+	--font-buttons: 'Mulish', sans-serif;
 
 	/* размеры от разрешения */
 	--border-radius-desktop: 30px;
@@ -33,6 +34,7 @@
 
 html {
 	overflow-y: scroll;
+	font-size: 16px; /* базовый размер шрифта */
 }
 
 body {

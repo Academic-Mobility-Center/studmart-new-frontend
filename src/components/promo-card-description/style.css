@@ -21,10 +21,8 @@
 .golden-apple-heading {
 	padding: 0;
 	margin: 0;
-	font:
-		700 16px Mulish,
-		sans-serif;
-	color: #032c28;
+	font-weight: 700;
+	font-size: 1rem;
 	word-wrap: break-word;
 }
 
@@ -32,10 +30,8 @@
 	padding: 0;
 	margin: 0;
 	margin-top: 5px;
-	font:
-		400 14px Mulish,
-		sans-serif;
-	color: #032c28;
+	font-size: 0.875rem;
+	font-weight: 400;
 }
 
 .discount-button-container {
@@ -49,12 +45,9 @@
 	width: 72px;
 	min-width: 72px;
 	height: 42px;
-	font:
-		800 16px 'Nunito Sans',
-		sans-serif;
-	color: #032c28;
+	font: 800 16px var(--font-headings);
 	cursor: pointer;
-	background: #8fe248;
+	background: var(--bg-green);
 	border: none;
 	border-radius: 20px;
 }

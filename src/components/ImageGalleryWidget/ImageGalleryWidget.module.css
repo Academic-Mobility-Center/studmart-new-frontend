@@ -86,19 +86,18 @@
 	z-index: 2;
 	padding: 0;
 	margin: 0;
-	font: 800 48px/48px var(--font-headings);
-	color: #032c28;
+	font: 800 3rem var(--font-headings);
 	text-align: left;
 	letter-spacing: var(--font-headings-spacing);
 	line-height: 100%;
 
 	@media (width<=1024px) {
-		font-size: 32px;
+		font-size: 2rem;
 		letter-spacing: 5px;
 	}
 
 	@media (width<=768px) {
-		font-size: 16px;
+		font-size: 1rem;
 		letter-spacing: 3px;
 	}
 }

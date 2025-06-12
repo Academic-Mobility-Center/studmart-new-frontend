@@ -21,10 +21,7 @@
 
 .section-title {
 	margin: 0;
-	font:
-		800 24px 'Nunito Sans',
-		sans-serif;
-	color: #032c28;
+	font: 800 1.5rem var(--font-headings);
 }
 
 .service-card-list {
@@ -45,13 +42,11 @@
 	max-width: 528px;
 	height: 48px;
 	margin-top: 30px;
-	font:
-		700 14px Mulish,
-		sans-serif;
-	color: #032c28;
+	font-size: 0.875rem;
+	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.42px;
-	background: #f8f8f8;
+	background: var(--background);
 	border: 1px solid var(--border-color);
 	border-radius: 15px;
 	cursor: pointer;

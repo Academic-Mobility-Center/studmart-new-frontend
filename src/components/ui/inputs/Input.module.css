@@ -3,12 +3,12 @@
 	flex-direction: column;
 	gap: 12px;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 0.875rem;
 	line-height: 100%;
 }
 
 .label {
-	font-size: 14px;
+	font-size: 0.875rem;
 	font-weight: 400;
 }
 

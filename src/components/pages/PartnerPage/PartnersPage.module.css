@@ -32,7 +32,7 @@
 
 .banner-text {
 	font-family: var(--font-headings);
-	font-size: 48px;
+	font-size: 3rem;
 	font-weight: 800;
 	letter-spacing: 3px;
 	line-height: 3rem;
@@ -62,7 +62,7 @@
 	}
 
 	.banner-text {
-		font-size: 20px;
+		font-size: 1.25rem;
 		line-height: 1;
 	}
 
