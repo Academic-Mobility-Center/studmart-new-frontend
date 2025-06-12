@@ -15,11 +15,12 @@
 	/* шрифты */
 	--font-size: 0.875rem;
 	--font-headings-spacing: 7px;
+	--font-buttons: 'Mulish', sans-serif;
+	--font-headings: 'Nunito Sans', sans-serif;
 
 	/* размеры экранов */
 	--phone: 768px;
 	--tablet: 1024px;
-	--font-buttons: 'Mulish', sans-serif;
 
 	/* размеры от разрешения */
 	--border-radius-desktop: 30px;
@@ -44,6 +45,7 @@ body {
 	color: var(--text-color);
 	font-family: var(--font-buttons);
 	font-size: var(--font-size);
+	line-height: 100%;
 
 	--border-radius: var(--border-radius-desktop);
 

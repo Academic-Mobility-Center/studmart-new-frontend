@@ -1,0 +1,52 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 19px;
+	width: 100%;
+	max-width: 410px;
+	margin: auto;
+	margin-top: 25px;
+	padding: 30px;
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius);
+}
+
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.title {
+	font-size: 1.5rem;
+	font-weight: 800;
+	line-height: 1;
+}
+
+.actions {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.submit-button {
+	background-color: var(--bg-green);
+	padding: 15px;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-radius: 15px;
+}
+
+.login-link {
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-align: center;
+	color: #032c28;
+}
+
+.login-anchor {
+	color: #6dbc29;
+	text-decoration: underline;
+	padding-left: 8px;
+}
