@@ -1,25 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import InputField from '@/components/fields/input/InputField';
-import PasswordField from '@/components/fields/password/PasswordField';
-import InputTextField from '@/components/ui/InputTextField';
+import InputCheckbox from '@/components/ui/inputs/InputCheckbox';
+import InputPasswordField from '@/components/ui/inputs/InputPasswordField';
+import InputTextField from '@/components/ui/inputs/InputTextField';
 import { useAuth } from '@/context/AuthContext';
 import { loginWithCookie } from '@/lib/api/auth';
 import LoginFormData from '@/types/LoginFormData';
 
 import ForgotPasswordEmail from '../forgot-password-email/ForgotPasswordEmail';
-import styles from './LoginForm.module.css';
+import styles from './LoginForm.module.scss';
 
 export default function LoginForm() {
 	const router = useRouter();
 	const { login } = useAuth();
 
 	const [isPasswordResetVisible, setIsPasswordResetVisible] = useState(false);
+	const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 	const [formData, setFormData] = useState<LoginFormData>({
 		email: '',
 		password: '',
@@ -29,21 +30,18 @@ export default function LoginForm() {
 		passwordResetConfirm: '',
 	});
 
-	const handleChange = (
-		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
-	) => {
-		const { name, value, type, checked } = event.target as HTMLInputElement;
-		setFormData((prevData) => ({
-			...prevData,
-			[name]: type === 'checkbox' ? checked : value,
-		}));
-	};
+	const handleChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+			const { name, value, type, checked } = event.target as HTMLInputElement;
+			setFormData((prevData) => ({
+				...prevData,
+				[name]: type === 'checkbox' ? checked : value,
+			}));
+		},
+		[],
+	);
 
-	const handleForgotPasswordClick = () => {
-		setIsPasswordResetVisible(true);
-	};
-
-	const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+	const handleModal = () => setIsPasswordResetVisible((prev) => !prev);
 
 	const validate = () => {
 		const newErrors: { email?: string; password?: string } = {};
@@ -98,49 +96,23 @@ export default function LoginForm() {
 				onChange={handleChange}
 				errorText={errors.email}
 			/>
-			<div className={styles['field-wrapper']}>
-				<InputField
-					label="Почта"
-					placeholder="Example@gmail.com"
-					name="email"
-					value={formData.email}
-					onChange={handleChange}
-					width={350}
-					labelFontSize={14}
-					marginBottom={0}
-				/>
-				{errors.email && <p className={styles['error-text']}>{errors.email}</p>}
-			</div>
-			<div className={styles['field-wrapper']}>
-				<PasswordField
-					label="Пароль"
-					placeholder="********"
-					name="password"
+			<div>
+				<InputPasswordField
 					value={formData.password}
 					onChange={handleChange}
-					labelFontSize={14}
+					errorText={errors.password}
+					className={styles.password}
 				/>
-				{errors.password && <p className={styles['error-text']}>{errors.password}</p>}
+				<p className={styles['forgot-password']} onClick={handleModal}>
+					Забыли пароль?
+				</p>
 			</div>
-
-			<p className={styles['forgot-password']} onClick={handleForgotPasswordClick}>
-				Забыли пароль?
-			</p>
-
-			<div className={styles['checkbox-wrapper']}>
-				<input
-					id="rememberMe"
-					type="checkbox"
-					name="rememberMe"
-					checked={formData.rememberMe}
-					onChange={handleChange}
-					className={styles['checkbox']}
-				/>
-				<label htmlFor="rememberMe" className={styles['checkbox-label']}>
-					Запомнить меня
-				</label>
-			</div>
-
+			<InputCheckbox
+				name="rememberMe"
+				checked={formData.rememberMe}
+				onChange={handleChange}
+				label={'Запомнить меня'}
+			/>
 			<div className={styles['actions']}>
 				<button type="submit" className={styles['submit-button']}>
 					Войти
@@ -152,13 +124,12 @@ export default function LoginForm() {
 					</Link>
 				</p>
 			</div>
-
 			{isPasswordResetVisible && (
 				<ForgotPasswordEmail
 					formData={formData}
 					handleChange={handleChange}
-					onClose={() => setIsPasswordResetVisible(false)}
-					onClick={() => setIsPasswordResetVisible(false)}
+					onClose={handleModal}
+					onClick={handleModal}
 				/>
 			)}
 		</form>

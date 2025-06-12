@@ -1,0 +1,53 @@
+.input-text-field {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 100%;
+}
+
+.label {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.input {
+	width: 100%;
+	height: 100%;
+	padding: 15px;
+	border: 1px solid var(--border-color);
+	background: white;
+	border-radius: 15px;
+	transition: border-color 0.2s ease-in-out;
+
+	&:focus {
+		border-color: #000;
+		outline: none;
+	}
+}
+
+.input-password {
+	padding-right: 39px;
+}
+
+.error-text {
+	color: #dc2626;
+	font-size: 0.875rem;
+	font-weight: 500;
+	word-wrap: normal;
+}
+
+.input-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.button {
+	cursor: pointer;
+	position: absolute;
+	transform: translateY(50%);
+	right: 0;
+	padding-right: 15px;
+}
