@@ -31,6 +31,10 @@
 	padding-right: 39px;
 }
 
+.error {
+	border-color: #dc2626;
+}
+
 .error-text {
 	color: #dc2626;
 	font-size: 0.875rem;

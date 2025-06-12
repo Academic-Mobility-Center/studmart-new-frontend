@@ -43,7 +43,7 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 					{...rest}
 					id={currentId}
 					name={name}
-					className={styles.input}
+					className={clsx(styles.input, { [styles['error']]: !!errorText })}
 					rows={rows ?? 3}
 					placeholder={placeholder}
 					onChange={onChange}
@@ -54,7 +54,7 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 				id={currentId}
 				name={name}
 				type={type}
-				className={styles.input}
+				className={clsx(styles.input, { [styles['error']]: !!errorText })}
 				placeholder={placeholder}
 				onChange={onChange}
 			/>

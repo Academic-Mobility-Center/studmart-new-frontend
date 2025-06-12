@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 
 import Link from 'next/link';
 
+import ButtonCustom from '@/components/ui/ButtonCustom';
 import InputPasswordField from '@/components/ui/inputs/InputPasswordField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
 import RegFormProps from '@/types/RegFormProps';
 
-import styles from './RegForm1.module.scss';
+import styles from '../RegForm.module.scss';
 
 const RegForm1: React.FC<RegFormProps> = ({ onClick, formData, handleChange }) => {
 	const [errors, setErrors] = useState<{
@@ -65,7 +66,6 @@ const RegForm1: React.FC<RegFormProps> = ({ onClick, formData, handleChange }) =
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
 		if (validate()) {
-			console.log('Форма отправлена, вызываем onClick');
 			onClick(event);
 		}
 	};
@@ -107,9 +107,7 @@ const RegForm1: React.FC<RegFormProps> = ({ onClick, formData, handleChange }) =
 				value={formData?.promocode}
 			/>
 			<div className={styles.actions}>
-				<button type="submit" className={styles['submit-button']}>
-					Далее
-				</button>
+				<ButtonCustom type="submit">Далее</ButtonCustom>
 				<p className={styles['login-link']}>
 					Уже есть аккаунт?
 					<Link href="/login" className={styles['login-anchor']}>

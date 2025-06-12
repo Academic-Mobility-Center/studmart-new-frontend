@@ -16,9 +16,9 @@ import { Option } from '@/types/Option';
 import RegistrationFormData from '@/types/RegistrationFormData';
 import University from '@/types/University';
 
-import RegForm1 from '../forms/reg-form-1/RegForm1';
-import RegForm2 from '../forms/reg-form-2/RegForm2';
-import RegForm3 from '../forms/reg-form-3/RegForm3';
+import RegForm1 from '../forms/reg-forms/RegForm1/RegForm1';
+import RegForm2 from '../forms/reg-forms/RegForm2/RegForm2';
+import RegForm3 from '../forms/reg-forms/RegForm3/RegForm3';
 
 interface ErrorResponse {
 	status: number;

@@ -2,11 +2,14 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
-import { DateField } from '@/components/fields/date/DateField';
-import InputField from '@/components/fields/input/InputField';
-import { SelectField } from '@/components/fields/select/SelectField';
+import ButtonCustom from '@/components/ui/ButtonCustom';
+import InputDateField from '@/components/ui/inputs/InputDateField';
+import InputSelectField from '@/components/ui/inputs/InputSelectField';
+import InputTextField from '@/components/ui/inputs/InputTextField';
 import { transformToOptions } from '@/utils/dataTransform';
 import RegFormProps from '@/types/RegFormProps';
+
+import styles from '../RegForm.module.scss';
 
 const genderOptions = [
 	{ id: 1, name: 'Мужской' },
@@ -67,97 +70,69 @@ const RegForm2: React.FC<RegFormProps> = ({ handleChange, onBack, formData, onCl
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
-		event.preventDefault(); // Добавьте это!
+		event.preventDefault();
 		if (validate()) {
-			console.log('Форма отправлена, вызываем onClick');
-			onClick(event); // Переход на следующую страницу
+			onClick(event);
 		}
 	};
-	return (
-		<div
-			className="border bg-[#f8f8f8] 
-            flex flex-col gap-5 w-full max-w-[410px] 
-            self-center p-[30px] rounded-[30px] 
-            border-solid border-[rgba(0,0,0,0.20)] mt-[25px]"
-		>
-			<div className="flex justify-between">
-				<h2 className="text-2xl font-extrabold text-[#032c28]">Регистрация</h2>
-				<h2 className="text-2xl font-extrabold text-[#032c28]">2/3</h2>
-			</div>
-			<div className="flex flex-col gap-1">
-				<InputField
-					label="Имя"
-					placeholder="Дмитрий"
-					onChange={handleChange}
-					name="name"
-					value={formData.name}
-					width={350}
-					labelFontSize={14}
-					maxRows={1}
-				/>
-				{errors.name && <p className="text-red-600 text-sm font-medium mt-1">{errors.name}</p>}
-			</div>
-			<div className="flex flex-col gap-1">
-				<InputField
-					label="Фамилия"
-					placeholder="Орлов"
-					onChange={handleChange}
-					name="fullname"
-					value={formData.fullname}
-					width={350}
-					labelFontSize={14}
-					maxRows={1}
-				/>
-				{errors.fullname && (
-					<p className="text-red-600 text-sm font-medium mt-1">{errors.fullname}</p>
-				)}
-			</div>
-			<div className="flex flex-col gap-1">
-				<DateField
-					label="Дата рождения"
-					onChange={handleChange}
-					name="date"
-					value={formData?.date instanceof Date ? formData?.date?.toISOString().split('T')[0] : ''}
-					labelFontSize={14}
-					width={350}
-				/>
-				{errors.date && <p className="text-red-600 text-sm font-medium mt-1">{errors.date}</p>}
-			</div>
 
-			<SelectField
+	return (
+		<form onSubmit={handleSubmit} className={styles.form}>
+			<div className={styles.header}>
+				<h2 className={styles.title}>Регистрация</h2>
+				<h3 className={styles.title}>2/3</h3>
+			</div>
+			<InputTextField
+				label="Имя"
+				placeholder="Дмитрий"
+				onChange={handleChange}
+				name="name"
+				value={formData.name}
+				errorText={errors.name}
+			/>
+			<InputTextField
+				label="Фамилия"
+				placeholder="Орлов"
+				onChange={handleChange}
+				name="fullname"
+				value={formData.fullname}
+				errorText={errors.fullname}
+			/>
+			<InputSelectField
+				errorText={errors.gender}
 				label="Пол"
 				options={transformToOptions(genderOptions)}
 				name="gender"
 				value={formData.gender ?? undefined}
 				onChange={handleChange}
-				width={350}
-				labelFontSize={14}
 				placeholder="Мужской"
 			/>
-			<div className="flex flex-col gap-4">
-				<div className="flex justify-center gap-[15px]">
-					<button
-						onClick={onBack}
-						className="bg-[#EFEFEF] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl w-full max-w-[116px] h-[48]"
-					>
+			<InputDateField
+				label="Дата рождения"
+				name="date"
+				onChange={handleChange}
+				value={formData.date}
+				errorText={errors.date}
+			/>
+
+			<div className={styles.actions}>
+				<div className={styles['button-wrapper']}>
+					<ButtonCustom className={styles['back-button']} customType="secondary" onClick={onBack}>
 						Назад
-					</button>
-					<button
-						type="button"
-						onClick={handleSubmit}
-						className="bg-[#8fe248] text-[#032c28] p-2 text-sm font-bold uppercase rounded-2xl w-full max-w-[219px]"
-					>
+					</ButtonCustom>
+					<ButtonCustom type="submit" onClick={handleSubmit}>
 						Далее
-					</button>
+					</ButtonCustom>
 				</div>
-				<p className="text-sm font-bold text-[#032c28] text-center">
+				<p className={styles['login-link']}>
 					Уже есть аккаунт?
-					<Link href="/login" className="text-[#6dbc29] underline pl-2">
+					<Link href="/login" className={styles['login-anchor']}>
 						Войти
 					</Link>
 				</p>
 			</div>
-		</div>
+		</form>
 	);
 };
+
 export default RegForm2;

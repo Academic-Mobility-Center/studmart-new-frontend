@@ -45,8 +45,38 @@
 	color: #032c28;
 }
 
+.button-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+}
+
+.back-button {
+	max-width: 116px;
+}
+
 .login-anchor {
 	color: #6dbc29;
 	text-decoration: underline;
 	padding-left: 8px;
+}
+
+.link {
+	color: #6dbc29;
+	text-decoration: underline;
+}
+
+@media (width <= 768px) {
+	.form {
+		padding: 15px;
+	}
+
+	.back-button {
+		max-width: unset;
+	}
+
+	.button-wrapper {
+		flex-direction: column;
+	}
 }
