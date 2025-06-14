@@ -21,8 +21,14 @@
 	letter-spacing: 1;
 }
 
+.forgot-password-container {
+	display: flex;
+	justify-content: end;
+	margin-top: 5px;
+}
+
 .forgot-password {
-	text-align: end;
+	width: fit-content;
 	font-size: 0.875rem;
 	color: #888;
 	text-decoration: underline;

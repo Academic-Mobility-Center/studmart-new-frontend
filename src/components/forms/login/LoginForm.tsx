@@ -104,9 +104,11 @@ export default function LoginForm() {
 					errorText={errors.password}
 					className={styles.password}
 				/>
-				<p className={styles['forgot-password']} onClick={handleModal}>
-					Забыли пароль?
-				</p>
+				<div className={styles['forgot-password-container']}>
+					<p className={styles['forgot-password']} onClick={handleModal}>
+						Забыли пароль?
+					</p>
+				</div>
 			</div>
 			<InputCheckbox
 				name="rememberMe"
