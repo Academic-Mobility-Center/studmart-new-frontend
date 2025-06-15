@@ -53,7 +53,7 @@ body {
 	color: var(--text-color);
 	font-family: var(--font-buttons);
 	font-size: var(--font-size);
-	line-height: 100%;
+	line-height: normal;
 
 	--border-radius: var(--border-radius-desktop);
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { ClipLoader } from 'react-spinners';
 
+import Loader from '@/components/ui/Loader';
 import { PartnerWithIdType } from '@/app/(partner)/partner-personal-account/context';
 import { loaderStyle } from '@/app/context';
 import { useAuth } from '@/context/AuthContext';
@@ -40,8 +41,6 @@ interface Discount {
 interface Props {
 	imageUrl: string;
 	partnerId: string;
-	isAuth: boolean;
-	role: string | null;
 }
 
 interface EmployeePromocode {
@@ -72,14 +71,20 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 	const [discountsIds, setDiscountsIds] = useState<string[]>([]);
 	const { id, role, isAuthenticated: isAuth } = useAuth();
 
+	const [isLoadingPromocodes, setIsLoadingPromocodes] = useState(false);
+	const [isLoadingPartner, setIsLoadingPartner] = useState(false);
+
 	useEffect(() => {
 		const fetchData = async () => {
+			setIsLoadingPromocodes(true);
+			setIsLoadingPartner(true);
 			try {
 				const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId, id ?? '');
 				setPartnerData(partnerInfo);
 			} catch (error) {
 				console.log(error);
 			}
+			setIsLoadingPartner(false);
 		};
 		if (id) fetchData();
 	}, [partnerId, regionId, id]);
@@ -94,6 +99,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 	useEffect(() => {
 		const fetchDiscounts = async () => {
 			if (!discountsIds.length) return;
+			setIsLoadingPromocodes(true);
 			try {
 				const results: PersonalPromocode[] = [];
 				for (const discountId of discountsIds) {
@@ -113,6 +119,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 			} catch (error) {
 				console.error('Ошибка при получении промокодов:', error);
 			}
+			setIsLoadingPromocodes(false);
 		};
 		if (id) fetchDiscounts();
 	}, [discountsIds, id, role]);
@@ -124,34 +131,28 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		}
 	};
 	const closeModal = () => setIsModalOpen(false);
-	if (!partnerData) {
-		return (
-			<div className={'flex justify-center items-center h-screen bg-white'}>
-				<ClipLoader size={50} color="#36d7b7" />
-			</div>
-		);
+	if (isLoadingPartner || isLoadingPromocodes) {
+		return <Loader />;
 	}
 	return (
 		<div className={styles['container']}>
 			<PartnerInfo imageUrl={imageUrl} partnerId={partnerId} {...partnerData} />
 
-			<div className={styles['discounts-wrapper']}>
-				{personalPromocodes.map((promo, index) => {
-					const isEmployee = !('discount' in promo);
-					const name = isEmployee ? promo.name : promo.discount.name;
-					const description = isEmployee ? promo.description : promo.discount.description;
-					return (
-						<DiscountBox
-							key={index}
-							title={name}
-							description={description}
-							onClick={() => openModal(promo)}
-							isAuth={isAuth}
-							role={role}
-						/>
-					);
-				})}
-			</div>
+			{personalPromocodes.map((promo, index) => {
+				const isEmployee = !('discount' in promo);
+				const name = isEmployee ? promo.name : promo.discount.name;
+				const description = isEmployee ? promo.description : promo.discount.description;
+				return (
+					<DiscountBox
+						key={index}
+						title={name}
+						description={description}
+						onClick={() => openModal(promo)}
+						isAuth={isAuth}
+						role={role}
+					/>
+				);
+			})}
 			<DiscountModal isOpen={isModalOpen} closeModal={closeModal} promoCode={selectedPromo} />
 		</div>
 	);

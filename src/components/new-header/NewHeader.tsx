@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import { Dialog } from '@headlessui/react';
 import clsx from 'clsx';
@@ -19,10 +19,11 @@ import {
 } from '@/lib/api/promocodes';
 import PromoCardType from '@/types/PromoCard';
 
+import ModalWindow from '../ui/ModalWindow';
 import styles from './NewHeader.module.css';
 
 interface NewHeaderProps {
-	isAuthenticated: boolean;
+	children?: ReactNode;
 }
 
 const citiesInModal = [
@@ -33,8 +34,8 @@ interface Option {
 	label: string;
 	value: string;
 }
-export default function NewHeader({ isAuthenticated }: NewHeaderProps) {
-	const { role } = useAuth();
+export default function NewHeader({}: NewHeaderProps) {
+	const { isAuthenticated, role } = useAuth();
 	const router = useRouter();
 	const { regionId } = useCity();
 	const [partners, setPartners] = useState<PromoCardType[]>([]);
@@ -203,11 +204,7 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 	}, []);
 
 	return (
-		<Dialog
-			open={isOpen}
-			onClose={closeModal}
-			className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs"
-		>
+		<ModalWindow isOpen={isOpen} onClose={closeModal}>
 			<div className="bg-white p-10 rounded-lg w-[700px] h-[700px] flex flex-col items-center">
 				<h2 className="text-lg font-bold text-black">Выберите город</h2>
 				<input
@@ -236,6 +233,6 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 					)}
 				</ul>
 			</div>
-		</Dialog>
+		</ModalWindow>
 	);
 }

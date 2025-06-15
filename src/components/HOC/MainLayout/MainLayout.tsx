@@ -2,10 +2,9 @@
 
 import { FC, ReactNode } from 'react';
 
-import { ClipLoader } from 'react-spinners';
-
 import NewFooter from '@/components/new-footer/NewFooter';
 import NewHeader from '@/components/new-header/NewHeader';
+import Loader from '@/components/ui/Loader';
 import { useAuth } from '@/context/AuthContext';
 
 import styles from './MainLayout.module.css';
@@ -15,17 +14,15 @@ interface IMainLayoutProps {
 }
 
 const MainLayout: FC<IMainLayoutProps> = ({ children }) => {
-	const { isAuthenticated, isLoading } = useAuth();
+	const { isLoading } = useAuth();
+
 	if (isLoading) {
-		return (
-			<div className={styles['loader-container']}>
-				<ClipLoader size={50} color="#36d7b7" />
-			</div>
-		);
+		return <Loader />;
 	}
+
 	return (
 		<div className={styles.layout}>
-			<NewHeader isAuthenticated={isAuthenticated} />
+			<NewHeader />
 			<main className={styles.content}>{children}</main>
 			<NewFooter />
 		</div>

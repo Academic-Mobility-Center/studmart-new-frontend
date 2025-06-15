@@ -27,7 +27,7 @@ const NewFooter = () => {
 					className={styles['privacy-link']}
 				>
 					Политика конфиденциальности
-				</LinkedMenuItem>{' '}
+				</LinkedMenuItem>
 				<LinkedMenuItem
 					link={'/files/Пользовательское соглашение.pdf'}
 					className={styles['user-policy-link']}

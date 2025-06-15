@@ -173,7 +173,7 @@ const RegForm3: React.FC<Props> = ({
 				errorText={errors.consent}
 			>
 				<span>
-					Даю согласие на обработку персональных данных.{' '}
+					Даю согласие на обработку персональных данных.
 					<Link
 						href="/files/Политика конфиденциальности.pdf"
 						target="_blank"

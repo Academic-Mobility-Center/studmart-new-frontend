@@ -1,0 +1,92 @@
+.card {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	padding: 30px;
+	background-color: var(--bg-brown);
+	border-radius: var(--border-radius);
+	border: 1px solid var(--border-color);
+	overflow: hidden;
+
+	@media (width<=1024px) {
+		padding: 15px;
+	}
+}
+
+.card-bg-image {
+	z-index: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	object-fit: cover;
+	pointer-events: none;
+
+	@media (width<=1024px) {
+		top: unset;
+		bottom: 0;
+		transform: rotate(180deg);
+	}
+}
+
+.text-section {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	font-size: 0.875rem;
+}
+
+.title {
+	font-family: var(--font-headings);
+	font-size: 1.5rem;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+	width: 100%;
+	line-height: 1.2;
+
+	@media (width<=1024px) {
+		font-size: 1.25rem;
+	}
+}
+
+.button-row {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	margin-top: 32px;
+	gap: 24px;
+
+	@media (width<=1024px) {
+		gap: 10px;
+	}
+}
+
+.secondary-button {
+	position: relative;
+	width: 72px;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	min-height: 48px;
+	height: auto;
+	padding: auto;
+
+	@media (width<=1024px) {
+		width: 48px;
+	}
+}
+
+.eye-image {
+	position: absolute;
+	top: 0;
+	transform: translateX(50%);
+	transform: translateY(50%);
+	width: 24px;
+	height: 24px;
+}
+
+.note {
+	font-size: 0.875rem;
+	margin-top: 4px;
+}

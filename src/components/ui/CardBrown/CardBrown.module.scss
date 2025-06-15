@@ -1,0 +1,15 @@
+.card-brown {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	height: fit-content;
+	padding: 30px;
+	background-color: var(--bg-brown);
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius);
+	line-height: normal;
+
+	@media (width<=1024px) {
+		padding: 15px;
+	}
+}

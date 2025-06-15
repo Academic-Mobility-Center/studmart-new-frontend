@@ -1,0 +1,98 @@
+.card {
+	position: relative;
+	width: 588px;
+	font-size: 0.875rem;
+	line-height: normal;
+	height: fit-content;
+	overflow: hidden;
+}
+
+.title {
+	font-size: 1.5rem;
+	font-weight: 800;
+}
+
+.promocode {
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 8px;
+	width: 100%;
+	margin-top: 20px;
+	padding: 15px;
+	border-radius: 20px;
+	border: 1px solid var(--border-color);
+	background-color: var(--background);
+	display: flex;
+
+	@media (width<=1024px) {
+		border-radius: var(--border-radius-phone);
+	}
+}
+
+.promocode-value {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-top: 4px;
+
+	@media (width<=1024px) {
+		font-size: 1rem;
+	}
+}
+
+.copy-button {
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	background: none;
+	border: none;
+	padding: 0;
+}
+
+.copied-message {
+	color: #16a34a;
+	margin-top: 8px;
+}
+
+.footer {
+	z-index: 1;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	max-width: 360px;
+	gap: 20px;
+	margin-top: 40px;
+
+	@media (width<=1024px) {
+		gap: 15px;
+	}
+}
+
+.info-block {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.label {
+	color: #888;
+}
+
+.value {
+	font-size: 1.25rem;
+	font-weight: bold;
+
+	@media (width<=1024px) {
+		font-size: 1rem;
+		gap: 1rem;
+	}
+}
+
+.decor {
+	position: absolute;
+	z-index: 0;
+	bottom: 0;
+	right: 0;
+	height: 102px;
+	width: 245px;
+	object-fit: cover;
+}

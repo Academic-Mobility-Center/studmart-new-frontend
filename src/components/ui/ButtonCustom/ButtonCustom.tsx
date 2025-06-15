@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes, FC } from 'react';
 import { Button } from '@mui/base';
 import clsx from 'clsx';
 
-import styles from './ButtonCustom.module.scss';
+import styles from './ButtonCustom.module.css';
 
 interface IButtonCustomProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;

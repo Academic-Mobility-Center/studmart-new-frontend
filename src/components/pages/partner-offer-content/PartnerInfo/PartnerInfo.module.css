@@ -3,6 +3,15 @@
 	flex-direction: column;
 	width: 100%;
 	gap: 20px;
+	line-height: normal;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 15px;
+	gap: 20px;
 }
 
 .image-container {
@@ -22,17 +31,14 @@
 	font-size: 2.25rem;
 	font-weight: 800;
 	letter-spacing: 4px;
-	line-height: 100%;
 }
 
 .partner-subtitle {
 	font-size: 1rem;
 	font-weight: 700;
-	line-height: 100%;
 }
 
 .partner-description {
-	line-height: normal;
 	max-width: 500px;
 }
 
@@ -57,7 +63,9 @@
 	}
 
 	.partner-description {
-		display: none;
+		&.phone-hide {
+			display: none;
+		}
 	}
 
 	.partner-title {
@@ -66,7 +74,10 @@
 
 	.button-site {
 		width: 100%;
-		display: none;
+
+		&.phone-hide {
+			display: none;
+		}
 	}
 
 	.button-more {
