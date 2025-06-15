@@ -2,11 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { ClipLoader } from 'react-spinners';
-
 import Loader from '@/components/ui/Loader';
 import { PartnerWithIdType } from '@/app/(partner)/partner-personal-account/context';
-import { loaderStyle } from '@/app/context';
 import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
 import {
@@ -76,15 +73,15 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			setIsLoadingPromocodes(true);
 			setIsLoadingPartner(true);
 			try {
 				const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId, id ?? '');
 				setPartnerData(partnerInfo);
+				setIsLoadingPartner(false);
 			} catch (error) {
 				console.log(error);
+				setIsLoadingPartner(false);
 			}
-			setIsLoadingPartner(false);
 		};
 		if (id) fetchData();
 	}, [partnerId, regionId, id]);
@@ -116,10 +113,11 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 					}
 				}
 				setPersonalPromocodes(results);
+				setIsLoadingPromocodes(false);
 			} catch (error) {
 				console.error('Ошибка при получении промокодов:', error);
+				setIsLoadingPromocodes(false);
 			}
-			setIsLoadingPromocodes(false);
 		};
 		if (id) fetchDiscounts();
 	}, [discountsIds, id, role]);
