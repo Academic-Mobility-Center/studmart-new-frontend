@@ -1,20 +1,16 @@
 'use client';
 
+import { FC, HTMLAttributes, useEffect, useRef } from 'react';
+
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import ButtonCustom from '@/components/ui/ButtonCustom';
 import { useAuth } from '@/context/AuthContext';
 
-const buttonBaseClasses =
-	'w-full flex items-center gap-2.5 px-[19px] py-3 hover:bg-[#efefef] transition-colors h-16';
-const iconClass = 'w-6 h-6';
-const textClass = 'font-mulish text-sm font-normal text-[#032c28]';
-const sectionBorderClass = 'w-full h-px bg-[rgba(0,0,0,0.20)]';
-const menuWrapperClass =
-	'border bg-[#f8f8f8] rounded-[15px] border-solid border-[rgba(0,0,0,0.20)] overflow-hidden';
-const logoutButtonClass =
-	'border bg-[#f8f8f8] font-mulish text-sm font-bold tracking-[0.42px] uppercase text-[#032c28] w-full h-12 cursor-pointer rounded-[15px] border-solid border-[rgba(0,0,0,0.20)] hover:bg-[#efefef] transition-colors';
+import styles from './StudentMenu.module.css';
 
 const menuItems = [
 	{ icon: 'id-card', label: 'Студмарт ID', href: '/student-personal-account/id' },
@@ -38,37 +34,56 @@ const menuItems = [
 	{ icon: 'faq', label: 'FAQ', href: '/student-personal-account/faq' },
 ];
 
-const StudentMenu = () => {
+interface IStudentMenu extends HTMLAttributes<HTMLDivElement> {
+	className?: string;
+}
+
+const StudentMenu: FC<IStudentMenu> = ({ className, ...rest }) => {
 	const pathname = usePathname();
 	const { logout } = useAuth();
-	return (
-		<nav className="flex flex-col w-[322px] gap-5 self-start pl-[40px]">
-			<ul className={menuWrapperClass}>
-				{menuItems.map(({ icon, label, href }, index) => {
-					const isActive = pathname === href;
+	const wrapperRef = useRef<HTMLDivElement>(null);
 
+	useEffect(() => {
+		const wrapper = wrapperRef.current;
+		if (!wrapper) return;
+
+		const onWheel = (e: WheelEvent) => {
+			if (e.deltaY === 0) return;
+			e.preventDefault();
+			wrapper.scrollLeft += e.deltaY;
+		};
+
+		wrapper.addEventListener('wheel', onWheel, { passive: false });
+
+		return () => wrapper.removeEventListener('wheel', onWheel);
+	}, []);
+
+	return (
+		<nav {...rest} className={clsx(styles.menu, className)}>
+			<div ref={wrapperRef} className={styles['menu-wrapper']}>
+				{menuItems.map(({ icon, label, href }) => {
+					const isActive = pathname === href;
 					return (
-						<li key={icon}>
-							<Link href={href}>
-								<div className={`${buttonBaseClasses} ${isActive ? 'bg-[#efefef]' : ''}`}>
-									<Image
-										src={`/icons/student-account/${icon}.svg`}
-										className={iconClass}
-										alt=""
-										width={24}
-										height={24}
-									/>
-									<span className={textClass}>{label}</span>
-								</div>
-							</Link>
-							{index < menuItems.length - 1 && <div className={sectionBorderClass} />}
-						</li>
+						<Link
+							key={icon}
+							href={href}
+							className={clsx(styles['menu-item'], { [styles['menu-item-active']]: isActive })}
+						>
+							<Image
+								src={`/icons/student-account/${icon}.svg`}
+								className={styles.icon}
+								alt=""
+								width={24}
+								height={24}
+							/>
+							<span className={styles.text}>{label}</span>
+						</Link>
 					);
 				})}
-			</ul>
-			<button className={logoutButtonClass} onClick={logout}>
+			</div>
+			<ButtonCustom className={styles.button} customType="white" onClick={logout}>
 				Выйти из аккаунта
-			</button>
+			</ButtonCustom>
 		</nav>
 	);
 };

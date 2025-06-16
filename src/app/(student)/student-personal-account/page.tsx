@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import Loader from '@/components/ui/Loader';
 import { useAuth } from '@/context/AuthContext';
 
 export default function AccountRootPage() {
@@ -19,6 +20,5 @@ export default function AccountRootPage() {
 			router.replace('/student-personal-account/id');
 		}
 	}, [role, router]);
-
-	return null; // Можно добавить спиннер/лоадер по желанию
+	return <Loader />; // Можно добавить спиннер/лоадер по желанию
 }
