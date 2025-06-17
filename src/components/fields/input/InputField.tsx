@@ -75,7 +75,7 @@ export default function InputField({
 							borderColor: '#ccc',
 						},
 						'&:hover fieldset': {
-							borderColor: '#888',
+							borderColor: 'var(--label-color)',
 						},
 						'&.Mui-focused fieldset': {
 							borderColor: '#032c28',

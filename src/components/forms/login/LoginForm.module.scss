@@ -30,7 +30,7 @@
 .forgot-password {
 	width: fit-content;
 	font-size: 0.875rem;
-	color: #888;
+	color: var(--label-color);
 	text-decoration: underline;
 	cursor: pointer;
 }

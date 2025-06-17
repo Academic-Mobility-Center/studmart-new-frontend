@@ -10,12 +10,14 @@
 	--bg-brown: #f0e9e2;
 	--bg-yellow: #fee200;
 	--bg-purple: #ffb9ff;
+	--gray: #888;
 
 	/* используемые цвета */
 	--background: var(--bg-white);
 	--bg-primary: var(--bg-green);
 	--bg-secondary: #efefef;
 	--border-color: rgb(0, 0, 0, 0.2);
+	--label-color: var(--gray);
 
 	/* hover цвета */
 	--hover-bg-primary: #71c538;

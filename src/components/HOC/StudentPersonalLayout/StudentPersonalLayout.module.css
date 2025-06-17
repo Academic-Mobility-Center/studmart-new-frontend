@@ -7,3 +7,12 @@
 		display: block;
 	}
 }
+
+.button {
+	display: none;
+	margin-top: 40px;
+
+	@media (width<=1024px) {
+		display: block;
+	}
+}
