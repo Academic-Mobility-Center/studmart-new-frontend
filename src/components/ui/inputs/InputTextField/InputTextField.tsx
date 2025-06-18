@@ -9,10 +9,10 @@ export interface IInputTextFieldProps
 		InputHTMLAttributes<HTMLInputElement> & TextareaHTMLAttributes<HTMLTextAreaElement>,
 		'onChange'
 	> {
-	onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+	name: string;
+	onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 	label?: string;
 	errorText?: string;
-	name: string;
 	isTextArea?: boolean;
 }
 

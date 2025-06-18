@@ -2,7 +2,6 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 
-import { Dialog } from '@headlessui/react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';

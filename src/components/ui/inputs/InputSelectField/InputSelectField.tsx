@@ -63,11 +63,11 @@ const InputSelectField: FC<InputSelectFieldProps> = ({
 				renderInput={(params: AutocompleteRenderInputParams) => (
 					<TextField
 						{...params}
+						className={styles.input}
 						name={name}
 						placeholder={placeholder}
 						onBlur={onBlur}
 						error={!!errorText}
-						helperText={errorText}
 						InputProps={{
 							...params.InputProps,
 							sx: {
@@ -122,6 +122,7 @@ const InputSelectField: FC<InputSelectFieldProps> = ({
 					</Box>
 				)}
 			/>
+			{errorText && <span className={styles['error-text']}>{errorText}</span>}
 		</div>
 	);
 };
