@@ -1,11 +1,17 @@
 .profile-card {
 	display: flex;
 	flex-direction: column;
+	max-width: 588px;
+	width: 100%;
 	gap: 40px;
 	padding: 20px;
 	border-radius: var(--border-radius);
 	background-color: var(--background);
 	border: 1px solid var(--border-color);
+
+	@media (width<=1024px) {
+		max-width: 100%;
+	}
 }
 
 .section-data {

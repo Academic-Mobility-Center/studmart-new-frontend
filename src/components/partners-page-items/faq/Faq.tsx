@@ -44,11 +44,13 @@ const Faq = () => {
 					<FaqItem
 						key={index}
 						heading={item.heading}
-						p1={item.p1}
-						p2={item.p2}
 						isOpen={openIndex === index}
 						onClick={() => handleClick(index)}
-					/>
+					>
+						{item.p1}
+						<br />
+						{item.p2}
+					</FaqItem>
 				))}
 			</div>
 		</div>
