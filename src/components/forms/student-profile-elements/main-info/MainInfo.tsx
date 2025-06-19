@@ -1,5 +1,5 @@
-import { MultipleSelectV2 } from '@/components/ui/fields/multiple-selectv2/MultipleSelectV2';
 import InputDateField from '@/components/ui/inputs/InputDateField';
+import InputMultiSelect from '@/components/ui/inputs/InputMultiSelect';
 import InputSelectField from '@/components/ui/inputs/InputSelectField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
 
@@ -37,6 +37,7 @@ interface Props {
 	languageProfiencyOptions: SelectOption[];
 	newCityOptions: City[];
 	newRegionOptions: Region[];
+	handleChangeSelectMulti: (name: string, values: string[]) => void;
 }
 
 const MainInfo: React.FC<Props> = ({
@@ -50,6 +51,7 @@ const MainInfo: React.FC<Props> = ({
 	languageProfiencyOptions,
 	newCityOptions,
 	newRegionOptions,
+	handleChangeSelectMulti,
 }) => {
 	return (
 		<div className={styles.form}>
@@ -139,7 +141,7 @@ const MainInfo: React.FC<Props> = ({
 				/>
 			</div>
 			<div className={styles['single-field']}>
-				<MultipleSelectV2
+				{/* <MultipleSelectV2
 					name="languageProfiency"
 					value={formData?.languageProfiency}
 					options={transformToOptions(languageProfiencyOptions)}
@@ -149,6 +151,19 @@ const MainInfo: React.FC<Props> = ({
 					placeholder="Владение иностранными языками"
 					onBlur={handleBlur}
 					onChange={handleChange}
+				/> */}
+				<InputMultiSelect
+					name="languageProfiency"
+					selectedValues={
+						formData?.languageProfiency?.map((item) =>
+							typeof item === 'string' ? item : item.value,
+						) ?? []
+					}
+					options={transformToOptions(languageProfiencyOptions)}
+					label="Владение иностранными языками"
+					placeholder="Владение иностранными языками"
+					// onBlur={handleBlur}
+					onChange={handleChangeSelectMulti}
 				/>
 			</div>
 		</div>

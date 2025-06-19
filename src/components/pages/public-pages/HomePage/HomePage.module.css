@@ -1,7 +1,5 @@
 .home-screen {
-	@media (width<=1024px) {
-		overflow-x: clip;
-	}
+	display: block;
 }
 
 .image-cards {

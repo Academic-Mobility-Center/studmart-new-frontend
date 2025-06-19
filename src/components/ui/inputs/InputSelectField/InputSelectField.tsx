@@ -83,6 +83,7 @@ const InputSelectField: FC<InputSelectFieldProps> = ({
 						}}
 						sx={{
 							'& .MuiOutlinedInput-root': {
+								fontFamily: 'var(--font-buttons)',
 								paddingLeft: '20px',
 								height: '48px',
 								'& fieldset': {

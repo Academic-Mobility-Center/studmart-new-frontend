@@ -27,7 +27,7 @@
 }
 
 .single-field {
-	width: calc(50% - 10px);
+	width: 100%;
 
 	@media (width<=1024px) {
 		width: 100%;

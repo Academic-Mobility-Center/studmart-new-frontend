@@ -200,6 +200,11 @@ const StudentProfilePage: React.FC = () => {
 		setErrors((prev) => ({ ...prev, [name]: validateField(name, newValue) }));
 	};
 
+	const handleChangeSelectMulti = (name: string, values: string[]) => {
+		setFormData((prev) => ({ ...prev, [name]: values }));
+		setErrors((prev) => ({ ...prev, [name]: validateField(name, values) }));
+	};
+
 	const handleSubmitForm = async (event: React.FormEvent) => {
 		event.preventDefault();
 		let hasErrors = false;
@@ -217,6 +222,7 @@ const StudentProfilePage: React.FC = () => {
 			setErrors((prev) => ({ ...prev, ...newErrors }));
 			return;
 		}
+		console.log(formData.languageProfiency);
 
 		const dataToSend: StudentPutData = {
 			id: id ?? '',
@@ -232,7 +238,10 @@ const StudentProfilePage: React.FC = () => {
 			balance: fetchStudent?.balance ?? 0,
 			hasWork: formData.isWork?.label === 'Работает',
 			cityId: Number(formData.city?.value) ?? null,
-			languageIds: formData.languageProfiency?.map((item) => Number(item.value)) ?? [],
+			languageIds:
+				formData.languageProfiency?.map((item) =>
+					item?.value ? Number(item.value) : Number(item),
+				) ?? [],
 			courseId: Number(formData.course?.value),
 			paymentInformation: fetchStudent?.paymentInformation || null,
 		};
@@ -271,6 +280,7 @@ const StudentProfilePage: React.FC = () => {
 					languageProfiencyOptions={languages}
 					newCityOptions={fetchCities}
 					newRegionOptions={regions}
+					handleChangeSelectMulti={handleChangeSelectMulti}
 				/>
 				<UniversityInfo
 					formData={formData}

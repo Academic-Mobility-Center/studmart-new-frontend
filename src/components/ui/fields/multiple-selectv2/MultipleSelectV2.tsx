@@ -60,6 +60,8 @@ export function MultipleSelectV2({
 		const {
 			target: { value: selectedValues },
 		} = event;
+		console.log(selectedValues, 'selectedValues');
+		console.log(value, 'value');
 
 		const selected =
 			typeof selectedValues === 'string' ? selectedValues.split(',') : selectedValues;
