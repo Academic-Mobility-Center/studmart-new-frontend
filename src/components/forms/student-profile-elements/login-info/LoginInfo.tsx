@@ -2,6 +2,7 @@ import React from 'react';
 
 import InputPasswordField from '@/components/ui/inputs/InputPasswordField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
+
 import { StudentFormData } from '@/types/StudentProfileData';
 
 import styles from './LoginInfo.module.css';

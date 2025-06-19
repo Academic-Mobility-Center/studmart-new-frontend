@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import InputField from '@/components/fields/input/InputField';
-import IStudentFormData from '@/app/(student)/student-personal-account/context';
-import { useAuth } from '@/context/AuthContext';
+import InputField from '@/components/ui/fields/input/InputField';
+
 import { getStudentById, updateStudent } from '@/lib/api/students';
+
+import { useAuth } from '@/context/AuthContext';
+import IStudentFormData from '@/context/StudentPersonalContext';
 import StudentBankCredentialsFormData from '@/types/StudentBankCredentialsFormData';
 import StudentPutData from '@/types/StudentPutData';
 

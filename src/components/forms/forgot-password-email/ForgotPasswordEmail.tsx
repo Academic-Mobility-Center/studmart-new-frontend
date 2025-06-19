@@ -1,7 +1,9 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-import InputField from '@/components/fields/input/InputField';
+import InputField from '@/components/ui/fields/input/InputField';
+
 import { forgotPassword } from '@/lib/api/auth';
+
 import LoginFormData from '@/types/LoginFormData';
 
 interface ForgotPasswordEmailProps {

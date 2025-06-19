@@ -1,11 +1,12 @@
 import { Mulish, Nunito_Sans } from 'next/font/google';
 
-import CookieConsent from '@/components/CookieConsent';
-import MainLayout from '@/components/HOC/MainLayout';
+import CookieConsent from '@/components/layouts/CookieConsent';
+import MainLayout from '@/components/layouts/MainLayout';
+
 import { AuthProvider } from '@/context/AuthContext';
 import { CityProvider } from '@/context/CityContext';
 
-import './globals.css';
+import '@/styles/globals.css';
 
 const mulish = Mulish({
 	subsets: ['latin', 'cyrillic'],

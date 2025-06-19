@@ -4,14 +4,16 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import MarkdownRenderer from '@/components/MarkdownRenderer';
-import InputField from '@/components/fields/input/InputField';
-import { SelectField } from '@/components/fields/select/SelectField';
-import { transformToOptions } from '@/utils/dataTransform';
 import { PartnerProfileData } from '@/app/(partner)/partner-personal-account/context';
-import { useAuth } from '@/context/AuthContext';
+import MarkdownRenderer from '@/components/ui/MarkdownRenderer/MarkdownRenderer';
+import InputField from '@/components/ui/fields/input/InputField';
+import { SelectField } from '@/components/ui/fields/select/SelectField';
+
+import { transformToOptions } from '@/utils/dataTransform';
 import { sendEmail } from '@/lib/api/email';
 import { getPartnerInfo } from '@/lib/api/partners';
+
+import { useAuth } from '@/context/AuthContext';
 
 import { FaqQuestions, faqCategoryOptionsPartner } from '../context';
 import { BlackArrowDown } from './icons/BlackArrowDown';

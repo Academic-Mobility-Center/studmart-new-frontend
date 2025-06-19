@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import { PartnerProfileData } from '@/app/(partner)/partner-personal-account/context';
-import { useAuth } from '@/context/AuthContext';
+
 import { getPartnerInfo, getPartnerRegions } from '@/lib/api/partners';
 import {
 	getEvents,
@@ -12,6 +12,8 @@ import {
 	getUsersDevices,
 } from '@/lib/api/statistics';
 import { getStudentUniversities } from '@/lib/api/students';
+
+import { useAuth } from '@/context/AuthContext';
 import City from '@/types/Cities';
 import Region from '@/types/Region';
 import StatisticFormData from '@/types/StatisticFormData';

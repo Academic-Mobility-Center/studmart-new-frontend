@@ -6,7 +6,9 @@ import ButtonCustom from '@/components/ui/ButtonCustom';
 import InputDateField from '@/components/ui/inputs/InputDateField';
 import InputSelectField from '@/components/ui/inputs/InputSelectField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
+
 import { transformToOptions } from '@/utils/dataTransform';
+
 import RegFormProps from '@/types/RegFormProps';
 
 import styles from '../RegForm.module.scss';

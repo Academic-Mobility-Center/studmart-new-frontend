@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import StudentPersonalAccountMenu from '@/components/menu/partner-personal-account-menu/PartnerPersonalAccountMenu';
+import StudentPersonalAccountMenu from '@/components/layouts/menus/partner-personal-account-menu/PartnerPersonalAccountMenu';
 
 export default function AccountLayout({ children }: { children: ReactNode }) {
 	const contentWrapperClasses =

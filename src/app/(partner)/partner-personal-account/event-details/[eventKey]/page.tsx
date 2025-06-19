@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import EventDetailsPageContent from '@/components/event-details-content/EventDetailsPageContent';
+import EventDetailsPageContent from '@/components/sections/EventDetailsPageContent/EventDetailsPageContent';
+
 import { useAuth } from '@/context/AuthContext';
 
 import { StatisticProvider } from '../../statistics/context';

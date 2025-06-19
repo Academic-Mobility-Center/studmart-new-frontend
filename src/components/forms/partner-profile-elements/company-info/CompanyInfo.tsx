@@ -1,9 +1,11 @@
 import { ChangeEvent } from 'react';
 
-import InputField from '@/components/fields/input/InputField';
-import { MultipleSelectField } from '@/components/fields/multiple-select/MultipleSelectField';
-import { SelectField } from '@/components/fields/select/SelectField';
+import InputField from '@/components/ui/fields/input/InputField';
+import { MultipleSelectField } from '@/components/ui/fields/multiple-select/MultipleSelectField';
+import { SelectField } from '@/components/ui/fields/select/SelectField';
+
 import { transformToOptions } from '@/utils/dataTransform';
+
 import { PartnerPersonalAccountFormData } from '@/types/PartnerPesonalAccount';
 import { SelectOption } from '@/types/SelectOption';
 

@@ -1,5 +1,6 @@
-import InputField from '@/components/fields/input/InputField';
-import PasswordField from '@/components/fields/password/PasswordField';
+import InputField from '@/components/ui/fields/input/InputField';
+import PasswordField from '@/components/ui/fields/password/PasswordField';
+
 import { PartnerPersonalAccountFormData } from '@/types/PartnerPesonalAccount';
 
 interface Props {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import ButtonCustom from '@/components/ui/ButtonCustom';
 import InputPasswordField from '@/components/ui/inputs/InputPasswordField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
+
 import RegFormProps from '@/types/RegFormProps';
 
 import styles from '../RegForm.module.scss';

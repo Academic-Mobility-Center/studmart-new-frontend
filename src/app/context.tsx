@@ -1,1 +1,0 @@
-export const loaderStyle = 'flex justify-center items-center h-screen bg-white';

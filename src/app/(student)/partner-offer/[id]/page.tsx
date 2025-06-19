@@ -2,7 +2,8 @@
 
 import { useParams } from 'next/navigation';
 
-import PartnerOfferContent from '@/components/pages/partner-offer-content/PartnerOfferContent';
+import PartnerOfferContent from '@/components/pages/public-pages/PartnerOfferContent/PartnerOfferContent';
+
 import Category from '@/types/Category';
 import RegionWithoutCountry from '@/types/RegionWithoutCountry';
 

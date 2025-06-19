@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 
 import { CustomTooltip } from '@/components/charts/CustomTooltip';
+
 import ChartDataItem from '@/types/ChartDataItem';
 
 export type EventConfig = {

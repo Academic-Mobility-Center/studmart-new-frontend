@@ -1,9 +1,11 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import { DateRangeField } from '@/components/fields/date/DateRangeField';
-import { SelectField } from '@/components/fields/select/SelectField';
-import { StatCard } from '@/components/statistics/StatCard';
+import { StatCard } from '@/components/charts/statistics/StatCard';
+import { DateRangeField } from '@/components/ui/fields/date/DateRangeField';
+import { SelectField } from '@/components/ui/fields/select/SelectField';
+
 import { transformToOptions } from '@/utils/dataTransform';
+
 import { Option } from '@/types/Option';
 import Region from '@/types/Region';
 import StatisticFormData from '@/types/StatisticFormData';

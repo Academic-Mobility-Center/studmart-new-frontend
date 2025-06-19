@@ -2,8 +2,10 @@ import React, { ChangeEvent, useState } from 'react';
 
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
-import PasswordField from '@/components/fields/password/PasswordField';
+import PasswordField from '@/components/ui/fields/password/PasswordField';
+
 import { resetPassword } from '@/lib/api/auth';
+
 import LoginFormData from '@/types/LoginFormData';
 
 interface ForgotPasswordConfirmProps {

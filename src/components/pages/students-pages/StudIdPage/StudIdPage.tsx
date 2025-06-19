@@ -9,9 +9,11 @@ import { useRouter } from 'next/navigation';
 
 import CardBrown from '@/components/ui/CardBrown';
 import Loader from '@/components/ui/Loader';
-import IStudentFormData from '@/app/(student)/student-personal-account/context';
-import { useAuth } from '@/context/AuthContext';
+
 import { getStudentById } from '@/lib/api/students';
+
+import { useAuth } from '@/context/AuthContext';
+import IStudentFormData from '@/context/StudentPersonalContext';
 
 import styles from './StudIdPage.module.css';
 

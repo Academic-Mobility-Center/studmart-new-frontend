@@ -2,10 +2,11 @@
 
 import './style.css';
 
-import ImageGalleryWidget from '@/components/ImageGalleryWidget/ImageGalleryWidget';
-import ServiceAudience from '@/components/ServiceAudience';
-import StylishShoppingSection from '@/components/StylishShoppingSection';
-import About from '@/components/about';
+import AboutStudmart from '@/components/sections/AboutStudmart';
+import ImageGalleryWidget from '@/components/sections/ImageGalleryWidget/ImageGalleryWidget';
+import ServiceAudience from '@/components/sections/ServiceAudience';
+import StylishShoppingSection from '@/components/sections/StylishShoppingSection';
+
 import { useAuth } from '@/context/AuthContext';
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
 			{!isAuthenticated && (
 				<div className="info-panel">
 					<ServiceAudience isAuthenticated={isAuthenticated} />
-					<About isAuthenticated={isAuthenticated} />
+					<AboutStudmart isAuthenticated={isAuthenticated} />
 				</div>
 			)}
 		</div>

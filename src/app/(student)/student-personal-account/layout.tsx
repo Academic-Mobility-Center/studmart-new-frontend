@@ -4,7 +4,8 @@ import { ReactNode, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import StudentPersonalLayout from '@/components/HOC/StudentPersonalLayout';
+import StudentPersonalLayout from '@/components/layouts/StudentPersonalLayout';
+
 import { useAuth } from '@/context/AuthContext';
 
 export default function StudentPersonalAccountLayout({ children }: { children: ReactNode }) {

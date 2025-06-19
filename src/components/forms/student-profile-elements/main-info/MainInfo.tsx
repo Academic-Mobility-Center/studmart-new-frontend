@@ -1,8 +1,10 @@
-import { MultipleSelectV2 } from '@/components/fields/multiple-selectv2/MultipleSelectV2';
+import { MultipleSelectV2 } from '@/components/ui/fields/multiple-selectv2/MultipleSelectV2';
 import InputDateField from '@/components/ui/inputs/InputDateField';
 import InputSelectField from '@/components/ui/inputs/InputSelectField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
+
 import { transformToOptions } from '@/utils/dataTransform';
+
 import City from '@/types/Cities';
 import Region from '@/types/Region';
 import { SelectOption } from '@/types/SelectOption';

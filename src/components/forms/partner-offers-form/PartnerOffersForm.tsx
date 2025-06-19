@@ -10,16 +10,18 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useRouter } from 'next/navigation';
 
-import InputField from '@/components/fields/input/InputField';
-import ImageUploader from '@/utils/imageUpload';
 import {
 	PartnerProfileData,
 	profileCardClasses,
 	profileTitleClasses,
 } from '@/app/(partner)/partner-personal-account/context';
-import fileToBase64 from '@/app/(public)/home/context';
-import { useAuth } from '@/context/AuthContext';
+import InputField from '@/components/ui/fields/input/InputField';
+
+import ImageUploader from '@/utils/imageUpload';
 import { getPartnerInfo, sendDescriptionFile, sendPartnerDescription } from '@/lib/api/partners';
+
+import { useAuth } from '@/context/AuthContext';
+import fileToBase64 from '@/context/HomePageContext';
 
 const pClass = 'font-[Mulish] text-[#032C28] mb-[10px]';
 

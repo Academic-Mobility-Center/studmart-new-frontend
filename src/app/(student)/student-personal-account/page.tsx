@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Loader from '@/components/ui/Loader';
+
 import { useAuth } from '@/context/AuthContext';
 
 export default function AccountRootPage() {

@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import { DateRangeField } from '@/components/fields/date/DateRangeField';
-import { DemographyChart } from '@/components/statistics/DemographyChart';
-import { DevicesChart } from '@/components/statistics/DevicesChart';
-import { GeographyChart } from '@/components/statistics/GeographyChart';
+import { DemographyChart } from '@/components/charts/statistics/DemographyChart';
+import { DevicesChart } from '@/components/charts/statistics/DevicesChart';
+import { GeographyChart } from '@/components/charts/statistics/GeographyChart';
+import { DateRangeField } from '@/components/ui/fields/date/DateRangeField';
+
 import StatisticFormData from '@/types/StatisticFormData';
 
 interface Props {

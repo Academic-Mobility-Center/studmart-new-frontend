@@ -10,15 +10,8 @@ import MainInfo from '@/components/forms/student-profile-elements/main-info/Main
 import UniversityInfo from '@/components/forms/student-profile-elements/university-info/UniversityInfo';
 import ButtonCustom from '@/components/ui/ButtonCustom';
 import Loader from '@/components/ui/Loader';
+
 import { transformToOption, transformToOptions } from '@/utils/dataTransform';
-import IStudentFormData, {
-	courseOptions,
-	familyStatusOptions,
-	genderOptions,
-	isWorkOptions,
-	validateField,
-} from '@/app/(student)/student-personal-account/context';
-import { useAuth } from '@/context/AuthContext';
 import { getPartnerRegions } from '@/lib/api/partners';
 import {
 	getLanguages,
@@ -28,6 +21,15 @@ import {
 	getStudentUniversities,
 	updateStudent,
 } from '@/lib/api/students';
+
+import { useAuth } from '@/context/AuthContext';
+import IStudentFormData, {
+	courseOptions,
+	familyStatusOptions,
+	genderOptions,
+	isWorkOptions,
+	validateField,
+} from '@/context/StudentPersonalContext';
 import City from '@/types/Cities';
 import LoginFormData from '@/types/LoginFormData';
 import { StudentFormData } from '@/types/StudentProfileData';

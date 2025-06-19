@@ -5,13 +5,11 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-import { StyledSwitch } from '@/components/fields/switch/StyledSwitch';
 import ButtonCustom from '@/components/ui/ButtonCustom';
-import {
-	categoriesAndServices,
-	personalDataItems,
-} from '@/app/(student)/student-personal-account/context';
+import { StyledSwitch } from '@/components/ui/fields/switch/StyledSwitch';
+
 import { useAuth } from '@/context/AuthContext';
+import { categoriesAndServices, personalDataItems } from '@/context/StudentPersonalContext';
 
 import styles from './StudentPolicyPage.module.css';
 import { ArrowDown } from './icons/ArrowDown';

@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { Button } from '@mui/base';
 import { useRouter } from 'next/navigation';
 
-import { transformToOption, transformToOptions } from '@/utils/dataTransform';
 import {
 	PartnerProfileData,
 	profileCardClasses,
@@ -13,7 +12,8 @@ import {
 	saveButtonClasses,
 	validateField,
 } from '@/app/(partner)/partner-personal-account/context';
-import { useAuth } from '@/context/AuthContext';
+
+import { transformToOption, transformToOptions } from '@/utils/dataTransform';
 import {
 	getPartnerCategories,
 	getPartnerCountries,
@@ -22,6 +22,8 @@ import {
 	updateEmployee,
 	updatePartner,
 } from '@/lib/api/partners';
+
+import { useAuth } from '@/context/AuthContext';
 import LoginFormData from '@/types/LoginFormData';
 import { Option } from '@/types/Option';
 import { PartnerPersonalAccountFormData } from '@/types/PartnerPesonalAccount';

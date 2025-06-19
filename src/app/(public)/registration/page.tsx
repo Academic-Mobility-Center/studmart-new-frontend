@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import RegistrationForm from '@/components/registration';
+import RegistrationForm from '@/components/pages/public-pages/RegistrationForm';
+
 import { useAuth } from '@/context/AuthContext';
 
 export default function Registration() {

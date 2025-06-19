@@ -2,12 +2,14 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
-import { FileField } from '@/components/fields/file/FileField';
 import ButtonCustom from '@/components/ui/ButtonCustom';
+import { FileField } from '@/components/ui/fields/file/FileField';
 import InputCheckbox from '@/components/ui/inputs/InputCheckbox';
 import InputSelectField from '@/components/ui/inputs/InputSelectField';
 import InputTextField from '@/components/ui/inputs/InputTextField';
+
 import { StudentEmailDomain } from '@/lib/api/students';
+
 import RegistrationFormData from '@/types/RegistrationFormData';
 
 import styles from '../RegForm.module.scss';

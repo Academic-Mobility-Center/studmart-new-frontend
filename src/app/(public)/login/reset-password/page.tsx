@@ -4,8 +4,9 @@ import { ChangeEvent, Suspense, useState } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import LoginForm from '@/components/forms/LoginForm/LoginForm';
 import ForgotPasswordConfirm from '@/components/forms/forgot-password-confirm/ForgotPasswordConfirm';
-import LoginForm from '@/components/forms/login/LoginForm';
+
 import LoginFormData from '@/types/LoginFormData';
 
 function ResetPasswordPageContent() {

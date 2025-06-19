@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
-import InputField from '@/components/fields/input/InputField';
+import InputField from '@/components/ui/fields/input/InputField';
+
 import { PartnerPersonalAccountFormData } from '@/types/PartnerPesonalAccount';
 
 const sectionTitleClasses =
