@@ -1,18 +1,15 @@
+import { Metadata } from 'next';
 import { Mulish, Nunito_Sans } from 'next/font/google';
 
 import CookieConsent from '@/components/layouts/CookieConsent';
 import MainLayout from '@/components/layouts/MainLayout';
 
+import { generateMetadata } from '@/utils/generateMetadata';
+
 import { AuthProvider } from '@/context/AuthContext';
 import { CityProvider } from '@/context/CityContext';
 
 import '@/styles/globals.css';
-
-import { Metadata } from 'next';
-
-import { generateMetadata } from '@/utils/generateMetadata';
-
-export const metadata: Metadata = generateMetadata();
 
 const mulish = Mulish({
 	subsets: ['latin', 'cyrillic'],
@@ -27,6 +24,8 @@ const nunitoSans = Nunito_Sans({
 	variable: '--font-headings',
 	display: 'swap',
 });
+
+export const metadata: Metadata = generateMetadata();
 
 export default function RootLayout({
 	children,

@@ -91,7 +91,21 @@ const ImageWrapper: React.FC<ImageWrapperProps> = ({
 	const isStudent = role === 'Student';
 
 	return (
-		<div className={styles['image-wrapper']} style={{ backgroundImage: `url(${imageUrl})` }}>
+		<div
+			className={styles['image-wrapper']} //style={{ backgroundImage: `url(${imageUrl})`
+		>
+			<div className={styles['partner-image']}>
+				<Image
+					src={imageUrl}
+					className={styles['image']}
+					fill
+					alt="partner"
+					loading="lazy"
+					quality={80}
+					sizes="400px"
+					style={{ objectFit: 'cover' }}
+				/>
+			</div>
 			{isAuthenticated && isStudent && (
 				<div className={styles.star} onClick={onStarClick}>
 					<Image

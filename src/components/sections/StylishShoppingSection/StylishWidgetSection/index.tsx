@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Button } from '@mui/base';
 
 import { PromoCard } from '@/components/sections/PromoCard/PromoCard';
+import Loader from '@/components/ui/Loader';
 
 import {
 	getFavouritesPartners,
@@ -116,12 +117,13 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
 
 	const showLoadMore = regularCards.length > visibleCount;
 
+	if (loading) return <Loader />;
 	return (
 		<>
 			{renderCards(fixedCards, true)}
 
 			<div className={styles['hierarchical-content-container']}>
-				{loading ? null : renderCards(regularCards.slice(0, visibleCount))}
+				{renderCards(regularCards.slice(0, visibleCount))}
 			</div>
 
 			{showLoadMore && (

@@ -79,9 +79,9 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 			try {
 				const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId, id ?? '');
 				setPartnerData(partnerInfo);
-				setIsLoadingPartner(false);
 			} catch (error) {
 				console.log(error);
+			} finally {
 				setIsLoadingPartner(false);
 			}
 		};
@@ -115,9 +115,9 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 					}
 				}
 				setPersonalPromocodes(results);
-				setIsLoadingPromocodes(false);
 			} catch (error) {
 				console.error('Ошибка при получении промокодов:', error);
+			} finally {
 				setIsLoadingPromocodes(false);
 			}
 		};
@@ -131,28 +131,34 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		}
 	};
 	const closeModal = () => setIsModalOpen(false);
-	if (isLoadingPartner || isLoadingPromocodes) {
+	if (isLoadingPartner) {
 		return <Loader />;
 	}
+
 	return (
 		<div className={styles['container']}>
 			<PartnerInfo imageUrl={imageUrl} partnerId={partnerId} {...partnerData} />
-
-			{personalPromocodes.map((promo, index) => {
-				const isEmployee = !('discount' in promo);
-				const name = isEmployee ? promo.name : promo.discount.name;
-				const description = isEmployee ? promo.description : promo.discount.description;
-				return (
-					<DiscountBox
-						key={index}
-						title={name}
-						description={description}
-						onClick={() => openModal(promo)}
-						isAuth={isAuth}
-						role={role}
-					/>
-				);
-			})}
+			{!isLoadingPromocodes ? (
+				<div className={styles['discount-wrapper']}>
+					{personalPromocodes.map((promo, index) => {
+						const isEmployee = !('discount' in promo);
+						const name = isEmployee ? promo.name : promo.discount.name;
+						const description = isEmployee ? promo.description : promo.discount.description;
+						return (
+							<DiscountBox
+								key={index}
+								title={name}
+								description={description}
+								onClick={() => openModal(promo)}
+								isAuth={isAuth}
+								role={role}
+							/>
+						);
+					})}
+				</div>
+			) : (
+				<Loader />
+			)}
 			<DiscountModal isOpen={isModalOpen} closeModal={closeModal} promoCode={selectedPromo} />
 		</div>
 	);
