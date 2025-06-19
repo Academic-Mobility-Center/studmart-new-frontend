@@ -14,6 +14,7 @@ export interface IInputTextFieldProps
 	label?: string;
 	errorText?: string;
 	isTextArea?: boolean;
+	textAreaResize?: boolean;
 }
 
 const InputTextField: FC<IInputTextFieldProps> = ({
@@ -26,6 +27,7 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 	placeholder,
 	rows,
 	isTextArea = false,
+	textAreaResize = true,
 	type = 'text',
 	...rest
 }) => {
@@ -38,26 +40,30 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 					{label}
 				</label>
 			)}
-			{(rows || isTextArea) && (
+			{rows || isTextArea ? (
 				<textarea
 					{...rest}
 					id={currentId}
 					name={name}
-					className={clsx(styles.input, { [styles['error']]: !!errorText })}
+					className={clsx(styles.input, {
+						[styles['error']]: !!errorText,
+						[styles['text-area-not-resize']]: !textAreaResize,
+					})}
 					rows={rows ?? 3}
 					placeholder={placeholder}
 					onChange={onChange}
 				/>
+			) : (
+				<input
+					{...rest}
+					id={currentId}
+					name={name}
+					type={type}
+					className={clsx(styles.input, { [styles['error']]: !!errorText })}
+					placeholder={placeholder}
+					onChange={onChange}
+				/>
 			)}
-			<input
-				{...rest}
-				id={currentId}
-				name={name}
-				type={type}
-				className={clsx(styles.input, { [styles['error']]: !!errorText })}
-				placeholder={placeholder}
-				onChange={onChange}
-			/>
 			{errorText && <span className={styles['error-text']}>{errorText}</span>}
 		</div>
 	);

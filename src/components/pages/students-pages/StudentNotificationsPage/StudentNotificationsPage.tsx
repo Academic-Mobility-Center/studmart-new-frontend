@@ -34,33 +34,27 @@ const StudentNotificationsPage = () => {
 	};
 
 	return (
-		<div className={styles['notifications-container']}>
-			<div className={styles['notifications-card']}>
-				<h3 className={styles['notifications-title']}>Настройка уведомлений</h3>
-				<p className={styles['notifications-description']}>
-					Вы можете выбрать категории предложений, которые не хотите просматривать и получать.
-					Управлять предпочтениями вы можете в данном разделе
-				</p>
-				<div className={styles['notifications-grid']}>
-					{notificationsItems.map((item) => (
-						<div
-							key={item}
-							onClick={() => toggleItem(item)}
-							className={styles['notification-item']}
-						>
-							<div className={styles['notification-text']}>{item}</div>
-							<StyledSwitch
-								checked={activeStates[item]}
-								onChange={() => toggleItem(item)}
-								onClick={(e: React.MouseEvent) => e.stopPropagation()}
-							/>
-						</div>
-					))}
-				</div>
-				<ButtonCustom type="submit" className={styles['save-button']} disabled>
-					Сохранить
-				</ButtonCustom>
+		<div className={styles['notifications-card']}>
+			<h3 className={styles['notifications-title']}>Настройка уведомлений</h3>
+			<p className={styles['notifications-description']}>
+				Вы можете выбрать категории предложений, которые не хотите просматривать и получать.
+				Управлять предпочтениями вы можете в данном разделе
+			</p>
+			<div className={styles['notifications-grid']}>
+				{notificationsItems.map((item) => (
+					<div key={item} onClick={() => toggleItem(item)} className={styles['notification-item']}>
+						<div className={styles['notification-text']}>{item}</div>
+						<StyledSwitch
+							checked={activeStates[item]}
+							onChange={() => toggleItem(item)}
+							onClick={(e: React.MouseEvent) => e.stopPropagation()}
+						/>
+					</div>
+				))}
 			</div>
+			<ButtonCustom type="submit" className={styles['save-button']} disabled>
+				Сохранить
+			</ButtonCustom>
 		</div>
 	);
 };

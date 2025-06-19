@@ -97,9 +97,13 @@ const StudentPolicyPage = () => {
 					{categoriesAndServices.map(({ heading, p, p_array }) => {
 						const isExpanded = expandedStates[heading];
 						return (
-							<div key={heading} className={styles['category-item']}>
+							<div
+								key={heading}
+								className={styles['category-item']}
+								onClick={() => toggleExpand(heading)}
+							>
 								<div className={styles['category-header']}>
-									<p>{heading}</p>
+									<p className={styles['category-title']}>{heading}</p>
 									<div className={styles['category-controls']}>
 										<StyledSwitch
 											checked={categoryStates[heading]}
@@ -111,7 +115,7 @@ const StudentPolicyPage = () => {
 												}))
 											}
 										/>
-										<div onClick={() => toggleExpand(heading)} className={styles['toggle-icon']}>
+										<div className={styles['toggle-icon']}>
 											{isExpanded ? <ArrowUp /> : <ArrowDown />}
 										</div>
 									</div>

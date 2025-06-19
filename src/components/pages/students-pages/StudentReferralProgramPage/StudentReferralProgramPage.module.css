@@ -17,6 +17,10 @@
 	padding: 20px;
 	border-radius: 15px;
 	border: 1px solid var(--border-color);
+
+	@media (width<=1024px) {
+		padding: 15px;
+	}
 }
 
 .card-title {

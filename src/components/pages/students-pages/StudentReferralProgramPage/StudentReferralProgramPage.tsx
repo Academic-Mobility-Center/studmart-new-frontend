@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import ButtonCustom from '@/components/ui/ButtonCustom';
+import Loader from '@/components/ui/Loader';
 
 import { getStudentById } from '@/lib/api/students';
 
@@ -20,6 +21,7 @@ interface IReferralData {
 const StudentReferralProgramPage = () => {
 	const { id } = useAuth();
 	const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null);
+	const [isLoadingStudent, setIsLoadingStudent] = useState(false);
 
 	const [formData, setFormData] = useState<IReferralData>({
 		account: 0,
@@ -29,6 +31,7 @@ const StudentReferralProgramPage = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
+			setIsLoadingStudent(true);
 			try {
 				const student = await getStudentById(id ?? '');
 				if (student) {
@@ -42,6 +45,8 @@ const StudentReferralProgramPage = () => {
 					console.error('Ошибка при загрузке студентов:', e);
 				}
 				return;
+			} finally {
+				setIsLoadingStudent(false);
 			}
 		};
 		if (id) {
@@ -88,7 +93,7 @@ const StudentReferralProgramPage = () => {
 			console.error('Ошибка:', err);
 		}
 	};
-
+	if (isLoadingStudent) return <Loader />;
 	return (
 		<div className={styles['page-container']}>
 			<div className={styles.card}>

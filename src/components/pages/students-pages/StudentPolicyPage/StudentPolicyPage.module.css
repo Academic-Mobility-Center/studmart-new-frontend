@@ -71,24 +71,39 @@
 .category-item {
 	border: 1px solid var(--border-color);
 	border-radius: 15px;
-	background-color: #efefef;
 	padding: 20px;
+
+	@media (width <= 1024px) {
+		padding: 15px;
+	}
 }
 
 .category-header {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	font-weight: 800;
+}
+
+.category-title {
+	overflow: hidden;
 
 	@media (width <= 1024px) {
-		font-size: 0.875rem;
+		max-width: 130px;
+		font-size: 0.75rem;
 	}
 }
 
 .category-controls {
 	display: flex;
 	gap: 20px;
+	justify-content: end;
 	align-items: center;
+	flex-shrink: 0;
+
+	@media (width <= 1024px) {
+		gap: 10px;
+	}
 }
 
 .toggle-icon {

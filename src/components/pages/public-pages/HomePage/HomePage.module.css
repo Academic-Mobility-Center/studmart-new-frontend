@@ -1,5 +1,7 @@
 .home-screen {
-	box-sizing: border-box;
+	@media (width<=1024px) {
+		overflow-x: clip;
+	}
 }
 
 .image-cards {

@@ -22,12 +22,12 @@
 }
 
 .error-text {
-	color: #dc2626;
+	color: var(--error-color);
 	font-size: 0.875rem;
 	font-weight: 500;
 	word-wrap: normal;
 }
 
 .error {
-	border-color: #dc2626;
+	border-color: var(--error-color);
 }
