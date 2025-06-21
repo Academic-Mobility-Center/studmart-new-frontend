@@ -1,23 +1,30 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-import InputField from '@/components/ui/fields/input/InputField';
+import ButtonCustom from '@/components/ui/ButtonCustom';
+import CustomCard from '@/components/ui/CustomCard';
+import ModalWindow from '@/components/ui/ModalWindow';
+import InputTextField from '@/components/ui/inputs/InputTextField';
 
 import { forgotPassword } from '@/lib/api/auth';
 
 import LoginFormData from '@/types/LoginFormData';
 
-interface ForgotPasswordEmailProps {
+import styles from './ForgotPasswordEmail.module.css';
+
+interface IForgotPasswordEmailProps {
 	onClose: () => void;
 	onClick: () => void;
 	formData: LoginFormData;
-	handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+	handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+	isOpen?: boolean;
 }
 
-const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
+const ForgotPasswordEmail: React.FC<IForgotPasswordEmailProps> = ({
 	onClose,
 	onClick,
 	handleChange,
 	formData,
+	isOpen,
 }) => {
 	const [errors, setErrors] = useState<{ passwordResetEmail?: string }>({});
 	const modalRef = useRef<HTMLDivElement>(null);
@@ -39,7 +46,7 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
 	useEffect(() => {
 		if (isSentSuccessfully) {
 			const timeout = setTimeout(() => {
-				onClick(); // закрытие от родителя
+				onClick();
 			}, 2000);
 			return () => clearTimeout(timeout);
 		}
@@ -72,43 +79,35 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
 			setLoading(false);
 		}
 	};
+
 	return (
-		<div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-[rgba(0,0,0,0.3)] backdrop-blur-[5px] z-50">
-			{isSentSuccessfully ? (
-				<div className="bg-white p-6 rounded-2xl shadow-lg w-[400px] text-center">
-					<h2 className="text-2xl font-extrabold text-[#032c28] mb-4">Письмо отправлено</h2>
-					<p className="text-[#032c28] text-sm font-medium">
-						Письмо для сброса пароля будет отправлено на указанную почту в ближайшее время.
-					</p>
-				</div>
-			) : (
-				<div ref={modalRef} className="bg-white p-6 rounded-2xl shadow-lg w-[400px]">
-					<h2 className="text-2xl font-extrabold text-[#032c28] mb-4">Сброс пароля</h2>
-					<div className="flex flex-col gap-1">
-						<InputField
+		<ModalWindow isOpen={isOpen} onClose={onClose}>
+			<CustomCard customColor="white" className={styles.card}>
+				{isSentSuccessfully ? (
+					<>
+						<h2 className={styles['title']}>Письмо отправлено</h2>
+						<p className={styles['description']}>
+							Письмо для сброса пароля будет отправлено на указанную почту в ближайшее время.
+						</p>
+					</>
+				) : (
+					<>
+						<h2 className={styles['title']}>Сброс пароля</h2>
+						<InputTextField
 							label="Почта от личного кабинета"
 							placeholder="Введите почту"
 							name="passwordResetEmail"
 							value={formData.passwordResetEmail}
+							errorText={errors.passwordResetEmail}
 							onChange={handleChange}
-							width={350}
-							labelFontSize={14}
 						/>
-						{errors.passwordResetEmail && (
-							<p className="text-red-600 text-sm font-medium mt-1">{errors.passwordResetEmail}</p>
-						)}
-					</div>
-					<button
-						type="button"
-						className="w-full bg-[#8fe248] text-[#032c28] p-2 rounded-2xl mt-4"
-						onClick={handleSubmit}
-						disabled={loading}
-					>
-						{loading ? 'Отправка...' : 'Отправить'}
-					</button>
-				</div>
-			)}
-		</div>
+						<ButtonCustom type="button" onClick={handleSubmit} disabled={loading}>
+							{loading ? 'Отправка...' : 'Отправить'}
+						</ButtonCustom>
+					</>
+				)}
+			</CustomCard>
+		</ModalWindow>
 	);
 };
 

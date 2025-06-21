@@ -70,6 +70,7 @@ const InputSelectField: FC<InputSelectFieldProps> = ({
 						error={!!errorText}
 						InputProps={{
 							...params.InputProps,
+							style: { padding: '15px 10px', paddingRight: 40, fontSize: '0.875rem' },
 							sx: {
 								paddingRight: '10px',
 								borderRadius: '16px',

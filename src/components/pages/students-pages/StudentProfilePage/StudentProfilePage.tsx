@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import ForgotPasswordEmail from '@/components/forms/forgot-password-email/ForgotPasswordEmail';
+import ForgotPasswordEmail from '@/components/forms/ForgotPasswordEmail/ForgotPasswordEmail';
 import LoginInfo from '@/components/forms/student-profile-elements/login-info/LoginInfo';
 import MainInfo from '@/components/forms/student-profile-elements/main-info/MainInfo';
 import UniversityInfo from '@/components/forms/student-profile-elements/university-info/UniversityInfo';
@@ -253,7 +253,9 @@ const StudentProfilePage: React.FC = () => {
 		setTimeout(() => setIsSaved(false), 3000);
 	};
 
-	const handleChangePassword = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChangePassword = (
+		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
 		const { name, value } = event.target;
 		setFormDataChangePassword((prev) => ({ ...prev, [name]: value }));
 	};
@@ -292,14 +294,13 @@ const StudentProfilePage: React.FC = () => {
 				/>
 			</div>
 			<ButtonCustom type="submit">{isSaved ? 'Сохранено ✓' : 'Сохранить'}</ButtonCustom>
-			{isPasswordResetVisible && (
-				<ForgotPasswordEmail
-					formData={formDataChangePassword}
-					handleChange={handleChangePassword}
-					onClose={() => setIsPasswordResetVisible(false)}
-					onClick={() => setIsPasswordResetVisible(false)}
-				/>
-			)}
+			<ForgotPasswordEmail
+				isOpen={isPasswordResetVisible}
+				formData={formDataChangePassword}
+				handleChange={handleChangePassword}
+				onClose={() => setIsPasswordResetVisible(false)}
+				onClick={() => setIsPasswordResetVisible(false)}
+			/>
 		</form>
 	);
 };

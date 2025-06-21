@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import ButtonCustom from '@/components/ui/ButtonCustom';
-import CardBrown from '@/components/ui/CardBrown';
+import CustomCard from '@/components/ui/CustomCard';
 import MarkdownRenderer from '@/components/ui/MarkdownRenderer/MarkdownRenderer';
 import ModalWindow from '@/components/ui/ModalWindow';
 
@@ -72,7 +72,7 @@ const PartnerInfo: FC<IPartnerInfoProps> = ({
 			</ButtonCustom>
 
 			<ModalWindow isOpen={modalOpen} onClose={handleModalOpen}>
-				<CardBrown className={styles.card}>
+				<CustomCard className={styles.card}>
 					{imageUrl && (
 						<div className={styles['image-container']}>
 							<Image
@@ -93,7 +93,7 @@ const PartnerInfo: FC<IPartnerInfoProps> = ({
 					<ButtonCustom onClick={handleClick} className={styles['button-site']}>
 						Перейти на сайт
 					</ButtonCustom>
-				</CardBrown>
+				</CustomCard>
 			</ModalWindow>
 		</div>
 	);

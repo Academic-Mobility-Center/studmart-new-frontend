@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import CardBrown from '@/components/ui/CardBrown';
+import CustomCard from '@/components/ui/CustomCard';
 import Loader from '@/components/ui/Loader';
 
 import { getStudentById } from '@/lib/api/students';
@@ -83,7 +83,7 @@ const StudIdPage: React.FC = () => {
 	};
 	if (isStudentLoading) return <Loader />;
 	return (
-		<CardBrown className={styles['card']}>
+		<CustomCard className={styles['card']}>
 			<div className={clsx(styles['corner-lines'], styles['corner-lines-up'])}>
 				<Image alt="lines" src="/icons/student-account/lines.png" fill />
 			</div>
@@ -142,7 +142,7 @@ const StudIdPage: React.FC = () => {
 					<p className={styles['edit-text']}>Редактировать</p>
 				</div>
 			</Link>
-		</CardBrown>
+		</CustomCard>
 	);
 };
 export default StudIdPage;

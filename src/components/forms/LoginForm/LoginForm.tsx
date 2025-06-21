@@ -15,7 +15,7 @@ import { loginWithCookie } from '@/lib/api/auth';
 import { useAuth } from '@/context/AuthContext';
 import LoginFormData from '@/types/LoginFormData';
 
-import ForgotPasswordEmail from '../forgot-password-email/ForgotPasswordEmail';
+import ForgotPasswordEmail from '../ForgotPasswordEmail/ForgotPasswordEmail';
 import styles from './LoginForm.module.scss';
 
 export default function LoginForm() {
@@ -129,14 +129,13 @@ export default function LoginForm() {
 					</Link>
 				</p>
 			</div>
-			{isPasswordResetVisible && (
-				<ForgotPasswordEmail
-					formData={formData}
-					handleChange={handleChange}
-					onClose={handleModal}
-					onClick={handleModal}
-				/>
-			)}
+			<ForgotPasswordEmail
+				isOpen={isPasswordResetVisible}
+				formData={formData}
+				handleChange={handleChange}
+				onClose={handleModal}
+				onClick={handleModal}
+			/>
 		</form>
 	);
 }

@@ -20,7 +20,7 @@ const ModalWindow: FC<IModalWindowProps> = ({ isOpen, onClose, children, classNa
 			className={clsx(styles['modal-window'], 'backdrop-blur-xs', className)}
 		>
 			<div onClick={onClose} className={styles['outer-click']} />
-			{children}
+			<div className={styles['content']}>{children}</div>
 		</Dialog>
 	);
 };

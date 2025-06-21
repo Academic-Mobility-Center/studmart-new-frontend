@@ -1,4 +1,4 @@
-.card-brown {
+.card {
 	position: relative;
 	width: 100%;
 	max-width: 100%;
@@ -12,4 +12,8 @@
 	@media (width<=1024px) {
 		padding: 15px;
 	}
+}
+
+.card-white {
+	background-color: var(--bg-white);
 }

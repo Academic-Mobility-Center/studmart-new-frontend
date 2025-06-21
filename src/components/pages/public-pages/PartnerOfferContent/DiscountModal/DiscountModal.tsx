@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Image from 'next/image';
 
-import CardBrown from '@/components/ui/CardBrown';
+import CustomCard from '@/components/ui/CustomCard';
 import MarkdownRenderer from '@/components/ui/MarkdownRenderer/MarkdownRenderer';
 import ModalWindow from '@/components/ui/ModalWindow';
 
@@ -30,7 +30,7 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode }
 
 	return (
 		<ModalWindow isOpen={isOpen} onClose={closeModal}>
-			<CardBrown className={styles.card}>
+			<CustomCard className={styles.card}>
 				<p className={styles.title}>{promoCode?.discount.name || 'Промокод'}</p>
 				<article className={styles.description}>
 					<MarkdownRenderer content={promoCode?.discount.description} />
@@ -85,7 +85,7 @@ export const DiscountModal: React.FC<Props> = ({ isOpen, closeModal, promoCode }
 					height={102}
 					className={styles.decor}
 				/>
-			</CardBrown>
+			</CustomCard>
 		</ModalWindow>
 	);
 };

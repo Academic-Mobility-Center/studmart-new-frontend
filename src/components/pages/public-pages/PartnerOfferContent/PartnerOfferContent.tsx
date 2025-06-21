@@ -131,7 +131,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		}
 	};
 	const closeModal = () => setIsModalOpen(false);
-	if (isLoadingPartner) {
+	if (isLoadingPartner || !isAuth) {
 		return <Loader />;
 	}
 

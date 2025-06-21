@@ -29,7 +29,7 @@ import { Option } from '@/types/Option';
 import { PartnerPersonalAccountFormData } from '@/types/PartnerPesonalAccount';
 import { EmployeePutData, PartnerPutData } from '@/types/PartnerUpdateData';
 
-import ForgotPasswordEmail from '../forgot-password-email/ForgotPasswordEmail';
+import ForgotPasswordEmail from '../ForgotPasswordEmail/ForgotPasswordEmail';
 import CompanyInfo from '../partner-profile-elements/company-info/CompanyInfo';
 import LoginInfo from '../partner-profile-elements/login-info/LoginInfo';
 import PaymentInfo from '../partner-profile-elements/payment-info/PaymentInfo';
@@ -334,7 +334,9 @@ const PartnerProfileForm: React.FC = () => {
 		passwordResetConfirm: '',
 	});
 
-	const handleChangePassword = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChangePassword = (
+		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
 		const { name, value } = event.target;
 		setFormDataChangePassword((prevData) => ({
 			...prevData,
@@ -374,16 +376,15 @@ const PartnerProfileForm: React.FC = () => {
 				<Button type="submit" className={saveButtonClasses}>
 					{isSaved ? 'Сохранено ✓' : 'Сохранить'}
 				</Button>
-				{isPasswordResetVisible && (
-					<ForgotPasswordEmail
-						formData={formDataChangePassword}
-						handleChange={handleChangePassword}
-						onClose={() => setIsPasswordResetVisible(false)}
-						onClick={() => {
-							setIsPasswordResetVisible(false);
-						}}
-					/>
-				)}
+				<ForgotPasswordEmail
+					isOpen={isPasswordResetVisible}
+					formData={formDataChangePassword}
+					handleChange={handleChangePassword}
+					onClose={() => setIsPasswordResetVisible(false)}
+					onClick={() => {
+						setIsPasswordResetVisible(false);
+					}}
+				/>
 			</form>
 		</>
 	);

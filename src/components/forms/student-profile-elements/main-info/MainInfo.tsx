@@ -140,7 +140,7 @@ const MainInfo: React.FC<Props> = ({
 					errorText={errors.isWork}
 				/>
 			</div>
-			<div className={styles['single-field']}>
+			<div className={styles['fields-row']}>
 				{/* <MultipleSelectV2
 					name="languageProfiency"
 					value={formData?.languageProfiency}
@@ -165,6 +165,8 @@ const MainInfo: React.FC<Props> = ({
 					// onBlur={handleBlur}
 					onChange={handleChangeSelectMulti}
 				/>
+
+				<div className="w-full" />
 			</div>
 		</div>
 	);
