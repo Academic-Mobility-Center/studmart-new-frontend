@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
+import CustomCard from '@/components/ui/CustomCard';
 import SearchInputField from '@/components/ui/fields/search_input/SearchInputField';
 import ModalWindow from '@/ui/ModalWindow';
 
@@ -206,34 +207,36 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 
 	return (
 		<ModalWindow isOpen={isOpen} onClose={closeModal}>
-			<div className="bg-white p-10 rounded-lg w-[700px] h-[700px] flex flex-col items-center">
-				<h2 className="text-lg font-bold text-black">Выберите город</h2>
-				<input
-					type="text"
-					placeholder="Введите название региона"
-					value={searchQuery}
-					onChange={(e) => setSearchQuery(e.target.value)}
-					className="border p-2 w-full rounded mt-2 text-black"
-				/>
-				<ul className="w-full overflow-auto mt-4">
-					{filteredCities.length > 0 ? (
-						filteredCities.map((city, index) => (
-							<li
-								key={index}
-								className="cursor-pointer p-2 hover:bg-gray-200 text-black"
-								onClick={() => {
-									setCity(city.name, city.id.toString());
-									closeModal();
-								}}
-							>
-								{city.name}
-							</li>
-						))
-					) : (
-						<p className="text-gray-500 text-center mt-2">Такого региона нет</p>
-					)}
-				</ul>
-			</div>
+			<CustomCard customColor="white" style={{ maxWidth: 700 }}>
+				<div className="flex flex-col items-center">
+					<h2 className="text-lg font-bold text-black">Выберите город</h2>
+					<input
+						type="text"
+						placeholder="Введите название региона"
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						className="border p-2 w-full rounded mt-2 text-black"
+					/>
+					<ul className="w-full overflow-auto mt-4 " style={{ maxHeight: 500 }}>
+						{filteredCities.length > 0 ? (
+							filteredCities.map((city, index) => (
+								<li
+									key={index}
+									className="cursor-pointer p-2 hover:bg-gray-200 text-black"
+									onClick={() => {
+										setCity(city.name, city.id.toString());
+										closeModal();
+									}}
+								>
+									{city.name}
+								</li>
+							))
+						) : (
+							<p className="text-gray-500 text-center mt-2">Такого региона нет</p>
+						)}
+					</ul>
+				</div>
+			</CustomCard>
 		</ModalWindow>
 	);
 }
