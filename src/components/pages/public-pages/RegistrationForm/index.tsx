@@ -129,6 +129,13 @@ export default function RegistrationForm() {
 		}));
 	};
 
+	const handleSelect = (name: string, value: Option | null) => {
+		setFormData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
+	};
+
 	const setBooleanField = (name: string, value: boolean) => {
 		setFormData((prevData) => ({
 			...prevData,
@@ -315,6 +322,7 @@ export default function RegistrationForm() {
 							handleChange={handleChangeForm}
 							onClick={handleSubmitForm1}
 							formData={formData}
+							handleSelect={handleSelect}
 						/>
 					)}
 					{isSecondPage && (
@@ -323,6 +331,7 @@ export default function RegistrationForm() {
 							formData={formData}
 							onClick={handleSubmitForm2}
 							onBack={handleBackForm2}
+							handleSelect={handleSelect}
 						/>
 					)}
 					{isThirdPage && (
@@ -334,6 +343,7 @@ export default function RegistrationForm() {
 							universitiesOptions={universitiesOptions}
 							coursesOptions={coursesOptions}
 							setBooleanField={setBooleanField}
+							handleSelect={handleSelect}
 						/>
 					)}
 				</>

@@ -99,7 +99,8 @@ const InputMultiSelect: FC<MultiSelectProps> = ({
 						{selected.length > 0 ? getSelectedLabels() : placeholder}
 					</div>
 					<div className={multiSelectStyles.arrow}>
-						<svg
+						<span className={clsx({ [multiSelectStyles.rotated]: isOpen })}>▼</span>
+						{/* <svg
 							width="10"
 							height="6"
 							viewBox="0 0 10 6"
@@ -114,7 +115,7 @@ const InputMultiSelect: FC<MultiSelectProps> = ({
 								strokeLinecap="round"
 								strokeLinejoin="round"
 							/>
-						</svg>
+						</svg> */}
 					</div>
 				</div>
 

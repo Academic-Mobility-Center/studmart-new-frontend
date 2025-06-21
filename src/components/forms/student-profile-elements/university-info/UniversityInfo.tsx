@@ -3,6 +3,7 @@ import InputTextField from '@/components/ui/inputs/InputTextField';
 
 import { transformToOptions } from '@/utils/dataTransform';
 
+import { Option } from '@/types/Option';
 import { SelectOption } from '@/types/SelectOption';
 import { StudentFormData } from '@/types/StudentProfileData';
 import University from '@/types/University';
@@ -24,6 +25,7 @@ interface Props {
 	) => void;
 	courseOptions: SelectOption[];
 	newUniversityOptions: University[];
+	handleChangeSelectSingle: (name: string, values: Option | null) => void;
 }
 
 const UniversityInfo: React.FC<Props> = ({
@@ -33,6 +35,7 @@ const UniversityInfo: React.FC<Props> = ({
 	courseOptions,
 	errors,
 	newUniversityOptions,
+	handleChangeSelectSingle,
 }) => {
 	const filteredUniversityOptions = formData?.region
 		? newUniversityOptions.filter((u) => u.city.region.id.toString() === formData.region?.value)
@@ -48,7 +51,7 @@ const UniversityInfo: React.FC<Props> = ({
 					label="Университет"
 					placeholder="Университет"
 					value={formData?.university}
-					onChange={handleChange}
+					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					options={transformToOptions(filteredUniversityOptions)}
 					errorText={errors.university}
@@ -69,7 +72,7 @@ const UniversityInfo: React.FC<Props> = ({
 					label="Курс"
 					placeholder="Курс"
 					value={formData?.course}
-					onChange={handleChange}
+					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					options={transformToOptions(courseOptions)}
 					errorText={errors.course}

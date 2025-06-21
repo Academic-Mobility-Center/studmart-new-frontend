@@ -15,6 +15,7 @@ export interface IInputTextFieldProps
 	errorText?: string;
 	isTextArea?: boolean;
 	textAreaResize?: boolean;
+	inputClassName?: string;
 }
 
 const InputTextField: FC<IInputTextFieldProps> = ({
@@ -29,6 +30,7 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 	isTextArea = false,
 	textAreaResize = true,
 	type = 'text',
+	inputClassName,
 	...rest
 }) => {
 	const currentId = id ?? name + 'Id';
@@ -45,10 +47,14 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 					{...rest}
 					id={currentId}
 					name={name}
-					className={clsx(styles.input, {
-						[styles['error']]: !!errorText,
-						[styles['text-area-not-resize']]: !textAreaResize,
-					})}
+					className={clsx(
+						styles.input,
+						{
+							[styles['error']]: !!errorText,
+							[styles['text-area-not-resize']]: !textAreaResize,
+						},
+						inputClassName,
+					)}
 					rows={rows ?? 3}
 					placeholder={placeholder}
 					onChange={onChange}
@@ -59,7 +65,7 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 					id={currentId}
 					name={name}
 					type={type}
-					className={clsx(styles.input, { [styles['error']]: !!errorText })}
+					className={clsx(styles.input, { [styles['error']]: !!errorText }, inputClassName)}
 					placeholder={placeholder}
 					onChange={onChange}
 				/>

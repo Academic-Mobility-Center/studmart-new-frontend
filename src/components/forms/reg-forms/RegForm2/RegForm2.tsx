@@ -18,7 +18,13 @@ const genderOptions = [
 	{ id: 2, name: 'Женский' },
 ];
 
-const RegForm2: React.FC<RegFormProps> = ({ handleChange, onBack, formData, onClick }) => {
+const RegForm2: React.FC<RegFormProps> = ({
+	handleChange,
+	onBack,
+	formData,
+	onClick,
+	handleSelect,
+}) => {
 	const [errors, setErrors] = useState<{
 		name?: string;
 		fullname?: string;
@@ -106,7 +112,7 @@ const RegForm2: React.FC<RegFormProps> = ({ handleChange, onBack, formData, onCl
 				options={transformToOptions(genderOptions)}
 				name="gender"
 				value={formData.gender ?? undefined}
-				onChange={handleChange}
+				onChange={handleSelect}
 				placeholder="Мужской"
 			/>
 			<InputDateField

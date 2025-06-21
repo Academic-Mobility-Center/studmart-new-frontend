@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 
+import { Option } from './Option';
 import RegistrationFormData from './RegistrationFormData';
 
 export type FormDataType = {
@@ -26,4 +27,5 @@ export default interface RegFormProps {
 		value: string;
 	}[];
 	validate?: () => boolean;
+	handleSelect: (name: string, value: Option | null) => void;
 }

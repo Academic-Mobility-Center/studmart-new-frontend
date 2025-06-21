@@ -1,132 +1,178 @@
-import { FC, memo } from 'react';
+import {
+	ChangeEvent,
+	FC,
+	InputHTMLAttributes,
+	KeyboardEvent,
+	TextareaHTMLAttributes,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
-import { Autocomplete, AutocompleteRenderInputParams, Box, TextField } from '@mui/material';
 import clsx from 'clsx';
 
-import styles from '../Input.module.css';
+import InputTextField from '@/components/ui/inputs/InputTextField';
 
-type Option = {
-	label: string;
-	value: string;
-};
+import { Option } from '@/types/Option';
 
-interface InputSelectFieldProps {
-	label?: string;
-	placeholder?: string;
-	options: Option[];
-	value?: Option | null;
+import styles from './InputSelectField.module.css';
+
+interface IInputSelectFieldProps
+	extends Omit<
+		InputHTMLAttributes<HTMLInputElement> & TextareaHTMLAttributes<HTMLTextAreaElement>,
+		'onChange' | 'value'
+	> {
 	name: string;
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+	label?: string;
+	options?: Option[];
+	loadOptions?: (input: string) => Promise<Option[]>;
+	onChange: (name: string, values: Option | null) => void;
+	value?: Option;
 	errorText?: string;
-	disabled?: boolean;
-	className?: string;
+	isTextArea?: boolean;
+	textAreaResize?: boolean;
+	searchOn?: boolean;
 }
 
-const InputSelectField: FC<InputSelectFieldProps> = ({
-	label,
-	options,
-	value,
+const InputSelectField: FC<IInputSelectFieldProps> = ({
 	name,
+	label,
+	options = [],
+	loadOptions,
 	onChange,
-	onBlur,
-	placeholder,
+	value,
 	errorText,
+	placeholder,
 	disabled,
-	className,
+	isTextArea = false,
+	textAreaResize = true,
+	searchOn = true,
+	...rest
 }) => {
-	const handleChange = (_: React.SyntheticEvent, newValue: Option | null) => {
-		const event = {
-			target: {
-				name,
-				value: newValue?.value ?? '',
-			},
-		} as React.ChangeEvent<HTMLInputElement>;
-		onChange(event);
+	const [suggestions, setSuggestions] = useState<Option[]>(options);
+	const [isOpen, setIsOpen] = useState(false);
+	const [inputValue, setInputValue] = useState(value?.label ?? '');
+	const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		setInputValue(value?.label ?? '');
+	}, [value]);
+
+	useEffect(() => {
+		const input = inputValue.trim();
+		if (!input) {
+			setSuggestions(options);
+			return;
+		}
+		if (searchOn)
+			if (loadOptions) {
+				loadOptions(input).then((res) => {
+					setSuggestions(res);
+					setHighlightedIndex(0);
+				});
+			} else {
+				const filtered = options.filter((opt) =>
+					opt.label.toLowerCase().includes(input.toLowerCase()),
+				);
+				setSuggestions(filtered);
+				setHighlightedIndex(0);
+			}
+	}, [inputValue, loadOptions, options, searchOn]);
+
+	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+				setIsOpen(false);
+			}
+		};
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => document.removeEventListener('mousedown', handleClickOutside);
+	}, []);
+
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		setInputValue(e.target.value);
+		setIsOpen(true);
+		setHighlightedIndex(0);
+		if (!e.target.value) onChange(name, null);
+	};
+
+	const handleSelect = (option: Option) => {
+		onChange(name, option);
+		setInputValue(option.label);
+		setIsOpen(false);
+	};
+
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		if (!isOpen) return;
+
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			setHighlightedIndex((prev) => Math.min(prev + 1, suggestions.length - 1));
+		}
+		if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			setHighlightedIndex((prev) => Math.max(prev - 1, 0));
+		}
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			if (highlightedIndex >= 0 && suggestions[highlightedIndex]) {
+				handleSelect(suggestions[highlightedIndex]);
+			}
+		}
+		if (e.key === 'Escape') {
+			e.preventDefault();
+			setIsOpen(false);
+		}
 	};
 
 	return (
-		<div className={clsx(styles['input-text-field'], className)}>
-			{label && (
-				<label className={styles.label} htmlFor={name}>
-					{label}
-				</label>
+		<div className={styles['autocomplete']} ref={containerRef}>
+			<div className={styles['input-wrapper']}>
+				<InputTextField
+					inputClassName={styles['input-with-arrow']}
+					onClick={() => setIsOpen(true)}
+					name={name}
+					label={label}
+					value={inputValue}
+					placeholder={placeholder}
+					errorText={errorText}
+					disabled={disabled}
+					autoComplete="off"
+					onChange={handleInputChange}
+					onKeyDown={handleKeyDown}
+					isTextArea={isTextArea}
+					textAreaResize={textAreaResize}
+					{...rest}
+				/>
+				<span
+					onClick={() => setIsOpen((prev) => !prev)}
+					aria-hidden="true"
+					className={clsx(styles['icon'], {
+						[styles['has-error']]: !!errorText,
+						[styles['icon-open']]: isOpen,
+					})}
+				>
+					▼
+				</span>
+			</div>
+			{isOpen && suggestions.length > 0 && (
+				<ul className={styles['dropdown']}>
+					{suggestions.map((opt, index) => (
+						<li
+							key={opt.value}
+							className={`${styles['dropdown-item']} ${
+								index === highlightedIndex ? styles['highlighted'] : ''
+							}`}
+							onClick={() => handleSelect(opt)}
+						>
+							{opt.label}
+						</li>
+					))}
+				</ul>
 			)}
-			<Autocomplete
-				options={options}
-				value={value || null}
-				onChange={handleChange}
-				getOptionLabel={(option) => option.label}
-				isOptionEqualToValue={(a, b) => a.value === b.value}
-				disabled={disabled}
-				noOptionsText="Ничего не найдено"
-				renderInput={(params: AutocompleteRenderInputParams) => (
-					<TextField
-						{...params}
-						className={styles.input}
-						name={name}
-						placeholder={placeholder}
-						onBlur={onBlur}
-						error={!!errorText}
-						InputProps={{
-							...params.InputProps,
-							style: { padding: '15px 10px', paddingRight: 40, fontSize: '0.875rem' },
-							sx: {
-								paddingRight: '10px',
-								borderRadius: '16px',
-								backgroundColor: '#fff',
-								color: '#032c28',
-								'& input::placeholder': {
-									color: '#888888',
-									opacity: 1,
-								},
-							},
-						}}
-						sx={{
-							'& .MuiOutlinedInput-root': {
-								fontFamily: 'var(--font-buttons)',
-								paddingLeft: '20px',
-								height: '48px',
-								'& fieldset': {
-									borderColor: '#ccc',
-								},
-								'&:hover fieldset': {
-									borderColor: 'var(--label-color)',
-								},
-								'&.Mui-focused fieldset': {
-									borderColor: '#032c28',
-								},
-							},
-						}}
-					/>
-				)}
-				renderOption={(props, option) => (
-					<Box
-						component="li"
-						{...props}
-						key={'key' + option.label}
-						sx={{
-							px: 2,
-							py: 1,
-							cursor: 'pointer',
-							color: '#032c28',
-							'&:hover': {
-								backgroundColor: '#032c28',
-								color: '#8FE248',
-							},
-							'&.Mui-focused': {
-								backgroundColor: '#032c28',
-								color: '#8FE248',
-							},
-						}}
-					>
-						{option.label}
-					</Box>
-				)}
-			/>
-			{errorText && <span className={styles['error-text']}>{errorText}</span>}
 		</div>
 	);
 };
 
-export default memo(InputSelectField);
+export default InputSelectField;

@@ -29,7 +29,7 @@ export const courseOptions = [
 
 export const validateField = (
 	name: string,
-	value: string | boolean | string[],
+	value?: string | boolean | string[] | null,
 ): string | string[] | undefined => {
 	switch (name) {
 		case 'email':

@@ -122,11 +122,8 @@ const StudentFaqPage = () => {
 						options={transformToOptions(faqCategoryOptions)}
 						name="category"
 						value={category}
-						onChange={(e) => {
-							const selectedOption = transformToOptions(faqCategoryOptions).find(
-								(opt) => opt.value === e.target.value,
-							);
-							setCategory(selectedOption);
+						onChange={(_, option) => {
+							if (option) setCategory(option);
 						}}
 					/>
 					<InputTextField

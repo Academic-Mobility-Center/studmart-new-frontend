@@ -1,113 +1,65 @@
-.input-text-field {
-	display: flex;
-	width: 100%;
-	flex-direction: column;
-	gap: 12px;
-	font-weight: 400;
-	font-size: 0.875rem;
-	line-height: normal;
-}
-
-.label {
-	font-size: 0.875rem;
-	font-weight: 400;
-}
-
-.select-container {
+.autocomplete {
 	position: relative;
 	width: 100%;
 }
 
-.select-button {
-	font-family: var(--font-buttons);
-	width: 100%;
-	padding: 15px;
-	border: 1px solid var(--border-color);
-	background: var(--color-white);
-	border-radius: 15px;
-	text-align: left;
-	font-size: 0.875rem;
-	font-weight: 400;
-	position: relative;
-	cursor: pointer;
-	transition: border-color 0.2s ease-in-out;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.select-button:focus {
-	border-color: #000;
-	outline: none;
-}
-
-.select-button:disabled {
-	color: var(--gray);
-	border-color: var(--gray);
-	cursor: not-allowed;
-}
-
-.select-icon {
+.dropdown {
 	position: absolute;
-	right: 15px;
+	z-index: 10;
+	top: 100%;
+	left: 0;
+	right: 0;
+	margin-top: 4px;
+	padding: 0;
+	list-style: none;
+	background-color: var(--color-white);
+	border: 1px solid var(--border-color);
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgb(0, 0, 0, 0.08);
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+.dropdown-item {
+	padding: 10px;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+	background-color: #f2f2f2;
+}
+
+.dropdown-item:hover,
+.highlighted {
+	background-color: var(--bg-green);
+}
+
+.input-with-arrow {
+	padding-right: 2rem;
+	text-overflow: ellipsis;
+}
+
+.input-wrapper {
+	position: relative;
+	width: 100%;
+}
+
+.icon {
+	top: 67%;
+	position: absolute;
+	right: 0.75rem;
+	cursor: pointer;
+	transform: translateY(-50%);
+	transition: transform 0.3s ease;
+	font-size: 0.8rem;
+}
+
+.has-error {
 	top: 50%;
 	transform: translateY(-50%);
 }
 
-.options-container {
-	position: absolute;
-	top: calc(100% + 5px);
-	left: 0;
-	right: 0;
-	max-height: 200px;
-	overflow-y: auto;
-	background: var(--color-white);
-	border: 1px solid var(--border-color);
-	border-radius: 10px;
-	z-index: 10;
-	box-shadow: 0 4px 10px rgb(0, 0, 0, 0.1);
-}
-
-.search-input {
-	width: 100%;
-	padding: 10px 15px;
-	border: none;
-	border-bottom: 1px solid var(--border-color);
-	font-size: 0.875rem;
-}
-
-.search-input:focus {
-	outline: none;
-}
-
-.option {
-	padding: 10px 15px;
-	cursor: pointer;
-	font-size: 0.875rem;
-}
-
-.option:hover {
-	background-color: rgb(0, 0, 0, 0.05);
-}
-
-.option-selected {
-	background-color: rgb(0, 0, 0, 0.08);
-}
-
-.no-options {
-	padding: 15px;
-	text-align: center;
-	color: var(--gray);
-	font-size: 0.875rem;
-}
-
-.error {
-	border-color: var(--error-color);
-}
-
-.error-text {
-	color: var(--error-color);
-	font-size: 0.875rem;
-	font-weight: 500;
-	word-wrap: normal;
+.icon-open {
+	transform: translateY(-50%) rotate(180deg);
 }

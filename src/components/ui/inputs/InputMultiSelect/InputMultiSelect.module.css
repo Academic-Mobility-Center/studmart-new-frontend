@@ -28,6 +28,7 @@
 	display: flex;
 	align-items: center;
 	transition: transform 0.2s ease;
+	font-size: 0.8rem;
 }
 
 .arrow .rotated {

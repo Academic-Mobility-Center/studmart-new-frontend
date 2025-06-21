@@ -32,6 +32,7 @@ import IStudentFormData, {
 } from '@/context/StudentPersonalContext';
 import City from '@/types/Cities';
 import LoginFormData from '@/types/LoginFormData';
+import { Option } from '@/types/Option';
 import { StudentFormData } from '@/types/StudentProfileData';
 import StudentPutData from '@/types/StudentPutData';
 import University from '@/types/University';
@@ -204,6 +205,12 @@ const StudentProfilePage: React.FC = () => {
 		setFormData((prev) => ({ ...prev, [name]: values }));
 		setErrors((prev) => ({ ...prev, [name]: validateField(name, values) }));
 	};
+	const handleChangeSelectSingle = (name: string, values: Option | null) => {
+		console.log(name, values, validateField(name, values ? values.label : ''));
+
+		setFormData((prev) => ({ ...prev, [name]: values }));
+		setErrors((prev) => ({ ...prev, [name]: validateField(name, values ? values.label : '') }));
+	};
 
 	const handleSubmitForm = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -283,6 +290,7 @@ const StudentProfilePage: React.FC = () => {
 					newCityOptions={fetchCities}
 					newRegionOptions={regions}
 					handleChangeSelectMulti={handleChangeSelectMulti}
+					handleChangeSelectSingle={handleChangeSelectSingle}
 				/>
 				<UniversityInfo
 					formData={formData}
@@ -291,6 +299,7 @@ const StudentProfilePage: React.FC = () => {
 					errors={errors}
 					courseOptions={fetchCourses}
 					newUniversityOptions={fetchUniversities}
+					handleChangeSelectSingle={handleChangeSelectSingle}
 				/>
 			</div>
 			<ButtonCustom type="submit">{isSaved ? 'Сохранено ✓' : 'Сохранить'}</ButtonCustom>

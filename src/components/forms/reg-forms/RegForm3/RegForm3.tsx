@@ -10,6 +10,7 @@ import InputTextField from '@/components/ui/inputs/InputTextField';
 
 import { StudentEmailDomain } from '@/lib/api/students';
 
+import { Option } from '@/types/Option';
 import RegistrationFormData from '@/types/RegistrationFormData';
 
 import styles from '../RegForm.module.scss';
@@ -38,6 +39,7 @@ interface Props {
 		value: string;
 	}[];
 	setBooleanField: (name: string, value: boolean) => void;
+	handleSelect: (name: string, value: Option | null) => void;
 }
 type errorRegForm3 = {
 	profession?: string;
@@ -55,6 +57,7 @@ const RegForm3: React.FC<Props> = ({
 	universitiesOptions,
 	coursesOptions,
 	setBooleanField,
+	handleSelect,
 }) => {
 	const [errors, setErrors] = useState<errorRegForm3>({
 		profession: '',
@@ -144,7 +147,7 @@ const RegForm3: React.FC<Props> = ({
 				options={universitiesOptions ?? []}
 				name="university"
 				value={formData.university ?? undefined}
-				onChange={handleChange}
+				onChange={handleSelect}
 				placeholder="Университет"
 				errorText={errors.university}
 			/>
@@ -163,7 +166,7 @@ const RegForm3: React.FC<Props> = ({
 				options={coursesOptions || []}
 				name="course"
 				value={formData.course ?? undefined}
-				onChange={handleChange}
+				onChange={handleSelect}
 				placeholder="Курс"
 				errorText={errors.course}
 			/>

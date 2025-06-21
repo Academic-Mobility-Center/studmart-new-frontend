@@ -6,6 +6,7 @@ import InputTextField from '@/components/ui/inputs/InputTextField';
 import { transformToOptions } from '@/utils/dataTransform';
 
 import City from '@/types/Cities';
+import { Option } from '@/types/Option';
 import Region from '@/types/Region';
 import { SelectOption } from '@/types/SelectOption';
 import { StudentFormData } from '@/types/StudentProfileData';
@@ -38,6 +39,7 @@ interface Props {
 	newCityOptions: City[];
 	newRegionOptions: Region[];
 	handleChangeSelectMulti: (name: string, values: string[]) => void;
+	handleChangeSelectSingle: (name: string, values: Option | null) => void;
 }
 
 const MainInfo: React.FC<Props> = ({
@@ -52,6 +54,7 @@ const MainInfo: React.FC<Props> = ({
 	newCityOptions,
 	newRegionOptions,
 	handleChangeSelectMulti,
+	handleChangeSelectSingle,
 }) => {
 	return (
 		<div className={styles.form}>
@@ -91,7 +94,7 @@ const MainInfo: React.FC<Props> = ({
 					label="Пол"
 					placeholder="Пол"
 					value={formData?.gender}
-					onChange={handleChange}
+					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.gender}
 				/>
@@ -103,7 +106,7 @@ const MainInfo: React.FC<Props> = ({
 					label="Регион проживания"
 					placeholder="Регион проживания"
 					value={formData?.region}
-					onChange={handleChange}
+					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.region}
 				/>
@@ -113,7 +116,7 @@ const MainInfo: React.FC<Props> = ({
 					label="Город проживания"
 					placeholder="Город проживания"
 					value={formData?.city}
-					onChange={handleChange}
+					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.city}
 				/>
@@ -125,7 +128,7 @@ const MainInfo: React.FC<Props> = ({
 					label="Семейное положение"
 					placeholder="Семейное положение"
 					value={formData?.familyStatus}
-					onChange={handleChange}
+					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.familyStatus}
 				/>
@@ -135,7 +138,7 @@ const MainInfo: React.FC<Props> = ({
 					label="Наличие работы"
 					placeholder="Наличие работы"
 					value={formData?.isWork}
-					onChange={handleChange}
+					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.isWork}
 				/>
