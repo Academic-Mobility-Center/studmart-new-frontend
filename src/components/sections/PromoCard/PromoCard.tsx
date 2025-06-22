@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import PromoCardsDescriprion from '@/components/unknown/PromoCardsContent/promo-card-description';
 
-import { addToFavouritePartner, deleteFavouritePartner } from '@/lib/api/promocodes';
+import { useHandleFavoriteCard } from '@/hooks/query/usePartnersCardsQuery';
 
 import { useAuth } from '@/context/AuthContext';
 
@@ -34,7 +34,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 	isInitiallyFavourite,
 }) => {
 	const router = useRouter();
-	const { isAuthenticated, role, id: studentId } = useAuth();
+	const { isAuthenticated, role } = useAuth();
 	const [isFavourite, setIsFavourite] = useState<boolean>(isInitiallyFavourite ?? false);
 
 	const handleClick = () => {
@@ -42,6 +42,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 		router.push(`/partner-offer/${id}`);
 	};
 
+	const { addInFavouritePartner, deleteOutFavouritePartner } = useHandleFavoriteCard();
 	const handleStarClick = async (e: React.MouseEvent) => {
 		e.stopPropagation();
 		const newValue = !isFavourite;
@@ -49,8 +50,8 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 
 		try {
 			const result = newValue
-				? await addToFavouritePartner(id, studentId ?? '')
-				: await deleteFavouritePartner(id, studentId ?? '');
+				? await addInFavouritePartner(id)
+				: await deleteOutFavouritePartner(id);
 
 			if (result?.ignoredError) console.warn('Ignored error from API');
 		} catch (error) {

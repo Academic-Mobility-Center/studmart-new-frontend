@@ -1,21 +1,14 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { Button } from '@mui/base';
 
 import { PromoCard } from '@/components/sections/PromoCard/PromoCard';
 import Loader from '@/components/ui/Loader';
 
-import {
-	getFavouritesPartners,
-	getPromocodePartners,
-	getPromocodePartnersByRegionId,
-} from '@/lib/api/promocodes';
+import { usePartnersCardsQuery } from '@/hooks/query/usePartnersCardsQuery';
 
-import { useAuth } from '@/context/AuthContext';
-import { useCity } from '@/context/CityContext';
-import { transformPromos } from '@/context/HomePageContext';
 import PromoCardType from '@/types/PromoCard';
 
 import styles from './StylishWidgetSection.module.css';
@@ -29,69 +22,11 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
 	const LOAD_MORE_STEP = 4;
 
 	const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_CARDS);
-	const [partners, setPartners] = useState<PromoCardType[]>([]);
-	const [favouritePartners, setFavouritePartners] = useState<PromoCardType[]>([]);
-	const [loading, setLoading] = useState(true);
 
-	const { id } = useAuth();
-	const { regionId } = useCity();
+	const { cards, fixedCards, favoritesCards, isLoadingFavoritesCard, isLoadingPartnersCard } =
+		usePartnersCardsQuery(selectedCategoryId);
 
-	useEffect(() => {
-		const fetchPromos = async () => {
-			try {
-				setLoading(true);
-				const data = regionId
-					? await getPromocodePartnersByRegionId(regionId)
-					: await getPromocodePartners();
-				setPartners(transformPromos(data || []));
-			} catch (err) {
-				console.error('Error fetching promocodes:', err);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchPromos();
-	}, [regionId]);
-
-	useEffect(() => {
-		if (!id) return;
-
-		const fetchFavourites = async () => {
-			try {
-				const data = await getFavouritesPartners(id);
-				const transformed = transformPromos(data || []).map((card) => ({
-					...card,
-					categoryId: 0,
-				}));
-				setFavouritePartners(transformed);
-			} catch (error) {
-				console.warn('Error fetching favourites:', error);
-			}
-		};
-
-		fetchFavourites();
-	}, [id]);
-
-	// === Мемоизированные данные ===
-	const favouriteIds = useMemo(
-		() => new Set(favouritePartners.map((p) => p.id)),
-		[favouritePartners],
-	);
-
-	const { fixedCards, regularCards } = useMemo(() => {
-		const sourceCards =
-			selectedCategoryId === 0
-				? favouritePartners
-				: selectedCategoryId !== null
-					? partners.filter((p) => p.categoryId === selectedCategoryId)
-					: partners;
-
-		const fixed = sourceCards.filter((c) => c.isFixed);
-		const regular = sourceCards.filter((c) => !c.isFixed);
-
-		return { fixedCards: fixed, regularCards: regular };
-	}, [selectedCategoryId, partners, favouritePartners]);
+	const favouriteIds = useMemo(() => new Set(favoritesCards.map((p) => p.id)), [favoritesCards]);
 
 	// === Рендер карточек ===
 	const renderCards = (cards: PromoCardType[], fixed = false) => (
@@ -115,15 +50,16 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
 
 	const handleLoadMore = () => setVisibleCount((prev) => prev + LOAD_MORE_STEP);
 
-	const showLoadMore = regularCards.length > visibleCount;
+	const showLoadMore = cards.length > visibleCount;
 
-	if (loading) return <Loader />;
+	if (isLoadingFavoritesCard || isLoadingPartnersCard) return <Loader />;
+
 	return (
 		<>
 			{renderCards(fixedCards, true)}
 
 			<div className={styles['hierarchical-content-container']}>
-				{renderCards(regularCards.slice(0, visibleCount))}
+				{renderCards(cards.slice(0, visibleCount))}
 			</div>
 
 			{showLoadMore && (

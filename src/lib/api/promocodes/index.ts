@@ -1,3 +1,5 @@
+import { PromoPartners } from '@/context/HomePageContext';
+
 export const getPromocodeCategories = async () => {
 	try {
 		const res = await fetch('/api/promocodes/Categories');
@@ -26,7 +28,7 @@ export const getCategoryById = async (id: string) => {
 		return null;
 	}
 };
-export const getPromocodePartners = async () => {
+export const getPromocodePartners = async (): Promise<PromoPartners[]> => {
 	try {
 		const res = await fetch('/api/promocodes/Partners');
 		if (!res.ok) {
@@ -36,7 +38,7 @@ export const getPromocodePartners = async () => {
 		return data;
 	} catch (error) {
 		console.error('Ошибка в getPromocodePartners:', error);
-		return null;
+		return [];
 	}
 };
 export const getPromocodeDiscounts = async () => {
@@ -78,7 +80,7 @@ export const getPromocodePartnerById = async (id: string) => {
 		return null;
 	}
 };
-export const getPromocodePartnersByRegionId = async (id: string) => {
+export const getPromocodePartnersByRegionId = async (id: string): Promise<PromoPartners[]> => {
 	try {
 		const res = await fetch(`/api/promocodes/Partners?RegionId=${id}`);
 		if (!res.ok) {
@@ -88,7 +90,7 @@ export const getPromocodePartnersByRegionId = async (id: string) => {
 		return data;
 	} catch (error) {
 		console.error('Ошибка в getPromocodePartnersByRegionId:', error);
-		return null;
+		return [];
 	}
 };
 export const getPromocodePartnerByIdAndRegionId = async (
@@ -134,9 +136,9 @@ export const getPromocodeDiscountByDiscountIdAndStudentId = async (
 		return null;
 	}
 };
-export const getFavouritesPartners = async (id: string) => {
+export const getFavouritesPartners = async (id: string | null): Promise<PromoPartners[]> => {
 	try {
-		const res = await fetch(`/api/promocodes/Favourites/${id}`);
+		const res = await fetch(`/api/promocodes/Favourites/${id ?? ''}`);
 		if (!res.ok) {
 			throw new Error(`Ошибка при получении избранных партнеров: ${res.status}`);
 		}
@@ -144,11 +146,15 @@ export const getFavouritesPartners = async (id: string) => {
 		return data;
 	} catch (error) {
 		console.error('Ошибка в getPromocodePartnersByRegionId:', error);
-		return null;
+		return [];
 	}
 };
-export const addToFavouritePartner = async (partnerId: string, studentId: string) => {
+
+export const addToFavouritePartner = async (partnerId: string, studentId: string | null) => {
 	try {
+		if (!studentId) {
+			throw new Error(`Ошибка: 403`);
+		}
 		const res = await fetch(`/api/promocodes/Favourites`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -172,8 +178,11 @@ export const addToFavouritePartner = async (partnerId: string, studentId: string
 	}
 };
 
-export const deleteFavouritePartner = async (partnerId: string, studentId: string) => {
+export const deleteFavouritePartner = async (partnerId: string, studentId: string | null) => {
 	try {
+		if (!studentId) {
+			throw new Error(`Ошибка: 403`);
+		}
 		const res = await fetch('/api/promocodes/Favourites', {
 			method: 'DELETE',
 			headers: {

@@ -11,6 +11,8 @@ import { CityProvider } from '@/context/CityContext';
 
 import '@/styles/globals.css';
 
+import { QueryProvider } from '@/components/layouts/providers/QueryProvider';
+
 const mulish = Mulish({
 	subsets: ['latin', 'cyrillic'],
 	weight: ['400', '600', '700', '800', '900'],
@@ -35,12 +37,14 @@ export default function RootLayout({
 	return (
 		<html lang="ru" data-theme={'light'}>
 			<body className={`${nunitoSans.variable} ${mulish.variable} antialiased `}>
-				<CityProvider>
-					<AuthProvider>
-						<MainLayout>{children}</MainLayout>
-						<CookieConsent />
-					</AuthProvider>
-				</CityProvider>
+				<QueryProvider>
+					<CityProvider>
+						<AuthProvider>
+							<MainLayout>{children}</MainLayout>
+							<CookieConsent />
+						</AuthProvider>
+					</CityProvider>
+				</QueryProvider>
 			</body>
 		</html>
 	);

@@ -13,7 +13,13 @@ const NewFooter = () => {
 		<footer className={styles['footer']}>
 			<div className={styles['footer-top']}>
 				<div className={styles['logo-wrapper']}>
-					<Image src="/icons/footer/logo.svg" alt="Логотип" className={styles['logo']} fill />
+					<Image
+						src="/icons/footer/logo.svg"
+						alt="Логотип"
+						className={styles['logo']}
+						fill
+						priority
+					/>
 				</div>
 				<div className={styles['info-section']}>
 					<Contacts />

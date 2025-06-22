@@ -75,7 +75,7 @@ export const menuItems: MenuItem[] = [
 	{ name: 'Обучение', Icon: SchoolSvg, id: 7 },
 	{ name: 'Спорт', Icon: ExerciseSvg, id: 8 },
 ];
-type PromoPartners = {
+export type PromoPartners = {
 	id: string;
 	companyName: string;
 	subtitle: string;
