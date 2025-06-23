@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import styles from './ButtonCustom.module.css';
 
 interface IButtonCustomProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	customType?: 'primary' | 'secondary' | 'white';
 }
 

@@ -28,13 +28,12 @@ export const usePartnersCardsQuery = (
 			(regionId ? getPromocodePartnersByRegionId(regionId) : getPromocodePartners()).then((res) =>
 				transformPromos(res),
 			),
-		enabled: enabledFavorites,
 	});
 
 	const { data: favoritesCards = [], isLoading: isLoadingFavoritesCard } = useQuery({
 		queryKey: queryKeys.favoritesCard(),
 		queryFn: () => getFavouritesPartners(id).then((res) => transformPromos(res)),
-		enabled: !!id,
+		enabled: enabledFavorites,
 	});
 
 	const { fixedCards, cards } = useMemo(() => {

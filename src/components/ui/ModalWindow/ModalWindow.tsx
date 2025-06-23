@@ -10,11 +10,18 @@ export interface IModalWindowProps {
 	children?: ReactNode;
 	isOpen?: boolean;
 	onClose: () => void;
+	appear?: boolean;
 }
 
-const ModalWindow: FC<IModalWindowProps> = ({ isOpen, onClose, children, className }) => {
+const ModalWindow: FC<IModalWindowProps> = ({
+	isOpen,
+	onClose,
+	children,
+	className,
+	appear = true,
+}) => {
 	return (
-		<Transition appear show={isOpen} as={Fragment}>
+		<Transition appear={appear} show={isOpen} as={Fragment}>
 			<Dialog
 				as="div"
 				onClose={onClose}

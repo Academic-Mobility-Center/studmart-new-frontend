@@ -19,6 +19,7 @@ import { useCity } from '@/context/CityContext';
 import PromoCardType from '@/types/PromoCard';
 
 import styles from './NewHeader.module.css';
+import SearchPartnerCard from './SearchPartnerModal';
 
 interface NewHeaderProps {
 	children?: ReactNode;
@@ -43,6 +44,7 @@ export default function NewHeader({}: NewHeaderProps) {
 		}
 	};
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 	const { city } = useCity();
 	const openModal = () => setIsModalOpen(true);
 	const closeModal = () => setIsModalOpen(false);
@@ -52,6 +54,9 @@ export default function NewHeader({}: NewHeaderProps) {
 			: isAuthenticated
 				? '/student-personal-account'
 				: '/login';
+
+	const handleSearchModal = () => setIsSearchModalOpen((prev) => !prev);
+
 	return (
 		<>
 			<header className={styles.header}>
@@ -81,11 +86,11 @@ export default function NewHeader({}: NewHeaderProps) {
 					</div>
 
 					<div className={styles.account}>
-						<button className={clsx(styles.icon, styles['phone-icon'])}>
-							<Image src="/icons/Header/search.svg" alt="" fill />
+						<button className={clsx(styles.icon, styles['phone-icon'])} onClick={handleSearchModal}>
+							<Image src="/icons/Header/search.svg" alt="Поиск" fill />
 						</button>
 						<Link href={isAuth} className={styles.icon}>
-							<Image src="/icons/Header/account.svg" alt="" fill />
+							<Image src="/icons/Header/account.svg" alt="Профиль" fill />
 						</Link>
 						<Link
 							href={
@@ -99,13 +104,13 @@ export default function NewHeader({}: NewHeaderProps) {
 						>
 							<Image src="/icons/Header/wallet.svg" alt="" fill />
 						</Link>
-						<button className={clsx(styles.icon, styles['tablet-icon'])}>
+						{/* <button className={clsx(styles.icon, styles['tablet-icon'])}>
 							<Image src="/icons/Header/menu.svg" alt="" fill />
-						</button>
+						</button> */}
 					</div>
 				</div>
 			</header>
-
+			<SearchPartnerCard isOpen={isSearchModalOpen} onClose={handleSearchModal} />
 			<CitySelectionModal isOpen={isModalOpen} closeModal={closeModal} />
 		</>
 	);
