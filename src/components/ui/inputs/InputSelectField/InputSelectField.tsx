@@ -15,6 +15,8 @@ import InputTextField from '@/components/ui/inputs/InputTextField';
 
 import { Option } from '@/types/Option';
 
+import ArrowDown from '@/assets/icons/arrows/input_arrow.svg';
+
 import styles from './InputSelectField.module.css';
 
 interface IInputSelectFieldProps
@@ -131,6 +133,7 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 			<div className={styles['input-wrapper']}>
 				<InputTextField
 					inputClassName={styles['input-with-arrow']}
+					clearButtonClass={styles['clear-button-select']}
 					onClick={() => setIsOpen(true)}
 					name={name}
 					label={label}
@@ -153,7 +156,7 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 						[styles['icon-open']]: isOpen,
 					})}
 				>
-					▼
+					<ArrowDown />
 				</span>
 			</div>
 			{isOpen && suggestions.length > 0 && (

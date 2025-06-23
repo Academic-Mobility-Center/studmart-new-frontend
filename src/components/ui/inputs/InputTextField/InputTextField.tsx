@@ -16,6 +16,9 @@ export interface IInputTextFieldProps
 	isTextArea?: boolean;
 	textAreaResize?: boolean;
 	inputClassName?: string;
+	clearButtonClass?: string;
+	onClear?: () => void;
+	showClear?: boolean;
 }
 
 const InputTextField: FC<IInputTextFieldProps> = ({
@@ -31,9 +34,28 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 	textAreaResize = true,
 	type = 'text',
 	inputClassName,
+	clearButtonClass,
+	onClear,
+	showClear = true,
 	...rest
 }) => {
 	const currentId = id ?? name + 'Id';
+	const isShowClear = showClear && !!rest.value && !rest.disabled;
+
+	const handleClear = () => {
+		if (onClear) return onClear();
+		if (!onChange) return;
+
+		const event = {
+			...new Event('input', { bubbles: true }),
+			target: {
+				name,
+				value: '',
+			},
+		} as unknown as React.ChangeEvent<HTMLInputElement>;
+
+		onChange(event);
+	};
 
 	return (
 		<div className={clsx(styles['input-text-field'], className)}>
@@ -42,34 +64,53 @@ const InputTextField: FC<IInputTextFieldProps> = ({
 					{label}
 				</label>
 			)}
-			{rows || isTextArea ? (
-				<textarea
-					{...rest}
-					id={currentId}
-					name={name}
-					className={clsx(
-						styles.input,
-						{
-							[styles['error']]: !!errorText,
-							[styles['text-area-not-resize']]: !textAreaResize,
-						},
-						inputClassName,
-					)}
-					rows={rows ?? 3}
-					placeholder={placeholder}
-					onChange={onChange}
-				/>
-			) : (
-				<input
-					{...rest}
-					id={currentId}
-					name={name}
-					type={type}
-					className={clsx(styles.input, { [styles['error']]: !!errorText }, inputClassName)}
-					placeholder={placeholder}
-					onChange={onChange}
-				/>
-			)}
+
+			<div className={styles['input-container']}>
+				{rows || isTextArea ? (
+					<textarea
+						{...rest}
+						id={currentId}
+						name={name}
+						className={clsx(
+							styles.input,
+							{
+								[styles['error']]: !!errorText,
+								[styles['text-area-not-resize']]: !textAreaResize,
+								[styles['show-clear-input']]: isShowClear,
+							},
+							inputClassName,
+						)}
+						rows={rows ?? 3}
+						placeholder={placeholder}
+						onChange={onChange}
+					/>
+				) : (
+					<input
+						{...rest}
+						id={currentId}
+						name={name}
+						type={type}
+						className={clsx(
+							styles.input,
+							{ [styles['error']]: !!errorText, [styles['show-clear-input']]: isShowClear },
+							inputClassName,
+						)}
+						placeholder={placeholder}
+						onChange={onChange}
+					/>
+				)}
+				{isShowClear && (
+					<button
+						type="button"
+						className={clsx(styles['clear-button'], clearButtonClass)}
+						onClick={handleClear}
+						aria-label="Очистить поле"
+					>
+						×
+					</button>
+				)}
+			</div>
+
 			{errorText && <span className={styles['error-text']}>{errorText}</span>}
 		</div>
 	);

@@ -36,8 +36,12 @@
 }
 
 .input-with-arrow {
-	padding-right: 2rem;
+	padding-right: 3rem;
 	text-overflow: ellipsis;
+}
+
+.clear-button-select {
+	right: 35px;
 }
 
 .input-wrapper {
@@ -48,11 +52,12 @@
 .icon {
 	top: 67%;
 	position: absolute;
-	right: 0.75rem;
+	right: 15px;
 	cursor: pointer;
 	transform: translateY(-50%);
 	transition: transform 0.3s ease;
 	font-size: 0.8rem;
+	color: var(--gray);
 }
 
 .has-error {

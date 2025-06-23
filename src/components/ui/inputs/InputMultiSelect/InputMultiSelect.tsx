@@ -2,6 +2,8 @@ import { FC, memo, useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 
+import ArrowDown from '@/assets/icons/arrows/input_arrow.svg';
+
 import styles from '../Input.module.css';
 import multiSelectStyles from './InputMultiSelect.module.css';
 
@@ -99,23 +101,11 @@ const InputMultiSelect: FC<MultiSelectProps> = ({
 						{selected.length > 0 ? getSelectedLabels() : placeholder}
 					</div>
 					<div className={multiSelectStyles.arrow}>
-						<span className={clsx({ [multiSelectStyles.rotated]: isOpen })}>▼</span>
-						{/* <svg
-							width="10"
-							height="6"
-							viewBox="0 0 10 6"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-							className={clsx({ [multiSelectStyles.rotated]: isOpen })}
+						<span
+							className={clsx(multiSelectStyles.arrow, { [multiSelectStyles.rotated]: isOpen })}
 						>
-							<path
-								d="M1 1L5 5L9 1"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg> */}
+							<ArrowDown />
+						</span>
 					</div>
 				</div>
 
