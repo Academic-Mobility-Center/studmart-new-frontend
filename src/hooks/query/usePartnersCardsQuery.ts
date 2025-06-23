@@ -15,16 +15,20 @@ import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
 import { transformPromos } from '@/context/HomePageContext';
 
-export const usePartnersCardsQuery = (selectedCategoryId: number | null) => {
+export const usePartnersCardsQuery = (
+	selectedCategoryId?: number | null,
+	enabledFavorites = true,
+) => {
 	const { id } = useAuth();
 	const { regionId } = useCity();
 
-	const { data: partnersCards = [], isLoading: isLoadingPartnersCard } = useQuery({
+	const { data: allPartnersCards = [], isLoading: isLoadingPartnersCard } = useQuery({
 		queryKey: queryKeys.partnersCard(),
 		queryFn: () =>
 			(regionId ? getPromocodePartnersByRegionId(regionId) : getPromocodePartners()).then((res) =>
 				transformPromos(res),
 			),
+		enabled: enabledFavorites,
 	});
 
 	const { data: favoritesCards = [], isLoading: isLoadingFavoritesCard } = useQuery({
@@ -38,16 +42,17 @@ export const usePartnersCardsQuery = (selectedCategoryId: number | null) => {
 		const sourceCards = isFavoriteCategory
 			? favoritesCards
 			: selectedCategoryId !== null
-				? partnersCards.filter((partner: any) => partner.categoryId === selectedCategoryId)
-				: partnersCards;
+				? allPartnersCards.filter((partner: any) => partner.categoryId === selectedCategoryId)
+				: allPartnersCards;
 
 		const fixed = sourceCards.filter((card: any) => card.isFixed);
 		const cards = sourceCards.filter((card: any) => !card.isFixed);
 
 		return { fixedCards: fixed, cards: cards };
-	}, [selectedCategoryId, partnersCards, favoritesCards]);
+	}, [selectedCategoryId, allPartnersCards, favoritesCards]);
 
 	return {
+		allPartnersCards,
 		fixedCards,
 		cards,
 		isLoadingPartnersCard,

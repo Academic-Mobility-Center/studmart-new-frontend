@@ -11,15 +11,11 @@ import CustomCard from '@/components/ui/CustomCard';
 import SearchInputField from '@/components/ui/fields/search_input/SearchInputField';
 import ModalWindow from '@/ui/ModalWindow';
 
-import {
-	getPromocodePartners,
-	getPromocodePartnersByRegionId,
-	getPromocodeRegions,
-} from '@/lib/api/promocodes';
+import { usePartnersCardsQuery } from '@/hooks/query/usePartnersCardsQuery';
+import { getPromocodeRegions } from '@/lib/api/promocodes';
 
 import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
-import { transformPromos } from '@/context/HomePageContext';
 import PromoCardType from '@/types/PromoCard';
 
 import styles from './NewHeader.module.css';
@@ -39,28 +35,8 @@ interface Option {
 export default function NewHeader({}: NewHeaderProps) {
 	const { isAuthenticated, role } = useAuth();
 	const router = useRouter();
-	const { regionId } = useCity();
-	const [partners, setPartners] = useState<PromoCardType[]>([]);
-	useEffect(() => {
-		const fetchPromoCards = async () => {
-			try {
-				let promoCardsArray;
-				if (regionId) {
-					promoCardsArray = await getPromocodePartnersByRegionId(regionId);
-				} else {
-					promoCardsArray = await getPromocodePartners();
-				}
+	const { allPartnersCards: partners } = usePartnersCardsQuery(null, false);
 
-				const transformed = transformPromos(promoCardsArray || []);
-				setPartners(transformed);
-			} catch (error) {
-				console.error('Error fetching promocodes:', error);
-				setPartners([]);
-			}
-		};
-
-		fetchPromoCards();
-	}, [regionId]);
 	const handleChange = (event: React.SyntheticEvent, newValue: Option | null) => {
 		if (newValue) {
 			router.push(`/partner-offer/${newValue.value}`);

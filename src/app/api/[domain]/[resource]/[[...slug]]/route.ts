@@ -47,9 +47,12 @@ export async function GET(
 
 	const pathSuffix = slug?.length ? `/${slug.join('/')}` : '';
 	const url = new URL(request.url);
+
 	const query = url.search ? `?${url.searchParams.toString()}` : '';
 
 	const externalUrl = `https://${domain}.${process.env.NEXT_PUBLIC_API_URL}/${resource}${pathSuffix}${query}`;
+
+	console.log('Запрос к api: ', externalUrl);
 
 	try {
 		const response = await fetch(externalUrl, {
