@@ -42,12 +42,12 @@
 	max-width: 500px;
 }
 
-.button-site {
-	width: 282px;
-}
-
 .button-more {
 	display: none;
+}
+
+.button-site {
+	width: 282px;
 }
 
 @media (width<=1024px) {

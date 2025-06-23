@@ -70,8 +70,8 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 	const [discountsIds, setDiscountsIds] = useState<string[]>([]);
 	const { id, role, isAuthenticated: isAuth } = useAuth();
 
-	const [isLoadingPromocodes, setIsLoadingPromocodes] = useState(false);
-	const [isLoadingPartner, setIsLoadingPartner] = useState(false);
+	const [isLoadingPromocodes, setIsLoadingPromocodes] = useState(true);
+	const [isLoadingPartner, setIsLoadingPartner] = useState(true);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -131,7 +131,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		}
 	};
 	const closeModal = () => setIsModalOpen(false);
-	if (isLoadingPartner || !isAuth) {
+	if (isLoadingPartner && !!partnerData && !isAuth) {
 		return <Loader />;
 	}
 
