@@ -44,7 +44,7 @@ const StudentCredentialsPage = () => {
 	const router = useRouter();
 	const [isSaved, setIsSaved] = useState(false);
 	const [isError, setIsError] = useState(false);
-	const [isLoadingStudent, setIsLoadingStudent] = useState(false);
+	const [isLoadingStudent, setIsLoadingStudent] = useState(true);
 
 	useEffect(() => {
 		if (role && role !== 'Student') {
@@ -151,8 +151,6 @@ const StudentCredentialsPage = () => {
 
 		if (hasErrors) return;
 
-		if (isLoadingStudent) return <Loader />;
-
 		const dataToSend: StudentPutData = {
 			id: id ?? '',
 			firstName: formData?.name ?? '',
@@ -189,6 +187,8 @@ const StudentCredentialsPage = () => {
 		setIsError(false);
 		setTimeout(() => setIsSaved(false), 3000);
 	};
+
+	if (isLoadingStudent) return <Loader />;
 	return (
 		<form onSubmit={handleSubmitForm} className={styles['credentials-form']}>
 			<h3 className={styles['credentials-title']}>Банковские реквизиты</h3>
