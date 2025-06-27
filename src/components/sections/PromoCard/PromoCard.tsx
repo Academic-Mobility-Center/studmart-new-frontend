@@ -104,7 +104,6 @@ const ImageWrapper: React.FC<ImageWrapperProps> = ({
 					loading="lazy"
 					quality={80}
 					sizes="400px"
-					style={{ objectFit: 'cover' }}
 				/>
 			</div>
 			{isAuthenticated && isStudent && (

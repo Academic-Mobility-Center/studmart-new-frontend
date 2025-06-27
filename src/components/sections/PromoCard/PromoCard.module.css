@@ -8,7 +8,7 @@
 	overflow: hidden;
 	cursor: pointer;
 	transition: transform 0.2s ease;
-	min-height: 203px;
+	min-height: 200px;
 	background-color: white;
 }
 
@@ -19,7 +19,7 @@
 .image-wrapper {
 	position: relative;
 	width: 100%;
-	height: 125px;
+	min-height: 125px;
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-start;
@@ -29,16 +29,25 @@
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 	flex: 2 1 auto;
+
+	@media (width<=768px) {
+		aspect-ratio: 16 / 7;
+		height: auto;
+	}
 }
 
 .partner-image {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
 
 	.image {
+		height: 100%;
 		object-fit: cover;
+
+		/* @media (width<=500px) {
+			object-fit: cover;
+		} */
 	}
 }
 

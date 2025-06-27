@@ -42,7 +42,7 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
 					categoryId={card.categoryId}
 					isInitiallyFavourite={favouriteIds.has(card.id)}
 					width={fixed ? 384 : undefined}
-					height={fixed ? 246 : undefined}
+					height={fixed ? 248 : undefined}
 				/>
 			))}
 		</div>
