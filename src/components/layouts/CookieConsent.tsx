@@ -30,8 +30,7 @@ export default function CookieConsent() {
 					target="_blank"
 					rel="noopener noreferrer"
 					className="font-bold underline"
-				>
-					cookies
+				>  {' cookies'}
 				</Link>
 				, чтобы запоминать ваши предпочтения, подбирать подходящие промокоды и улучшать удобство
 				использования сервиса.
