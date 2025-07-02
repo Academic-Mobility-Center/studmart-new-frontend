@@ -1,0 +1,36 @@
+.referral-section-container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	align-items: center;
+	justify-content: flex-start;
+	background: var(--background);
+	border-radius: 20px;
+	padding: 20px 30px;
+}
+
+.referral-icon {
+	box-sizing: border-box;
+	display: block;
+	flex: 0 0 auto;
+	width: 50px;
+	max-width: initial;
+	height: 50px;
+}
+
+.referral-title {
+	flex: 0 0 auto;
+	padding: 0;
+	margin: 0;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-align: center;
+}
+
+@media (width<=1024px) {
+	.referral-section-container {
+		border-radius: 15px;
+		padding: 15px 30px;
+	}
+}

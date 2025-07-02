@@ -1,0 +1,33 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.label {
+	font-size: 0.875rem;
+}
+
+.hidden-input {
+	display: none;
+}
+
+.custom-input {
+	border: 1px solid var(--border-color);
+	padding: 15px;
+	border-radius: 15px;
+	min-height: 48px;
+	cursor: pointer;
+	background-color: var(--background);
+}
+
+.error-text {
+	color: var(--error-color);
+	font-size: 0.875rem;
+	font-weight: 500;
+	word-wrap: normal;
+}
+
+.error {
+	border-color: var(--error-color);
+}

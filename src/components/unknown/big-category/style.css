@@ -1,0 +1,71 @@
+.promo-card1 {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	flex: 0 0 auto;
+	gap: 8px;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: 15px 15px 16px 19px;
+	background: #f8f8f8;
+	border: 1px solid var(--border-color);
+	border-radius: 0 0 30px 30px;
+	box-shadow: 0 0 4px rgb(0, 0, 0, 0.25);
+}
+
+.delivery-service-section {
+	flex: 0 0 auto;
+	padding-top: 5px;
+}
+
+.golden-apple-heading {
+	padding: 0;
+	margin: 0;
+	font-weight: 700;
+	font-size: 1rem;
+	color: #032c28;
+}
+
+.golden-apple-cosmetics-description {
+	padding: 0;
+	margin: 0;
+	margin-top: 5px;
+	font-size: 0.875rem;
+	font-weight: 400;
+}
+
+.discount-button-container {
+	flex: 0 0 auto;
+	padding-bottom: 6px;
+}
+
+.discount-button1 {
+	box-sizing: border-box;
+	display: block;
+	flex: 0 0 auto;
+	width: 95px;
+	min-width: 95px;
+	height: 47px;
+	font: 800 1.25rem var(--font-headings);
+	cursor: pointer;
+	background: var(--bg-green);
+	border: none;
+	border-radius: 20px;
+}
+
+/* Стили для ссылки-обертки */
+.big-category-link {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+
+/* Hover-эффект для всей карточки */
+.hover-card {
+	transition: transform 200ms ease;
+}
+
+.hover-card:hover {
+	transform: scale(1.02);
+}

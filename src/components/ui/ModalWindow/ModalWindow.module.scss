@@ -1,0 +1,23 @@
+.modal-window {
+	z-index: 50;
+	position: fixed;
+	inset: 0;
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+	background-color: rgb(0, 0, 0, 0.1);
+	overflow: auto;
+	height: 100vh;
+}
+
+.content {
+	width: 100%;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+}
+
+.outer-click {
+	position: fixed;
+	inset: 0;
+}

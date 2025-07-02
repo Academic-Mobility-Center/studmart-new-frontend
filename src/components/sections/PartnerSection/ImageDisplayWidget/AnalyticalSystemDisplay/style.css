@@ -1,0 +1,39 @@
+.analytics-system-container1 {
+	flex: 0 0 auto;
+	align-self: center;
+	padding-right: 30px;
+	margin-top: -80px;
+}
+
+.analytics-system-container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	align-items: center;
+	justify-content: flex-start;
+	width: 252px;
+	padding: 20px 35px;
+	background: #f8f8f8;
+	border-radius: 20px;
+}
+
+.discount-image {
+	box-sizing: border-box;
+	display: block;
+	flex: 0 0 auto;
+	width: 50px;
+	max-width: initial;
+	height: 50px;
+	position: relative;
+	z-index: 1;
+}
+
+.discount-offer-heading-117 {
+	flex: 0 0 auto;
+	padding: 0;
+	margin: 0;
+	font-weight: 700;
+	font-size: 1rem;
+	color: #032c28;
+}

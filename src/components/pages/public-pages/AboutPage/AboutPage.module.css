@@ -1,0 +1,12 @@
+.about-page-inner {
+	width: 100%;
+	margin-top: 25px;
+
+	@media (width <= 1024px) {
+		margin-top: 20px;
+	}
+}
+
+.about-page-content {
+	width: 100%;
+}

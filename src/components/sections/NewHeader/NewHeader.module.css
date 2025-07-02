@@ -1,0 +1,99 @@
+@reference "tailwindcss";
+
+.header {
+	@apply flex items-center justify-between h-20 rounded-b-[30px];
+
+	padding: 0 40px;
+	background-color: var(--bg-green);
+
+	.logo {
+		@apply relative;
+
+		min-width: 141px;
+		min-height: 30px;
+
+		@media (width <= 1024px) {
+			min-width: 94px;
+			width: 94px;
+			min-height: 20px;
+			height: 20px;
+		}
+	}
+
+	@media (width <= 1024px) {
+		height: 50px;
+		padding: 15px 10px;
+		border-bottom-right-radius: 15px;
+		border-bottom-left-radius: 15px;
+	}
+}
+
+.icon {
+	position: relative;
+	max-width: 24px;
+	width: 24px;
+	max-height: 24px;
+	height: 24px;
+}
+
+.phone-icon {
+	display: none;
+	cursor: pointer;
+
+	@media (width <= 768px) {
+		display: flex;
+	}
+}
+
+.tablet-icon {
+	display: none;
+	cursor: pointer;
+
+	@media (width <= 1024px) {
+		display: flex;
+	}
+}
+
+.end-block {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.nav {
+	@apply flex items-center justify-center;
+
+	gap: 40px;
+	flex-grow: 1;
+	white-space: nowrap;
+
+	@media (width <= 1024px) {
+		display: none;
+	}
+}
+
+.search {
+	@apply flex items-center;
+
+	margin-right: 23px;
+	gap: 20px;
+
+	@media (width <= 768px) {
+		display: none;
+	}
+}
+
+.search-city {
+	@apply flex items-center cursor-pointer gap-2;
+
+	&_text {
+		@apply text-sm text-[#032c28] max-w-[110px];
+	}
+}
+
+.account {
+	@apply flex items-center;
+
+	min-width: 58px;
+	flex-grow: 1;
+	gap: 10px;
+}

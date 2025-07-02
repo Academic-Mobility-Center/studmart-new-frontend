@@ -1,0 +1,110 @@
+.system-container {
+	display: flex;
+	width: 100%;
+	margin-bottom: 15px;
+	font-family: var(--font-headings);
+}
+
+.system-content {
+	width: 100%;
+}
+
+.main-card {
+	position: relative;
+	overflow: hidden;
+	background-color: var(--bg-yellow);
+	font-size: 3rem;
+	font-weight: 800;
+	letter-spacing: var(--font-headings-spacing);
+	line-height: 48px;
+	width: 100%;
+	margin: 0;
+	padding: 40px 40px 100px;
+	border-radius: var(--border-radius);
+}
+
+.main-card-title {
+	position: relative;
+	z-index: 1;
+}
+
+.scribbles-container-image {
+	display: none;
+	position: absolute;
+	bottom: -65px;
+	right: 0;
+	width: 448px;
+	height: 137px;
+	z-index: 0;
+}
+
+.scribbles-on {
+	display: block;
+}
+
+.partner-title-card {
+	background-color: var(--bg-purple);
+}
+
+.system-card {
+	background-color: var(--bg-purple);
+	width: 656px;
+	padding: 20px 30px;
+	border-radius: var(--border-radius);
+}
+
+.partner-system-card {
+	background-color: var(--bg-yellow);
+	width: 504px;
+}
+
+.system-card-wrapper {
+	position: relative;
+	top: -60px;
+	left: 40px;
+	right: 40px;
+}
+
+.system-card-text {
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 26px;
+}
+
+.system-image {
+	width: 371px;
+	height: 222px;
+	margin-top: 40px;
+	margin-left: 28px;
+	position: relative;
+}
+
+@media (width <= 1024px) {
+	.main-card {
+		font-size: 1.5rem;
+		padding: 15px;
+		letter-spacing: 4px;
+		line-height: 23px;
+		padding-bottom: 48px;
+	}
+
+	.system-card-text {
+		font-size: 0.75rem;
+		line-height: 15px;
+	}
+
+	.system-card-wrapper {
+		width: 229px;
+		top: -28px;
+		left: 15px;
+	}
+
+	.system-card {
+		width: 100%;
+		padding: 15px;
+	}
+
+	.system-image {
+		display: none;
+	}
+}

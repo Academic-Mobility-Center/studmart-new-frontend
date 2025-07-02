@@ -1,0 +1,53 @@
+.container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0 29px 30px;
+	background: linear-gradient(292.56deg, #fee200 0%, #ffeb4b 100%);
+	border-radius: 30px;
+}
+
+.main-content {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+}
+
+.left-column {
+	width: 253px;
+	padding-top: 30px;
+}
+
+.section-title {
+	margin: 0;
+	font: 800 1.5rem var(--font-headings);
+}
+
+.service-card-list {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	gap: 20px;
+}
+
+.right-column {
+	width: 282px;
+	margin-left: 24px;
+}
+
+.details-button {
+	display: block;
+	width: 100%;
+	max-width: 528px;
+	height: 48px;
+	margin-top: 30px;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.42px;
+	background: var(--background);
+	border: 1px solid var(--border-color);
+	border-radius: 15px;
+	cursor: pointer;
+}

@@ -1,0 +1,9 @@
+.delivery-service-card {
+	box-sizing: border-box;
+	flex: 0 0 auto;
+	width: 282px;
+	height: 203px;
+	overflow: hidden;
+	border: 1px solid var(--border-color);
+	border-radius: 20px;
+}

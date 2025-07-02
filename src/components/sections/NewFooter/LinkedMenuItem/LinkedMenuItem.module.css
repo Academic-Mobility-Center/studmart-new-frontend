@@ -1,0 +1,22 @@
+.menu-item {
+	font-size: 0.875rem;
+	font-weight: 400;
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+	transition: text-decoration 0.3s;
+
+	@media (width <= 768px) {
+		font-size: 0.75rem;
+	}
+}
+
+.menu-item:hover {
+	text-decoration: underline;
+}
+
+.menu-item-disabled {
+	opacity: 0.5;
+	cursor: default;
+	pointer-events: none;
+}

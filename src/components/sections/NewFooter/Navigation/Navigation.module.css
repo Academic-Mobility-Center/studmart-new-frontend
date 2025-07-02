@@ -1,0 +1,44 @@
+.navigation-container {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	@media (width <=1024px) {
+		text-align: right;
+	}
+}
+
+.navigation-title {
+	font-size: 1rem;
+	font-weight: 700;
+	align-self: stretch;
+	margin: 0;
+	padding: 0;
+}
+
+.navigation-links {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	@media (width <= 1024px) {
+		gap: 5px;
+	}
+}
+
+.logout-button {
+	font-size: 0.875rem;
+	font-weight: 400;
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+	transition: text-decoration 0.3s;
+
+	@media (width <= 768px) {
+		font-size: 0.75rem;
+	}
+}
+
+.logout-button:hover {
+	text-decoration: underline;
+}

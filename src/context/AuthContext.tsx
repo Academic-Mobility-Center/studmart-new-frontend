@@ -56,17 +56,17 @@
 //         if (!token || typeof token !== 'string' || isExpired(token)) {
 //           throw new Error('Token is missing or expired');
 //         }
-  
+
 //         const isValid = await verifyToken();
 //         if (!isValid) {
 //           throw new Error('Token verification failed');
 //         }
-  
+
 //         const decoded = jwtDecode<JwtPayload>(token);
 //         setRole(decoded.role);
 //         setFirstName(decoded.firstName)
-//         setLastName(decoded.lastName)    
-//         setUniversityShortName(decoded?.universityShortName)    
+//         setLastName(decoded.lastName)
+//         setUniversityShortName(decoded?.universityShortName)
 //         setYear(decoded?.yearsBeforeEnding);
 //         setIsAuthenticated(true);
 //       } catch (error) {
@@ -89,7 +89,7 @@
 //     setRole(decoded.role);
 //     setFirstName(decoded.firstName)
 //     setLastName(decoded.lastName)
-//     setUniversityShortName(decoded?.universityShortName)    
+//     setUniversityShortName(decoded?.universityShortName)
 //     setYear(decoded?.yearsBeforeEnding);
 //     setIsAuthenticated(true);
 //   };
@@ -101,17 +101,17 @@
 //   };
 
 //   return (
-//     <AuthContext.Provider 
-//       value={{ 
-//         isAuthenticated, 
-//         isLoading, 
-//         role, 
+//     <AuthContext.Provider
+//       value={{
+//         isAuthenticated,
+//         isLoading,
+//         role,
 //         firstName,
 //         lastName,
 //         universityShortName,
 //         year,
-//         login, 
-//         logout 
+//         login,
+//         logout
 //       }}>
 //       {children}
 //     </AuthContext.Provider>
@@ -127,137 +127,137 @@
 // };
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+
 import { useRouter } from 'next/navigation';
 
 type UserPayload = {
-  role: string;
-  lastName: string;
-  firstName: string;
-  universityShortName?: string;
-  yearsBeforeEnding?: number;
-  id: string;
+	role: string;
+	lastName: string;
+	firstName: string;
+	universityShortName?: string;
+	yearsBeforeEnding?: number;
+	id: string;
 };
 
 type AuthContextType = {
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  role: string | null;
-  id: string | null
-  universityShortName?: string | null;
-  year?: number | null;
-  logout: () => void;
-  login: () => Promise<void>; 
+	isAuthenticated: boolean;
+	isLoading: boolean;
+	role: string | null;
+	id: string | null;
+	universityShortName?: string | null;
+	year?: number | null;
+	logout: () => void;
+	login: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [role, setRole] = useState<string | null>(null);
-  const [id, setId] = useState<string | null>(null);
-  const [universityShortName, setUniversityShortName] = useState<string | null>(null);
-  const [year, setYear] = useState<number | null>(null);
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [role, setRole] = useState<string | null>(null);
+	const [id, setId] = useState<string | null>(null);
+	const [universityShortName, setUniversityShortName] = useState<string | null>(null);
+	const [year, setYear] = useState<number | null>(null);
 
-  const router = useRouter();
+	const router = useRouter();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch('/api/auth/verify', {
-          credentials: 'include',
-        });
+	useEffect(() => {
+		const checkAuth = async () => {
+			try {
+				const res = await fetch('/api/auth/verify', {
+					credentials: 'include',
+				});
 
-        if (res.status === 401) {
-          setIsAuthenticated(false);
-          setRole(null);
-          return;
-        }
-  
-        if (!res.ok) throw new Error('Not authenticated');
+				if (res.status === 401) {
+					setIsAuthenticated(false);
+					setRole(null);
+					return;
+				}
 
-        const user: UserPayload = await res.json();
+				if (!res.ok) throw new Error('Not authenticated');
 
-        setRole(user.role);
-        setId(user.id)
+				const user: UserPayload = await res.json();
 
-        setUniversityShortName(user.universityShortName || null);
-        setYear(user.yearsBeforeEnding ?? null);
-        setIsAuthenticated(true);
-      } catch (err) {
-        console.error('Auth check failed:', err);
-        setIsAuthenticated(false);
-        setRole(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+				setRole(user.role);
+				setId(user.id);
 
-    checkAuth();
-  }, []);
+				setUniversityShortName(user.universityShortName || null);
+				setYear(user.yearsBeforeEnding ?? null);
+				setIsAuthenticated(true);
+			} catch (err) {
+				console.error('Auth check failed:', err);
+				setIsAuthenticated(false);
+				setRole(null);
+			} finally {
+				setIsLoading(false);
+			}
+		};
 
-  const logout = async () => {
-    try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-    } catch (e) {
-      console.error('Logout failed', e);
-    } finally {
-      setIsAuthenticated(false);
-      setRole(null);
-      setId(null);
-      setUniversityShortName(null);
-      setYear(null);
-      router.push('/login');
-    }
-  };
+		checkAuth();
+	}, []);
 
-  const login = async () => {
-    try {
-      const res = await fetch('/api/auth/verify', {
-        credentials: 'include',
-      });
-  
-      if (!res.ok) throw new Error('Not authenticated');
-      
-      const user: UserPayload = await res.json();
-  
-      setRole(user.role);
-      setId(user.id)
-      setUniversityShortName(user.universityShortName || null);
-      setYear(user.yearsBeforeEnding ?? null);
-      setIsAuthenticated(true);
-    } catch (err) {
-      console.error('Login (verify) failed:', err);
-      setIsAuthenticated(false);
-    }
-  };
-  return (
-    <AuthContext.Provider
-      value={{
-        isAuthenticated,
-        isLoading,
-        role,
-        id,
-        universityShortName,
-        year,
-        logout,
-        login
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+	const logout = async () => {
+		try {
+			await fetch('/api/auth/logout', {
+				method: 'POST',
+				credentials: 'include',
+			});
+		} catch (e) {
+			console.error('Logout failed', e);
+		} finally {
+			setIsAuthenticated(false);
+			setRole(null);
+			setId(null);
+			setUniversityShortName(null);
+			setYear(null);
+			router.push('/login');
+		}
+	};
+
+	const login = async () => {
+		try {
+			const res = await fetch('/api/auth/verify', {
+				credentials: 'include',
+			});
+
+			if (!res.ok) throw new Error('Not authenticated');
+
+			const user: UserPayload = await res.json();
+
+			setRole(user.role);
+			setId(user.id);
+			setUniversityShortName(user.universityShortName || null);
+			setYear(user.yearsBeforeEnding ?? null);
+			setIsAuthenticated(true);
+		} catch (err) {
+			console.error('Login (verify) failed:', err);
+			setIsAuthenticated(false);
+		}
+	};
+	return (
+		<AuthContext.Provider
+			value={{
+				isAuthenticated,
+				isLoading,
+				role,
+				id,
+				universityShortName,
+				year,
+				logout,
+				login,
+			}}
+		>
+			{children}
+		</AuthContext.Provider>
+	);
 }
 
 export const useAuth: () => AuthContextType = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+	const context = useContext(AuthContext);
+	if (context === undefined) {
+		throw new Error('useAuth must be used within an AuthProvider');
+	}
+	return context;
 };
-

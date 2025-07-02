@@ -1,0 +1,16 @@
+.container {
+	display: flex;
+	margin-top: 25px;
+	gap: 24px;
+
+	@media (width<=1024px) {
+		flex-wrap: wrap;
+	}
+}
+
+.discount-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: 100%;
+}

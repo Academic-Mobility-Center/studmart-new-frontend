@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   web:
@@ -9,7 +9,7 @@ services:
         - ENV=local
     image: nextjs-app
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=production
     restart: unless-stopped
