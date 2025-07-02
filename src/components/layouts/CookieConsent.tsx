@@ -24,17 +24,19 @@ export default function CookieConsent() {
 	return (
 		<div className="fixed bottom-4 right-4 max-w-md bg-neutral-900 text-white p-4 rounded-xl shadow-lg text-sm z-50">
 			<p>
-				Мы используем
+				Мы используем{' '}
 				<Link
-					href="files/Политика конфиденциальности.pdf" // замените путь на нужный вам
+					href="files/Политика конфиденциальности.pdf"
 					target="_blank"
 					rel="noopener noreferrer"
 					className="font-bold underline"
-				>  {' cookies'}
+				>
+					cookies
 				</Link>
 				, чтобы запоминать ваши предпочтения, подбирать подходящие промокоды и улучшать удобство
 				использования сервиса.
 			</p>
+
 			<button
 				onClick={acceptCookies}
 				className="mt-3 px-4 py-1 bg-white text-black text-sm rounded-full hover:bg-gray-200 transition cursor-pointer"
