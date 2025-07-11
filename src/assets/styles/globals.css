@@ -22,13 +22,13 @@
 	--label-color: var(--gray);
 
 	/* hover цвета */
-	--hover-bg-primary: #71c538;
+	--hover-bg-primary: #aaf46a;
 	--hover-bg-secondary: #e0e0e0;
 	--hover-bg-white: var(--bg-secondary);
 
 	/* шрифты */
 	--font-size: 0.875rem;
-	--font-headings-spacing: 7px;
+	--font-headings-spacing: 1px;
 	--font-buttons: 'Mulish', sans-serif;
 	--font-headings: 'Nunito Sans', sans-serif;
 

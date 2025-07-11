@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Mulish, Nunito_Sans } from 'next/font/google';
+import { Mulish } from 'next/font/google';
 
 import CookieConsent from '@/components/layouts/CookieConsent';
 import MainLayout from '@/components/layouts/MainLayout';
@@ -15,15 +15,8 @@ import { QueryProvider } from '@/components/layouts/providers/QueryProvider';
 
 const mulish = Mulish({
 	subsets: ['latin', 'cyrillic'],
-	weight: ['400', '600', '700', '800', '900'],
+	weight: ['200', '300', '400', '600', '700', '800', '900'],
 	variable: '--font-buttons',
-	display: 'swap',
-});
-
-const nunitoSans = Nunito_Sans({
-	subsets: ['latin', 'cyrillic'],
-	weight: ['400', '600', '700', '800', '900'],
-	variable: '--font-headings',
 	display: 'swap',
 });
 
@@ -36,7 +29,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ru" data-theme={'light'}>
-			<body className={`${nunitoSans.variable} ${mulish.variable} antialiased `}>
+			<head>
+				<link
+					href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wdth,wght@75..100,200..1000&display=swap"
+					rel="stylesheet"
+				/>
+			</head>
+			<body className={`${mulish.variable} antialiased `}>
 				<QueryProvider>
 					<CityProvider>
 						<AuthProvider>

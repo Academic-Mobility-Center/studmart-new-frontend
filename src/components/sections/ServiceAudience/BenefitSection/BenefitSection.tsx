@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { Button } from '@mui/base';
 import Link from 'next/link';
 
 import ServiceCard from '@/components/sections/ServiceCard';
+import ButtonCustom from '@/components/ui/ButtonCustom';
 
 import styles from './BenefitSection.module.scss';
 
@@ -34,7 +34,9 @@ const BenefitSection: FC<IBenefitSectionProps> = ({
 				))}
 			</div>
 			<Link href={buttonHref} className="w-full">
-				<Button className={styles['button-style']}>Подробнее</Button>
+				<ButtonCustom customType="white" className={styles['button-style']}>
+					Подробнее
+				</ButtonCustom>
 			</Link>
 		</div>
 	);

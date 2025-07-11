@@ -89,6 +89,9 @@
 	font: 800 3rem var(--font-headings);
 	text-align: left;
 	letter-spacing: var(--font-headings-spacing);
+	font-variation-settings:
+		'wght' 800,
+		'wdth' 125;
 	line-height: 100%;
 
 	@media (width<=1024px) {

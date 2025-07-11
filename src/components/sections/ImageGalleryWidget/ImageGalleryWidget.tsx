@@ -15,11 +15,8 @@ function ImageGalleryWidget({ isAuthenticated }: ImageGalleryWidgetProps) {
 		<div className={styles.container}>
 			<div className={styles['yellow-block']}>
 				<h1 className={styles.heading}>
-					Получай эксклюзивные
-					<br />
-					скидки у партнеров,
-					<br />
-					ведь ты студент!
+					Скидки для студентов <br />
+					от крупных и локальных партнеров
 				</h1>
 				<div className={styles['button-container']}>
 					{!isAuthenticated && (

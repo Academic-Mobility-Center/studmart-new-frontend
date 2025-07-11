@@ -5,6 +5,7 @@ import React, { useMemo, useState } from 'react';
 import { Button } from '@mui/base';
 
 import { PromoCard } from '@/components/sections/PromoCard/PromoCard';
+import ButtonCustom from '@/components/ui/ButtonCustom';
 import Loader from '@/components/ui/Loader';
 
 import { usePartnersCardsQuery } from '@/hooks/query/usePartnersCardsQuery';
@@ -63,9 +64,9 @@ function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps)
 			</div>
 
 			{showLoadMore && (
-				<Button className={styles['promo-button']} onClick={handleLoadMore}>
+				<ButtonCustom className={styles['promo-button']} onClick={handleLoadMore}>
 					Посмотреть еще
-				</Button>
+				</ButtonCustom>
 			)}
 		</>
 	);

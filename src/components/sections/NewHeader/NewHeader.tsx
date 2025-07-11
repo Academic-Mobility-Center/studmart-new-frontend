@@ -76,7 +76,7 @@ export default function NewHeader({}: NewHeaderProps) {
 							<div className={styles.icon}>
 								<Image src="/icons/Header/location.svg" alt="" fill />
 							</div>
-							<p className={styles['search-city_text']}>{city || 'Выберите город'}</p>
+							<p className={styles['search-city_text']}>{city || 'Выберите регион'}</p>
 						</div>
 						<SearchBar
 							isAuthenticated={isAuthenticated}
@@ -141,7 +141,7 @@ interface SearchBarProps {
 	partners: PromoCardType[];
 }
 
-function SearchBar({ isAuthenticated, handleChange, partners }: SearchBarProps) {
+function SearchBar({ handleChange, partners }: SearchBarProps) {
 	const pathname = usePathname();
 
 	// Страницы, где должен быть показан текст-заглушка вместо поиска
@@ -153,7 +153,7 @@ function SearchBar({ isAuthenticated, handleChange, partners }: SearchBarProps) 
 	}));
 
 	return (
-		<div className={`w-[201px] flex flex-col gap-1 ${!isAuthenticated ? 'opacity-50' : ''}`}>
+		<div className={`w-[201px] flex flex-col gap-1 z-20`}>
 			{isAuthPage ? (
 				<>
 					<p className="text-sm text-[#032c28]">Поиск</p>

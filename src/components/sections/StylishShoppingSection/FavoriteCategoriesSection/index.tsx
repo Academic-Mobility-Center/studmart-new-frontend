@@ -101,6 +101,52 @@ export default function FavoriteCategoriesSection({
 		};
 	}, [loading]);
 
+	useEffect(() => {
+		const container = scrollRef.current;
+		if (!container) return;
+
+		let isDragging = false;
+		let startX = 0;
+		let scrollLeft = 0;
+
+		const handleMouseDown = (e: MouseEvent) => {
+			isDragging = true;
+			container.classList.add(styles.dragging); // Добавь стили, если нужно
+			startX = e.pageX - container.offsetLeft;
+			scrollLeft = container.scrollLeft;
+		};
+
+		const handleMouseLeave = () => {
+			isDragging = false;
+			container.classList.remove(styles.dragging);
+		};
+
+		const handleMouseUp = () => {
+			isDragging = false;
+			container.classList.remove(styles.dragging);
+		};
+
+		const handleMouseMove = (e: MouseEvent) => {
+			if (!isDragging) return;
+			e.preventDefault();
+			const x = e.pageX - container.offsetLeft;
+			const walk = (x - startX) * 1.5; // скорость скролла
+			container.scrollLeft = scrollLeft - walk;
+		};
+
+		container.addEventListener('mousedown', handleMouseDown);
+		container.addEventListener('mouseleave', handleMouseLeave);
+		container.addEventListener('mouseup', handleMouseUp);
+		container.addEventListener('mousemove', handleMouseMove);
+
+		return () => {
+			container.removeEventListener('mousedown', handleMouseDown);
+			container.removeEventListener('mouseleave', handleMouseLeave);
+			container.removeEventListener('mouseup', handleMouseUp);
+			container.removeEventListener('mousemove', handleMouseMove);
+		};
+	}, [loading]);
+
 	// const scrollBy = (amount: number) => {
 	// 	if (scrollRef.current) {
 	// 		scrollRef.current.scrollBy({ left: amount, behavior: 'smooth' });

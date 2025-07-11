@@ -58,6 +58,8 @@
 	@media (width<=1024px) {
 		transform: scaleX(-1);
 	}
+
+	pointer-events: none;
 }
 
 .hand-container {
@@ -75,6 +77,7 @@
 }
 
 .hand-image {
+	pointer-events: none;
 	width: inherit;
 	height: inherit;
 }

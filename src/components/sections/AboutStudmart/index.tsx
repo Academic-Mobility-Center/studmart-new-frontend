@@ -1,7 +1,7 @@
-import { Button } from '@mui/base';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ButtonCustom from '@/components/ui/ButtonCustom';
 import HeadingSection from '@/ui/HeadingSection';
 
 import styles from './About.module.css';
@@ -39,7 +39,7 @@ export default function AboutStudmart({ isAuthenticated }: IAboutStudmartProps) 
 						</div>
 					</div>
 					<Link href="/registration">
-						<Button className={styles['primary-button']}>Зарегистрироваться</Button>
+						<ButtonCustom className={styles['primary-button']}>Зарегистрироваться</ButtonCustom>
 					</Link>
 				</div>
 				<div className={styles['image-wrapper']}>

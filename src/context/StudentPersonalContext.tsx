@@ -55,7 +55,7 @@ export const validateField = (
 			return value ? undefined : ['Выберите регион'];
 
 		case 'city':
-			return value ? undefined : ['Выберите город'];
+			return value ? undefined : ['Выберите регион'];
 
 		case 'familyStatus':
 			return value ? undefined : ['Выберите семейное положение'];

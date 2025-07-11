@@ -53,6 +53,7 @@ export default function CompactSearchInput({
 							...params.InputProps,
 							disableUnderline: false,
 							sx: {
+								opacity: '50%',
 								fontSize: 14,
 								color: '#032c28',
 								'&:before': {
