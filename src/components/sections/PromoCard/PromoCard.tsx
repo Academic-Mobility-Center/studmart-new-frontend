@@ -30,7 +30,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 	discount,
 	id,
 	// width = 282,
-	height = 203,
+	// height = 203,
 	isInitiallyFavourite,
 }) => {
 	const router = useRouter();
@@ -61,7 +61,7 @@ export const PromoCard: React.FC<PromoCardProps> = ({
 	};
 
 	return (
-		<div className={styles.card} style={{ minHeight: `${height}px` }} onClick={handleClick}>
+		<div className={styles.card} onClick={handleClick}>
 			<ImageWrapper
 				imageUrl={imageUrl}
 				isFavourite={isFavourite}
