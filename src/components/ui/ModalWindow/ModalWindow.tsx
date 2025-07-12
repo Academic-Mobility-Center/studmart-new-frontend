@@ -3,6 +3,9 @@ import { FC, Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 
+import CloseIcon from '@/assets/icons/close.svg';
+
+import ButtonCustom from '../ButtonCustom';
 import styles from './ModalWindow.module.scss';
 
 export interface IModalWindowProps {
@@ -27,8 +30,13 @@ const ModalWindow: FC<IModalWindowProps> = ({
 				onClose={onClose}
 				className={clsx(styles['modal-window'], 'backdrop-blur-xs', className)}
 			>
+				<div onClick={onClose} className={styles['outer-click']} />
 				<div className={styles['content']}>
-					<div onClick={onClose} className={styles['outer-click']} />
+					<div className={styles.header}>
+						<ButtonCustom className={styles.close} onClick={onClose} customType="white">
+							<CloseIcon />
+						</ButtonCustom>
+					</div>
 					{children}
 				</div>
 			</Dialog>

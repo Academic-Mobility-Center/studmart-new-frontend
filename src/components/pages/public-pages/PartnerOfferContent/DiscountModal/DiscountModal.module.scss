@@ -5,6 +5,10 @@
 	line-height: normal;
 	height: fit-content;
 	overflow: hidden;
+
+	@media (width<=768px) {
+		width: 100%;
+	}
 }
 
 .title {
@@ -23,6 +27,7 @@
 	border: 1px solid var(--border-color);
 	background-color: var(--background);
 	display: flex;
+	cursor: pointer;
 
 	@media (width<=1024px) {
 		border-radius: var(--border-radius-phone);

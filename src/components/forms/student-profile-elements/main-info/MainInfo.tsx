@@ -97,6 +97,7 @@ const MainInfo: React.FC<Props> = ({
 					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.gender}
+					searchOn={false}
 				/>
 			</div>
 			<div className={styles['fields-row']}>
@@ -131,6 +132,7 @@ const MainInfo: React.FC<Props> = ({
 					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.familyStatus}
+					searchOn={false}
 				/>
 				<InputSelectField
 					name="isWork"
@@ -141,6 +143,7 @@ const MainInfo: React.FC<Props> = ({
 					onChange={handleChangeSelectSingle}
 					onBlur={handleBlur}
 					errorText={errors.isWork}
+					searchOn={false}
 				/>
 			</div>
 			<div className={styles['fields-row']}>

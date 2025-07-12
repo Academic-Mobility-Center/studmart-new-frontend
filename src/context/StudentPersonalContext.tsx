@@ -70,7 +70,7 @@ export const validateField = (
 			return value ? undefined : ['Выберите университет'];
 
 		case 'profession':
-			return (value as string).length >= 2 ? undefined : 'Укажите профессию';
+			return (value as string).length >= 2 ? undefined : 'Укажите специальность';
 
 		case 'course':
 			return value ? undefined : ['Выберите курс'];

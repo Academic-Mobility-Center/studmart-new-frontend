@@ -180,7 +180,7 @@ export default function FavoriteCategoriesSection({
 							overflowX: 'auto',
 							display: 'flex',
 							gap: '8px',
-							// padding: '0 30px',
+							padding: '0 20px',
 							scrollBehavior: 'auto',
 						}}
 					>

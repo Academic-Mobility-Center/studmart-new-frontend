@@ -72,7 +72,7 @@ const PartnerInfo: FC<IPartnerInfoProps> = ({
 			</ButtonCustom>
 
 			<ModalWindow isOpen={modalOpen} onClose={handleModalOpen}>
-				<CustomCard className={styles.card}>
+				<CustomCard customColor="white" className={styles.card}>
 					{imageUrl && (
 						<div className={styles['image-container']}>
 							<Image

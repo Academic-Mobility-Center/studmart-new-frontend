@@ -123,7 +123,7 @@ export default function LoginForm() {
 					Войти
 				</ButtonCustom>
 				<p className={styles['register-text']}>
-					Еще нет аккаунта?
+					Еще нет аккаунта?{' '}
 					<Link href="/registration" className={styles['register-link']}>
 						Зарегистрироваться
 					</Link>

@@ -3,6 +3,10 @@
 	width: 100%;
 }
 
+.pointer {
+	cursor: pointer;
+}
+
 .dropdown {
 	position: absolute;
 	z-index: 10;

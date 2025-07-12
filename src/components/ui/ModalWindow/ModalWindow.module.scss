@@ -11,13 +11,27 @@
 }
 
 .content {
-	width: 100%;
 	margin: auto;
-	display: flex;
-	justify-content: center;
+	position: relative;
+
+	@media (width <= 768px) {
+		width: 100%;
+	}
 }
 
 .outer-click {
 	position: fixed;
 	inset: 0;
+}
+
+.close {
+	margin-bottom: 10px;
+	padding: 10px 23px !important;
+	max-width: 60px !important;
+	border-radius: 360px !important;
+}
+
+.header {
+	display: flex;
+	justify-content: flex-end;
 }

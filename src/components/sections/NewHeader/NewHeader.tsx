@@ -188,7 +188,7 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 
 	return (
 		<ModalWindow isOpen={isOpen} onClose={closeModal}>
-			<CustomCard customColor="white" style={{ maxWidth: 700 }}>
+			<CustomCard customColor="white">
 				<div className="flex flex-col items-center">
 					<h2 className="text-lg font-bold text-black">Выберите город</h2>
 					<input

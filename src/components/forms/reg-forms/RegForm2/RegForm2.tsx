@@ -114,6 +114,7 @@ const RegForm2: React.FC<RegFormProps> = ({
 				value={formData.gender ?? undefined}
 				onChange={handleSelect}
 				placeholder="Мужской"
+				searchOn={false}
 			/>
 			<InputDateField
 				label="Дата рождения"

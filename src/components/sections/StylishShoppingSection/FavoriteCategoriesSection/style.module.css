@@ -6,3 +6,28 @@
 		width: calc(100% + 40px);
 	}
 }
+
+.category::before,
+.category::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 20px;
+	pointer-events: none;
+	z-index: 1;
+
+	@media (width<=1024px) {
+		padding: 0 20px;
+	}
+}
+
+.category::before {
+	left: 0;
+	background: linear-gradient(to right, var(--background), transparent);
+}
+
+.category::after {
+	right: 0;
+	background: linear-gradient(to left, var(--background), transparent);
+}

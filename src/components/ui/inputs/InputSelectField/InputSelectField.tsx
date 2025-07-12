@@ -71,14 +71,14 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 			if (loadOptions) {
 				loadOptions(input).then((res) => {
 					setSuggestions(res);
-					setHighlightedIndex(0);
+					setHighlightedIndex(-1);
 				});
 			} else {
 				const filtered = options.filter((opt) =>
 					opt.label.toLowerCase().includes(input.toLowerCase()),
 				);
 				setSuggestions(filtered);
-				setHighlightedIndex(0);
+				setHighlightedIndex(-1);
 			}
 	}, [inputValue, loadOptions, options, searchOn]);
 
@@ -95,14 +95,24 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setInputValue(e.target.value);
 		setIsOpen(true);
-		setHighlightedIndex(0);
-		if (!e.target.value) onChange(name, null);
+		if (!e.target.value) {
+			setHighlightedIndex(-1);
+			onChange(name, null);
+		}
 	};
 
-	const handleSelect = (option: Option) => {
+	const handleClear = () => {
+		setInputValue('');
+		setIsOpen(false);
+		setHighlightedIndex(-1);
+		onChange(name, null);
+	};
+
+	const handleSelect = (option: Option, index: number) => {
 		onChange(name, option);
 		setInputValue(option.label);
 		setIsOpen(false);
+		setHighlightedIndex(index);
 	};
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -119,7 +129,7 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 		if (e.key === 'Enter') {
 			e.preventDefault();
 			if (highlightedIndex >= 0 && suggestions[highlightedIndex]) {
-				handleSelect(suggestions[highlightedIndex]);
+				handleSelect(suggestions[highlightedIndex], highlightedIndex);
 			}
 		}
 		if (e.key === 'Escape') {
@@ -132,7 +142,7 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 		<div className={styles['autocomplete']} ref={containerRef}>
 			<div className={styles['input-wrapper']}>
 				<InputTextField
-					inputClassName={styles['input-with-arrow']}
+					inputClassName={clsx(styles['input-with-arrow'], { [styles.pointer]: !searchOn })}
 					clearButtonClass={styles['clear-button-select']}
 					onClick={() => setIsOpen(true)}
 					name={name}
@@ -143,9 +153,11 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 					disabled={disabled}
 					autoComplete="off"
 					onChange={handleInputChange}
+					onClear={handleClear}
 					onKeyDown={handleKeyDown}
 					isTextArea={isTextArea}
 					textAreaResize={textAreaResize}
+					readOnly={!searchOn}
 					{...rest}
 				/>
 				<span
@@ -167,7 +179,7 @@ const InputSelectField: FC<IInputSelectFieldProps> = ({
 							className={`${styles['dropdown-item']} ${
 								index === highlightedIndex ? styles['highlighted'] : ''
 							}`}
-							onClick={() => handleSelect(opt)}
+							onClick={() => handleSelect(opt, index)}
 						>
 							{opt.label}
 						</li>
