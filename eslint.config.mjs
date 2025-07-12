@@ -90,6 +90,7 @@ export default [
 			'@typescript-eslint/explicit-module-boundary-types': 'off',
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-unused-vars': 'warn',
+			'@next/next/no-page-custom-font': 'off',
 			// '@typescript-eslint/naming-convention': [
 			// 	'error',
 			// 	{

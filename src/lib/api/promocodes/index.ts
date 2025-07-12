@@ -95,13 +95,14 @@ export const getPromocodePartnersByRegionId = async (id: string): Promise<PromoP
 };
 export const getPromocodePartnerByIdAndRegionId = async (
 	partnerId: string,
-	regionId: string,
-	StudentId: string,
+	regionId?: string | null,
+	StudentId?: string | null,
 ) => {
 	try {
-		const res = await fetch(
-			`/api/promocodes/Partners?Id=${partnerId}&RegionId=${regionId}&StudentId=${StudentId}`,
-		);
+		let url = `/api/promocodes/Partners?Id=${partnerId}`;
+		url += regionId ? `&RegionId=${regionId}` : '';
+		url += StudentId ? `&StudentId=${StudentId}` : '';
+		const res = await fetch(url);
 		if (!res.ok) {
 			throw new Error(`Ошибка при получении партнеров по региону: ${res.status}`);
 		}

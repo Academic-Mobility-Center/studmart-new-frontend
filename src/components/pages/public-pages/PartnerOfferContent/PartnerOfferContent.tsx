@@ -77,7 +77,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		const fetchData = async () => {
 			setIsLoadingPartner(true);
 			try {
-				const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId, id ?? '');
+				const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId, id);
 				setPartnerData(partnerInfo);
 			} catch (error) {
 				console.log(error);
@@ -85,7 +85,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 				setIsLoadingPartner(false);
 			}
 		};
-		if (id) fetchData();
+		fetchData();
 	}, [partnerId, regionId, id]);
 
 	useEffect(() => {
@@ -104,7 +104,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 				for (const discountId of discountsIds) {
 					try {
 						let promocode: PersonalPromocode;
-						if (role === 'Employee') {
+						if (role === 'Employee' || !id) {
 							promocode = await getPromocodeById(discountId);
 						} else {
 							promocode = await getPromocodeDiscountByDiscountIdAndStudentId(discountId, id ?? '');
@@ -121,7 +121,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 				setIsLoadingPromocodes(false);
 			}
 		};
-		if (id) fetchDiscounts();
+		fetchDiscounts();
 	}, [discountsIds, id, role]);
 
 	const openModal = (promo: UnifiedPromocode) => {
@@ -131,7 +131,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		}
 	};
 	const closeModal = () => setIsModalOpen(false);
-	if (isLoadingPartner && !!partnerData && !isAuth) {
+	if (isLoadingPartner && !!partnerData) {
 		return <Loader />;
 	}
 

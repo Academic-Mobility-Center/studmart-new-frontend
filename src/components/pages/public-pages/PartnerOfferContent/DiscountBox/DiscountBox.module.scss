@@ -34,6 +34,7 @@
 	display: flex;
 	flex-direction: column;
 	font-size: 0.875rem;
+	overflow-wrap: break-word;
 }
 
 .title {
@@ -89,4 +90,6 @@
 .note {
 	font-size: 0.875rem;
 	margin-top: 4px;
+	opacity: 0.8;
+	z-index: 1;
 }

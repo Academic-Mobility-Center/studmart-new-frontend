@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import ButtonCustom from '@/components/ui/ButtonCustom';
 import MarkdownRenderer from '@/components/ui/MarkdownRenderer/MarkdownRenderer';
@@ -16,6 +19,13 @@ interface Props {
 const DiscountBox = ({ title, description, onClick, isAuth, role }: Props) => {
 	const isStudent = role === 'Student';
 	const isButtonDisabled = !isAuth || !isStudent;
+	const { push } = useRouter();
+
+	const handleNotAuthClick = () => {
+		if (!isAuth) {
+			push('/login');
+		}
+	};
 
 	return (
 		<div className={styles.card}>
@@ -26,25 +36,17 @@ const DiscountBox = ({ title, description, onClick, isAuth, role }: Props) => {
 				</article>
 			</div>
 			<div className={styles['button-row']}>
-				<ButtonCustom
-					customType="white"
-					disabled={isButtonDisabled || !isStudent}
-					onClick={isStudent ? onClick : undefined}
-				>
+				<ButtonCustom customType="white" onClick={!isButtonDisabled ? onClick : handleNotAuthClick}>
 					Получить скидку
 				</ButtonCustom>
 				<ButtonCustom
 					customType="white"
-					disabled={!isButtonDisabled}
+					disabled={isButtonDisabled}
 					className={styles['secondary-button']}
+					onClick={isStudent ? onClick : undefined}
 				>
 					<div className={styles['eye-image']}>
-						<Image
-							src="/icons/offer/eye.svg"
-							onClick={isStudent ? onClick : undefined}
-							alt=""
-							fill
-						/>
+						<Image src="/icons/offer/eye.svg" alt="" fill />
 					</div>
 				</ButtonCustom>
 			</div>
@@ -55,7 +57,7 @@ const DiscountBox = ({ title, description, onClick, isAuth, role }: Props) => {
 				height={98}
 				width={191}
 			/>
-			{!isStudent && (
+			{(!isStudent || !isAuth) && (
 				<p className={styles.note}>
 					Получение промокода / скидки доступно только зарегистрированным студентам
 				</p>

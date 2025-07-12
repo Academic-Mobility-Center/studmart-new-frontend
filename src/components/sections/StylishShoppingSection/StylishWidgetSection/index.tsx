@@ -2,8 +2,6 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { Button } from '@mui/base';
-
 import { PromoCard } from '@/components/sections/PromoCard/PromoCard';
 import ButtonCustom from '@/components/ui/ButtonCustom';
 import Loader from '@/components/ui/Loader';
