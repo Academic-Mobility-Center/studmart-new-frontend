@@ -190,7 +190,7 @@ function CitySelectionModal({ isOpen, closeModal }: { isOpen: boolean; closeModa
 		<ModalWindow isOpen={isOpen} onClose={closeModal}>
 			<CustomCard customColor="white">
 				<div className="flex flex-col items-center">
-					<h2 className="text-lg font-bold text-black">Выберите город</h2>
+					<h2 className="text-lg font-bold text-black">Выберите регион</h2>
 					<input
 						type="text"
 						placeholder="Введите название региона"

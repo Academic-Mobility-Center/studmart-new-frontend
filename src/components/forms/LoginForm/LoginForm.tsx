@@ -134,7 +134,7 @@ export default function LoginForm() {
 				formData={formData}
 				handleChange={handleChange}
 				onClose={handleModal}
-				onClick={handleModal}
+				onClick={() => setIsPasswordResetVisible(false)}
 			/>
 		</form>
 	);
