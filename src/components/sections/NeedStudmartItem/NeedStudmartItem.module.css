@@ -28,6 +28,7 @@
 .title {
 	font-size: 1rem;
 	font-weight: 700;
+	word-wrap: break-word;
 }
 
 .description {

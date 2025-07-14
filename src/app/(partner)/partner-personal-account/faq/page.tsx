@@ -108,12 +108,13 @@ const FaqPage = () => {
 								key={title}
 								className="w-[548px] rounded-[15px] 
                                     border border-[rgba(0,0,0,0.20)] 
-                                    bg-[#F8F8F8] text-[#032C28] p-5 font-[Mulish]"
+                                    bg-[#F8F8F8] text-[#032C28] p-5 font-[Mulish] cursor-pointer"
+								onClick={() => toggleExpand(title)}
 							>
 								<div className="flex flex-row justify-between font-extrabold">
 									<p>{title}</p>
 									<div className="flex flex-row justify-between gap-5 items-center">
-										<div onClick={() => toggleExpand(title)} className="cursor-pointer">
+										<div className="cursor-pointer">
 											{isExpanded ? <BlackArrowUp /> : <BlackArrowDown />}
 										</div>
 									</div>

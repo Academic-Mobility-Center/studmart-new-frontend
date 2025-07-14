@@ -15,13 +15,10 @@ import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
 import { transformNotFixedPromos, transformPromos } from '@/context/HomePageContext';
 
-export const usePartnersCardsQuery = (
-	selectedCategoryId?: number | null,
-	enabledFavorites = true,
-) => {
-	const { id } = useAuth();
+export const usePartnersCardsQuery = (selectedCategoryId?: number | null) => {
+	const { id, role } = useAuth();
 	const { regionId } = useCity();
-
+	const enabledFavoutitesPartners = role === 'Student' ? true : false;
 	const { data: allPartnersCards = [], isLoading: isLoadingPartnersCard } = useQuery({
 		queryKey: queryKeys.partnersCard(),
 		queryFn: () =>
@@ -33,7 +30,7 @@ export const usePartnersCardsQuery = (
 	const { data: favoritesCards = [], isLoading: isLoadingFavoritesCard } = useQuery({
 		queryKey: queryKeys.favoritesCard(),
 		queryFn: () => getFavouritesPartners(id).then((res) => transformNotFixedPromos(res)),
-		enabled: enabledFavorites,
+		enabled: enabledFavoutitesPartners,
 	});
 
 	const { fixedCards, cards } = useMemo(() => {

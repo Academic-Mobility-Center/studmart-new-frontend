@@ -30,7 +30,10 @@ const InputDateField: FC<IInputDateFieldProps> = ({
 			: typeof value === 'string'
 				? value
 				: '';
-
+	const date = new Date();
+	const year = date.getFullYear();
+	const maxYear = year - 18;
+	const minYear = year - 60;
 	return (
 		<div className={clsx(styles['input-text-field'], className)}>
 			{label && (
@@ -44,6 +47,8 @@ const InputDateField: FC<IInputDateFieldProps> = ({
 				id={currentId}
 				name={name}
 				type="date"
+				min={`${minYear}-01-01`}
+				max={`${maxYear}-12-31`}
 				className={styles.input}
 				onChange={onChange}
 			/>

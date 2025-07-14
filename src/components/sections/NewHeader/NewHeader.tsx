@@ -36,7 +36,7 @@ interface Option {
 export default function NewHeader({}: NewHeaderProps) {
 	const { isAuthenticated, role } = useAuth();
 	const router = useRouter();
-	const { allPartnersCards: partners } = usePartnersCardsQuery(null, false);
+	const { allPartnersCards: partners } = usePartnersCardsQuery(null);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: Option | null) => {
 		if (newValue) {

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -24,8 +26,12 @@ const NeedStudmartItem = ({
 			</div>
 			<div className={styles['text-container']}>
 				<p className={styles['title']}>
-					{title}
-					<br />
+					{title.split('\n').map((line, i) => (
+						<React.Fragment key={i}>
+							{line}
+							<br />
+						</React.Fragment>
+					))}
 					{subtitle}
 				</p>
 				<p className={styles['description']}>{children}</p>

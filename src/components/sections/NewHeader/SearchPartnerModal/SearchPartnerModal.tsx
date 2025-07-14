@@ -19,7 +19,7 @@ interface ISearchPartnerModalProps {
 }
 
 const SearchPartnerModal: FC<ISearchPartnerModalProps> = ({ isOpen = false, onClose }) => {
-	const { allPartnersCards: partners } = usePartnersCardsQuery(null, false);
+	const { allPartnersCards: partners } = usePartnersCardsQuery(null);
 	const [search, setSearch] = useState('');
 
 	const filteredPartners = useMemo(() => {
