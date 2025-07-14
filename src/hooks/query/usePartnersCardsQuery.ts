@@ -13,7 +13,7 @@ import {
 import { queryKeys } from '@/constants/queryKeys';
 import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
-import { transformPromos } from '@/context/HomePageContext';
+import { transformNotFixedPromos, transformPromos } from '@/context/HomePageContext';
 
 export const usePartnersCardsQuery = (
 	selectedCategoryId?: number | null,
@@ -32,7 +32,7 @@ export const usePartnersCardsQuery = (
 
 	const { data: favoritesCards = [], isLoading: isLoadingFavoritesCard } = useQuery({
 		queryKey: queryKeys.favoritesCard(),
-		queryFn: () => getFavouritesPartners(id).then((res) => transformPromos(res)),
+		queryFn: () => getFavouritesPartners(id).then((res) => transformNotFixedPromos(res)),
 		enabled: enabledFavorites,
 	});
 

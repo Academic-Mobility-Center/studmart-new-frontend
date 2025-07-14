@@ -99,6 +99,19 @@ export const transformPromos = (data: PromoPartners[]): promoCard[] => {
 		isFixed: item.isFixed || false,
 	}));
 };
+
+export const transformNotFixedPromos = (data: PromoPartners[]): promoCard[] => {
+	return data.map((item) => ({
+		id: item.id,
+		heading: item.companyName,
+		discount: item.maxDiscount,
+		subtitle: item.subtitle,
+		imageUrl: '/icons/home/delivery.svg',
+		categoryId: item?.category?.id || 0,
+		isFixed: false,
+	}));
+};
+
 interface DiscountRegion {
 	id: number;
 	name: string;

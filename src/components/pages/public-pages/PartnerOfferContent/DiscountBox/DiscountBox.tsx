@@ -1,10 +1,14 @@
 'use client';
 
+import { useState } from 'react';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import ButtonCustom from '@/components/ui/ButtonCustom';
 import MarkdownRenderer from '@/components/ui/MarkdownRenderer/MarkdownRenderer';
+
+import PersonalPromocode from '@/types/PersonalPromocode';
 
 import styles from './DiscountBox.module.scss';
 
@@ -14,9 +18,10 @@ interface Props {
 	onClick?: () => void;
 	isAuth: boolean;
 	role: string | null;
+	promocode: PersonalPromocode | undefined;
 }
 
-const DiscountBox = ({ title, description, onClick, isAuth, role }: Props) => {
+const DiscountBox = ({ title, description, onClick, isAuth, role, promocode }: Props) => {
 	const isStudent = role === 'Student';
 	const isButtonDisabled = !isAuth || !isStudent;
 	const { push } = useRouter();
@@ -24,6 +29,17 @@ const DiscountBox = ({ title, description, onClick, isAuth, role }: Props) => {
 	const handleNotAuthClick = () => {
 		if (!isAuth) {
 			push('/login');
+		}
+	};
+
+	const [copied, setCopied] = useState(false);
+
+	const copyToClipboard = () => {
+		if (promocode?.promocode) {
+			navigator.clipboard.writeText(promocode.promocode).then(() => {
+				setCopied(true);
+				setTimeout(() => setCopied(false), 2000);
+			});
 		}
 	};
 
@@ -36,8 +52,12 @@ const DiscountBox = ({ title, description, onClick, isAuth, role }: Props) => {
 				</article>
 			</div>
 			<div className={styles['button-row']}>
-				<ButtonCustom customType="white" onClick={!isButtonDisabled ? onClick : handleNotAuthClick}>
-					Получить скидку
+				<ButtonCustom
+					customType="white"
+					onClick={!isButtonDisabled ? copyToClipboard : handleNotAuthClick}
+				>
+					{copied && <>Промокод скопирован</>}
+					{!copied && <>Получить скидку</>}
 				</ButtonCustom>
 				<ButtonCustom
 					customType="white"

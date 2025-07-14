@@ -18,7 +18,7 @@ interface StylishWidgetSectionProps {
 
 function StylishWidgetSection({ selectedCategoryId }: StylishWidgetSectionProps) {
 	const INITIAL_VISIBLE_CARDS = 16;
-	const LOAD_MORE_STEP = 4;
+	const LOAD_MORE_STEP = 8;
 
 	const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_CARDS);
 

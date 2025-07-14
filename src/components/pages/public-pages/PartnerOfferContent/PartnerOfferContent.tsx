@@ -13,6 +13,7 @@ import {
 
 import { useAuth } from '@/context/AuthContext';
 import { useCity } from '@/context/CityContext';
+import EmployeePromocode from '@/types/EmployeePromocode';
 import PersonalPromocode from '@/types/PersonalPromocode';
 
 import DiscountBox from './DiscountBox/DiscountBox';
@@ -40,23 +41,6 @@ interface Discount {
 interface Props {
 	imageUrl: string;
 	partnerId: string;
-}
-
-interface EmployeePromocode {
-	id: string;
-	name: string;
-	description: string;
-	size: number;
-	promocodeValue: string;
-	partner: {
-		id: string;
-		companyName: string;
-		subtitle: string;
-		maxDiscount: number;
-		isFixed: boolean;
-	};
-	hasAllRegions: boolean;
-	regions: [];
 }
 
 type UnifiedPromocode = PersonalPromocode | EmployeePromocode;
@@ -144,6 +128,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 						const isEmployee = !('discount' in promo);
 						const name = isEmployee ? promo.name : promo.discount.name;
 						const description = isEmployee ? promo.description : promo.discount.description;
+						const promocode = promo as PersonalPromocode | undefined;
 						return (
 							<DiscountBox
 								key={index}
@@ -152,12 +137,13 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 								onClick={() => openModal(promo)}
 								isAuth={isAuth}
 								role={role}
+								promocode={promocode}
 							/>
 						);
 					})}
 				</div>
 			) : (
-				<Loader />
+				<Loader color="#FFFFFF" />
 			)}
 			<DiscountModal isOpen={isModalOpen} closeModal={closeModal} promoCode={selectedPromo} />
 		</div>
