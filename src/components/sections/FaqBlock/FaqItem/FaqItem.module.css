@@ -8,7 +8,7 @@
 	overflow: hidden;
 	padding: 30px;
 	transition: all 0.3s ease;
-	font-size: 0.875rem;
+	font-size: 1rem;
 }
 
 .header {
@@ -37,6 +37,7 @@
 	overflow: hidden;
 	transition: max-height 0.3s ease-in-out;
 	line-height: 18px;
+	font-size: 0.875rem;
 }
 
 .content-open {

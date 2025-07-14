@@ -27,10 +27,10 @@ const studentsCards = [
 ];
 
 const partnersCards = [
-	{ title: 'Получаешь скидку 5–30%', Icon: ProfitabilitySvg },
-	{ title: 'Реферальная система', Icon: AudienceSvg },
-	{ title: 'Бесплатно', Icon: AnalyticalSvg },
-	{ title: 'Доступ для иностранных студентов', Icon: SalesSvg },
+	{ title: 'Окупаемая стоимость', Icon: ProfitabilitySvg },
+	{ title: 'Аналитическая система', Icon: AudienceSvg },
+	{ title: 'Точно определенная аудитория', Icon: AnalyticalSvg },
+	{ title: 'Новый канал продаж и продвижения', Icon: SalesSvg },
 ];
 
 function ServiceAudience({ isAuthenticated }: Props) {
@@ -59,6 +59,12 @@ function ServiceAudience({ isAuthenticated }: Props) {
 				<div className={styles['partner-card']}>
 					<BenefitSection title="Партнерам" cards={partnersCards} buttonHref="partners" />
 					<div className={styles['hand-container']}>
+						{/* <Image
+							fill
+							src="/icons/home/hand.svg"
+							alt=""
+							className={styles['hand-image']}
+						/> */}
 						<HandSvg className={styles['hand-image']} />
 					</div>
 				</div>

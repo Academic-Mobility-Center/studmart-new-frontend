@@ -102,7 +102,7 @@ export default function NewHeader({}: NewHeaderProps) {
 							}
 							className={styles.icon}
 						>
-							<Image src="/icons/Header/wallet.svg" alt="" fill />
+							{role === 'Student' ? <Image src="/icons/Header/wallet.svg" alt="" fill /> : <></>}
 						</Link>
 						{/* <button className={clsx(styles.icon, styles['tablet-icon'])}>
 							<Image src="/icons/Header/menu.svg" alt="" fill />
