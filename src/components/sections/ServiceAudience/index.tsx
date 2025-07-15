@@ -5,7 +5,6 @@ import HeadingSection from '@/ui/HeadingSection';
 import AnalyticalSvg from '@/public/icons/PartnerServicesSection/AnaliticalSvg';
 import AudienceSvg from '@/public/icons/PartnerServicesSection/AudienceSvg';
 import ForeignStudentSvg from '@/public/icons/PartnerServicesSection/ForeignStudentSvg';
-import HandSvg from '@/public/icons/PartnerServicesSection/HandSvg';
 import ProfitabilitySvg from '@/public/icons/PartnerServicesSection/ProfitabilitySvg';
 import SalesSvg from '@/public/icons/PartnerServicesSection/SalesSvg';
 import MoneySvg from '@/public/icons/StudentServicesSection/MoneySvg';
@@ -59,13 +58,8 @@ function ServiceAudience({ isAuthenticated }: Props) {
 				<div className={styles['partner-card']}>
 					<BenefitSection title="Партнерам" cards={partnersCards} buttonHref="partners" />
 					<div className={styles['hand-container']}>
-						{/* <Image
-							fill
-							src="/icons/home/hand.svg"
-							alt=""
-							className={styles['hand-image']}
-						/> */}
-						<HandSvg className={styles['hand-image']} />
+						<Image fill src="/icons/home/hand.png" alt="" className={styles['hand-image']} />
+						{/* <HandSvg className={styles['hand-image']} /> */}
 					</div>
 				</div>
 			</div>

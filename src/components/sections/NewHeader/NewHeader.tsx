@@ -61,7 +61,7 @@ export default function NewHeader({}: NewHeaderProps) {
 		<>
 			<header className={styles.header}>
 				<Link href="/home" className={styles.logo}>
-					<Image src="/icons/Header/logo.svg" alt="" fill />
+					<Image src="/icons/Header/logo.png" alt="" fill />
 				</Link>
 
 				<nav className={styles.nav}>

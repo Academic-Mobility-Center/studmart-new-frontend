@@ -56,6 +56,8 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 
 	const [isLoadingPromocodes, setIsLoadingPromocodes] = useState(true);
 	const [isLoadingPartner, setIsLoadingPartner] = useState(true);
+	// forceStopLoading нужен, чтобы избежать бесконечной загрузки
+	const [forceStopLoading, setForceStopLoading] = useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -107,7 +109,15 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		};
 		fetchDiscounts();
 	}, [discountsIds, id, role]);
-
+	useEffect(() => {
+		if (isLoadingPromocodes) {
+			const timer = setTimeout(() => {
+				setIsLoadingPromocodes(false);
+				setForceStopLoading(true);
+			}, 2500);
+			return () => clearTimeout(timer);
+		}
+	}, [isLoadingPromocodes]);
 	const openModal = (promo: UnifiedPromocode) => {
 		if (role === 'Student' && 'discount' in promo) {
 			setSelectedPromo(promo);
@@ -122,7 +132,9 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 	return (
 		<div className={styles['container']}>
 			<PartnerInfo imageUrl={imageUrl} partnerId={partnerId} {...partnerData} />
-			{!isLoadingPromocodes ? (
+			{isLoadingPromocodes && !forceStopLoading ? (
+				<Loader />
+			) : personalPromocodes.length > 0 ? (
 				<div className={styles['discount-wrapper']}>
 					{personalPromocodes.map((promo, index) => {
 						const isEmployee = !('discount' in promo);
@@ -143,7 +155,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 					})}
 				</div>
 			) : (
-				<Loader color="#FFFFFF" />
+				<div className={styles['no-promos']}>У данного партнёра нет предложений</div>
 			)}
 			<DiscountModal isOpen={isModalOpen} closeModal={closeModal} promoCode={selectedPromo} />
 		</div>

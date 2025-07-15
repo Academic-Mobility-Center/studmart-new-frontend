@@ -14,7 +14,7 @@ const NewFooter = () => {
 			<div className={styles['footer-top']}>
 				<div className={styles['logo-wrapper']}>
 					<Image
-						src="/icons/footer/logo.svg"
+						src="/icons/footer/logo.png"
 						alt="Логотип"
 						className={styles['logo']}
 						fill
