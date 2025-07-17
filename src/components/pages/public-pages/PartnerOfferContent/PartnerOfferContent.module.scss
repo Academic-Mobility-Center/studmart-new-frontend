@@ -19,13 +19,14 @@
 		max-width: unset;
 	}
 }
+
 .no-promos {
-	color: #fff;
 	font-size: 18px;
 	text-align: center;
 	width: 100%;
 	max-width: 50%;
-	color: #032C28;
+	color: #032c28;
+
 	@media (width<=1024px) {
 		max-width: unset;
 	}

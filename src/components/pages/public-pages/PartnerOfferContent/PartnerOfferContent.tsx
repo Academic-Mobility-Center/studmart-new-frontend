@@ -63,7 +63,7 @@ const PartnerOfferContent = ({ imageUrl, partnerId }: Props) => {
 		const fetchData = async () => {
 			setIsLoadingPartner(true);
 			try {
-				const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, regionId, id);
+				const partnerInfo = await getPromocodePartnerByIdAndRegionId(partnerId, null, id);
 				setPartnerData(partnerInfo);
 			} catch (error) {
 				console.log(error);

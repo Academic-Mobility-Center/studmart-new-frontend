@@ -66,8 +66,9 @@
 	width: 180px;
 	height: 160px;
 	position: absolute;
-	top: 0px;
+	top: 0;
 	right: 0;
+
 	/* width: 175px;
 	height: 280px;
 	position: absolute;

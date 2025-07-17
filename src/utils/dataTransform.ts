@@ -1,6 +1,7 @@
 import { Option } from '@/types/Option';
 
 export const transformToOptions = (array: { id: number; name: string }[]): Option[] => {
+	if (!Array.isArray(array)) return [];
 	return array.map((item) => ({
 		label: item.name,
 		value: item.id.toString(),
