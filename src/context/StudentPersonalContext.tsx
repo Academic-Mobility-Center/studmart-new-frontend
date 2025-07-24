@@ -8,7 +8,6 @@ export const familyStatusOptions = [
 	{ id: 2, name: 'Холост / Не замужем' },
 	{ id: 3, name: 'Разведен / Разведена' },
 	{ id: 4, name: 'Вдовец / Вдова' },
-	{ id: 5, name: 'Есть дети' },
 ];
 
 export const isWorkOptions = [

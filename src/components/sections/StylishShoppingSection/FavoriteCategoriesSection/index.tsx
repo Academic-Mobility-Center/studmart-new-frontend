@@ -31,8 +31,8 @@ export default function FavoriteCategoriesSection({
 	const [fetchedMenuItems, setFetchedMenuItems] = useState<MenuItem[]>([]);
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = useState(true);
-	// const [canScrollLeft, setCanScrollLeft] = useState(false);
-	// const [canScrollRight, setCanScrollRight] = useState(false);
+	const [canScrollLeft, setCanScrollLeft] = useState(false);
+	const [canScrollRight, setCanScrollRight] = useState(false);
 	const { isAuthenticated, role } = useAuth();
 
 	useEffect(() => {
@@ -77,10 +77,10 @@ export default function FavoriteCategoriesSection({
 		if (!scrollContainer) return;
 
 		const updateScrollButtons = () => {
-			// setCanScrollLeft(scrollContainer.scrollLeft > 0);
-			// setCanScrollRight(
-			// 	scrollContainer.scrollLeft + scrollContainer.clientWidth < scrollContainer.scrollWidth,
-			// );
+			setCanScrollLeft(scrollContainer.scrollLeft > 0);
+			setCanScrollRight(
+				scrollContainer.scrollLeft + scrollContainer.clientWidth < scrollContainer.scrollWidth,
+			);
 		};
 
 		const handleWheelScroll = (event: WheelEvent) => {
@@ -147,11 +147,11 @@ export default function FavoriteCategoriesSection({
 		};
 	}, [loading]);
 
-	// const scrollBy = (amount: number) => {
-	// 	if (scrollRef.current) {
-	// 		scrollRef.current.scrollBy({ left: amount, behavior: 'smooth' });
-	// 	}
-	// };
+	const scrollBy = (amount: number) => {
+		if (scrollRef.current) {
+			scrollRef.current.scrollBy({ left: amount, behavior: 'smooth' });
+		}
+	};
 
 	const IconComponent = ({ iconUrl }: { iconUrl?: string }) =>
 		iconUrl ? (
@@ -194,7 +194,7 @@ export default function FavoriteCategoriesSection({
 								}
 								style={{
 									background: id === selectedCategoryId ? '#e0f7fa' : '#f8f8f8',
-									borderColor: id === selectedCategoryId ? '#4dd0e1' : 'rgba(0, 0, 0, 0.2)',
+									borderColor: id === selectedCategoryId ? '#8fe248' : 'rgba(0, 0, 0, 0.2)',
 								}}
 							>
 								<IconComponent iconUrl={IconUrl} />
@@ -204,7 +204,7 @@ export default function FavoriteCategoriesSection({
 					</ScrollContainer>
 
 					{/* Кнопки под меню */}
-					{/* <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '8px' }}>
+					<div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '8px' }}>
 						<button
 							onClick={() => scrollBy(-200)}
 							disabled={!canScrollLeft}
@@ -233,7 +233,7 @@ export default function FavoriteCategoriesSection({
 						>
 							▶
 						</button>
-					</div> */}
+					</div>
 				</div>
 			)}
 		</div>

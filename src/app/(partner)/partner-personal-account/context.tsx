@@ -51,7 +51,7 @@ export const validateField = (
 				: 'Некорректный URL';
 
 		case 'phoneNumber':
-			return /^(\+7|8)?[\s-]?\(?9\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/.test(value as string)
+			return /^(\+7|8)?[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/.test(value as string)
 				? undefined
 				: 'Некорректный номер телефона';
 
