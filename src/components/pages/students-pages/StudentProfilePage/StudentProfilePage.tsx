@@ -155,7 +155,7 @@ const StudentProfilePage: React.FC = () => {
 			date: new Date(fetchStudent.birthDate),
 			gender: transformToOption(genderOption),
 			region: fetchStudent.region ? transformToOption(fetchStudent.region) : undefined,
-			city: fetchStudent.city ? transformToOption(fetchStudent.city) : undefined,
+			// city: fetchStudent.city ? transformToOption(fetchStudent.city) : undefined,
 			familyStatus: familyStatusOption ? transformToOption(familyStatusOption) : undefined,
 			isWork: transformToOption(workOptions),
 			languageProfiency: fetchStudent.languages
@@ -168,6 +168,18 @@ const StudentProfilePage: React.FC = () => {
 	}, [fetchStudent]);
 
 	useEffect(() => {
+		if (!fetchStudent?.city || fetchCities.length === 0) return;
+
+		const cityExists = fetchCities.find((c) => c.id === fetchStudent.city.id);
+		if (cityExists) {
+			setFormData((prev) => ({
+				...prev,
+				city: { value: cityExists.id.toString(), label: cityExists.name },
+			}));
+		}
+	}, [fetchCities, fetchStudent]);
+
+	useEffect(() => {
 		const fetchCitiesByRegion = async () => {
 			try {
 				let cities: City[];
@@ -177,6 +189,13 @@ const StudentProfilePage: React.FC = () => {
 					cities = await getStudentCities();
 				}
 				setFetchCities(cities);
+
+				const selectedCityId = formData.city?.value;
+				const cityExists = cities.some((c) => c.id.toString() === selectedCityId);
+
+				if (!cityExists) {
+					setFormData((prev) => ({ ...prev, city: undefined }));
+				}
 			} catch (error) {
 				console.error('Ошибка при загрузке городов:', error);
 			}
