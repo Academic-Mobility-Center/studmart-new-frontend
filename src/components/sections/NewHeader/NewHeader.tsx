@@ -92,21 +92,20 @@ export default function NewHeader({}: NewHeaderProps) {
 						<Link href={isAuth} className={styles.icon}>
 							<Image src="/icons/Header/account.svg" alt="Профиль" fill />
 						</Link>
-						<Link
-							href={
-								isAuthenticated && role === 'Student'
-									? '/student-personal-account/referal-program'
-									: isAuthenticated && role === 'Employee'
-										? ''
-										: '/login'
-							}
-							className={styles.icon}
-						>
-							{role === 'Student' ? <Image src="/icons/Header/wallet.svg" alt="" fill /> : <></>}
-						</Link>
-						{/* <button className={clsx(styles.icon, styles['tablet-icon'])}>
-							<Image src="/icons/Header/menu.svg" alt="" fill />
-						</button> */}
+						{role && isAuthenticated && (
+							<Link
+								href={
+									isAuthenticated && role === 'Student'
+										? '/student-personal-account/referal-program'
+										: isAuthenticated && role === 'Employee'
+											? ''
+											: '/login'
+								}
+								className={styles.icon}
+							>
+								{role === 'Student' ? <Image src="/icons/Header/wallet.svg" alt="" fill /> : <></>}
+							</Link>
+						)}
 					</div>
 				</div>
 			</header>
