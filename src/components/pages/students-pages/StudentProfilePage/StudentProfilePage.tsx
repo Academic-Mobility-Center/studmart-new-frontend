@@ -177,7 +177,6 @@ const StudentProfilePage: React.FC = () => {
 					cities = await getStudentCities();
 				}
 				setFetchCities(cities);
-				setFormData((prev) => ({ ...prev, city: undefined }));
 			} catch (error) {
 				console.error('Ошибка при загрузке городов:', error);
 			}
