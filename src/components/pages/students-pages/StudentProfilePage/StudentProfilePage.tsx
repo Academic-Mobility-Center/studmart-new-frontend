@@ -14,6 +14,7 @@ import Loader from '@/components/ui/Loader';
 import { transformToOption, transformToOptions } from '@/utils/dataTransform';
 import { getPartnerRegions } from '@/lib/api/partners';
 import {
+	getCitiesByRegionId,
 	getLanguages,
 	getStudentById,
 	getStudentCities,
@@ -165,6 +166,25 @@ const StudentProfilePage: React.FC = () => {
 			course: transformToOption(fetchStudent.course) ?? undefined,
 		});
 	}, [fetchStudent]);
+
+	useEffect(() => {
+		const fetchCitiesByRegion = async () => {
+			try {
+				let cities: City[];
+				if (formData.region?.value) {
+					cities = await getCitiesByRegionId(formData.region.value);
+				} else {
+					cities = await getStudentCities();
+				}
+				setFetchCities(cities);
+				setFormData((prev) => ({ ...prev, city: undefined }));
+			} catch (error) {
+				console.error('Ошибка при загрузке городов:', error);
+			}
+		};
+
+		fetchCitiesByRegion();
+	}, [formData.region]);
 
 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,

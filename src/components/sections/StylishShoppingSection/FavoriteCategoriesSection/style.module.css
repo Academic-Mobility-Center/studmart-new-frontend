@@ -1,8 +1,8 @@
 .category {
 	position: relative;
+	left: -20px;
 
 	@media (width<=1024px) {
-		left: -20px;
 		width: calc(100% + 40px);
 	}
 }
