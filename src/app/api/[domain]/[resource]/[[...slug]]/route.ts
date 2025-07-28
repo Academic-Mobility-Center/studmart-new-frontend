@@ -34,6 +34,7 @@ const allowedResources = [
 	'forward',
 	'Export',
 	'Detailed',
+	'Avatars',
 ];
 export async function GET(
 	request: Request,

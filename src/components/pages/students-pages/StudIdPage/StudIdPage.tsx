@@ -10,9 +10,10 @@ import { useRouter } from 'next/navigation';
 import CustomCard from '@/components/ui/CustomCard';
 import Loader from '@/components/ui/Loader';
 
-import { getStudentById } from '@/lib/api/students';
+import { getStudentById, uploadStudentAvatar } from '@/lib/api/students';
 
 import { useAuth } from '@/context/AuthContext';
+import fileToBase64 from '@/context/HomePageContext';
 import IStudentFormData from '@/context/StudentPersonalContext';
 
 import styles from './StudIdPage.module.css';
@@ -27,23 +28,36 @@ const StudIdPage: React.FC = () => {
 		}
 	}, [role, router]);
 
-	const [image, setImage] = useState(
-		'/icons/student-account/d4eeae509bbfb902288411fb819999c2.jpeg',
-	);
+	const HOST = process.env.NEXT_PUBLIC_API_URL;
+	const url = `https://files.${HOST}/Avatars/${id}`;
+	const [image, setImage] = useState(url);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isStudentLoading, setStudentLoading] = useState(false);
 	const [fetchStudent, setFetchStudent] = useState<IStudentFormData | null>(null);
 
-	const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
-		if (file) {
-			setIsLoading(true);
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setImage(reader.result as string);
-				setIsLoading(false);
-			};
-			reader.readAsDataURL(file);
+		if (!file) return;
+
+		setIsLoading(true);
+
+		try {
+			const base64String = await fileToBase64(file);
+			setImage(URL.createObjectURL(file));
+			if (id) {
+				const contentType = file.type;
+				const response = await uploadStudentAvatar(id, base64String, contentType);
+
+				if (response === 201) {
+					console.log('Фотография успешно загружена');
+				} else {
+					console.warn('Ошибка при загрузке фотографии. Код ответа:', response);
+				}
+			}
+		} catch (error) {
+			console.error('Ошибка при обработке изображения:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 

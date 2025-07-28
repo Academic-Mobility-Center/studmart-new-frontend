@@ -230,23 +230,18 @@ export const getLanguages = async () => {
 		return null;
 	}
 };
-// export const sendStudentFile = (id: string, image: string, contentType: string) => {
-//   try {
-//     fetch(`/api/files/Verifications`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         "accept": "*/*"
-//       },
-//       body: JSON.stringify({
-//         id,
-//         image,
-//         contentType
-//       })
-//     }).catch(error => {
-//       console.log("Ошибка при отправке файла:", error);
-//     });
-//   } catch (error) {
-//     console.log("Ошибка в sendStudentFile:", error);
-//   }
-// };
+
+export const uploadStudentAvatar = async (id: string, image: string, contentType: string) => {
+	try {
+		const res = await fetch(`/api/files/Avatars`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', accept: '*/*' },
+			body: JSON.stringify({ id, image, contentType }),
+		});
+
+		return res.status;
+	} catch (error) {
+		console.error('Ошибка при загрузке фото:', error);
+		return 500;
+	}
+};
